@@ -1,5 +1,6 @@
 <template>
   <div class="about">
+    <button @click="AuthProvider('google')">auth Google</button>
     <h1>This is an about page</h1>
     <h3>{{titulo}}</h3>
     <table>
@@ -40,6 +41,22 @@ export default {
   },
   mounted() {
 
+  },
+
+  methods: {
+    AuthProvider(provider) {    
+     // console.log(provider)        
+      // var self = this
+      
+      this.$auth.authenticate(provider)
+        .then(response => {
+          console.log(response);
+          // self.SocialLogin(provider,response)
+        })
+        .catch(err => {
+            console.log({err:err})
+        })
+    },
   }
 
 
