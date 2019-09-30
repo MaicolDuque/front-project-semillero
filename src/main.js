@@ -15,7 +15,7 @@ Vue.use(VueSocialauth, {
     }
   }
 })
-https://mail.google.com
+//https://mail.google.com
 
 // Vue.config.productionTip = false
 
