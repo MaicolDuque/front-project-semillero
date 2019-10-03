@@ -59,7 +59,7 @@ export default {
     },
 
     SocialLogin(provider,response){
-        this.$http.post('/sociallogin/'+provider,response).then(response => {
+        this.$http.post('http://localhost:8000/api/sociallogin/'+provider,response).then(response => {
             console.log(response.data)
         }).catch(err => {
             console.log({err:err})
