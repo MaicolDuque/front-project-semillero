@@ -51,7 +51,7 @@ export default {
       this.$auth.authenticate(provider)
         .then(response => {
           console.log(response);
-          // self.SocialLogin(provider,response)
+          self.SocialLogin(provider,response)
         })
         .catch(err => {
             console.log({err:err})
