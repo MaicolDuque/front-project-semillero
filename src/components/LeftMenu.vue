@@ -25,7 +25,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item has-treeview menu-open">
+          <!-- <li class="nav-item has-treeview menu-open">
             <a href="#" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
@@ -36,7 +36,7 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="./index.html" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
+                   <i class="nav-icon fas fa-tachometer-alt"></i>
                   <p>Dashboard v1</p>
                 </a>
               </li>
@@ -53,16 +53,12 @@
                 </a>
               </li>
             </ul>
-          </li>
-          <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Widgets
-                <span class="right badge badge-danger">New</span>
-              </p>
-            </a>
-          </li>
+          </li> -->
+   
+          <router-link  to="/" class="nav-item" tag="li"><a class="nav-link active"> <i class="nav-icon fas fa-tachometer-alt"></i>Dashboard</a></router-link> 
+          <router-link  to="/usuarios" class="nav-item" tag="li"><a class="nav-link"> <i class="nav-icon fas fa-users"></i>Usuarios</a></router-link> 
+                 
+
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-copy"></i>
