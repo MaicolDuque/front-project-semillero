@@ -6,6 +6,13 @@ import store from './store'
 import VueAxios from 'vue-axios'
 import VueSocialauth from 'vue-social-auth'
 import axios from 'axios';
+//
+
+
+import VuePaginate from 'vue-paginate'
+Vue.use(VuePaginate)
+
+Vue.use(VuePaginate)
 Vue.use(VueAxios, axios)
 Vue.use(VueSocialauth, {
   providers: {

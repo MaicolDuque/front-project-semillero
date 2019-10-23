@@ -5,6 +5,9 @@ import About from './views/About.vue'
 import Grupos from './views/Grupos.vue'
 import AddGrupo from './views/AddGrupo.vue'
 import EditGrupo from './views/EditGrupo.vue'
+import Directores from './views/Directores.vue'
+import AddDirector from './views/AddDirector.vue'
+import EditDirector from './views/EditDirector.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -35,6 +38,21 @@ export default new Router({
       path: '/editGrupo',
       name: 'editgrupo',
       component: EditGrupo
+    },
+    {
+      path: '/directores',
+      name: 'directores',
+      component: Directores
+    },
+    {
+      path: '/addDirector',
+      name: 'addDirector',
+      component: AddDirector
+    },
+    {
+      path: '/editdirector',
+      name: 'editdirector',
+      component: EditDirector
     },
   ]
 })
