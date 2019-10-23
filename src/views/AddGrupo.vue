@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <section class="content">
     <h3 class="text-center">Agregar Grupo</h3>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="collapse navbar-collapse">
@@ -31,10 +31,12 @@
         </form>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
+
+import ApiService from "../services/api.service"
 export default {
   data() {
     return {
@@ -43,8 +45,8 @@ export default {
   },
   methods: {
     addGrupo() {
-      this.axios
-        .post("http://127.0.0.1:8000/api/grupo", this.grupo)
+      ApiService
+        .post("/grupo", this.grupo)
         .then(
           response => this.$router.push({ name: "home" })
           // console.log(response.data)
