@@ -1,14 +1,14 @@
 <template>
   <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong>
-    All rights reserved.
-    <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 3.0.0-rc.3
-    </div>
+    <strong>
+      <p>
+        Politécnico Colombiano Jaime Isaza Cadavid © 2019
+        <br />Sede Medellín
+        <br />Institución de Educación Superior de caracter pública y departamental sujeta a inspección y vigilancia por parte del Ministerio de Educación.
+      </p>
+    </strong>
   </footer>
 </template>
 <script>
-export default {
-  
-}
+export default {};
 </script>

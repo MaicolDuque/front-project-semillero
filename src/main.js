@@ -6,12 +6,15 @@ import store from './store'
 import VueAxios from 'vue-axios'
 import VueSocialauth from 'vue-social-auth'
 import axios from 'axios';
-//
+//Dependencia mensajes de confirmación de acciones
+import Toasted from 'vue-toasted'
+//Dependencia ventanas emergentes notificaciones
+import VueSweetalert2 from 'vue-sweetalert2';
 
-
-import VuePaginate from 'vue-paginate'
+import VuePaginate from 'vue-paginate';
+Vue.use(VueSweetalert2);
 Vue.use(VuePaginate)
-
+Vue.use(Toasted)
 Vue.use(VuePaginate)
 Vue.use(VueAxios, axios)
 Vue.use(VueSocialauth, {

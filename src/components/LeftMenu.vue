@@ -62,26 +62,32 @@
                 </a>
               </li>
             </ul>
-          </li> -->
-          <li class="nav-item">            
+          </li>-->
+          <li class="nav-item">
             <router-link to="/" class="nav-link active">
-             <i class="nav-icon fas fa-tachometer-alt"></i>
-             Home
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              Home
             </router-link>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <router-link to="/Grupos" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               Grupos de investigación
             </router-link>
-          </li>
-          <li class="nav-item">
+          </li>-->
+          <!-- <li class="nav-item">
             <router-link to="/Directores" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               Directores investigación
             </router-link>
-          </li>
-          <li class="nav-item has-treeview">
+          </li>-->
+          <!-- <li class="nav-item">
+            <router-link to="/semilleros" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              Semilleros investigación
+            </router-link>
+          </li>-->
+          <!-- <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-copy"></i>
               <p>
@@ -128,27 +134,27 @@
                 </a>
               </li>
             </ul>
-          </li>
+          </li>-->
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-chart-pie"></i>
               <p>
-                Charts
+                Investigación
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/charts/chartjs.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>ChartJS</p>
-                </a>
+                <router-link to="/Grupos" class="nav-link">
+                  <i class="nav-icon fas fa-th"></i>
+                  Grupos de investigación
+                </router-link>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/flot.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Flot</p>
-                </a>
+                <router-link to="/Directores" class="nav-link">
+                  <i class="nav-icon fas fa-th"></i>
+                  Directores investigación
+                </router-link>
               </li>
               <li class="nav-item">
                 <a href="pages/charts/inline.html" class="nav-link">
@@ -158,6 +164,37 @@
               </li>
             </ul>
           </li>
+          <!--  -->
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-chart-pie"></i>
+              <p>
+                Semilleros
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <router-link to="/semilleros" class="nav-link">
+                  <i class="nav-icon fas fa-th"></i>
+                  Semilleros investigación
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link to="/coordinadores" class="nav-link">
+                  <i class="nav-icon fas fa-th"></i>
+                  Coordinadores
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <a href="pages/charts/inline.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Inline</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <!--  -->
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tree"></i>

@@ -17,7 +17,14 @@
           </div>
           <div class="form-group">
             <label>Categoria</label>
-            <input type="text" class="form-control" v-model="grupo.categoria" />
+            <br />
+            <select @change="onChange($event)">
+              <option disabled value>Please select one</option>
+              <option v-for="option in options" v-bind:key="option.value">{{ option.text }}</option>
+            </select>
+            <!-- <span>Selected: {{ selected }}</span> -->
+            <!-- <label>Categoria</label>
+            <input type="text" class="form-control" v-model="grupo.categoria" />-->
           </div>
           <div class="form-group">
             <label>colciencias</label>
@@ -25,7 +32,11 @@
           </div>
           <div class="form-group">
             <label>facultad</label>
-            <input type="text" class="form-control" v-model="grupo.id_facultad" />
+            <br />
+            <select @change="selectChange">
+              <option disabled value>Por favor,Seleccione uno</option>
+              <option v-for="item in facultades" v-bind:key="item.value">{{ item.facultad }}</option>
+            </select>
           </div>
           <button type="submit" class="btn btn-primary">Agregar Grupo</button>
         </form>
@@ -35,24 +46,65 @@
 </template>
 
 <script>
-
-import ApiService from "../services/api.service"
+import ApiService from "../services/api.service";
 export default {
   data() {
     return {
+      selected: "",
+      options: [
+        { text: "A1", value: "1" },
+        { text: "A", value: "2" },
+        { text: "B", value: "3" },
+        { text: "C", value: "4" },
+        { text: "D", value: "5" }
+      ],
+      facultades: {},
       grupo: {}
     };
   },
+  mounted() {
+    this.getFacultades();
+  },
+  computed: {
+    formatearFaccultades() {
+      return Object.values(this.facultades);
+    }
+  },
   methods: {
+    getFacultades() {
+      ApiService.get("/facultad").then(response => {
+        this.facultades = response.data;
+      });
+    },
+
     addGrupo() {
-      ApiService
-        .post("/grupo", this.grupo)
-        .then(
-          response => this.$router.push({ name: "home" })
-          // console.log(response.data)
-        )
+      ApiService.post("/grupo", this.grupo)
+        .then(response => this.$router.push({ name: "grupos" }))
         .catch(error => console.log(error))
         .finally(() => (this.loading = false));
+      this.appear();
+    },
+    onChange($event) {
+      this.grupo.categoria = event.target.value;
+    },
+    selectChange(event) {
+      var i;
+      this.facultades.forEach(function(element) {
+        if (element.facultad == event.target.value) {
+          i = element.id_facultad;
+        }
+      });
+      this.grupo.id_facultad = i;
+    },
+    appear() {
+      this.$toasted.show("Agregado correctamente", {
+        //theme of the toast you prefer
+        theme: "bubble",
+        //position of the toast container
+        position: "top-right",
+        //display time of the toast
+        duration: 2000
+      });
     }
   }
 };

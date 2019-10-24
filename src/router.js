@@ -2,12 +2,22 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import About from './views/About.vue'
+//
 import Grupos from './views/Grupos.vue'
 import AddGrupo from './views/AddGrupo.vue'
 import EditGrupo from './views/EditGrupo.vue'
+//
 import Directores from './views/Directores.vue'
 import AddDirector from './views/AddDirector.vue'
 import EditDirector from './views/EditDirector.vue'
+//
+import Semilleros from './views/Semilleros.vue'
+import AddSemillero from './views/AddSemillero.vue'
+import EditSemillero from './views/EditSemillero.vue'
+//
+import Coordinadores from './views/Coordinadores.vue'
+import AddCoordinador from './views/AddCoordinador.vue'
+import EditCoordinador from './views/EditCoordinador.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -53,6 +63,36 @@ export default new Router({
       path: '/editdirector',
       name: 'editdirector',
       component: EditDirector
+    },
+    {
+      path: '/semilleros',
+      name: 'semilleros',
+      component: Semilleros
+    },
+    {
+      path: '/addsemillero',
+      name: 'addsemillero',
+      component: AddSemillero
+    },
+    {
+      path: '/editsemillero',
+      name: 'editsemillero',
+      component: EditSemillero
+    },
+    {
+      path: '/coordinadores',
+      name: 'coordinadores',
+      component: Coordinadores
+    },
+    {
+      path: '/addcoordinador',
+      name: 'addcoordinador',
+      component: AddCoordinador
+    },
+    {
+      path: '/editcoordiandor',
+      name: 'editcoordinador',
+      component: EditCoordinador
     },
   ]
 })

@@ -12,18 +12,17 @@
       <div class="col-md-6">
         <form @submit.prevent="addDirector">
           <div class="form-group">
-            <label>Documento</label>
+            <label>Nombre</label>
             <input type="text" class="form-control" v-model="director.documento" />
           </div>
           <div class="form-group">
-            <label>Nombre</label>
+            <label>Objetivo</label>
             <input type="text" class="form-control" v-model="director.nombre_usuario" />
           </div>
           <div class="form-group">
-            <label>Apellido</label>
+            <label>Descripción</label>
             <input type="text" class="form-control" v-model="director.apellido_usuario" />
           </div>
-
           <div class="form-group">
             <label>Correo</label>
             <input type="text" class="form-control" v-model="director.email" />
@@ -45,7 +44,7 @@
         </form>
       </div>
     </div>
-    <pre>{{$data}}</pre>
+    {{$data}}
   </div>
 </template>
 
@@ -61,7 +60,7 @@ export default {
     addDirector() {
       ApiService.post("/usuario", this.director)
         .then(
-          response => this.$router.push({ name: "directores" })
+          response => this.$router.push({ name: "coordinadores" })
           // console.log(response.data)
         )
         .catch(error => console.log(error))
