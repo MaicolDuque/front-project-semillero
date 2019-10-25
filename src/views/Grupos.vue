@@ -10,6 +10,9 @@
         </div>
       </div>
     </nav>
+    <div>
+      <input type="text" placeholder="buscar" class="form-control" v-model="name" />
+    </div>
     <table class="table table-bordered">
       <thead>
         <tr>
@@ -21,7 +24,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in grupos" :key="item.id_grupo">
+        <tr v-for="item in searchGrupo" :key="item.id_grupo">
           <td>{{ item.grupo }}</td>
           <td>{{ item.categoria }}</td>
           <td>{{ item.cod_colciencias }}</td>
@@ -46,7 +49,12 @@ import ApiService from "../services/api.service";
 export default {
   data() {
     return {
-      grupos: []
+      options: [
+        { text: "Activo", value: "1" },
+        { text: "Inactivo", value: "0" }
+      ],
+      grupos: [],
+      name: ""
     };
   },
   created() {
@@ -71,6 +79,11 @@ export default {
         //display time of the toast
         duration: 2000
       });
+    }
+  },
+  computed: {
+    searchGrupo: function() {
+      return this.grupos.filter(item => item.grupo.includes(this.name));
     }
   }
 };

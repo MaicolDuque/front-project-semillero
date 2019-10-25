@@ -157,10 +157,10 @@
                 </router-link>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/inline.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Inline</p>
-                </a>
+                <router-link to="/asignargrupo" class="nav-link">
+                  <i class="nav-icon fas fa-th"></i>
+                  Asignación Grupo
+                </router-link>
               </li>
             </ul>
           </li>

@@ -18,6 +18,8 @@ import EditSemillero from './views/EditSemillero.vue'
 import Coordinadores from './views/Coordinadores.vue'
 import AddCoordinador from './views/AddCoordinador.vue'
 import EditCoordinador from './views/EditCoordinador.vue'
+//
+import AsignarGrupo from './views/AsignarGrupo.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -93,6 +95,11 @@ export default new Router({
       path: '/editcoordiandor',
       name: 'editcoordinador',
       component: EditCoordinador
+    },
+    {
+      path: '/asignargrupo',
+      name: 'asignargrupo',
+      component: AsignarGrupo
     },
   ]
 })

@@ -11,7 +11,21 @@ import Toasted from 'vue-toasted'
 //Dependencia ventanas emergentes notificaciones
 import VueSweetalert2 from 'vue-sweetalert2';
 
+
 import VuePaginate from 'vue-paginate';
+
+
+// Importa VeeValidate y el Validator
+
+
+// Indicar uso de idioma español
+
+
+
+
+
+
+
 Vue.use(VueSweetalert2);
 Vue.use(VuePaginate)
 Vue.use(Toasted)

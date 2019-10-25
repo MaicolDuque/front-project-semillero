@@ -8,44 +8,23 @@
           <router-link to="/" class="nav-item nav-link">Home</router-link>
           <router-link to="/addDirector" class="nav-item nav-link">Agregar</router-link>
         </div>
+        <li class="list-group-item">
+          <input type="text" placeholder="Buscar" class="form-control" v-model="name" />
+        </li>
       </div>
     </nav>
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Documento</th>
-          <th>Nombre</th>
-          <th>Apellido</th>
-          <th>Telefono</th>
-          <th>Estado</th>
-          <th>Email</th>
-          <th>Tipo usuario</th>
-          <th>Rol</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="item in directores" :key="item.id_usuario">
-          <td>{{ item.documento }}</td>
-          <td>{{ item.nombre_usuario }}</td>
-          <td>{{ item.apellido_usuario }}</td>
-          <td>{{ item.telefono }}</td>
-          <td>{{ item.estado }}</td>
-          <td>{{ item.email }}</td>
-          <td>{{ item.tipo_usuario }}</td>
-          <td>{{ item.rol }}</td>
-          <td>
-            <div class="btn-group" role="group">
-              <router-link
-                :to="{name: 'editdirector', params: { id: item.id_usuario}}"
-                class="btn btn-primary"
-              >Editar</router-link>
-              <button class="btn btn-danger" @click="deleteDirector(item.id_usuario)">Eliminar</button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="row">
+      <div class="col-sm-4">
+        <button v-on:click="getUsers" class="btn btn-primary">Listar</button>
+        <ul class="list-group">
+          <li
+            class="list-group-item"
+            v-for="item in searchUser"
+            :key="item.id_usuario"
+          >{{ item.nombre_usuario }}</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -57,11 +36,11 @@ export default {
       directores: []
     };
   },
-  created() {
+  /* created() {
     ApiService.get("/usuario").then(response => {
       this.directores = response.data;
     });
-  },
+  }, */
   methods: {
     deleteDirector(id) {
       ApiService.delete(`/usuario/${id}`).then(response => {
@@ -69,6 +48,18 @@ export default {
         this.directores.splice(i, 1);
         this.appear();
       });
+    },
+    getUsers: function() {
+      ApiService.get("/usuario").then(response => {
+        this.directores = response.data;
+      });
+    }
+  },
+  computed: {
+    searchUser: function() {
+      return this.directores.filter(item =>
+        item.nombre_usuario.includes(this.name)
+      );
     }
   },
   appear() {
