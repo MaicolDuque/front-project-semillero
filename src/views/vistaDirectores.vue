@@ -10,25 +10,26 @@
         </div>
       </div>
     </nav>
-    <div>
-      <input type="text" placeholder="buscar" class="form-control" v-model="name" />
-    </div>
+    <div></div>
     <table class="table table-bordered">
       <thead>
         <tr>
           <th>Nombre</th>
+          <th>Apellido</th>
+
+          <th>Grupo</th>
+          <th>colciencias</th>
           <th>Categoria</th>
-          <th>Codigo Colciencias</th>
-          <th>Facultad</th>
           <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in searchGrupo" :key="item.id_grupo">
+        <tr v-for="item in directores" :key="item.id_director">
+          <td>{{ item.nombre_usuario }}</td>
+          <td>{{ item.apellido_usuario }}</td>
           <td>{{ item.grupo }}</td>
-          <td>{{ item.categoria }}</td>
           <td>{{ item.cod_colciencias }}</td>
-          <td>{{ item.facultad }}</td>
+          <td>{{ item.cod_categoria }}</td>
           <td>
             <div class="btn-group" role="group">
               <router-link
@@ -37,7 +38,7 @@
               >Editar</router-link>
               <button class="btn btn-danger" @click="deleteGrupo(item.id_grupo)">Eliminar</button>
               <router-link
-                :to="{name: 'asignargrupo', params: { id_grupo: item.id_grupo}}"
+                :to="{name: 'asignargrupo', params: { id: item.id_grupo}}"
                 class="btn btn-primary"
               >Asignar</router-link>
             </div>
@@ -53,17 +54,12 @@ import ApiService from "../services/api.service";
 export default {
   data() {
     return {
-      options: [
-        { text: "Activo", value: "1" },
-        { text: "Inactivo", value: "0" }
-      ],
-      grupos: [],
-      name: ""
+      directores: []
     };
   },
   created() {
-    ApiService.get("/grupo").then(response => {
-      this.grupos = response.data;
+    ApiService.get("/director").then(response => {
+      this.directores = response.data;
     });
   },
   methods: {
@@ -83,11 +79,6 @@ export default {
         //display time of the toast
         duration: 2000
       });
-    }
-  },
-  computed: {
-    searchGrupo: function() {
-      return this.grupos.filter(item => item.grupo.includes(this.name));
     }
   }
 };

@@ -1,30 +1,53 @@
 <template>
   <div>
     <h3 class="text-center">Directores de investigación</h3>
-    <br />
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="collapse navbar-collapse">
         <div class="navbar-nav">
-          <router-link to="/" class="nav-item nav-link">Home</router-link>
-          <router-link to="/addDirector" class="nav-item nav-link">Agregar</router-link>
+          <router-link to="/Directores" class="nav-item nav-link">Directores</router-link>
         </div>
-        <li class="list-group-item">
-          <input type="text" placeholder="Buscar" class="form-control" v-model="name" />
-        </li>
       </div>
     </nav>
-    <div class="row">
-      <div class="col-sm-4">
-        <button v-on:click="getUsers" class="btn btn-primary">Listar</button>
-        <ul class="list-group">
-          <li
-            class="list-group-item"
-            v-for="item in searchUser"
-            :key="item.id_usuario"
-          >{{ item.nombre_usuario }}</li>
-        </ul>
-      </div>
-    </div>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Documento</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Telefono</th>
+          <th>Estado</th>
+          <th>Email</th>
+          <th>Tipo usuario</th>
+          <th>Rol</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in usuarios" :key="item.id_usuario">
+          <td>{{ item.documento }}</td>
+          <td>{{ item.nombre_usuario }}</td>
+          <td>{{ item.apellido_usuario }}</td>
+          <td>{{ item.telefono }}</td>
+          <td>{{ item.estado }}</td>
+          <td>{{ item.email }}</td>
+          <td>{{ item.tipo_usuario }}</td>
+          <td>{{ item.rol }}</td>
+          <td>
+            <div class="btn-group" role="group">
+              <!-- <router-link
+                :to="{name: 'editdirector', params: { id: item.id_usuario}}"
+                class="btn btn-primary"
+              >Editar</router-link>-->
+              <button
+                class="btn btn-danger"
+                @click="seleccionarDirector(item.id_usuario)"
+              >Seleccionar</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <pre>{{$data}}</pre>
   </div>
 </template>
 
@@ -33,35 +56,61 @@ import ApiService from "../services/api.service";
 export default {
   data() {
     return {
-      directores: []
+      director: {},
+      usuarios: []
     };
   },
-  /* created() {
+  created() {
     ApiService.get("/usuario").then(response => {
-      this.directores = response.data;
+      this.usuarios = response.data;
     });
-  }, */
+  },
   methods: {
-    deleteDirector(id) {
-      ApiService.delete(`/usuario/${id}`).then(response => {
-        let i = this.directores.map(item => item.id_usuario).indexOf(id); // find index of your object
-        this.directores.splice(i, 1);
+    seleccionarDirector(id) {
+      this.director.id_grupo = this.$route.params.id_grupo;
+      alert("id_grupo:" + this.director.id_grupo);
+
+      let i = this.usuarios.map(item => item.id_usuario).indexOf(id);
+      if (i == 0) {
+        i++;
+        alert("id_usuario:" + i);
+        this.director.id_usuario = i;
+      } else {
+        alert("id_usuario:" + i);
+        this.director.id_usuario = i;
+      }
+
+      ApiService.post("/director", this.director)
+        .then(
+          response => this.$router.push({ name: "directores" })
+          // console.log(response.data)
+        )
+        .catch(error => console.log(error))
+        .finally(() => (this.loading = false));
+      /* ApiService.delete(`/grupo/${id}`).then(response => {
+        let i = this.grupos.map(item => item.id_grupo).indexOf(id); // find index of your object
+        this.grupos.splice(i, 1);
         this.appear();
-      });
+      }); */
     },
-    getUsers: function() {
-      ApiService.get("/usuario").then(response => {
-        this.directores = response.data;
-      });
+    addUsuario() {
+      this.usuario.id_rol = 2;
+      ApiService.post("/director", this.director)
+        .then(
+          response => this.$router.push({ name: "directores" })
+          // console.log(response.data)
+        )
+        .catch(error => console.log(error))
+        .finally(() => (this.loading = false));
     }
   },
-  computed: {
+  /* computed: {
     searchUser: function() {
       return this.directores.filter(item =>
         item.nombre_usuario.includes(this.name)
       );
     }
-  },
+  }, */
   appear() {
     this.$toasted.show("Eliminado correctamente", {
       //theme of the toast you prefer

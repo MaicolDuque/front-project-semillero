@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3 class="text-center">Directores de investigación</h3>
+    <h3 class="text-center">asiganar Directores de investigación</h3>
     <br />
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="collapse navbar-collapse">

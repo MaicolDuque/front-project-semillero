@@ -16,13 +16,17 @@ import VuePaginate from 'vue-paginate';
 
 
 // Importa VeeValidate y el Validator
-
+import { ValidationProvider, extend } from 'vee-validate';
+import { required } from 'vee-validate/dist/rules';
 
 // Indicar uso de idioma español
+extend('required', {
+  ...required,
+  message: 'The {_field_} field is required'
+});
 
 
-
-
+Vue.component('ValidationProvider', ValidationProvider);
 
 
 
@@ -46,6 +50,7 @@ Vue.use(VueSocialauth, {
 
 new Vue({
   router,
+  ValidationProvider,
   store,
   render: h => h(App)
 }).$mount('#app')

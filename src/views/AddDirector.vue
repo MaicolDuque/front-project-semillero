@@ -41,13 +41,17 @@
           </div>
 
           <div class="form-group">
-            <label>Correo</label>
+            <validation-provider rules="required" v-slot="{ errors }">
+              <input v-model="usuario.email" name="myinput" type="text" />
+              <span>{{ errors[0] }}</span>
+            </validation-provider>
+            <!-- <label>Correo</label>
             <input
               type="text"
               placeholder="Correo electonico"
               class="form-control"
               v-model="usuario.email"
-            />
+            />-->
           </div>
           <div class="form-group">
             <label>Telefono</label>
@@ -91,6 +95,7 @@ import ApiService from "../services/api.service";
 export default {
   data() {
     return {
+      value: "",
       options: [
         { text: "Activo", value: "1" },
         { text: "Inactivo", value: "0" }
@@ -109,6 +114,7 @@ export default {
   },
   methods: {
     addUsuario() {
+      this.usuario.id_rol = 2;
       ApiService.post("/usuario", this.usuario)
         .then(
           response => this.$router.push({ name: "directores" })

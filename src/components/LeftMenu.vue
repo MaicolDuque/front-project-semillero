@@ -162,6 +162,12 @@
                   Asignación Grupo
                 </router-link>
               </li>
+              <li class="nav-item">
+                <router-link to="/vistaDirectores" class="nav-link">
+                  <i class="nav-icon fas fa-th"></i>
+                  Directores asigandos
+                </router-link>
+              </li>
             </ul>
           </li>
           <!--  -->
