@@ -39,7 +39,7 @@ Vue.use(VueSocialauth, {
   providers: {
     google: {
       clientId: '632225845458-r9s1qfn6ta7e26gi6h00kh25qi0uk2f6.apps.googleusercontent.com',
-      redirectUri: 'http://localhost:8080/about' // Your client app URL
+      redirectUri: 'http://localhost:8080' // Your client app URL
     }
   }
 })
