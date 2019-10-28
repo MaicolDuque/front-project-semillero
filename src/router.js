@@ -22,6 +22,8 @@ import EditCoordinador from './views/EditCoordinador.vue'
 import AsignarGrupo from './views/AsignarGrupo.vue'
 //
 import vistaDirectores from './views/vistaDirectores.vue'
+//
+import AsignarSemillero from './views/AsignarSemillero.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -108,5 +110,11 @@ export default new Router({
       name: 'vistaDirectores',
       component: vistaDirectores
     },
+    {
+      path: '/asignarsemillero',
+      name: 'asignarsemillero',
+      component: AsignarSemillero
+    },
+
   ]
 })

@@ -27,7 +27,6 @@
           <td>{{ item.descripcion }}</td>
           <td>{{ item.grupo }}</td>
           <td>{{ item.facultad }}</td>
-
           <td>
             <div class="btn-group" role="group">
               <router-link
@@ -59,7 +58,7 @@ export default {
   methods: {
     deleteSemillero(id) {
       ApiService.delete(`/semillero/${id}`).then(response => {
-        let i = this.semilleros.map(item => item.id_grupo).indexOf(id); // find index of your object
+        let i = this.semilleros.map(item => item.id_semillero).indexOf(id); // find index of your object
         this.semilleros.splice(i, 1);
       });
     }

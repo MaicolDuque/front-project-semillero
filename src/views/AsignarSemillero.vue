@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3 class="text-center">Directores de investigación</h3>
+    <h3 class="text-center">coordinadores de semilleros</h3>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="collapse navbar-collapse">
         <div class="navbar-nav">
@@ -53,7 +53,7 @@ import ApiService from "../services/api.service";
 export default {
   data() {
     return {
-      director: {},
+      coordinador: {},
       usuarios: []
     };
   },
@@ -64,56 +64,34 @@ export default {
   },
   methods: {
     seleccionarDirector: function(item) {
-      this.director.id_grupo = this.$route.params.id_grupo;
-      alert("id_grupo:" + this.director.id_grupo);
+      this.coordinador.id_semillero = this.$route.params.id_semillero;
+      alert("id_grupo:" + this.coordinador.id_semillero);
 
       //let i = this.usuarios.map(item => item.id_usuario).indexOf(id);
-      this.director.id_usuario = item.id_usuario;
-      alert("id_usuario:" + this.director.id_usuario);
-      /* if (i == 0) {
-        //i++;
-        alert("id_usuario:" + i);
-        this.director.id_usuario = i;
-        i = 0;
-      } else {
-        alert("id_usuario:" + i);
-        this.director.id_usuario = i;
-        //i = 0;
-      } */
+      this.coordinador.id_usuario = item.id_usuario;
+      alert("id_usuario:" + this.coordinador.id_usuario);
 
-      ApiService.post("/director", this.director)
+      ApiService.post("/director", this.coordinador)
         .then(
-          response => this.$router.push({ name: "vistaDirectores" })
+          response => this.$router.push({ name: "" })
           // console.log(response.data)
         )
         .catch(error => console.log(error))
         .finally(() => (this.loading = false));
-      /* ApiService.delete(`/grupo/${id}`).then(response => {
-        let i = this.grupos.map(item => item.id_grupo).indexOf(id); // find index of your object
-        this.grupos.splice(i, 1);
-        this.appear();
-      }); */
     },
     addUsuario() {
       this.usuario.id_rol = 2;
-      ApiService.post("/director", this.director)
+      ApiService.post("/coordinador", this.coordianador)
         .then(
-          response => this.$router.push({ name: "directores" })
+          response => this.$router.push({ name: "coordinadores" })
           // console.log(response.data)
         )
         .catch(error => console.log(error))
         .finally(() => (this.loading = false));
     }
   },
-  /* computed: {
-    searchUser: function() {
-      return this.directores.filter(item =>
-        item.nombre_usuario.includes(this.name)
-      );
-    }
-  }, */
   appear() {
-    this.$toasted.show("Eliminado correctamente", {
+    this.$toasted.show("asiganado correctamente", {
       //theme of the toast you prefer
       theme: "bubble",
       //position of the toast container
