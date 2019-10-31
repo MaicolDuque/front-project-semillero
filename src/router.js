@@ -25,7 +25,7 @@ import vistaDirectores from './views/vistaDirectores.vue'
 //
 import AsignarSemillero from './views/AsignarSemillero.vue'
 import Login from './views/Login.vue'
-import TokenService from "./services/storage.service"
+import { TokenService } from "./services/storage.service"
 
 Vue.use(Router)
 
@@ -57,15 +57,15 @@ const router = new Router({
 
 
 router.beforeEach((to, from, next) => {    
-  // const loggedIn = !!TokenService.getToken();
+  const loggedIn = !!TokenService.getToken();
+  
+  if (!to.meta.isPublic && !loggedIn) {
+    return next({ name: 'login' })
+  }
 
-  // if (!to.meta.isPublic && !loggedIn) {
-  //   return next({ name: 'login' })
-  // }
-
-  // if (to.name === 'login' && loggedIn()) {
-  //   return next({ name: 'home' })
-  // }
+  if (to.name === 'login' && loggedIn) {
+    return next({ name: 'home' })
+  }
 
 
 

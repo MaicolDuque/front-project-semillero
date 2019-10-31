@@ -11,12 +11,26 @@
         </div>
       </div>
     </div>
+    
+    <button type="button" style="display:none" class="btn btn-danger toastrDefaultError" ref="modalDanger">
+      Launch Error Toast
+    </button>
+
+
   </div>
+  
 </template>
 
 <script>  
-
+import ApiService from "../services/api.service";
+import {TokenService} from '../services/storage.service'
 export default {
+
+  mounted: () => {
+    $('.toastrDefaultError').click(function() {
+      toastr.error('Email no se encuentra registrado!')
+    });
+  },
   methods: {
     login(){
       
@@ -37,13 +51,32 @@ export default {
     },
 
     SocialLogin(provider,response){
-        this.$http.post('http://localhost:8000/api/sociallogin/'+provider,response).then(response => {
-            console.log(response.data)
+        ApiService.post('/sociallogin/'+provider,response).then(response => {
+            const infoUser = response.data.user           
+            if(infoUser.infoToken){
+              return this.loginSuccessful(response.data.user)
+            }
+            this.loginFailed();
+            
         }).catch(err => {
             console.log({err:err})
         })
     },
+
+    loginFailed(){      
+      this.$refs.modalDanger.click()
+    },
+
+    loginSuccessful(data){     
+      TokenService.saveToken(data.infoToken.token)
+      TokenService.saveRefreshToken(data.infoToken.token)
+      ApiService.setHeader()
+      localStorage.user  = JSON.stringify(data.infoToken.user)
+      this.$store.commit('setLogin', true)
+      this.$router.push('home')
+    }
   }
+
 }
 </script>
 

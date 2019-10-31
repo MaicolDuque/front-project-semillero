@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { TokenService } from '../services/storage.service'
+import { TokenService } from './storage.service'
 
 const ApiService = {
 
@@ -7,7 +7,8 @@ const ApiService = {
         axios.defaults.baseURL = baseURL;
     },
 
-    setHeader() {
+    setHeader() {   
+        console.log(TokenService.getToken());     
         axios.defaults.headers.common["Authorization"] = `Bearer ${TokenService.getToken()}`
     },
 

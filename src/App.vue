@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div id="app" v-if="auth">
+  <div id="app" v-if="isAuth">
     <SPheader></SPheader>
     <SPleftMenu />
     <div class="content-wrapper">
@@ -18,18 +18,23 @@
 import SPheader from "./components/Header";
 import SPleftMenu from "./components/LeftMenu";
 import SPfooter from "./components/Footer";
-import ApiService from "./services/api.service";
 import Login from "./views/Login";
+import { TokenService } from "./services/storage.service"
 
-ApiService.init("http://127.0.0.1:8000/api");
 
 export default {
   components: { SPheader, SPleftMenu, SPfooter, Login },
   data () {
     return {
-      auth: false
+      // auth: false
     }
   },
+
+  computed: {
+    isAuth() {
+      return this.$store.state.isLogin
+    }
+  }
 };
 </script>
 <style>
