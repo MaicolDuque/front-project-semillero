@@ -24,7 +24,7 @@
       </thead>
       <tbody>
         <tr v-for="item in usuarios" :key="item.id_usuario">
-          <td>{{ item.documento }}: {{index}}</td>
+          <td>{{ item.documento }}}</td>
           <td>{{ item.nombre_usuario }}</td>
           <td>{{ item.apellido_usuario }}</td>
           <td>{{ item.telefono }}</td>

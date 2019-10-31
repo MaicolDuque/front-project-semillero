@@ -71,6 +71,8 @@ export default {
       TokenService.saveToken(data.infoToken.token)
       TokenService.saveRefreshToken(data.infoToken.token)
       ApiService.setHeader()
+
+      ApiService.mount401Interceptor();
       localStorage.user  = JSON.stringify(data.infoToken.user)
       this.$store.commit('setLogin', true)
       this.$router.push('home')

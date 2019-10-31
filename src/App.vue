@@ -29,7 +29,12 @@ export default {
       // auth: false
     }
   },
-
+  created () {
+    if(localStorage.access_token) {
+      this.$store.commit('setLogin', true)    
+      // this.$store.commit('addUser', JSON.parse(localStorage.user))
+    }
+  },
   computed: {
     isAuth() {
       return this.$store.state.isLogin
