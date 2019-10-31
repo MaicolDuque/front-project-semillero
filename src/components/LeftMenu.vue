@@ -153,7 +153,7 @@
               <li class="nav-item">
                 <router-link to="/Directores" class="nav-link">
                   <i class="nav-icon fas fa-th"></i>
-                  Directores investigación
+                  Crear usuario Director
                 </router-link>
               </li>
               <li class="nav-item">
@@ -199,6 +199,12 @@
                 </a>
               </li>
             </ul>
+          </li>
+          <li class="nav-item">
+            <router-link to="/gruposvisitante" class="nav-link active">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              Grupos de investigación
+            </router-link>
           </li>
           <!--  -->
           <li class="nav-item has-treeview">

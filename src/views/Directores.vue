@@ -6,7 +6,7 @@
       <div class="collapse navbar-collapse">
         <div class="navbar-nav">
           <router-link to="/" class="nav-item nav-link">Home</router-link>
-          <router-link to="/addDirector" class="nav-item nav-link">Agregar</router-link>
+          <router-link to="/AddUserDirector" class="nav-item nav-link">Agregar</router-link>
         </div>
       </div>
     </nav>

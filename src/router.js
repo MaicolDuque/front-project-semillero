@@ -8,7 +8,7 @@ import AddGrupo from './views/AddGrupo.vue'
 import EditGrupo from './views/EditGrupo.vue'
 //
 import Directores from './views/Directores.vue'
-import AddDirector from './views/AddDirector.vue'
+import AddUserDirector from './views/AddUserDirector.vue'
 import EditDirector from './views/EditDirector.vue'
 //
 import Semilleros from './views/Semilleros.vue'
@@ -24,6 +24,12 @@ import AsignarGrupo from './views/AsignarGrupo.vue'
 import vistaDirectores from './views/vistaDirectores.vue'
 //
 import AsignarSemillero from './views/AsignarSemillero.vue'
+//
+import VistaGruposVisitante from './views/VistaGruposVisitante.vue'
+
+import HelloWorld from './components/HelloWorld.vue'
+
+
 Vue.use(Router)
 
 export default new Router({
@@ -61,9 +67,9 @@ export default new Router({
       component: Directores
     },
     {
-      path: '/addDirector',
-      name: 'addDirector',
-      component: AddDirector
+      path: '/addUserDirector',
+      name: 'addUserDirector',
+      component: AddUserDirector
     },
     {
       path: '/editdirector',
@@ -114,6 +120,16 @@ export default new Router({
       path: '/asignarsemillero',
       name: 'asignarsemillero',
       component: AsignarSemillero
+    },
+    {
+      path: '/gruposvisitante',
+      name: 'gruposvisitante',
+      component: VistaGruposVisitante
+    },
+    {
+      path: '/HelloWorld',
+      name: 'HelloWorld',
+      component: HelloWorld
     },
 
   ]

@@ -1,5 +1,5 @@
 <template>
-  <section class="content">
+  <div class="container">
     <h3 class="text-center">Agregar Grupo</h3>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="collapse navbar-collapse">
@@ -9,74 +9,141 @@
       </div>
     </nav>
     <div class="row">
-      <div class="col-md-6">
-        <form @submit.prevent="addGrupo">
-          <div class="form-group">
-            <label>grupo</label>
-            <input type="text" class="form-control" v-model="grupo.grupo" />
-          </div>
-          <div class="form-group">
-            <label>Categoria</label>
+      <div class="col-sm-8 offset-sm-2">
+        <div>
+          <!-- <h2>Nuevo Grupo de Investigación</h2> -->
+          <form @submit.prevent="handleSubmit">
+            <div class="form-group">
+              <label for="grupo">Grupo</label>
+              <input
+                type="text"
+                v-model="grupo.grupo"
+                id="grupo"
+                name="grupo"
+                placeholder="Nombre"
+                class="form-control"
+                :class="{ 'is-invalid': submitted && $v.grupo.grupo.$error }"
+              />
+              <div
+                v-if="submitted && !$v.grupo.grupo.required"
+                class="invalid-feedback"
+              >El campo grupo es requerido</div>
+            </div>
+            <div class="form-group">
+              <label for="facultad">Categoria</label>
+              <br />
+              <select class="custom-select browser-default" @change="onChange($event)" required>
+                <option value>Por favor seleccione un Elemento</option>
+                <option
+                  v-for="item in categorias"
+                  v-bind:key="item.value"
+                  id="id_categoria"
+                  name="id_categoria"
+                  class="form-control"
+                  :class="{ 'is-invalid': submitted && $v.grupo.categoria.$error }"
+                >{{ item.categoria }}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="cod_colciencias">Codigo cod_colciencias</label>
+              <input
+                type="text"
+                v-model="grupo.cod_colciencias"
+                id="cod_colciencias"
+                name="cod_colciencias"
+                class="form-control"
+                placeholder="Codigo Colciencias"
+                :class="{ 'is-invalid': submitted && $v.grupo.cod_colciencias.$error }"
+              />
+              <div
+                v-if="submitted && !$v.grupo.cod_colciencias.required"
+                class="invalid-feedback"
+              >El campo Codigo de cod_colciencias es requerido</div>
+            </div>
+            <div class="form-group">
+              <label for="facultad">Facultad</label>
+              <br />
+              <select class="custom-select browser-default" @change="selectChangeFacultad" required>
+                <option value>Por favor seleccione un Elemento</option>
+                <option
+                  v-for="item in facultades"
+                  v-bind:key="item.value"
+                  id="id_facultad"
+                  name="id_facultad"
+                  class="form-control"
+                  :class="{ 'is-invalid': submitted && $v.grupo.id_facultad.$error }"
+                >{{ item.facultad }}</option>
+              </select>
+              <!-- <div
+                  class="invalid-feedback"
+                  v-if="submitted && !$v.grupo.facultad.required "
+              >la seleccion facultad es requerido</div>-->
+            </div>
             <br />
-            <select @change="onChange($event)">
-              <option disabled value>Please select one</option>
-              <option v-for="option in options" v-bind:key="option.value">{{ option.text }}</option>
-            </select>
-            <!-- <span>Selected: {{ selected }}</span> -->
-            <!-- <label>Categoria</label>
-            <input type="text" class="form-control" v-model="grupo.categoria" />-->
-          </div>
-          <div class="form-group">
-            <label>colciencias</label>
-            <input type="text" class="form-control" v-model="grupo.cod_colciencias" />
-          </div>
-          <div class="form-group">
-            <label>facultad</label>
-            <br />
-            <select @change="selectChange">
-              <option disabled value>Por favor,Seleccione uno</option>
-              <option v-for="item in facultades" v-bind:key="item.value">{{ item.facultad }}</option>
-            </select>
-          </div>
-          <button type="submit" class="btn btn-primary">Agregar Grupo</button>
-        </form>
+            <div class="form-group">
+              <button class="btn btn-primary">Guardar</button>
+            </div>
+          </form>
+          <!-- <pre>{{$data}}</pre> -->
+        </div>
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
+import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
 import ApiService from "../services/api.service";
+
 export default {
   data() {
     return {
-      selected: "",
-      options: [
-        { text: "A1", value: "1" },
-        { text: "A", value: "2" },
-        { text: "B", value: "3" },
-        { text: "C", value: "4" },
-        { text: "D", value: "5" }
-      ],
+      //Almacena como respuesta las facultadas enviadas por el Api
       facultades: {},
-      grupo: {}
+      //Almacena como respuesta las categorias enviadas por el Api
+      categorias: {},
+      //Almacena los datos del grupo a crear
+      grupo: {
+        grupo: "",
+        categoria: "",
+        cod_colciencias: "",
+        id_facultad: ""
+      },
+      submitted: false
     };
   },
+  //Obtiene las falcultades una vez se llama al componente
   mounted() {
     this.getFacultades();
+    this.getCategorias();
   },
+  //comvierte el objeto->en un arreglo
   computed: {
-    formatearFaccultades() {
-      return Object.values(this.facultades);
+    formatearCategorias() {
+      return Object.values(this.facultades, this.getCategorias);
+    }
+  },
+
+  //Reglas de validacion para VueValidate
+  validations: {
+    grupo: {
+      grupo: { required },
+      categoria: { required },
+      cod_colciencias: { required },
+      id_facultad: { required }
     }
   },
   methods: {
+    getCategorias() {
+      ApiService.get("/categoria").then(response => {
+        this.categorias = response.data;
+      });
+    },
     getFacultades() {
       ApiService.get("/facultad").then(response => {
         this.facultades = response.data;
       });
     },
-
     addGrupo() {
       ApiService.post("/grupo", this.grupo)
         .then(response => this.$router.push({ name: "grupos" }))
@@ -84,17 +151,36 @@ export default {
         .finally(() => (this.loading = false));
       this.appear();
     },
-    onChange($event) {
-      this.grupo.categoria = event.target.value;
-    },
-    selectChange(event) {
+    /*
+    Cuendo se seleciona una opción del elemento <select></select>
+    recore el arreglo facultades para obtener el id de cada una de ellas
+    */
+    selectChangeFacultad(event) {
       var i;
       this.facultades.forEach(function(element) {
         if (element.facultad == event.target.value) {
           i = element.id_facultad;
         }
       });
+      //asigna el el id segun facultad selecionada
       this.grupo.id_facultad = i;
+    },
+
+    onChange($event) {
+      this.grupo.categoria = event.target.value;
+    },
+    //Valida el formulario
+    handleSubmit(e) {
+      this.submitted = true;
+
+      // Se detiene aqui si es invalido, de lo contrario ejecuta el submit()
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        return;
+      }
+
+      this.addGrupo();
+      /* alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.grupo)); */
     },
     appear() {
       this.$toasted.show("Agregado correctamente", {
