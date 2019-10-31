@@ -24,97 +24,57 @@ import AsignarGrupo from './views/AsignarGrupo.vue'
 import vistaDirectores from './views/vistaDirectores.vue'
 //
 import AsignarSemillero from './views/AsignarSemillero.vue'
+import Login from './views/Login.vue'
+import TokenService from "./services/storage.service"
+
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: Home
-    },
-    {
-      path: '/about',
-      name: 'about',
-      component: About
-    },
-    {
-      path: '/grupos',
-      name: 'grupos',
-      component: Grupos
-    },
-    {
-      path: '/addGrupos',
-      name: 'addgrupos',
-      component: AddGrupo
-    },
-    {
-      path: '/editGrupo',
-      name: 'editgrupo',
-      component: EditGrupo
-    },
-    {
-      path: '/directores',
-      name: 'directores',
-      component: Directores
-    },
-    {
-      path: '/addDirector',
-      name: 'addDirector',
-      component: AddDirector
-    },
-    {
-      path: '/editdirector',
-      name: 'editdirector',
-      component: EditDirector
-    },
-    {
-      path: '/semilleros',
-      name: 'semilleros',
-      component: Semilleros
-    },
-    {
-      path: '/addsemillero',
-      name: 'addsemillero',
-      component: AddSemillero
-    },
-    {
-      path: '/editsemillero',
-      name: 'editsemillero',
-      component: EditSemillero
-    },
-    {
-      path: '/coordinadores',
-      name: 'coordinadores',
-      component: Coordinadores
-    },
-    {
-      path: '/addcoordinador',
-      name: 'addcoordinador',
-      component: AddCoordinador
-    },
-    {
-      path: '/editcoordiandor',
-      name: 'editcoordinador',
-      component: EditCoordinador
-    },
-    {
-      path: '/asignargrupo',
-      name: 'asignargrupo',
-      component: AsignarGrupo
-    },
-    {
-      path: '/vistaDirectores',
-      name: 'vistaDirectores',
-      component: vistaDirectores
-    },
-    {
-      path: '/asignarsemillero',
-      name: 'asignarsemillero',
-      component: AsignarSemillero
-    },
+    { path: '/login',name: 'login',component: Login, meta: {isPublic: true} },
+    { path: '/',name: 'home',component: Home },
+    { path: '/about',name: 'about',component: About },
+    { path: '/grupos',name: 'grupos',component: Grupos },
+    { path: '/addGrupos',name: 'addgrupos',component: AddGrupo },
+    { path: '/editGrupo',name: 'editgrupo',component: EditGrupo },
+    { path: '/directores',name: 'directores',component: Directores },
+    { path: '/addDirector',name: 'addDirector',component: AddDirector },
+    { path: '/editdirector',name: 'editdirector',component: EditDirector },
+    { path: '/semilleros',name: 'semilleros',component: Semilleros },
+    { path: '/addsemillero',name: 'addsemillero',component: AddSemillero },
+    { path: '/editsemillero',name: 'editsemillero',component: EditSemillero },
+    { path: '/coordinadores',name: 'coordinadores',component: Coordinadores },
+    { path: '/addcoordinador', name: 'addcoordinador',component: AddCoordinador },
+    { path: '/editcoordiandor',name: 'editcoordinador',component: EditCoordinador },
+    { path: '/asignargrupo',name: 'asignargrupo',component: AsignarGrupo },
+    { path: '/vistaDirectores',name: 'vistaDirectores',component: vistaDirectores },
+    { path: '/asignarsemillero',name: 'asignarsemillero',component: AsignarSemillero },
 
   ]
 })
+
+
+router.beforeEach((to, from, next) => {    
+  // const loggedIn = !!TokenService.getToken();
+
+  // if (!to.meta.isPublic && !loggedIn) {
+  //   return next({ name: 'login' })
+  // }
+
+  // if (to.name === 'login' && loggedIn()) {
+  //   return next({ name: 'home' })
+  // }
+
+
+
+  // Do not allow user to visit login page or register page if they are logged in
+  // if (loggedIn && onlyWhenLoggedOut) {
+  //   return next('/')
+  // }
+
+  next();
+})
+
+export default router;

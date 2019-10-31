@@ -27,7 +27,7 @@ export default {
   components: { SPheader, SPleftMenu, SPfooter, Login },
   data () {
     return {
-      auth: true
+      auth: false
     }
   },
 };
