@@ -28,6 +28,8 @@ import AsignarSemillero from './views/AsignarSemillero.vue'
 import VistaGruposVisitante from './views/VistaGruposVisitante.vue'
 
 import HelloWorld from './components/HelloWorld.vue'
+//
+
 
 import Login from './views/Login.vue'
 import { TokenService } from "./services/storage.service"
@@ -45,13 +47,13 @@ const router = new Router({
     { path: '/addGrupos', name: 'addgrupos', component: AddGrupo },
     { path: '/editGrupo', name: 'editgrupo', component: EditGrupo },
     { path: '/directores', name: 'directores', component: Directores },
-    { path: '/addDirector', name: 'addDirector', component: AddDirector },
+    { path: '/adduserdirector', name: 'adduserDirector', component: AddUserDirector },
     { path: '/editdirector', name: 'editdirector', component: EditDirector },
     { path: '/semilleros', name: 'semilleros', component: Semilleros },
     { path: '/addsemillero', name: 'addsemillero', component: AddSemillero },
     { path: '/editsemillero', name: 'editsemillero', component: EditSemillero },
     { path: '/coordinadores', name: 'coordinadores', component: Coordinadores },
-    { path: '/addcoordinador', name: 'addcoordinador', component: AddCoordinador },
+    /* { path: '/addcoordinador', name: 'addcoordinador', component: AddCoordinador }, */
     { path: '/editcoordiandor', name: 'editcoordinador', component: EditCoordinador },
     { path: '/asignargrupo', name: 'asignargrupo', component: AsignarGrupo },
     { path: '/vistaDirectores', name: 'vistaDirectores', component: vistaDirectores },
