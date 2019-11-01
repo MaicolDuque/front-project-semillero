@@ -1,5 +1,6 @@
 <template>
-  <div id="app">
+<div>
+  <div id="app" v-if="isAuth">
     <SPheader></SPheader>
     <SPleftMenu />
     <div class="content-wrapper">
@@ -7,18 +8,38 @@
     </div>
     <SPfooter />
   </div>
+
+  <Login v-else />
+</div>
+
 </template>
 
 <script>
 import SPheader from "./components/Header";
 import SPleftMenu from "./components/LeftMenu";
 import SPfooter from "./components/Footer";
-import ApiService from "./services/api.service";
+import Login from "./views/Login";
+import { TokenService } from "./services/storage.service"
 
-ApiService.init("http://127.0.0.1:8000/api");
 
 export default {
-  components: { SPheader, SPleftMenu, SPfooter }
+  components: { SPheader, SPleftMenu, SPfooter, Login },
+  data () {
+    return {
+      // auth: false
+    }
+  },
+  created () {
+    if(localStorage.access_token) {
+      this.$store.commit('setLogin', true)    
+      // this.$store.commit('addUser', JSON.parse(localStorage.user))
+    }
+  },
+  computed: {
+    isAuth() {
+      return this.$store.state.isLogin
+    }
+  }
 };
 </script>
 <style>
