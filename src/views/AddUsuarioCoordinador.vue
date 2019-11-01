@@ -125,21 +125,6 @@
                 >{{ item.tipo_usuario }}</option>
               </select>
             </div>
-            <!-- <div class="form-group">
-              <label for="facultad">Rol</label>
-              <br />
-              <select class="custom-select browser-default" @change="selectChangeFacultad" required>
-                <option value>Por favor seleccione un Elemento</option>
-                <option
-                  v-for="item in facultades"
-                  v-bind:key="item.value"
-                  id="id_rol"
-                  name="id_rol"
-                  class="form-control"
-                  :class="{ 'is-invalid': submitted && $v.grupo.id_facultad.$error }"
-                >{{ item.facultad }}</option>
-              </select>
-            </div>-->
             <br />
             <div class="form-group">
               <button class="btn btn-primary">Guardar</button>
@@ -248,9 +233,9 @@ export default {
         return;
       }
       //asigna como usuario un Director
-      this.usuario.id_rol = 2;
+      this.usuario.id_rol = 3;
       this.addUsuario();
-      /* alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.usuario)); */
+      /*  alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.usuario)); */
     },
     appear() {
       this.$toasted.show("Agregado correctamente", {

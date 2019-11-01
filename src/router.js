@@ -16,7 +16,7 @@ import AddSemillero from './views/AddSemillero.vue'
 import EditSemillero from './views/EditSemillero.vue'
 //
 import Coordinadores from './views/Coordinadores.vue'
-import AddCoordinador from './views/AddCoordinador.vue'
+import AddUsuarioCoordinador from './views/AddUsuarioCoordinador.vue'
 import EditCoordinador from './views/EditCoordinador.vue'
 //
 import AsignarGrupo from './views/AsignarGrupo.vue'
@@ -97,9 +97,9 @@ export default new Router({
       component: Coordinadores
     },
     {
-      path: '/addcoordinador',
-      name: 'addcoordinador',
-      component: AddCoordinador
+      path: '/addusuariocoordinador',
+      name: 'addusuariocoordinador',
+      component: AddUsuarioCoordinador
     },
     {
       path: '/editcoordiandor',

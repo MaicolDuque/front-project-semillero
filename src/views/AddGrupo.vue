@@ -32,7 +32,11 @@
             <div class="form-group">
               <label for="facultad">Categoria</label>
               <br />
-              <select class="custom-select browser-default" @change="onChange($event)" required>
+              <select
+                class="custom-select browser-default"
+                @change="selectChangeCategoria"
+                required
+              >
                 <option value>Por favor seleccione un Elemento</option>
                 <option
                   v-for="item in categorias"
@@ -40,7 +44,7 @@
                   id="id_categoria"
                   name="id_categoria"
                   class="form-control"
-                  :class="{ 'is-invalid': submitted && $v.grupo.categoria.$error }"
+                  :class="{ 'is-invalid': submitted && $v.grupo.id_categoria.$error }"
                 >{{ item.categoria }}</option>
               </select>
             </div>
@@ -105,7 +109,7 @@ export default {
       //Almacena los datos del grupo a crear
       grupo: {
         grupo: "",
-        categoria: "",
+        id_categoria: "",
         cod_colciencias: "",
         id_facultad: ""
       },
@@ -128,7 +132,7 @@ export default {
   validations: {
     grupo: {
       grupo: { required },
-      categoria: { required },
+      id_categoria: { required },
       cod_colciencias: { required },
       id_facultad: { required }
     }
@@ -166,8 +170,15 @@ export default {
       this.grupo.id_facultad = i;
     },
 
-    onChange($event) {
-      this.grupo.categoria = event.target.value;
+    selectChangeCategoria(event) {
+      var i;
+      this.categorias.forEach(function(element) {
+        if (element.categoria == event.target.value) {
+          i = element.id_categoria;
+        }
+      });
+      //asigna el el id segun facultad selecionada
+      this.grupo.id_categoria = i;
     },
     //Valida el formulario
     handleSubmit(e) {

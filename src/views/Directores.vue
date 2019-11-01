@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3 class="text-center">Directores de investigación</h3>
+    <h3 class="text-center">usuarios de investigación</h3>
     <br />
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="collapse navbar-collapse">
@@ -25,7 +25,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in directores" :key="item.id_usuario">
+        <tr v-for="item in usuarios" :key="item.id_usuario">
           <td>{{ item.documento }}</td>
           <td>{{ item.nombre_usuario }}</td>
           <td>{{ item.apellido_usuario }}</td>
@@ -54,19 +54,19 @@ import ApiService from "../services/api.service";
 export default {
   data() {
     return {
-      directores: []
+      usuarios: []
     };
   },
   created() {
     ApiService.get("/usuario").then(response => {
-      this.directores = response.data;
+      this.usuarios = response.data;
     });
   },
   methods: {
     deleteDirector(id) {
       ApiService.delete(`/usuario/${id}`).then(response => {
-        let i = this.directores.map(item => item.id_usuario).indexOf(id); // find index of your object
-        this.directores.splice(i, 1);
+        let i = this.usuarios.map(item => item.id_usuario).indexOf(id); // find index of your object
+        this.usuarios.splice(i, 1);
         this.appear();
       });
     }
