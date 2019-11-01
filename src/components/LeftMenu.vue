@@ -69,6 +69,12 @@
               Home
             </router-link>
           </li>
+          <li class="nav-item">
+            <router-link to="/Grupos" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              Grupos de investigación
+            </router-link>
+          </li>
           <!-- <li class="nav-item">
             <router-link to="/Grupos" class="nav-link">
               <i class="nav-icon fas fa-th"></i>

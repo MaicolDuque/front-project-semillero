@@ -59,9 +59,9 @@ const router = new Router({
 router.beforeEach((to, from, next) => {    
   const loggedIn = !!TokenService.getToken();
   
-  if (!to.meta.isPublic && !loggedIn) {
-    return next({ name: 'login' })
-  }
+  // if (!to.meta.isPublic && !loggedIn) {
+  //   return next({ name: 'login' })
+  // }
 
   if (to.name === 'login' && loggedIn) {
     return next({ name: 'home' })
