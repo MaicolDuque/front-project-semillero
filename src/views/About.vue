@@ -1,4 +1,4 @@
-<template>
+npm run serve<template>
   <div class="about">
     <button @click="AuthProvider('google')">auth Google</button>
     <h1>This is an about page</h1>

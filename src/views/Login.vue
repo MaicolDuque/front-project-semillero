@@ -4,73 +4,78 @@
       <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
         <div class="card card-signin my-5">
           <div class="card-body">
-            <h5 class="text-center">Ingresa con email del poli:</h5>                                       
-              <hr class="my-4">
-              <button  @click="AuthProvider('google')" class="btn btn-lg btn-google btn-block text-uppercase"><i class="fab fa-google mr-2"></i> Sign in with Google</button>                          
+            <h5 class="text-center">Ingresa con email del poli:</h5>
+            <hr class="my-4" />
+            <button
+              @click="AuthProvider('google')"
+              class="btn btn-lg btn-google btn-block text-uppercase"
+            >
+              <i class="fab fa-google mr-2"></i> Sign in with Google
+            </button>
           </div>
         </div>
       </div>
     </div>
-    
-    <button type="button" style="display:none" class="btn btn-danger toastrDefaultError" ref="modalDanger">
-      Launch Error Toast
-    </button>
 
-
+    <button
+      type="button"
+      style="display:none"
+      class="btn btn-danger toastrDefaultError"
+      ref="modalDanger"
+    >Launch Error Toast</button>
   </div>
-  
 </template>
 
-<script>  
+<script>
 import ApiService from "../services/api.service";
-import {TokenService} from '../services/storage.service'
+import { TokenService } from "../services/storage.service";
 export default {
-
   mounted: () => {
-    $('.toastrDefaultError').click(function() {
-      toastr.error('Email no se encuentra registrado!')
+    $(".toastrDefaultError").click(function() {
+      toastr.error("Email no se encuentra registrado!");
     });
   },
   methods: {
-    login(){
-      
-    },
+    login() {},
 
-    AuthProvider(provider) { 
-     // console.log(provider)        
-     var self = this;
-      
-      this.$auth.authenticate(provider)
+    AuthProvider(provider) {
+      // console.log(provider)
+      var self = this;
+
+      this.$auth
+        .authenticate(provider)
         .then(response => {
           console.log(response);
-          self.SocialLogin(provider,response)
+          self.SocialLogin(provider, response);
         })
         .catch(err => {
-            console.log({err:err})
+          console.log({ err: err });
+        });
+    },
+
+    SocialLogin(provider, response) {
+      ApiService.post("/sociallogin/" + provider, response)
+        .then(response => {
+          const infoUser = response.data.user;
+          console.log(response.data);
+          if (infoUser.infoToken) {
+            return this.loginSuccessful(response.data.user);
+          }
+          this.loginFailed();
         })
+        .catch(err => {
+          console.log({ err: err });
+        });
     },
 
-    SocialLogin(provider,response){
-        ApiService.post('/sociallogin/'+provider,response).then(response => {
-            const infoUser = response.data.user           
-            if(infoUser.infoToken){
-              return this.loginSuccessful(response.data.user)
-            }
-            this.loginFailed();
-            
-        }).catch(err => {
-            console.log({err:err})
-        })
+    loginFailed() {
+      this.$refs.modalDanger.click();
     },
 
-    loginFailed(){      
-      this.$refs.modalDanger.click()
-    },
-
-    loginSuccessful(data){     
-      TokenService.saveToken(data.infoToken.token)
-      TokenService.saveRefreshToken(data.infoToken.token)
-      ApiService.setHeader()
+    loginSuccessful(data) {
+      TokenService.saveToken(data.infoToken.token);
+      TokenService.saveRefreshToken(data.infoToken.token);
+      ApiService.setHeader();
 
       ApiService.mount401Interceptor();
       localStorage.user  = JSON.stringify(data.infoToken.user)
@@ -78,19 +83,18 @@ export default {
       this.$router.push('/')
     }
   }
-
-}
+};
 </script>
 
 <style scoped>
 :root {
   --input-padding-x: 1.5rem;
-  --input-padding-y: .75rem;
+  --input-padding-y: 0.75rem;
 }
 
 body {
   background: #007bff;
-  background: linear-gradient(to right, #0062E6, #33AEFF);
+  background: linear-gradient(to right, #0062e6, #33aeff);
 }
 
 .card-signin {
@@ -116,7 +120,7 @@ body {
 .form-signin .btn {
   font-size: 80%;
   border-radius: 5rem;
-  letter-spacing: .1rem;
+  letter-spacing: 0.1rem;
   font-weight: bold;
   padding: 1rem;
   transition: all 0.2s;
@@ -132,12 +136,12 @@ body {
   border-radius: 2rem;
 }
 
-.form-label-group>input,
-.form-label-group>label {
+.form-label-group > input,
+.form-label-group > label {
   padding: var(--input-padding-y) var(--input-padding-x);
 }
 
-.form-label-group>label {
+.form-label-group > label {
   position: absolute;
   top: 0;
   left: 0;
@@ -148,8 +152,8 @@ body {
   line-height: 1.5;
   color: #495057;
   border: 1px solid transparent;
-  border-radius: .25rem;
-  transition: all .1s ease-in-out;
+  border-radius: 0.25rem;
+  transition: all 0.1s ease-in-out;
 }
 
 .form-label-group input::-webkit-input-placeholder {
@@ -177,7 +181,7 @@ body {
   padding-bottom: calc(var(--input-padding-y) / 3);
 }
 
-.form-label-group input:not(:placeholder-shown)~label {
+.form-label-group input:not(:placeholder-shown) ~ label {
   padding-top: calc(var(--input-padding-y) / 3);
   padding-bottom: calc(var(--input-padding-y) / 3);
   font-size: 12px;
@@ -198,7 +202,7 @@ body {
 -------------------------------------------------- */
 
 @supports (-ms-ime-align: auto) {
-  .form-label-group>label {
+  .form-label-group > label {
     display: none;
   }
   .form-label-group input::-ms-input-placeholder {
@@ -209,9 +213,8 @@ body {
 /* Fallback for IE
 -------------------------------------------------- */
 
-@media all and (-ms-high-contrast: none),
-(-ms-high-contrast: active) {
-  .form-label-group>label {
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .form-label-group > label {
     display: none;
   }
   .form-label-group input:-ms-input-placeholder {

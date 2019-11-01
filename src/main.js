@@ -11,12 +11,26 @@ import Toasted from 'vue-toasted'
 //Dependencia ventanas emergentes notificaciones
 import VueSweetalert2 from 'vue-sweetalert2';
 
+import Vuelidate from 'vuelidate'
 
 import VuePaginate from 'vue-paginate';
 
 // Importa VeeValidate y el Validator
 import { ValidationProvider, extend } from 'vee-validate';
 import { required } from 'vee-validate/dist/rules';
+
+
+// Import Vue and vue2-collapse
+
+import VueCollapse from 'vue2-collapse'
+
+
+Vue.use(Vuelidate)
+
+
+// Loading the plugin into the Vue.
+Vue.use(VueCollapse);
+
 
 
 //Import API for setter anf getter localstorage
@@ -26,14 +40,14 @@ import { TokenService } from './services/storage.service'
 // Indicar uso de idioma español
 extend('required', {
   ...required,
-  message: 'The {_field_} field is required'
+  message: 'El campo es requerido'
 });
 
 
 ApiService.init(process.env.VUE_APP_URL_API); // Config URL for services
 
 // If token exists set header
-if (TokenService.getToken()) { 
+if (TokenService.getToken()) {
   ApiService.setHeader();
 }
 
