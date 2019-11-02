@@ -80,7 +80,7 @@ export default {
       ApiService.mount401Interceptor();
       localStorage.user  = JSON.stringify(data.infoToken.user)
       this.$store.commit('setLogin', true)
-      this.$router.push('/')
+      this.$router.push({ name: 'home'})
     }
   }
 };

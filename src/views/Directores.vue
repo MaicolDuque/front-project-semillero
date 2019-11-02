@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <!-- <div>
     <h3 class="text-center">usuarios de investigación</h3>
     <br />
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -46,6 +46,68 @@
         </tr>
       </tbody>
     </table>
+  </div> -->
+  <div style="padding:25px">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Directores</h1>
+          </div>         
+        </div>
+      </div>
+    </section>
+    <section class="content">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>Documento</th>
+                  <th>Nombre</th>
+                  <th>Apellido</th>
+                  <th>Telefono</th>
+                  <th>Estado</th>
+                  <th>Email</th>
+                  <th>Tipo usuario</th>
+                  <th>Rol</th>
+                  <th>Acciones</th>
+                </tr>
+                </thead>                
+                <tbody>
+                  <tr v-for="item in usuarios" :key="item.id_usuario">
+                    <td>{{ item.documento }}</td>
+                    <td>{{ item.nombre_usuario }}</td>
+                    <td>{{ item.apellido_usuario }}</td>
+                    <td>{{ item.telefono }}</td>
+                    <td>{{ item.estado }}</td>
+                    <td>{{ item.email }}</td>
+                    <td>{{ item.tipo_usuario }}</td>
+                    <td>{{ item.rol }}</td>
+                    <td>
+                      <div class="btn-group" role="group">
+                        <router-link
+                          :to="{name: 'editdirector', params: { id: item.id_usuario}}"
+                          class="btn btn-primary"
+                        >Editar</router-link>
+                        <button class="btn btn-danger" @click="deleteDirector(item.id_usuario)">Eliminar</button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
 </template>
 
