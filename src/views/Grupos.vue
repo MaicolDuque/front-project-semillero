@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="padding:25px">
     
     <h3 class="text-center">Grupos de investigación</h3>
     <br />

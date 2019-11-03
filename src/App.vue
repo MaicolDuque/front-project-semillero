@@ -31,9 +31,11 @@ export default {
   },
   created () {
     if(localStorage.access_token) {
-      this.$store.commit('setLogin', true)    
+      this.$store.commit('setLogin', true)          
       // this.$store.commit('addUser', JSON.parse(localStorage.user))
     }
+
+    
   },
   computed: {
     isAuth() {

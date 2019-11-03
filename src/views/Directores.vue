@@ -75,7 +75,7 @@ export default {
   created() {
     ApiService.get("/usuario")
     .then(response => {
-      this.usuarios = response.data;
+      this.usuarios = response.data.filter(user => user.rol == "Director")
     })
     .then(ress => $("#example2").DataTable())
   },
@@ -88,6 +88,10 @@ export default {
       });
     }
   },
+
+  computed: {
+    
+  },
   appear() {
     this.$toasted.show("Eliminado correctamente", {
       //theme of the toast you prefer
@@ -98,5 +102,5 @@ export default {
       duration: 2000
     });
   }
-};
+}
 </script>
