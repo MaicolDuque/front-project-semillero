@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h3 class="text-center">Grupo de investigación</h3>
+    
+    <h3 class="text-center">Grupos de investigación</h3>
     <br />
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="collapse navbar-collapse">
@@ -10,41 +11,51 @@
         </div>
       </div>
     </nav>
-    <div>
-      <input type="text" placeholder="buscar" class="form-control" v-model="name" />
-    </div>
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Categoria</th>
-          <th>Codigo Colciencias</th>
-          <th>Facultad</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="item in searchGrupo" :key="item.id_grupo">
-          <td>{{ item.grupo }}</td>
-          <td>{{ item.categoria }}</td>
-          <td>{{ item.cod_colciencias }}</td>
-          <td>{{ item.facultad }}</td>
-          <td>
-            <div class="btn-group" role="group">
-              <router-link
-                :to="{name: 'editgrupo', params: { id: item.id_grupo}}"
-                class="btn btn-primary"
-              >Editar</router-link>
-              <button class="btn btn-danger" @click="deleteGrupo(item.id_grupo)">Eliminar</button>
-              <router-link
-                :to="{name: 'asignargrupo', params: { id_grupo: item.id_grupo}}"
-                class="btn btn-primary"
-              >Asignar</router-link>
+    <section class="content">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">           
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Categoria</th>
+                    <th>Codigo Colciencias</th>
+                    <th>Facultad</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="item in searchGrupo" :key="item.id_grupo">
+                    <td>{{ item.grupo }}</td>
+                    <td>{{ item.categoria }}</td>
+                    <td>{{ item.cod_colciencias }}</td>
+                    <td>{{ item.facultad }}</td>
+                    <td>
+                      <div class="btn-group" role="group">
+                        <router-link
+                          :to="{name: 'editgrupo', params: { id: item.id_grupo}}"
+                          class="btn btn-primary"
+                        >Editar</router-link>
+                        <button class="btn btn-danger" @click="deleteGrupo(item.id_grupo)">Eliminar</button>
+                        <router-link
+                          :to="{name: 'asignargrupo', params: { id_grupo: item.id_grupo}}"
+                          class="btn btn-primary"
+                        >Asignar</router-link>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+               
+              </table>
             </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+            <!-- /.card-body -->
+          </div>
+        </div>
+      </div>
+    </section> 
   </div>
 </template>
 
@@ -62,9 +73,14 @@ export default {
     };
   },
   created() {
-    ApiService.get("/grupo").then(response => {
-      this.grupos = response.data;
-    });
+    ApiService.get("/grupo")
+    .then(response => {
+      this.grupos = response.data;  
+    })
+    .then(res => $("#example2").DataTable());
+  },
+  mounted: function() {
+    
   },
   methods: {
     deleteGrupo(id) {
