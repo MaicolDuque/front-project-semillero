@@ -28,8 +28,7 @@ import AsignarSemillero from './views/AsignarSemillero.vue'
 //
 import VistaGruposVisitante from './views/VistaGruposVisitante.vue'
 
-import HelloWorld from './components/HelloWorld.vue'
-//
+
 
 
 import Login from './views/Login.vue'
@@ -39,7 +38,7 @@ Vue.use(Router)
 
 const router = new Router({
   mode: 'history',
-  // base: process.env.BASE_URL,
+  linkExactActiveClass: "active",
   routes: [
     { path: '/login', name: 'login', component: Login, meta: { isPublic: true } },
     { path: '/', name: 'home', component: Home },
