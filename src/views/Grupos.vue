@@ -39,6 +39,7 @@
                           :to="{name: 'editgrupo', params: { id: item.id_grupo}}"
                           class="btn btn-primary"
                         >Editar</router-link>
+                        
                         <button class="btn btn-danger" @click="deleteGrupo(item.id_grupo)">Eliminar</button>
                         <router-link
                           :to="{name: 'asignargrupo', params: { id_grupo: item.id_grupo}}"

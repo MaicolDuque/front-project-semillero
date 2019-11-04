@@ -4,7 +4,7 @@
     <SPheader></SPheader>
     <SPleftMenu />
     <div class="content-wrapper">
-      <router-view />
+      <router-view></router-view>
     </div>
     <SPfooter />
   </div>

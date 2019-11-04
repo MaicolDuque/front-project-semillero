@@ -6,6 +6,7 @@ import About from './views/About.vue'
 import Grupos from './views/Grupos.vue'
 import AddGrupo from './views/AddGrupo.vue'
 import EditGrupo from './views/EditGrupo.vue'
+
 //
 import Directores from './views/Directores.vue'
 import AddUserDirector from './views/AddUserDirector.vue'
@@ -38,14 +39,14 @@ Vue.use(Router)
 
 const router = new Router({
   mode: 'history',
-  base: process.env.BASE_URL,
+  // base: process.env.BASE_URL,
   routes: [
     { path: '/login', name: 'login', component: Login, meta: { isPublic: true } },
     { path: '/', name: 'home', component: Home },
     { path: '/about', name: 'about', component: About },
     { path: '/grupos', name: 'grupos', component: Grupos },
     { path: '/addGrupos', name: 'addgrupos', component: AddGrupo },
-    { path: '/editGrupo', name: 'editgrupo', component: EditGrupo },
+    { path: '/editGrupo/:id', name: 'editgrupo', component: EditGrupo },    
     { path: '/directores', name: 'directores', component: Directores },
     { path: '/adduserdirector', name: 'adduserDirector', component: AddUserDirector },
     { path: '/editdirector', name: 'editdirector', component: EditDirector },

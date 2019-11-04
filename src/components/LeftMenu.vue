@@ -525,8 +525,7 @@
 export default {
   mounted: () => {
     if(localStorage.user) {
-      let user = JSON.parse(localStorage.user)
-      console.log(user.nombre_usuario)
+      let user = JSON.parse(localStorage.user)      
       $("#nameUser").text(user.nombre_usuario)
       $('#imageUser').attr('src',user.imagen);
     }

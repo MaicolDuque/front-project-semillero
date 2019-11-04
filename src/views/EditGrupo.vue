@@ -8,7 +8,45 @@
         </div>
       </div>
     </nav>
-    <div class="row">
+    <section class="content" >
+      <div style="width: 80%; margin: 0 auto;">
+        <form role="form">
+          <div class="card-body">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Nombre</label>              
+              <input type="text" class="form-control" v-model="grupo.grupo" placeholder="Nombre grupo" />
+            </div>
+            <div class="form-group">
+              <label>Código colciencias</label>
+              <input type="text" class="form-control" v-model="grupo.cod_colciencias" />
+            </div>
+            <div class="form-group">
+              <label>Categoria</label>
+              <select class="form-control " style="width: 100%;" v-model="grupo.id_categoria">                
+                <option v-for="option in categorias" v-bind:key="option.id_categoria" :value="option.id_categoria">
+                  {{ option.categoria }}
+                </option>
+              </select>
+            </div>
+             <div class="form-group">
+              <label>Facultad</label>
+              <select class="form-control " style="width: 100%;" v-model="grupo.id_facultad">                
+                <option v-for="facultad in facultades" v-bind:key="facultad.id_facultad" :value="facultad.id_facultad">
+                  {{ facultad.facultad }}
+                </option>
+              </select>
+            </div>
+           
+          </div>
+          <!-- /.card-body -->
+
+          <div class="card-footer">
+            <button type="submit" @click="updateGrupo" class="btn btn-primary">Actualizar</button>
+          </div>
+        </form>       
+      </div>
+    </section>
+    <!-- <div class="row">
       <div class="col-md-6">
         <form @submit.prevent="updateGrupo">
           <div class="form-group">
@@ -17,7 +55,6 @@
           </div>
           <div class="form-group">
             <label>categoria</label>
-            <!-- <input type="text" class="form-control" v-model="grupo.categoria" /> -->
             <br />
             <select @change="onChange($event)">
               <option disabled value>Please select one</option>
@@ -40,85 +77,60 @@
         </form>
         <pre>{{$data}}</pre>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
+import ApiService from "../services/api.service";
+
 export default {
   data() {
-    return {
-      selected: "",
-      options: [
-        { text: "A1", value: "1" },
-        { text: "A", value: "2" },
-        { text: "B", value: "3" },
-        { text: "C", value: "4" },
-        { text: "D", value: "5" }
-      ],
-      facultades: {},
+    return {  
+      categorias: [],
+      facultades: [],
       grupo: {}
     };
   },
+
+  created() {
+    console.log(this.$route.params.id)
+    ApiService.get(`/grupo/${this.$route.params.id}/edit`)
+      .then(response => {
+        this.grupo = response.data;        
+      });
+
+    ApiService.get("/categoria")
+    .then(res => this.categorias = res.data)
+    // .then(res2 => $('.select2').select2())
+
+    ApiService.get("/facultad").then(response => {
+      this.facultades = response.data;
+    });
+  },
   mounted() {
-    this.getFacultades();
+    
   },
   computed: {
-    formatearFaccultades() {
-      return Object.values(this.facultades);
-    }
+   
   },
-  created() {
-    this.axios
-      .get(`http://127.0.0.1:8000/api/grupo/${this.$route.params.id}/edit`)
-      .then(response => {
-        this.grupo = response.data;
-        console.log(this.grupo);
-      });
-  },
-  methods: {
-    getFacultades() {
-      this.axios.get("/facultad").then(response => {
-        this.facultades = response.data;
-      });
-    },
-    updateGrupo() {
-      //event.preventDefault();
-      this.axios
-        .patch(
-          `http://127.0.0.1:8000/api/grupo/${this.$route.params.id}`,
+ 
+  methods: {    
+    updateGrupo(event) {
+      event.preventDefault();      
+      ApiService
+        .put(
+          `/grupo/${this.$route.params.id}`,
           this.grupo
         )
-        .then(response => {
-          this.appear();
+        .then(response => {          
           this.$router.push({ name: "grupos" });
         })
         .catch(function(response) {
           alert("No se pudo crear el grupo");
         });
     },
-    onChange($event) {
-      this.grupo.categoria = event.target.value;
-    },
-    selectChange(event) {
-      var i;
-      this.facultades.forEach(function(element) {
-        if (element.facultad == event.target.value) {
-          i = element.id_facultad;
-        }
-      });
-      this.grupo.id_facultad = i;
-    },
-    appear() {
-      this.$toasted.show("Editado correctamente", {
-        //theme of the toast you prefer
-        theme: "bubble",
-        //position of the toast container
-        position: "top-right",
-        //display time of the toast
-        duration: 2000
-      });
-    }
+   
   }
 };
 </script>
