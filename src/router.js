@@ -28,6 +28,9 @@ import AsignarSemillero from './views/AsignarSemillero.vue'
 //
 import VistaGruposVisitante from './views/VistaGruposVisitante.vue'
 
+//Periodos
+import Periodos from './views/Periodos.vue'
+
 
 
 
@@ -58,6 +61,7 @@ const router = new Router({
     { path: '/asignargrupo', name: 'asignargrupo', component: AsignarGrupo },
     { path: '/vistaDirectores', name: 'vistaDirectores', component: vistaDirectores },
     { path: '/asignarsemillero', name: 'asignarsemillero', component: AsignarSemillero },
+    { path: '/periodos/:id', name: 'periodos', component: Periodos },    
 
   ]
 })

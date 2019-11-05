@@ -18,7 +18,7 @@
             
             <!-- /.card-header -->
             <div class="card-body">
-              <table id="example2" class="table table-bordered table-hover">
+              <table id="coordinadores" class="table table-bordered table-hover">
                 <thead>
                 <tr>
                   <th>Documento</th>
@@ -29,6 +29,7 @@
                   <th>Email</th>
                   <th>Tipo usuario</th>
                   <th>Rol</th>
+                  <th>Semillero</th>
                   <th>Acciones</th>
                 </tr>
                 </thead>                
@@ -42,6 +43,7 @@
                     <td>{{ item.email }}</td>
                     <td>{{ item.tipo_usuario }}</td>
                     <td>{{ item.rol }}</td>
+                    <td>{{ item.semillero }}</td>
                     <td>
                       <div class="btn-group" role="group">
                         <router-link
@@ -73,11 +75,11 @@ export default {
     };
   },
   created() {
-    ApiService.get("/usuario")
+    ApiService.get("/usuario/coordinador")
     .then(response => {
-      this.usuarios = response.data.filter(user => user.rol == "Coordinador")
+      this.usuarios = response.data
     })
-    .then(ress => $("#example2").DataTable())
+    .then(ress => $("#coordinadores").DataTable())
   },
   methods: {
     deleteDirector(id) {

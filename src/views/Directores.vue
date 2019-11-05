@@ -29,6 +29,7 @@
                   <th>Email</th>
                   <th>Tipo usuario</th>
                   <th>Rol</th>
+                  <th>Grupo</th>
                   <th>Acciones</th>
                 </tr>
                 </thead>                
@@ -42,6 +43,7 @@
                     <td>{{ item.email }}</td>
                     <td>{{ item.tipo_usuario }}</td>
                     <td>{{ item.rol }}</td>
+                    <td>{{ item.grupo }}</td>
                     <td>
                       <div class="btn-group" role="group">
                         <router-link
@@ -73,9 +75,9 @@ export default {
     };
   },
   created() {
-    ApiService.get("/usuario")
+    ApiService.get("/usuario/director")
     .then(response => {
-      this.usuarios = response.data.filter(user => user.rol == "Director")
+      this.usuarios = response.data
     })
     .then(ress => $("#example2").DataTable())
   },

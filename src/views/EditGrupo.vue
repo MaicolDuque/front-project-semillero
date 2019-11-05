@@ -21,8 +21,12 @@
               <input type="text" class="form-control" v-model="grupo.cod_colciencias" />
             </div>
             <div class="form-group">
+              <label>Vínculo</label>
+              <input type="text" class="form-control" v-model="grupo.vinculo" />
+            </div>
+            <div class="form-group">
               <label>Categoria</label>
-              <select class="form-control " style="width: 100%;" v-model="grupo.id_categoria">                
+              <select class="form-control " required="required" style="width: 100%;" v-model="grupo.id_categoria">                
                 <option v-for="option in categorias" v-bind:key="option.id_categoria" :value="option.id_categoria">
                   {{ option.categoria }}
                 </option>

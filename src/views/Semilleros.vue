@@ -27,7 +27,7 @@
             
             <!-- /.card-header -->
             <div class="card-body">
-              <table id="example2" class="table table-bordered table-hover">
+              <table id="semilleros" class="table table-bordered table-hover">
                 <thead>
                   <tr>
                     <th>Nombre</th>
@@ -49,9 +49,15 @@
                       <div class="btn-group" role="group">
                         <router-link
                           :to="{name: 'editsemillero', params: { id: item.id_semillero}}"
-                          class="btn btn-primary"
-                        >Editar</router-link>
-                        <button class="btn btn-danger" @click="deleteSemillero(item.id_semillero)">Eliminar</button>
+                          class="btn btn-primary">
+                          Editar
+                          </router-link>
+                        <button class="btn btn-danger" @click="deleteSemillero(item.id_semillero)">Eliminar</button>                      
+                        <router-link
+                        :to="{name: 'periodos', params: { id: item.id_semillero}}"
+                        class="btn btn-warning">
+                        Periodos
+                        </router-link>                        
                       </div>
                     </td>
                   </tr>
@@ -78,7 +84,7 @@ export default {
     ApiService.get("/semillero").then(response => {
       this.semilleros = response.data;
     })
-    .then(ress => $("#example2").DataTable())
+    .then(ress => $("#semilleros").DataTable())
   },
   methods: {
     deleteSemillero(id) {
