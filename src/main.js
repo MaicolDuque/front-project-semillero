@@ -12,30 +12,22 @@ import Toasted from 'vue-toasted'
 import VueSweetalert2 from 'vue-sweetalert2';
 
 import Vuelidate from 'vuelidate'
-
 import VuePaginate from 'vue-paginate';
-
 // Importa VeeValidate y el Validator
 import { ValidationProvider, extend } from 'vee-validate';
 import { required } from 'vee-validate/dist/rules';
-
-
 // Import Vue and vue2-collapse
-
 import VueCollapse from 'vue2-collapse'
-
-
-Vue.use(Vuelidate)
-
-
-// Loading the plugin into the Vue.
-Vue.use(VueCollapse);
-
-
+import Multiselect from 'vue-multiselect'  //Select with search
 
 //Import API for setter anf getter localstorage
 import ApiService from "./services/api.service";
 import { TokenService } from './services/storage.service'
+
+Vue.component('multiselect', Multiselect)
+Vue.use(Vuelidate)
+// Loading the plugin into the Vue.
+Vue.use(VueCollapse);
 
 // Indicar uso de idioma español
 extend('required', {

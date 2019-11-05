@@ -16,6 +16,7 @@
     "vee-validate": "^3.0.11",
     "vue": "^2.6.10",
     "vue-axios": "^2.1.4",
+    "vue-multiselect": "^2.1.6",
     "vue-paginate": "^3.6.0",
     "vue-router": "^3.0.3",
     "vue-social-auth": "^1.4.1",

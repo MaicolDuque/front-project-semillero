@@ -9,79 +9,49 @@
       </div>
     </nav>
     <section class="content" >
-      <div style="width: 80%; margin: 0 auto;">
-        <form role="form">
-          <div class="card-body">
-            <div class="form-group">
-              <label for="exampleInputEmail1">Nombre</label>              
-              <input type="text" class="form-control" v-model="grupo.grupo" placeholder="Nombre grupo" />
-            </div>
-            <div class="form-group">
-              <label>Código colciencias</label>
-              <input type="text" class="form-control" v-model="grupo.cod_colciencias" />
-            </div>
-            <div class="form-group">
-              <label>Vínculo</label>
-              <input type="text" class="form-control" v-model="grupo.vinculo" />
-            </div>
-            <div class="form-group">
-              <label>Categoria</label>
-              <select class="form-control " required="required" style="width: 100%;" v-model="grupo.id_categoria">                
-                <option v-for="option in categorias" v-bind:key="option.id_categoria" :value="option.id_categoria">
-                  {{ option.categoria }}
-                </option>
-              </select>
-            </div>
-             <div class="form-group">
-              <label>Facultad</label>
-              <select class="form-control " style="width: 100%;" v-model="grupo.id_facultad">                
-                <option v-for="facultad in facultades" v-bind:key="facultad.id_facultad" :value="facultad.id_facultad">
-                  {{ facultad.facultad }}
-                </option>
-              </select>
-            </div>
-           
-          </div>
-          <!-- /.card-body -->
-
-          <div class="card-footer">
-            <button type="submit" @click="updateGrupo" class="btn btn-primary">Actualizar</button>
-          </div>
-        </form>       
+      <div style="width: 50%; margin: 0 auto;">        
+        <div class="card card-success">
+          <form role="form">
+            <div class="card-body">             
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Nombre</label>              
+                    <input type="text" class="form-control" v-model="grupo.grupo" placeholder="Nombre grupo" />
+                  </div>
+                  <div class="form-group">
+                    <label>Código colciencias</label>
+                    <input type="text" class="form-control" v-model="grupo.cod_colciencias" />
+                  </div>
+                  <div class="form-group">
+                    <label>Vínculo</label>
+                    <input type="text" class="form-control" v-model="grupo.vinculo" />
+                  </div>
+                  <div class="form-group">
+                    <label>Categoria</label>
+                    <select class="form-control " required="required" style="width: 100%;" v-model="grupo.id_categoria">                
+                      <option v-for="option in categorias" v-bind:key="option.id_categoria" :value="option.id_categoria">
+                        {{ option.categoria }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Facultad</label>
+                    <select class="form-control " style="width: 100%;" v-model="grupo.id_facultad">                
+                      <option v-for="facultad in facultades" v-bind:key="facultad.id_facultad" :value="facultad.id_facultad">
+                        {{ facultad.facultad }}
+                      </option>
+                    </select>
+                  </div>
+                
+                </div>
+                <div class="card-footer">
+                  <button type="submit" @click="updateGrupo" class="btn btn-primary">Actualizar</button>
+                </div>
+            </div>           
+          </form> 
+        </div>     
       </div>
     </section>
-    <!-- <div class="row">
-      <div class="col-md-6">
-        <form @submit.prevent="updateGrupo">
-          <div class="form-group">
-            <label>Nombre</label>
-            <input type="text" class="form-control" v-model="grupo.grupo" />
-          </div>
-          <div class="form-group">
-            <label>categoria</label>
-            <br />
-            <select @change="onChange($event)">
-              <option disabled value>Please select one</option>
-              <option v-for="option in options" v-bind:key="option.value">{{ option.text }}</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>cod_colciencias</label>
-            <input type="text" class="form-control" v-model="grupo.cod_colciencias" />
-          </div>
-          <div class="form-group">
-            <label>Facultad</label>
-            <br />
-            <select @change="selectChange">
-              <option disabled value>Por favor,Seleccione uno</option>
-              <option v-for="item in facultades" v-bind:key="item.value">{{ item.facultad }}</option>
-            </select>
-          </div>
-          <button type="submit" class="btn btn-primary">Actualizar</button>
-        </form>
-        <pre>{{$data}}</pre>
-      </div>
-    </div> -->
   </div>
 </template>
 
