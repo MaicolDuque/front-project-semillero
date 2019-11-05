@@ -17,7 +17,7 @@
           <div class="card">           
             <!-- /.card-header -->
             <div class="card-body">
-              <table id="example2" class="table table-bordered table-hover">
+              <table id="tblGrupos" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
                 <thead>
                   <tr>
                     <th>Nombre</th>
@@ -78,7 +78,11 @@ export default {
     .then(response => {
       this.grupos = response.data;  
     })
-    .then(res => $("#example2").DataTable());
+    .then(res => {
+      $("#tblGrupos").DataTable({
+        responsive: true
+      })
+    });
   },
   mounted: function() {
     

@@ -18,7 +18,7 @@
             
             <!-- /.card-header -->
             <div class="card-body">
-              <table id="example2" class="table table-bordered table-hover">
+              <table id="example2" class="table table-bordered table-hover" style="width: 100%">
                 <thead>
                 <tr>
                   <th>Documento</th>
@@ -28,7 +28,7 @@
                   <th>Estado</th>
                   <th>Email</th>
                   <th>Tipo usuario</th>
-                  <th>Rol</th>
+                  
                   <th>Grupo</th>
                   <th>Acciones</th>
                 </tr>
@@ -42,7 +42,7 @@
                     <td>{{ item.estado }}</td>
                     <td>{{ item.email }}</td>
                     <td>{{ item.tipo_usuario }}</td>
-                    <td>{{ item.rol }}</td>
+                    
                     <td>{{ item.grupo }}</td>
                     <td>
                       <div class="btn-group" role="group">
@@ -79,7 +79,9 @@ export default {
     .then(response => {
       this.usuarios = response.data
     })
-    .then(ress => $("#example2").DataTable())
+    .then(ress => $("#example2").DataTable({
+      responsive: true
+    }))
   },
   methods: {
     deleteDirector(id) {

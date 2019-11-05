@@ -18,7 +18,7 @@
             
             <!-- /.card-header -->
             <div class="card-body">
-              <table id="coordinadores" class="table table-bordered table-hover">
+              <table id="coordinadores" class="table table-bordered table-hover" style="width: 100%">
                 <thead>
                 <tr>
                   <th>Documento</th>
@@ -79,7 +79,9 @@ export default {
     .then(response => {
       this.usuarios = response.data
     })
-    .then(ress => $("#coordinadores").DataTable())
+    .then(ress => $("#coordinadores").DataTable({
+      responsive: true
+    }))
   },
   methods: {
     deleteDirector(id) {

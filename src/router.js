@@ -51,7 +51,7 @@ const router = new Router({
     { path: '/editGrupo/:id', name: 'editgrupo', component: EditGrupo },    
     { path: '/directores', name: 'directores', component: Directores },
     { path: '/adduserdirector', name: 'adduserDirector', component: AddUserDirector },
-    { path: '/editdirector', name: 'editdirector', component: EditDirector },
+    { path: '/editdirector/:id', name: 'editdirector', component: EditDirector },
     { path: '/semilleros', name: 'semilleros', component: Semilleros },
     { path: '/addsemillero', name: 'addsemillero', component: AddSemillero },
     { path: '/editsemillero', name: 'editsemillero', component: EditSemillero },
