@@ -27,7 +27,7 @@
             
             <!-- /.card-header -->
             <div class="card-body">
-              <table id="semilleros" class="table table-bordered table-hover">
+              <table id="semilleros" class="table table-bordered table-hover dt-responsive nowrap" style="width: 100%">
                 <thead>
                   <tr>
                     <th>Nombre</th>
@@ -84,7 +84,9 @@ export default {
     ApiService.get("/semillero").then(response => {
       this.semilleros = response.data;
     })
-    .then(ress => $("#semilleros").DataTable())
+    .then(ress => $("#semilleros").DataTable({
+      responsive: true
+    }))
   },
   methods: {
     deleteSemillero(id) {
