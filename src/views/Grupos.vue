@@ -36,18 +36,14 @@
                     <td>{{ item.categoria }}</td>
                     <td>{{ item.cod_colciencias }}</td>
                     <td>{{ item.facultad }}</td>
-                    <td>
+                    <td style="text-align: center">
                       <div class="btn-group" role="group">
                         <router-link
                           :to="{name: 'editgrupo', params: { id: item.id_grupo}}"
                           class="btn btn-primary"
                         >Editar</router-link>
-
-                        <button class="btn btn-danger" @click="deleteGrupo(item.id_grupo)">Eliminar</button>
-                        <router-link
-                          :to="{name: 'asignargrupo', params: { id_grupo: item.id_grupo}}"
-                          class="btn btn-primary"
-                        >Asignar</router-link>
+                        
+                        <button class="btn btn-danger" @click="deleteGrupo(item.id_grupo)">Eliminar</button>                       
                       </div>
                     </td>
                   </tr>
