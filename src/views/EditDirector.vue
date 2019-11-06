@@ -28,19 +28,27 @@
                 </div>
                 <div class="form-group">
                   <label>Correo</label>
-                  <input type="text" class="form-control" v-model="director.telefono" />
-                </div>
-                <div class="form-group">
-                  <label>Telefono</label>
                   <input type="text" class="form-control" v-model="director.email" />
                 </div>
                 <div class="form-group">
-                  <label>Usuario</label>
-                  <input type="text" class="form-control" v-model="director.id_tipo_usuario" />
+                  <label>Telefono</label>
+                  <input type="text" class="form-control" v-model="director.telefono" />
                 </div>
                 <div class="form-group">
-                  <label>Rol</label>
-                  <input type="text" class="form-control" v-model="director.id_rol" />
+                  <label>Tipo usuario:</label>
+                  <select class="form-control " style="width: 100%;" v-model="director.id_tipo_usuario">                
+                    <option v-for="tipo in tipoUsuarios" :key="tipo.id_tipo_usuario" :value="tipo.id_tipo_usuario">
+                      {{ tipo.tipo_usuario }}
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Rol:</label>
+                  <select class="form-control " style="width: 100%;" v-model="director.id_rol">                
+                    <option v-for="rol in roles" :key="rol.id_rol" :value="rol.id_rol">
+                      {{ rol.rol }}
+                    </option>
+                  </select>
                 </div>
                 <div class="form-group">
                   <label>Grupo</label>
@@ -69,7 +77,9 @@ export default {
   data() {
     return {
       director: [],
-      grupos: []
+      grupos: [],
+      tipoUsuarios: [],
+      roles: []
 
     };
   },
@@ -83,21 +93,43 @@ export default {
     .then(response => {
       this.grupos = response.data;  
     })
+
+    ApiService.get("/tipousuario")
+      .then(response => {
+        this.tipoUsuarios = response.data       
+    });
+
+    ApiService.get("/rol")
+      .then(response => {
+        this.roles = response.data       
+    });
   },
   methods: {
     updateGrupo() {
       //event.preventDefault();
-      this.axios
-        .patch(
-          `http://127.0.0.1:8000/api/usuario/${this.$route.params.id}`,
-          this.director
-        )
+      console.log(this.director)
+      ApiService.put(`usuario/${this.$route.params.id}`, this.objectDirector)
         .then(response => {
-          this.$router.push({ name: "home" });
+          this.$router.push({ name: "directores" });
         })
-        .catch(function(response) {
+        .catch(function(response) {          
           alert("No se pudo crear el grupo");
         });
+    }
+  },
+
+  computed: {
+    objectDirector(){      
+        return  JSON.parse(`{
+          "documento":        "${this.director.documento}",
+          "nombre_usuario":   "${this.director.nombre_usuario}",
+          "estado":           ${this.director.estado},
+          "apellido_usuario": "${this.director.apellido_usuario}",
+          "telefono":         "${this.director.telefono}",
+          "email":            "${this.director.email}",
+          "id_rol":           ${this.director.id_rol},
+          "id_tipo_usuario":  ${this.director.id_tipo_usuario}
+        }`)
     }
   }
 };
