@@ -11,7 +11,6 @@
     <div class="row">
       <div class="col-sm-8 offset-sm-2">
         <div>
-          <!-- <h2>Nuevo Grupo de Investigación</h2> -->
           <form @submit.prevent="handleSubmit">
             <div class="form-group">
               <label for="grupo">Grupo</label>
@@ -65,6 +64,22 @@
               >El campo Codigo de cod_colciencias es requerido</div>
             </div>
             <div class="form-group">
+              <label for="cod_colciencias">Codigo cod_colciencias</label>
+              <input
+                type="text"
+                v-model="grupo.vinculo"
+                id="vinculo"
+                name="vinculo"
+                class="form-control"
+                placeholder="Vinculo Colciencias"
+                :class="{ 'is-invalid': submitted && $v.grupo.vinculo.$error }"
+              />
+              <div
+                v-if="submitted && !$v.grupo.vinculo.required"
+                class="invalid-feedback"
+              >El campo vinculo cod_colciencias es requerido</div>
+            </div>
+            <div class="form-group">
               <label for="facultad">Facultad</label>
               <br />
               <select class="custom-select browser-default" @change="selectChangeFacultad" required>
@@ -78,10 +93,6 @@
                   :class="{ 'is-invalid': submitted && $v.grupo.id_facultad.$error }"
                 >{{ item.facultad }}</option>
               </select>
-              <!-- <div
-                  class="invalid-feedback"
-                  v-if="submitted && !$v.grupo.facultad.required "
-              >la seleccion facultad es requerido</div>-->
             </div>
             <br />
             <div class="form-group">
@@ -111,7 +122,8 @@ export default {
         grupo: "",
         id_categoria: "",
         cod_colciencias: "",
-        id_facultad: ""
+        id_facultad: "",
+        vinculo: ""
       },
       submitted: false
     };
@@ -131,18 +143,31 @@ export default {
   //Reglas de validacion para VueValidate
   validations: {
     grupo: {
-      grupo: { required },
+      grupo: { required, min: 3 },
       id_categoria: { required },
       cod_colciencias: { required },
-      id_facultad: { required }
+      id_facultad: { required },
+      vinculo: { required }
     }
   },
   methods: {
+    /* Despliega mensaje de exito al guardar un registro */
+    showAlert() {
+      this.$swal({
+        type: "success",
+        text: "Registro creado con exito",
+        timer: 2000,
+        showCancelButton: false,
+        showConfirmButton: false
+      });
+    },
+    /* Obtiene las categorias que se cargan en un <select> */
     getCategorias() {
       ApiService.get("/categoria").then(response => {
         this.categorias = response.data;
       });
     },
+    /* Obtiene las Facultades que se cargan en un <select> */
     getFacultades() {
       ApiService.get("/facultad").then(response => {
         this.facultades = response.data;
@@ -153,7 +178,7 @@ export default {
         .then(response => this.$router.push({ name: "grupos" }))
         .catch(error => console.log(error))
         .finally(() => (this.loading = false));
-      this.appear();
+      this.showAlert();
     },
     /*
     Cuendo se seleciona una opción del elemento <select></select>
@@ -189,19 +214,8 @@ export default {
       if (this.$v.$invalid) {
         return;
       }
-
       this.addGrupo();
       /* alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.grupo)); */
-    },
-    appear() {
-      this.$toasted.show("Agregado correctamente", {
-        //theme of the toast you prefer
-        theme: "bubble",
-        //position of the toast container
-        position: "top-right",
-        //display time of the toast
-        duration: 2000
-      });
     }
   }
 };

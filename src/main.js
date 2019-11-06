@@ -10,6 +10,7 @@ import VueSocialauth from 'vue-social-auth'
 import Toasted from 'vue-toasted'
 //Dependencia ventanas emergentes notificaciones
 import VueSweetalert2 from 'vue-sweetalert2';
+//
 
 import Vuelidate from 'vuelidate'
 import VuePaginate from 'vue-paginate';
