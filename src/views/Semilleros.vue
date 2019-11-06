@@ -33,8 +33,7 @@
                     <th>Nombre</th>
                     <th>Objetivo</th>
                     <th>descripcion</th>
-                    <th>grupo</th>
-                    <th>facultad</th>
+                    <th>grupo</th>                    
                     <th>Acciones</th>
                   </tr>
                 </thead>                
@@ -43,8 +42,7 @@
                     <td>{{ item.semillero }}</td>
                     <td>{{ item.objetivo }}</td>
                     <td>{{ item.descripcion }}</td>
-                    <td>{{ item.grupo }}</td>
-                    <td>{{ item.facultad }}</td>
+                    <td>{{ item.grupo }}</td>                    
                     <td>
                       <div class="btn-group" role="group">
                         <router-link

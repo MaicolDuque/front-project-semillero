@@ -89,9 +89,10 @@ export default {
         this.director = response.data.filter(res => res.id_usuario == this.$route.params.id)[0];        
       });
     
-    ApiService.get("/grupo")
+    ApiService.get("/grupo/disponible")
     .then(response => {
       this.grupos = response.data;  
+      this.grupos.push({grupo: this.director.grupo, id_grupo: this.director.id_grupo})
     })
 
     ApiService.get("/tipousuario")
@@ -108,13 +109,15 @@ export default {
     updateGrupo() {
       //event.preventDefault();
       console.log(this.director)
-      ApiService.put(`usuario/${this.$route.params.id}`, this.objectDirector)
-        .then(response => {
-          this.$router.push({ name: "directores" });
-        })
+      ApiService.put(`usuario/${this.$route.params.id}`, this.objectDirector)        
         .catch(function(response) {          
           alert("No se pudo crear el grupo");
         });
+
+      ApiService.put(`director/${this.$route.params.id}`, {id_grupo: this.director.id_grupo})
+        .then(response => {
+          this.$router.push({ name: "directores" });
+        })
     }
   },
 
