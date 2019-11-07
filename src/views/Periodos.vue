@@ -4,37 +4,52 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Periodos académicos - {{nombre}}</h1>
+            <h1>Periodos académicos - {{semillero.semillero}}</h1>
           </div>         
         </div>
       </div>
     </section>
     <section class="content">
       <div class="row">
-        <div class="col-lg-4 col-sm-6 ">
+        <div class="col-lg-5 col-sm-6 ">
           <div class="card">            
             <!-- /.card-header -->
-            <div class="card-body">
-              <table id="example2" class="table table-bordered table-hover">
+            <div class="card-body" >
+              <table id="periodos" class="table table-bordered table-hover dt-responsive nowrap" style="width: 100%; text-align: center;max-width: 100%">
                 <thead>
                   <tr>
-                    <th>Periodo</th>                    
+                    <th>Periodos</th>    
+                    <th>Acciones</th>                    
                   </tr>
                 </thead>                
-                 <tbody>
-                  <tr>
-                    <td>2015-1</td>
-                  </tr>
-                  <tr>
-                    <td>2015-2</td>
-                  </tr>
+                 <tbody >
+                  <tr v-for="periodo in periodos" :key="periodo.id_periodo">
+                    <td style="width: 70%">
+                      <div style="cursor:pointer">
+                        {{periodo.periodo}}
+                      </div>
+                    </td>  
+                    <td style="width: 30%">
+                      <div class="btn-group" role="group">
+                        <router-link
+                          :to="{name: 'edit-periodo', params: { id: periodo.id_periodo}}"
+                          class="btn btn-primary"
+                        >Editar</router-link>
+                        <button
+                          class="btn btn-danger"
+                          @click="deletePeriodo(periodo.id_periodo)"
+                        >Eliminar</button>
+                      </div>
+                    </td>
+                  </tr>                  
                 </tbody>
               </table>
             </div>
             <!-- /.card-body -->
           </div>
-        </div>        
-        <div class="col-lg-8 col-sm-6 ">
+        </div>  
+
+        <div class="col-lg-7 col-sm-6 ">
           <div class="card card-primary card-outline">
             <div class="card-header p-0 pt-1 border-bottom-0">
               <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
@@ -66,16 +81,40 @@
             <!-- /.card -->
           </div>
         </div>
+
       </div>
     </section>
   </div>
 </template>
 
 <script>
+import ApiService from "../services/api.service";
 export default {
   data(){
     return {
-      nombre: "Semillero 1"
+      nombre: "Semillero 1",
+      periodos: [],
+      semillero: {}
+    }
+  },
+
+  created(){
+    ApiService.get("/periodo")
+      .then(response => {
+        this.periodos = response.data;
+      })
+      .then(ress => $("#periodos").DataTable({
+        responsive: true
+      }))
+
+    ApiService.get(`/semillero/${this.$route.params.id}`).then(response => {
+      this.semillero = response.data[0];
+    })
+  },
+
+  methods: {
+    deletePeriodo(id){
+      alert(id)
     }
   }
 }
