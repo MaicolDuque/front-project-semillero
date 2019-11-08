@@ -1,13 +1,19 @@
 <template>
-
   <div style="padding:25px">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="collapse navbar-collapse">
+        <div class="navbar-nav">
+          <router-link to="/addusercoordinador" class="nav-item nav-link">Agregar Coordinador</router-link>
+        </div>
+      </div>
+    </nav>
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1>Coordinadores</h1>
-          </div>         
+          </div>
         </div>
       </div>
     </section>
@@ -15,24 +21,27 @@
       <div class="row">
         <div class="col-12">
           <div class="card">
-            
             <!-- /.card-header -->
             <div class="card-body">
-              <table id="coordinadores" class="table table-bordered table-hover" style="width: 100%">
+              <table
+                id="coordinadores"
+                class="table table-bordered table-hover"
+                style="width: 100%"
+              >
                 <thead>
-                <tr>
-                  <th>Documento</th>
-                  <th>Nombre</th>
-                  <th>Apellido</th>
-                  <th>Telefono</th>
-                  <th>Estado</th>
-                  <th>Email</th>
-                  <th>Tipo usuario</th>
-                  <th>Rol</th>
-                  <th>Semillero</th>
-                  <th>Acciones</th>
-                </tr>
-                </thead>                
+                  <tr>
+                    <th>Documento</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Telefono</th>
+                    <th>Estado</th>
+                    <th>Email</th>
+                    <th>Tipo usuario</th>
+                    <th>Rol</th>
+                    <th>Semillero</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
                 <tbody>
                   <tr v-for="item in usuarios" :key="item.id_usuario">
                     <td>{{ item.documento }}</td>
@@ -50,7 +59,10 @@
                           :to="{name: 'editdirector', params: { id: item.id_usuario}}"
                           class="btn btn-primary"
                         >Editar</router-link>
-                        <button class="btn btn-danger" @click="deleteDirector(item.id_usuario)">Eliminar</button>
+                        <button
+                          class="btn btn-danger"
+                          @click="deleteDirector(item.id_usuario)"
+                        >Eliminar</button>
                       </div>
                     </td>
                   </tr>
@@ -62,7 +74,6 @@
         </div>
       </div>
     </section>
-
   </div>
 </template>
 
@@ -76,35 +87,22 @@ export default {
   },
   created() {
     ApiService.get("/usuario/coordinador")
-    .then(response => {
-      this.usuarios = response.data
-    })
-    .then(ress => $("#coordinadores").DataTable({
-      responsive: true
-    }))
+      .then(response => {
+        this.usuarios = response.data;
+      })
+      .then(ress =>
+        $("#coordinadores").DataTable({
+          responsive: true
+        })
+      );
   },
   methods: {
     deleteDirector(id) {
       ApiService.delete(`/usuario/${id}`).then(response => {
         let i = this.usuarios.map(item => item.id_usuario).indexOf(id); // find index of your object
         this.usuarios.splice(i, 1);
-        this.appear();
       });
     }
-  },
-
-  computed: {
-    
-  },
-  appear() {
-    this.$toasted.show("Eliminado correctamente", {
-      //theme of the toast you prefer
-      theme: "bubble",
-      //position of the toast container
-      position: "top-right",
-      //display time of the toast
-      duration: 2000
-    });
   }
-}
+};
 </script>

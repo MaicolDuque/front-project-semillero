@@ -1,38 +1,31 @@
 <template>
-
   <div style="padding:25px">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Directores</h1>
-          </div>         
-        </div>
-      </div>
-    </section>
+    <h3 class="text-center">Directores</h3>
+    <br />
+    <nav class="nav justify-content-end grey lighten-4 py-4">
+      <router-link style="color: #008000" to="/adduserdirector" tag="button">Agregar</router-link>
+    </nav>
     <section class="content">
       <div class="row">
         <div class="col-12">
           <div class="card">
-            
             <!-- /.card-header -->
             <div class="card-body">
               <table id="example2" class="table table-bordered table-hover" style="width: 100%">
                 <thead>
-                <tr>
-                  <th>Documento</th>
-                  <th>Nombre</th>
-                  <th>Apellido</th>
-                  <th>Telefono</th>
-                  <th>Estado</th>
-                  <th>Email</th>
-                  <th>Tipo usuario</th>
-                  
-                  <th>Grupo</th>
-                  <th>Acciones</th>
-                </tr>
-                </thead>                
+                  <tr>
+                    <th>Documento</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Telefono</th>
+                    <th>Estado</th>
+                    <th>Email</th>
+                    <th>Tipo usuario</th>
+
+                    <th>Grupo</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
                 <tbody>
                   <tr v-for="item in usuarios" :key="item.id_usuario">
                     <td>{{ item.documento }}</td>
@@ -42,7 +35,7 @@
                     <td>{{ item.estado }}</td>
                     <td>{{ item.email }}</td>
                     <td>{{ item.tipo_usuario }}</td>
-                    
+
                     <td>{{ item.grupo }}</td>
                     <td>
                       <div class="btn-group" role="group">
@@ -50,7 +43,10 @@
                           :to="{name: 'editdirector', params: { id: item.id_usuario}}"
                           class="btn btn-primary"
                         >Editar</router-link>
-                        <button class="btn btn-danger" @click="deleteDirector(item.id_usuario)">Eliminar</button>
+                        <button
+                          class="btn btn-danger"
+                          @click="deleteDirector(item.id_usuario)"
+                        >Eliminar</button>
                       </div>
                     </td>
                   </tr>
@@ -62,7 +58,6 @@
         </div>
       </div>
     </section>
-
   </div>
 </template>
 
@@ -76,35 +71,31 @@ export default {
   },
   created() {
     ApiService.get("/usuario/director")
-    .then(response => {
-      this.usuarios = response.data
-    })
-    .then(ress => $("#example2").DataTable({
-      responsive: true
-    }))
+      .then(response => {
+        this.usuarios = response.data;
+      })
+      .then(ress =>
+        $("#example2").DataTable({
+          responsive: true
+        })
+      );
   },
   methods: {
+    showAlert() {
+      this.$swal({
+        type: "success",
+        text: "Registro creado con exito",
+        timer: 2000,
+        showCancelButton: false,
+        showConfirmButton: false
+      });
+    },
     deleteDirector(id) {
       ApiService.delete(`/usuario/${id}`).then(response => {
         let i = this.usuarios.map(item => item.id_usuario).indexOf(id); // find index of your object
         this.usuarios.splice(i, 1);
-        this.appear();
       });
     }
-  },
-
-  computed: {
-    
-  },
-  appear() {
-    this.$toasted.show("Eliminado correctamente", {
-      //theme of the toast you prefer
-      theme: "bubble",
-      //position of the toast container
-      position: "top-right",
-      //display time of the toast
-      duration: 2000
-    });
   }
-}
+};
 </script>

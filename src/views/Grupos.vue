@@ -1,23 +1,21 @@
 <template>
   <div style="padding:25px">
-    
     <h3 class="text-center">Grupos de investigación</h3>
     <br />
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="collapse navbar-collapse">
-        <div class="navbar-nav">
-          <router-link to="/" class="nav-item nav-link">Home</router-link>
-          <router-link to="/addGrupos" class="nav-item nav-link">Agregar</router-link>
-        </div>
-      </div>
+    <nav class="nav justify-content-end grey lighten-4 py-4">
+      <router-link style="color: #008000" to="/addGrupos" tag="button">Agregar</router-link>
     </nav>
     <section class="content">
       <div class="row">
         <div class="col-12">
-          <div class="card">           
+          <div class="card">
             <!-- /.card-header -->
             <div class="card-body">
-              <table id="tblGrupos" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+              <table
+                id="tblGrupos"
+                class="table table-striped table-bordered dt-responsive nowrap"
+                style="width:100%"
+              >
                 <thead>
                   <tr>
                     <th>Nombre</th>
@@ -28,7 +26,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="item in searchGrupo" :key="item.id_grupo">
+                  <tr v-for="item in grupos" :key="item.id_grupo">
                     <td>{{ item.grupo }}</td>
                     <td>{{ item.categoria }}</td>
                     <td>{{ item.cod_colciencias }}</td>
@@ -39,72 +37,65 @@
                           :to="{name: 'editgrupo', params: { id: item.id_grupo}}"
                           class="btn btn-primary"
                         >Editar</router-link>
-                        
-                        <button class="btn btn-danger" @click="deleteGrupo(item.id_grupo)">Eliminar</button>                       
+
+                        <button class="btn btn-danger" @click="deleteGrupo(item.id_grupo)">Eliminar</button>
                       </div>
                     </td>
                   </tr>
                 </tbody>
-               
               </table>
             </div>
             <!-- /.card-body -->
           </div>
         </div>
       </div>
-    </section> 
+    </section>
   </div>
 </template>
 
 <script>
 import ApiService from "../services/api.service";
+import Swal from "sweetalert2/dist/sweetalert2.all.min.js";
 export default {
   data() {
     return {
-      options: [
-        { text: "Activo", value: "1" },
-        { text: "Inactivo", value: "0" }
-      ],
-      grupos: [],
-      name: ""
+      grupos: []
     };
   },
   created() {
     ApiService.get("/grupo")
-    .then(response => {
-      this.grupos = response.data;  
-    })
-    .then(res => {
-      $("#tblGrupos").DataTable({
-        responsive: true
+      .then(response => {
+        this.grupos = response.data;
       })
-    });
+      .then(res => {
+        $("#tblGrupos").DataTable({
+          responsive: true
+        });
+      });
   },
-  mounted: function() {
-    
-  },
+  mounted: function() {},
   methods: {
     deleteGrupo(id) {
-      ApiService.delete(`/grupo/${id}`).then(response => {
-        let i = this.grupos.map(item => item.id_grupo).indexOf(id); // find index of your object
-        this.grupos.splice(i, 1);
-        this.appear();
+      this.$swal({
+        title: "Estas seguro de eliminar el registro?",
+        text: "You won't be able to revert this!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Si, Eliminar!",
+        cancelButtonText: "Cancelar",
+        showCloseButton: true,
+        showLoaderOnConfirm: true
+      }).then(result => {
+        if (result.value) {
+          ApiService.delete(`/grupo/${id}`).then(response => {
+            let i = this.grupos.map(item => item.id_grupo).indexOf(id); // find index of your object
+            this.grupos.splice(i, 1);
+          });
+          this.$swal("Registro Eliminado");
+        } else {
+          this.$swal(" Accion Cancelada");
+        }
       });
-    },
-    appear() {
-      this.$toasted.show("Eliminado correctamente", {
-        //theme of the toast you prefer
-        theme: "bubble",
-        //position of the toast container
-        position: "top-right",
-        //display time of the toast
-        duration: 2000
-      });
-    }
-  },
-  computed: {
-    searchGrupo: function() {
-      return this.grupos.filter(item => item.grupo.includes(this.name));
     }
   }
 };
