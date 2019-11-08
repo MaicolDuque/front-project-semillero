@@ -3,7 +3,7 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-      <img        
+      <img
         src="/img/AdminLTELogo.png"
         alt="AdminLTE Logo"
         class="brand-image img-circle elevation-3"
@@ -17,7 +17,12 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img id="imageUser" src="img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image" />
+          <img
+            id="imageUser"
+            src="img/user2-160x160.jpg"
+            class="img-circle elevation-2"
+            alt="User Image"
+          />
         </div>
         <div class="info">
           <a href="#" id="nameUser" class="d-block">Alexander Pierce</a>
@@ -40,28 +45,35 @@
           </li>
           <li class="nav-item">
             <router-link to="/grupos" class="nav-link">
-             <i class="nav-icon fas fa-users"></i>
+              <i class="nav-icon fas fa-users"></i>
               Grupos de investigación
             </router-link>
-          </li> 
+          </li>
 
           <li class="nav-item">
-            <router-link to="/directores" class="nav-link">              
+            <router-link to="/directores" class="nav-link">
               <i class="nav-icon fas fa-user-tie"></i>
               Directores
             </router-link>
-          </li>  
+          </li>
           <li class="nav-item">
-            <router-link to="/coordinadores" class="nav-link">                            
+            <router-link to="/coordinadores" class="nav-link">
               <i class="nav-icon fas fa-user"></i>
               Coordinadores
             </router-link>
           </li>
 
           <li class="nav-item">
-            <router-link to="/semilleros" class="nav-link">                            
+            <router-link to="/semilleros" class="nav-link">
               <i class="nav-icon fas fa-layer-group"></i>
               Semilleros
+            </router-link>
+          </li>
+
+          <li class="nav-item">
+            <router-link to="/grupos_visitante" class="nav-link">
+              <i class="nav-icon far fa-image"></i>
+              Visitante
             </router-link>
           </li>
 
@@ -75,7 +87,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <router-link to="/Grupos" class="nav-link">                  
+                <router-link to="/Grupos" class="nav-link">
                   <i class="nav-icon fas fa-users"></i>
                   Grupos de investigación
                 </router-link>
@@ -129,7 +141,7 @@
                 </a>
               </li>
             </ul>
-          </li>         
+          </li>
           <!--  -->
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
@@ -524,10 +536,10 @@
 <script>
 export default {
   mounted: () => {
-    if(localStorage.user) {
-      let user = JSON.parse(localStorage.user)      
-      $("#nameUser").text(user.nombre_usuario)
-      $('#imageUser').attr('src',user.imagen);
+    if (localStorage.user) {
+      let user = JSON.parse(localStorage.user);
+      $("#nameUser").text(user.nombre_usuario);
+      $("#imageUser").attr("src", user.imagen);
     }
   }
 };

@@ -1,107 +1,110 @@
 <template>
-  <div class="container">
-    <h3 class="text-center">Agregar Grupo</h3>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="collapse navbar-collapse">
-        <div class="navbar-nav">
-          <router-link to="/grupos" class="nav-item nav-link">Grupos</router-link>
+  <div>
+    <div class="container">
+      <h3 class="text-center">Agregar Grupo</h3>
+      <nav class="nav grey lighten-4 py-4">
+        <router-link to="/grupos" class="nav-item nav-link">Grupos</router-link>
+      </nav>
+      <section class="content">
+        <div style="width: 50%; margin: 0 auto;">
+          <div class="card card-success">
+            <form @submit.prevent="handleSubmit">
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="grupo">Grupo</label>
+                  <input
+                    type="text"
+                    v-model="grupo.grupo"
+                    id="grupo"
+                    name="grupo"
+                    placeholder="Nombre"
+                    class="form-control"
+                    :class="{ 'is-invalid': submitted && $v.grupo.grupo.$error }"
+                  />
+                  <div
+                    v-if="submitted && !$v.grupo.grupo.required"
+                    class="invalid-feedback"
+                  >El campo grupo es requerido</div>
+                </div>
+                <div class="form-group">
+                  <label for="facultad">Categoria</label>
+                  <br />
+                  <select
+                    class="custom-select browser-default"
+                    @change="selectChangeCategoria"
+                    required
+                  >
+                    <option value>Por favor seleccione un Elemento</option>
+                    <option
+                      v-for="item in categorias"
+                      v-bind:key="item.value"
+                      id="id_categoria"
+                      name="id_categoria"
+                      class="form-control"
+                      :class="{ 'is-invalid': submitted && $v.grupo.id_categoria.$error }"
+                    >{{ item.categoria }}</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="cod_colciencias">Codigo cod_colciencias</label>
+                  <input
+                    type="text"
+                    v-model="grupo.cod_colciencias"
+                    id="cod_colciencias"
+                    name="cod_colciencias"
+                    class="form-control"
+                    placeholder="Codigo Colciencias"
+                    :class="{ 'is-invalid': submitted && $v.grupo.cod_colciencias.$error }"
+                  />
+                  <div
+                    v-if="submitted && !$v.grupo.cod_colciencias.required"
+                    class="invalid-feedback"
+                  >El campo Codigo de cod_colciencias es requerido</div>
+                </div>
+                <div class="form-group">
+                  <label for="cod_colciencias">Codigo cod_colciencias</label>
+                  <input
+                    type="text"
+                    v-model="grupo.vinculo"
+                    id="vinculo"
+                    name="vinculo"
+                    class="form-control"
+                    placeholder="Vinculo Colciencias"
+                    :class="{ 'is-invalid': submitted && $v.grupo.vinculo.$error }"
+                  />
+                  <div
+                    v-if="submitted && !$v.grupo.vinculo.required"
+                    class="invalid-feedback"
+                  >El campo vinculo cod_colciencias es requerido</div>
+                </div>
+                <div class="form-group">
+                  <label for="facultad">Facultad</label>
+                  <br />
+                  <select
+                    class="custom-select browser-default"
+                    @change="selectChangeFacultad"
+                    required
+                  >
+                    <option value>Por favor seleccione un Elemento</option>
+                    <option
+                      v-for="item in facultades"
+                      v-bind:key="item.value"
+                      id="id_facultad"
+                      name="id_facultad"
+                      class="form-control"
+                      :class="{ 'is-invalid': submitted && $v.grupo.id_facultad.$error }"
+                    >{{ item.facultad }}</option>
+                  </select>
+                </div>
+                <br />
+                <div class="form-group">
+                  <button class="btn btn-primary">Guardar</button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
-    </nav>
-    <div class="row">
-      <div class="col-sm-8 offset-sm-2">
-        <div>
-          <form @submit.prevent="handleSubmit">
-            <div class="form-group">
-              <label for="grupo">Grupo</label>
-              <input
-                type="text"
-                v-model="grupo.grupo"
-                id="grupo"
-                name="grupo"
-                placeholder="Nombre"
-                class="form-control"
-                :class="{ 'is-invalid': submitted && $v.grupo.grupo.$error }"
-              />
-              <div
-                v-if="submitted && !$v.grupo.grupo.required"
-                class="invalid-feedback"
-              >El campo grupo es requerido</div>
-            </div>
-            <div class="form-group">
-              <label for="facultad">Categoria</label>
-              <br />
-              <select
-                class="custom-select browser-default"
-                @change="selectChangeCategoria"
-                required
-              >
-                <option value>Por favor seleccione un Elemento</option>
-                <option
-                  v-for="item in categorias"
-                  v-bind:key="item.value"
-                  id="id_categoria"
-                  name="id_categoria"
-                  class="form-control"
-                  :class="{ 'is-invalid': submitted && $v.grupo.id_categoria.$error }"
-                >{{ item.categoria }}</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="cod_colciencias">Codigo cod_colciencias</label>
-              <input
-                type="text"
-                v-model="grupo.cod_colciencias"
-                id="cod_colciencias"
-                name="cod_colciencias"
-                class="form-control"
-                placeholder="Codigo Colciencias"
-                :class="{ 'is-invalid': submitted && $v.grupo.cod_colciencias.$error }"
-              />
-              <div
-                v-if="submitted && !$v.grupo.cod_colciencias.required"
-                class="invalid-feedback"
-              >El campo Codigo de cod_colciencias es requerido</div>
-            </div>
-            <div class="form-group">
-              <label for="cod_colciencias">Codigo cod_colciencias</label>
-              <input
-                type="text"
-                v-model="grupo.vinculo"
-                id="vinculo"
-                name="vinculo"
-                class="form-control"
-                placeholder="Vinculo Colciencias"
-                :class="{ 'is-invalid': submitted && $v.grupo.vinculo.$error }"
-              />
-              <div
-                v-if="submitted && !$v.grupo.vinculo.required"
-                class="invalid-feedback"
-              >El campo vinculo cod_colciencias es requerido</div>
-            </div>
-            <div class="form-group">
-              <label for="facultad">Facultad</label>
-              <br />
-              <select class="custom-select browser-default" @change="selectChangeFacultad" required>
-                <option value>Por favor seleccione un Elemento</option>
-                <option
-                  v-for="item in facultades"
-                  v-bind:key="item.value"
-                  id="id_facultad"
-                  name="id_facultad"
-                  class="form-control"
-                  :class="{ 'is-invalid': submitted && $v.grupo.id_facultad.$error }"
-                >{{ item.facultad }}</option>
-              </select>
-            </div>
-            <br />
-            <div class="form-group">
-              <button class="btn btn-primary">Guardar</button>
-            </div>
-          </form>
-          <!-- <pre>{{$data}}</pre> -->
-        </div>
-      </div>
+      </section>
     </div>
   </div>
 </template>
@@ -109,6 +112,7 @@
 <script>
 import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
 import ApiService from "../services/api.service";
+import Swal from "sweetalert2/dist/sweetalert2.all.min.js";
 
 export default {
   data() {

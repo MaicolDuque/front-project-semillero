@@ -49,21 +49,23 @@ const router = new Router({
     { path: '/about', name: 'about', component: About },
     { path: '/grupos', name: 'grupos', component: Grupos },
     { path: '/addGrupos', name: 'addgrupos', component: AddGrupo },
-    { path: '/editGrupo/:id', name: 'editgrupo', component: EditGrupo },    
+    { path: '/editGrupo/:id', name: 'editgrupo', component: EditGrupo },
     { path: '/directores', name: 'directores', component: Directores },
     { path: '/adduserdirector', name: 'adduserDirector', component: AddUserDirector },
     { path: '/editdirector/:id', name: 'editdirector', component: EditDirector },
     { path: '/semilleros', name: 'semilleros', component: Semilleros },
     { path: '/addsemillero', name: 'addsemillero', component: AddSemillero },
-    { path: '/editsemillero', name: 'editsemillero', component: EditSemillero },
+    { path: '/editsemillero/:id', name: 'editsemillero', component: EditSemillero },
     { path: '/coordinadores', name: 'coordinadores', component: Coordinadores },
     /* { path: '/addcoordinador', name: 'addcoordinador', component: AddCoordinador }, */
     { path: '/editcoordiandor', name: 'editcoordinador', component: EditCoordinador },
     { path: '/asignargrupo', name: 'asignargrupo', component: AsignarGrupo },
     { path: '/vistaDirectores', name: 'vistaDirectores', component: vistaDirectores },
     { path: '/asignarsemillero', name: 'asignarsemillero', component: AsignarSemillero },
-    { path: '/periodos/:id', name: 'periodos', component: Periodos },    
-    { path: '/periodos/edit/:id', name: 'edit-periodo', component: EditPeriodo },    
+    { path: '/periodos/:id', name: 'periodos', component: Periodos },
+    { path: '/periodos/edit/:id', name: 'edit-periodo', component: EditPeriodo },
+    { path: '/grupos_visitante', name: 'grupos_visitante', component: VistaGruposVisitante },
+
 
   ]
 })
@@ -71,7 +73,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   const loggedIn = !!TokenService.getToken();
-  
+
   // if (!to.meta.isPublic && !loggedIn) {
   //   return next({ name: 'login' })
   // }

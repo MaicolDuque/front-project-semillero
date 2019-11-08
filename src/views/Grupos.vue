@@ -2,13 +2,8 @@
   <div style="padding:25px">
     <h3 class="text-center">Grupos de investigación</h3>
     <br />
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="collapse navbar-collapse">
-        <div class="navbar-nav">
-          <router-link to="/" class="nav-item nav-link">Home</router-link>
-          <router-link to="/addGrupos" class="nav-item nav-link">Agregar</router-link>
-        </div>
-      </div>
+    <nav class="nav justify-content-end grey lighten-4 py-4">
+      <router-link style="color: #008000" to="/addGrupos" tag="button">Agregar</router-link>
     </nav>
     <section class="content">
       <div class="row">
@@ -42,8 +37,8 @@
                           :to="{name: 'editgrupo', params: { id: item.id_grupo}}"
                           class="btn btn-primary"
                         >Editar</router-link>
-                        
-                        <button class="btn btn-danger" @click="deleteGrupo(item.id_grupo)">Eliminar</button>                       
+
+                        <button class="btn btn-danger" @click="deleteGrupo(item.id_grupo)">Eliminar</button>
                       </div>
                     </td>
                   </tr>
@@ -60,7 +55,7 @@
 
 <script>
 import ApiService from "../services/api.service";
-/* import Swal from "sweetalert2/dist/sweetalert2.all.min.js"; */
+import Swal from "sweetalert2/dist/sweetalert2.all.min.js";
 export default {
   data() {
     return {
@@ -82,12 +77,12 @@ export default {
   methods: {
     deleteGrupo(id) {
       this.$swal({
-        title: "Are you sure?",
+        title: "Estas seguro de eliminar el registro?",
         text: "You won't be able to revert this!",
         type: "warning",
         showCancelButton: true,
-        confirmButtonText: "Yes, delete it!",
-        cancelButtonText: "Cancel",
+        confirmButtonText: "Si, Eliminar!",
+        cancelButtonText: "Cancelar",
         showCloseButton: true,
         showLoaderOnConfirm: true
       }).then(result => {
@@ -95,11 +90,10 @@ export default {
           ApiService.delete(`/grupo/${id}`).then(response => {
             let i = this.grupos.map(item => item.id_grupo).indexOf(id); // find index of your object
             this.grupos.splice(i, 1);
-            this.appear();
           });
-          this.$swal("Deleted", "Successfully deleted", "success");
+          this.$swal("Registro Eliminado");
         } else {
-          this.$swal("Cancelled", "Cancel deletion", "info");
+          this.$swal(" Accion Cancelada");
         }
       });
     }
