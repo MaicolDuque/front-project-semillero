@@ -1,22 +1,10 @@
 <template>
   <div style="padding:25px">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="collapse navbar-collapse">
-        <div class="navbar-nav">
-          <router-link to="/adduserdirector" class="nav-item nav-link">Agregar director</router-link>
-        </div>
-      </div>
+    <h3 class="text-center">Directores</h3>
+    <br />
+    <nav class="nav justify-content-end grey lighten-4 py-4">
+      <router-link style="color: #008000" to="/adduserdirector" tag="button">Agregar</router-link>
     </nav>
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Directores</h1>
-          </div>
-        </div>
-      </div>
-    </section>
     <section class="content">
       <div class="row">
         <div class="col-12">

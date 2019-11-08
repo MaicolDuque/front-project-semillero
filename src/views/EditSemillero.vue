@@ -1,111 +1,150 @@
 <template>
   <div>
     <h3 class="text-center">Editar Semillero</h3>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="collapse navbar-collapse">
-        <div class="navbar-nav">
-          <router-link to="/semilleros" class="nav-item nav-link">Semilleros</router-link>
+    <nav class="nav grey lighten-4 py-4">
+      <router-link to="/semilleros" class="nav-item nav-link">Semilleros</router-link>
+    </nav>
+    <section class="content">
+      <div style="width: 50%; margin: 0 auto;">
+        <div class="card card-success">
+          <form @submit.prevent="handleSubmit">
+            <div class="card-body">
+              <div class="form-group">
+                <label for="semillero">Nombre</label>
+                <input
+                  type="text"
+                  v-model="semillero.semillero"
+                  id="semillero"
+                  name="semillero"
+                  placeholder="Nombre"
+                  class="form-control"
+                  :class="{ 'is-invalid': submitted && $v.semillero.semillero.$error }"
+                />
+                <div
+                  v-if="submitted && !$v.semillero.semillero.required"
+                  class="invalid-feedback"
+                >El campo Nombre es requerido</div>
+              </div>
+              <div class="form-group">
+                <label for="semillero">Objetivo</label>
+                <input
+                  type="text"
+                  v-model="semillero.objetivo"
+                  id="objetivo"
+                  name="objetivo"
+                  placeholder="objetivo"
+                  class="form-control"
+                  :class="{ 'is-invalid': submitted && $v.semillero.objetivo.$error }"
+                />
+                <div
+                  v-if="submitted && !$v.semillero.objetivo.required"
+                  class="invalid-feedback"
+                >El campo Objetivo es requerido</div>
+              </div>
+              <div class="form-group">
+                <label for="semillero">Descripción</label>
+                <input
+                  type="text"
+                  v-model="semillero.descripcion"
+                  id="descripcion"
+                  name="descripcion"
+                  placeholder="descripcion"
+                  class="form-control"
+                  :class="{ 'is-invalid': submitted && $v.semillero.descripcion.$error }"
+                />
+                <div
+                  v-if="submitted && !$v.semillero.descripcion.required"
+                  class="invalid-feedback"
+                >El campo descripcion es requerido</div>
+              </div>
+              <div class="form-group">
+                <label>Grupo</label>
+                <select class="form-control" style="width: 100%;" v-model="semillero.id_grupo">
+                  <option
+                    v-for="grupo in grupos_investigacion"
+                    v-bind:key="grupo.id_grupo"
+                    :value="grupo.id_grupo"
+                  >{{ grupo.grupo }}</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary">Actualizar</button>
+            </div>
+          </form>
         </div>
       </div>
-    </nav>
-    <div class="row">
-      <div class="col-md-6">
-        <form @submit.prevent="updateSemillero">
-          <div class="form-group">
-            <label>Nombre</label>
-            <input type="text" class="form-control" v-model="semillero.semillero" />
-          </div>
-          <div class="form-group">
-            <label>Objetivo</label>
-            <input type="text" class="form-control" v-model="semillero.objetivo" />
-          </div>
-          <div class="form-group">
-            <label>Descripción</label>
-            <input type="text" class="form-control" v-model="semillero.descripcion" />
-          </div>
-          <div class="form-group">
-            <label>Facultad</label>
-            <br />
-            <select @change="selectChange">
-              <option disabled value>Por favor,Seleccione uno</option>
-              <option v-for="item in grupos_investigacion" v-bind:key="item.value">{{ item.grupo }}</option>
-            </select>
-          </div>
-          <button type="submit" class="btn btn-primary">Actualizar</button>
-        </form>
-        <pre>{{$data}}</pre>
-      </div>
-    </div>
+    </section>
   </div>
 </template>
 
 <script>
+import ApiService from "../services/api.service";
+import Swal from "sweetalert2/dist/sweetalert2.all.min.js";
+import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
 export default {
   data() {
     return {
       grupos_investigacion: {},
-      semillero: {}
+      semillero: {
+        semillero: "",
+        objetivo: "",
+        descripcion: "",
+        id_grupo: ""
+      },
+      submitted: false
     };
   },
-  mounted() {
-    this.getgrupos_investigacion();
+
+  created() {
+    ApiService.get(`/semillero/${this.$route.params.id}/edit`).then(
+      response => {
+        this.semillero = response.data;
+      }
+    );
+    ApiService.get("/grupo").then(response => {
+      this.grupos_investigacion = response.data;
+    });
   },
-  computed: {
-    formateargrupos() {
-      return Object.values(this.grupos_investigacion);
+
+  //Reglas de validacion para VueValidate
+  validations: {
+    semillero: {
+      semillero: { required },
+      objetivo: { required },
+      descripcion: { required },
+      id_grupo: { required }
     }
   },
-  created() {
-    this.axios
-      .get(`http://127.0.0.1:8000/api/semillero/${this.$route.params.id}/edit`)
-      .then(response => {
-        this.semillero = response.data;
-        //console.log(this.grupo);
-      });
-  },
+
   methods: {
-    getgrupos_investigacion() {
-      this.axios.get("/grupo").then(response => {
-        this.grupos_investigacion = response.data;
+    handleSubmit(e) {
+      this.submitted = true;
+      // Se detiene aqui si es invalido, de lo contrario ejecuta el submit()
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        return;
+      }
+      this.updateSemillero();
+      /* alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.grupo)); */
+    },
+    showAlert() {
+      this.$swal({
+        type: "success",
+        text: "Registro Actualizado con exito",
+        timer: 2000,
+        showCancelButton: false,
+        showConfirmButton: false
       });
     },
-    updateSemillero() {
-      //event.preventDefault();
-      this.axios
-        .patch(
-          `http://127.0.0.1:8000/api/semillero/${this.$route.params.id}`,
-          this.semillero
-        )
+
+    updateSemillero(event) {
+      ApiService.put(`/semillero/${this.$route.params.id}`, this.semillero)
         .then(response => {
-          this.appear();
+          this.showAlert();
           this.$router.push({ name: "semilleros" });
         })
         .catch(function(response) {
           alert("No se pudo crear el semillero");
         });
-    },
-    onChange($event) {
-      //this.grupo.categoria = event.target.value;
-    },
-    selectChange(event) {
-      /* var i;
-      this.grupos_investigación.forEach(function(element) {
-        if (element.grupo == event.target.value) {
-          i = element.id_grupo;
-          alert(i);
-        }
-      });
-      this.semillero.id_grupo = i; */
-    },
-    appear() {
-      this.$toasted.show("Editado correctamente", {
-        //theme of the toast you prefer
-        theme: "bubble",
-        //position of the toast container
-        position: "top-right",
-        //display time of the toast
-        duration: 2000
-      });
     }
   }
 };

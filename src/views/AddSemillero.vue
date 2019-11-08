@@ -129,6 +129,16 @@ export default {
   },
 
   methods: {
+    /* Despliega mensaje de exito al guardar un registro */
+    showAlert() {
+      this.$swal({
+        type: "success",
+        text: "Registro creado con exito",
+        timer: 2000,
+        showCancelButton: false,
+        showConfirmButton: false
+      });
+    },
     getGrupos() {
       ApiService.get("/grupo").then(response => {
         this.grupos_investigación = response.data;
@@ -140,7 +150,7 @@ export default {
         .then(response => this.$router.push({ name: "semilleros" }))
         .catch(error => console.log(error))
         .finally(() => (this.loading = false));
-      this.appear();
+      this.showAlert();
     },
     /*
     Cuendo se seleciona una opción del elemento <select></select>
@@ -162,25 +172,13 @@ export default {
     //Valida el formulario
     handleSubmit(e) {
       this.submitted = true;
-
       // Se detiene aqui si es invalido, de lo contrario ejecuta el submit()
       this.$v.$touch();
       if (this.$v.$invalid) {
         return;
       }
-
       this.addSemillero();
       /* alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.semillero)); */
-    },
-    appear() {
-      this.$toasted.show("Agregado correctamente", {
-        //theme of the toast you prefer
-        theme: "bubble",
-        //position of the toast container
-        position: "top-right",
-        //display time of the toast
-        duration: 2000
-      });
     }
   }
 };
