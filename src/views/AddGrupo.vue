@@ -22,7 +22,7 @@
                     :class="{ 'is-invalid': submitted && $v.grupo.grupo.$error }"
                   />
                   <div
-                    v-if="submitted && !$v.grupo.grupo.required"
+                    v-if="submitted && !$v.grupo.grupo.required "
                     class="invalid-feedback"
                   >El campo grupo es requerido</div>
                 </div>
@@ -147,7 +147,7 @@ export default {
   //Reglas de validacion para VueValidate
   validations: {
     grupo: {
-      grupo: { required, min: 3 },
+      grupo: { required },
       id_categoria: { required },
       cod_colciencias: { required },
       id_facultad: { required },
@@ -165,6 +165,7 @@ export default {
         showConfirmButton: false
       });
     },
+
     /* Obtiene las categorias que se cargan en un <select> */
     getCategorias() {
       ApiService.get("/categoria").then(response => {
@@ -179,10 +180,17 @@ export default {
     },
     addGrupo() {
       ApiService.post("/grupo", this.grupo)
+        .then(function(res) {
+          if (res.status == 200) {
+            alert(res.data);
+          } else if (res.status == 221) {
+            alert(res.data);
+          }
+        })
         .then(response => this.$router.push({ name: "grupos" }))
         .catch(error => console.log(error))
         .finally(() => (this.loading = false));
-      this.showAlert();
+      //
     },
     /*
     Cuendo se seleciona una opción del elemento <select></select>

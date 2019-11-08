@@ -18,9 +18,12 @@ import EditSemillero from './views/EditSemillero.vue'
 import EditPeriodo from './views/EditPeriodo'
 //
 import Coordinadores from './views/Coordinadores.vue'
-import AddUsuarioCoordinador from './views/AddUsuarioCoordinador.vue'
+
 import EditCoordinador from './views/EditCoordinador.vue'
 //
+import AddCoordinador from './views/AddCoordinador.vue'
+//
+
 import AsignarGrupo from './views/AsignarGrupo.vue'
 //
 import vistaDirectores from './views/vistaDirectores.vue'
@@ -57,8 +60,8 @@ const router = new Router({
     { path: '/addsemillero', name: 'addsemillero', component: AddSemillero },
     { path: '/editsemillero/:id', name: 'editsemillero', component: EditSemillero },
     { path: '/coordinadores', name: 'coordinadores', component: Coordinadores },
-    /* { path: '/addcoordinador', name: 'addcoordinador', component: AddCoordinador }, */
-    { path: '/editcoordiandor', name: 'editcoordinador', component: EditCoordinador },
+    { path: '/addcoordinador', name: 'addcoordinador', component: AddCoordinador },
+    { path: '/editcoordinador/:id', name: 'editcoordinador', component: EditCoordinador },
     { path: '/asignargrupo', name: 'asignargrupo', component: AsignarGrupo },
     { path: '/vistaDirectores', name: 'vistaDirectores', component: vistaDirectores },
     { path: '/asignarsemillero', name: 'asignarsemillero', component: AsignarSemillero },

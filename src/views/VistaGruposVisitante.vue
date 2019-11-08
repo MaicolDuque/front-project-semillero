@@ -42,16 +42,24 @@
                     <th>Nombre</th>
                     <th>Categoria</th>
                     <th>Codigo Colciencias</th>
+                    <th>Vinculo</th>
                     <th>Facultad</th>
+                    <th>Director</th>
+                    <th>Correo</th>
                     <!-- <th>Acciones</th> -->
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="item in searchGrupo" :key="item.id_grupo">
+                  <tr v-for="item in grupos" :key="item.id_grupo">
                     <td>{{item.grupo }}</td>
                     <td>{{ item.categoria }}</td>
                     <td>{{ item.cod_colciencias }}</td>
+
+                    <a :href="item.vinculo">{{item.vinculo}}</a>
+
                     <td>{{ item.facultad }}</td>
+                    <td>{{ item.nombre_usuario }}</td>
+                    <td>{{ item.email }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -299,7 +307,7 @@ export default {
     };
   },
   created() {
-    ApiService.get("/grupo").then(response => {
+    ApiService.get("/grupo/informacion").then(response => {
       this.grupos = response.data;
     });
   },
@@ -323,16 +331,6 @@ export default {
 </script>
 
 <style>
-/* body {
-  background: #20262e;
-  padding: 20px;
-  font-family: Helvetica;
-} */
-
-/* #app {
-  background: #fff;
-  padding: 20px;
-} */
 .item-active p {
   color: green;
 }
