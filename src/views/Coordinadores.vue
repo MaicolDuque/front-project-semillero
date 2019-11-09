@@ -3,7 +3,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="collapse navbar-collapse">
         <div class="navbar-nav">
-          <router-link to="/addusercoordinador" class="nav-item nav-link">Agregar Coordinador</router-link>
+          <router-link to="/addcoordinador" class="nav-item nav-link">Agregar Coordinador</router-link>
         </div>
       </div>
     </nav>
@@ -37,7 +37,7 @@
                     <th>Estado</th>
                     <th>Email</th>
                     <th>Tipo usuario</th>
-                    <th>Rol</th>
+                    <!-- <th>Rol</th> -->
                     <th>Semillero</th>
                     <th>Acciones</th>
                   </tr>
@@ -51,12 +51,12 @@
                     <td>{{ item.estado }}</td>
                     <td>{{ item.email }}</td>
                     <td>{{ item.tipo_usuario }}</td>
-                    <td>{{ item.rol }}</td>
+                    <!--  <td>{{ item.rol }}</td> -->
                     <td>{{ item.semillero }}</td>
                     <td>
                       <div class="btn-group" role="group">
                         <router-link
-                          :to="{name: 'editdirector', params: { id: item.id_usuario}}"
+                          :to="{name: 'editcoordinador', params: { id: item.id_usuario}}"
                           class="btn btn-primary"
                         >Editar</router-link>
                         <button

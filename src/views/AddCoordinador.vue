@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="container">
-      <h3 class="text-center">Agregar Usuario Director</h3>
+      <h3 class="text-center">Agregar Usuario coordinador</h3>
       <nav class="nav grey lighten-4 py-4">
-        <router-link to="/directores" class="nav-item nav-link">Directores</router-link>
+        <router-link to="/coordinadores" class="nav-item nav-link">coordinadores</router-link>
       </nav>
       <section class="content">
         <div style="width: 50%; margin: 0 auto;">
@@ -123,13 +123,13 @@
                   </select>
                 </div>
                 <div class="form-group">
-                  <label>Grupo</label>
-                  <select class="form-control" style="width: 100%;" v-model="usuario.id_grupo">
+                  <label>semillero</label>
+                  <select class="form-control" style="width: 100%;" v-model="usuario.id_semillero">
                     <option
-                      v-for="grupo in grupos"
-                      v-bind:key="grupo.id_grupo"
-                      :value="grupo.id_grupo"
-                    >{{ grupo.grupo }}</option>
+                      v-for="semillero in semilleros"
+                      v-bind:key="semillero.id_semillero"
+                      :value="semillero.id_semillero"
+                    >{{ semillero.semillero }}</option>
                   </select>
                 </div>
                 <!-- <div class="form-group">
@@ -143,7 +143,7 @@
                   id="id_rol"
                   name="id_rol"
                   class="form-control"
-                  :class="{ 'is-invalid': submitted && $v.grupo.id_facultad.$error }"
+                  :class="{ 'is-invalid': submitted && $v.semillero.id_facultad.$error }"
                 >{{ item.facultad }}</option>
               </select>
                 </div>-->
@@ -170,10 +170,10 @@ export default {
     return {
       direct: {
         id_usuario: "",
-        id_grupo: ""
+        id_semillero: ""
       },
       director: {},
-      grupos: [],
+      semilleros: [],
       value: "",
       options: [
         { text: "Activo", value: "1" },
@@ -195,11 +195,11 @@ export default {
     };
   },
   created() {
-    ApiService.get("/grupo/disponible").then(response => {
-      this.grupos = response.data;
-      this.grupos.push({
-        grupo: this.usuario.grupo,
-        id_grupo: this.usuario.id_grupo
+    ApiService.get("/semillero/disponible").then(response => {
+      this.semilleros = response.data;
+      this.semilleros.push({
+        semillero: this.usuario.semillero,
+        id_semillero: this.usuario.id_semillero
       });
     });
   },
@@ -246,7 +246,7 @@ export default {
         alert("No se pudo crear el Usuario");
       });
 
-      /*  ApiService.post("/director" id_grupo: this.director.id_grupo}).then(response => {
+      /*  ApiService.post("/coordinador" id_semillero: this.director.id_semillero}).then(response => {
         this.$router.push({ name: "directores" });
       }); */
       /* ApiService.post("/usuario", this.usuario)
@@ -293,24 +293,24 @@ export default {
         return;
       }
       //asigna como usuario un Director
-      this.usuario.id_rol = 2;
+      this.usuario.id_rol = 3;
       /* Almacenar el usuario */
-      var id_gr = this.usuario.id_grupo;
+      var id_gr = this.usuario.id_semillero;
       ApiService.post("/usuario", this.usuario).then(function(value) {
         /*  console.log(value); */
         retornado = value.data;
         console.log(retornado);
 
         console.log(id_gr);
-        ApiService.post("/director", {
+        ApiService.post("/coordinador", {
           id_usuario: value.data,
-          id_grupo: id_gr
+          id_semillero: id_gr
         }).then(function(value) {
           console.log(value);
         });
       });
 
-      /* logica de enviar api de creacion de usuario y asignacion de grupo */
+      /* logica de enviar api de creacion de usuario y asignacion de semillero */
 
       //this.addUsuario();
       /* alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.usuario)); */

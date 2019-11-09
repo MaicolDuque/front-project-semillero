@@ -26,7 +26,7 @@
                   <tr v-for="periodo in periodos" :key="periodo.id_periodo">
                     <td style="width: 70%">
                       <div style="cursor:pointer">
-                        {{periodo.periodo}}
+                        <a @click="showInfoPeriodo(periodo.id_periodo)">{{periodo.periodo}}</a>
                       </div>
                     </td>  
                     <td style="width: 30%">
@@ -68,7 +68,40 @@
             <div class="card-body">
               <div class="tab-content" id="custom-tabs-two-tabContent">
                 <div class="tab-pane fade show active" id="custom-tabs-two-home" role="tabpanel" aria-labelledby="custom-tabs-two-home-tab">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin malesuada lacus ullamcorper dui molestie, sit amet congue quam finibus. Etiam ultricies nunc non magna feugiat commodo. Etiam odio magna, mollis auctor felis vitae, ullamcorper ornare ligula. Proin pellentesque tincidunt nisi, vitae ullamcorper felis aliquam id. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin id orci eu lectus blandit suscipit. Phasellus porta, ante et varius ornare, sem enim sollicitudin eros, at commodo leo est vitae lacus. Etiam ut porta sem. Proin porttitor porta nisl, id tempor risus rhoncus quis. In in quam a nibh cursus pulvinar non consequat neque. Mauris lacus elit, condimentum ac condimentum at, semper vitae lectus. Cras lacinia erat eget sapien porta consectetur. 
+                    <table id="integrantes" class="table table-bordered table-hover" style="width: 100%">
+                      <thead>
+                        <tr>
+                          <th>Documento</th>
+                          <th>Nombre</th>
+                          <th>Apellido</th>                         
+                          <th>Email</th>
+                          <th>Tipo usuario</th>
+                          <th>Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="item in integrantes" :key="item.id_usuario">
+                          <td>{{ item.documento }}</td>
+                          <td>{{ item.nombre_usuario }}</td>
+                          <td>{{ item.apellido_usuario }}</td>                         
+                          <td>{{ item.email }}</td>
+                          <td>{{ item.tipo_usuario }}</td>
+                          
+                          <td>
+                            <div class="btn-group" role="group">
+                              <router-link
+                                :to="{name: 'editdirector', params: { id: item.id_usuario}}"
+                                class="btn btn-primary"
+                              >Editar</router-link>
+                              <button
+                                class="btn btn-danger"
+                                @click="deleteDirector(item.id_usuario)"
+                              >Eliminar</button>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
                 </div>
                 <div class="tab-pane fade" id="custom-tabs-two-profile" role="tabpanel" aria-labelledby="custom-tabs-two-profile-tab">
                     Mauris tincidunt mi at erat gravida, eget tristique urna bibendum. Mauris pharetra purus ut ligula tempor, et vulputate metus facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Maecenas sollicitudin, nisi a luctus interdum, nisl ligula placerat mi, quis posuere purus ligula eu lectus. Donec nunc tellus, elementum sit amet ultricies at, posuere nec nunc. Nunc euismod pellentesque diam. 
@@ -94,10 +127,12 @@ export default {
     return {
       nombre: "Semillero 1",
       periodos: [],
-      semillero: {}
+      semillero: {},
+      integrantes: [],
+      controlIntegrantes: 1
     }
   },
-
+  
   created(){
     ApiService.get("/periodo")
       .then(response => {
@@ -111,10 +146,30 @@ export default {
       this.semillero = response.data[0];
     })
   },
-
+  mounted: function() {
+    // $("#integrantes").DataTable({
+    //       responsive: true
+    // })
+  },
   methods: {
     deletePeriodo(id){
       alert(id)
+    },
+
+    showInfoPeriodo(id){
+      ApiService.get(`/integrante/semillero/periodo/${id}`)
+        .then(response => {
+          this.integrantes = response.data;
+        })
+        .then(res => {
+          if(this.controlIntegrantes){
+            this.controlIntegrantes = 0
+            $("#integrantes").DataTable({
+                  responsive: true
+            })
+          }
+        })
+       
     }
   }
 }
