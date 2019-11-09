@@ -17,6 +17,11 @@ import AddSemillero from './views/AddSemillero.vue'
 import EditSemillero from './views/EditSemillero.vue'
 import EditPeriodo from './views/EditPeriodo'
 //
+
+//Integrantes
+import EditIntegrante from './views/EditIntegrante.vue'
+import AddIntegrante from './views/AddIntegrante.vue'
+
 import Coordinadores from './views/Coordinadores.vue'
 
 import EditCoordinador from './views/EditCoordinador.vue'
@@ -68,8 +73,9 @@ const router = new Router({
     { path: '/periodos/:id', name: 'periodos', component: Periodos },
     { path: '/periodos/edit/:id', name: 'edit-periodo', component: EditPeriodo },
     { path: '/grupos_visitante', name: 'grupos_visitante', component: VistaGruposVisitante },
-
-
+    { path: '/editar-integrante/:id', name: 'editar-integrante', component: EditIntegrante },
+    { path: '/periodo/:id/agregar-integrante', name: 'agregar-integrante', component: AddIntegrante },
+    
   ]
 })
 

@@ -22,7 +22,7 @@
                     <th>Acciones</th>                    
                   </tr>
                 </thead>                
-                 <tbody >
+                 <tbody >                  
                   <tr v-for="periodo in periodos" :key="periodo.id_periodo">
                     <td style="width: 70%">
                       <div style="cursor:pointer">
@@ -68,6 +68,13 @@
             <div class="card-body">
               <div class="tab-content" id="custom-tabs-two-tabContent">
                 <div class="tab-pane fade show active" id="custom-tabs-two-home" role="tabpanel" aria-labelledby="custom-tabs-two-home-tab">
+                    <div style="text-align: right; padding: 14px 1px;">
+                      <button
+                          class="btn btn-success"
+                          @click="addIntegrante()"
+                          >Agregar
+                      </button>
+                    </div>
                     <table id="integrantes" class="table table-bordered table-hover" style="width: 100%">
                       <thead>
                         <tr>
@@ -80,6 +87,9 @@
                         </tr>
                       </thead>
                       <tbody>
+                        <tr v-if="integrantes.length == 0">
+                          <td colspan="6" style="text-align: center; font-size: 1.6em;">Seleccione un periodo...</td>
+                        </tr>
                         <tr v-for="item in integrantes" :key="item.id_usuario">
                           <td>{{ item.documento }}</td>
                           <td>{{ item.nombre_usuario }}</td>
@@ -90,7 +100,7 @@
                           <td>
                             <div class="btn-group" role="group">
                               <router-link
-                                :to="{name: 'editdirector', params: { id: item.id_usuario}}"
+                                :to="{name: 'editar-integrante', params: { id: item.id_usuario}}"
                                 class="btn btn-primary"
                               >Editar</router-link>
                               <button
@@ -129,7 +139,8 @@ export default {
       periodos: [],
       semillero: {},
       integrantes: [],
-      controlIntegrantes: 1
+      controlIntegrantes: 1,
+      idPeriodo: 0
     }
   },
   
@@ -157,6 +168,7 @@ export default {
     },
 
     showInfoPeriodo(id){
+      this.idPeriodo = id
       ApiService.get(`/integrante/semillero/periodo/${id}`)
         .then(response => {
           this.integrantes = response.data;
@@ -170,6 +182,13 @@ export default {
           }
         })
        
+    },
+
+    addIntegrante(){  
+      if(this.idPeriodo){
+        return this.$router.push({ name: "agregar-integrante", params: { id: this.$route.params.id } });
+      }    
+      alert("Debe seleccionar un periodo..")
     }
   }
 }
