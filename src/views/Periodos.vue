@@ -105,7 +105,7 @@
                               >Editar</router-link>
                               <button
                                 class="btn btn-danger"
-                                @click="deleteDirector(item.id_usuario)"
+                                @click="deleteIntegrante(item.id_usuario)"
                               >Eliminar</button>
                             </div>
                           </td>
@@ -167,6 +167,10 @@ export default {
       alert(id)
     },
 
+    deleteIntegrante(id){
+       alert(id)
+    },
+
     showInfoPeriodo(id){
       this.idPeriodo = id
       ApiService.get(`/integrante/semillero/periodo/${id}`)
@@ -174,12 +178,18 @@ export default {
           this.integrantes = response.data;
         })
         .then(res => {
+
+          
           if(this.controlIntegrantes){
             this.controlIntegrantes = 0
-            $("#integrantes").DataTable({
-                  responsive: true
+           $("#integrantes").DataTable({
+                  responsive: true,
+                  searching: false
             })
           }
+
+
+
         })
        
     },
