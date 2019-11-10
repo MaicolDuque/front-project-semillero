@@ -114,7 +114,49 @@
                     </table>
                 </div>
                 <div class="tab-pane fade" id="custom-tabs-two-profile" role="tabpanel" aria-labelledby="custom-tabs-two-profile-tab">
-                    Mauris tincidunt mi at erat gravida, eget tristique urna bibendum. Mauris pharetra purus ut ligula tempor, et vulputate metus facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Maecenas sollicitudin, nisi a luctus interdum, nisl ligula placerat mi, quis posuere purus ligula eu lectus. Donec nunc tellus, elementum sit amet ultricies at, posuere nec nunc. Nunc euismod pellentesque diam. 
+                   <div style="text-align: right; padding: 14px 1px;">
+                      <button
+                          class="btn btn-success"
+                          @click="addActividad()"
+                          >Agregar
+                      </button>
+                    </div>
+                   <table id="actividades" class="table table-bordered table-hover" style="width: 100%">
+                     <thead>
+                       <tr>
+                         <th>Nombre</th>
+                         <th>Responsable</th>
+                         <th>Recursos</th>
+                         <th>Registro</th>                         
+                         <th>Inicio / fin</th>
+                         <th>Acciones</th>
+                       </tr>
+                     </thead>
+                     <tbody>
+                       <tr v-if="integrantes.length == 0">
+                          <td colspan="6" style="text-align: center; font-size: 1.6em;">Seleccione un periodo...</td>
+                      </tr>
+                       <tr v-for="actividad in actividades" :key="actividad.id_actividad">
+                          <td>{{actividad.actividad}}</td>
+                          <td>{{actividad.responsable}}</td>
+                          <td>{{actividad.recursos}}</td>
+                          <td>{{actividad.registro}}</td>
+                          <td>meses</td>
+                          <td>
+                            <div class="btn-group" role="group">
+                              <router-link
+                                :to="{name: 'editar-integrante', params: { id: actividad.id_actividad}}"
+                                class="btn btn-primary"
+                              >Editar</router-link>
+                              <button
+                                class="btn btn-danger"
+                                @click="deleteIntegrante(actividad.id_actividad)"
+                              >Eliminar</button>
+                            </div>
+                          </td>
+                       </tr>
+                     </tbody>
+                   </table>
                 </div>
                 <div class="tab-pane fade" id="custom-tabs-two-messages" role="tabpanel" aria-labelledby="custom-tabs-two-messages-tab">
                     Morbi turpis dolor, vulputate vitae felis non, tincidunt congue mauris. Phasellus volutpat augue id mi placerat mollis. Vivamus faucibus eu massa eget condimentum. Fusce nec hendrerit sem, ac tristique nulla. Integer vestibulum orci odio. Cras nec augue ipsum. Suspendisse ut velit condimentum, mattis urna a, malesuada nunc. Curabitur eleifend facilisis velit finibus tristique. Nam vulputate, eros non luctus efficitur, ipsum odio volutpat massa, sit amet sollicitudin est libero sed ipsum. Nulla lacinia, ex vitae gravida fermentum, lectus ipsum gravida arcu, id fermentum metus arcu vel metus. Curabitur eget sem eu risus tincidunt eleifend ac ornare magna. 
@@ -139,6 +181,7 @@ export default {
       periodos: [],
       semillero: {},
       integrantes: [],
+      actividades: [],
       controlIntegrantes: 1,
       idPeriodo: 0
     }
@@ -178,8 +221,6 @@ export default {
           this.integrantes = response.data;
         })
         .then(res => {
-
-          
           if(this.controlIntegrantes){
             this.controlIntegrantes = 0
            $("#integrantes").DataTable({
@@ -187,16 +228,31 @@ export default {
                   searching: false
             })
           }
-
-
-
         })
+
+      ApiService.get(`/actividad/periodo/semillero/${id}`).then(response => {
+        this.actividades = response.data;
+      })
+      .then( res => {
+         $("#actividades").DataTable({
+              responsive: true,
+              searching: false,
+              retrieve: true
+          })
+      })
        
     },
 
     addIntegrante(){  
       if(this.idPeriodo){
         return this.$router.push({ name: "agregar-integrante", params: { id: this.$route.params.id } });
+      }    
+      alert("Debe seleccionar un periodo..")
+    },
+
+    addActividad(){
+      if(this.idPeriodo){
+        return console.log("Ruta add integrante")
       }    
       alert("Debe seleccionar un periodo..")
     }
