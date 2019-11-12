@@ -1,10 +1,9 @@
 <template>
   <div style="padding:25px">
     <h3 class="text-center">Directores</h3>
-    <br />
-    <nav class="nav justify-content-end grey lighten-4 py-4">
-      <router-link style="color: #008000" to="/adduserdirector" tag="button">Agregar</router-link>
-    </nav>
+    <div style="text-align: right; padding: 14px 1px;">
+      <router-link to="/adduserdirector" tag="button" class="btn btn-outline-success">Agregar</router-link>
+    </div>
     <section class="content">
       <div class="row">
         <div class="col-12">
@@ -41,10 +40,12 @@
                       <div class="btn-group" role="group">
                         <router-link
                           :to="{name: 'editdirector', params: { id: item.id_usuario}}"
-                          class="btn btn-primary"
+                          class="btn btn-outline-primary"
+                          style="margin: 2px"
                         >Editar</router-link>
                         <button
-                          class="btn btn-danger"
+                          style="margin: 2px"
+                          class="btn btn-outline-danger"
                           @click="deleteDirector(item.id_usuario)"
                         >Eliminar</button>
                       </div>

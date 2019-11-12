@@ -83,7 +83,7 @@
                 </select>
               </div>
               <div class="form-group">
-                <button class="btn btn-primary">Actualizar</button>
+                <button class="btn btn-outline-success">Actualizar</button>
               </div>
             </div>
           </form>

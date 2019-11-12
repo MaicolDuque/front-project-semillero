@@ -245,18 +245,6 @@ export default {
       ApiService.post("/usuario", this.objectUsuario).catch(function(response) {
         alert("No se pudo crear el Usuario");
       });
-
-      /*  ApiService.post("/director" id_grupo: this.director.id_grupo}).then(response => {
-        this.$router.push({ name: "directores" });
-      }); */
-      /* ApiService.post("/usuario", this.usuario)
-        .then(
-          response => this.$router.push({ name: "directores" })
-          // console.log(response.data)
-        )
-        .catch(error => console.log(error))
-        .finally(() => (this.loading = false));
-      this.appear(); */
     },
     getTipos_Usuarios() {
       ApiService.get("/tipousuario").then(response => {
