@@ -6,27 +6,51 @@
         <a @click="back" class="nav-item nav-link">Periodos</a>
       </nav>
 
-      
       <div class="card card-primary card-outline">
         <div class="card-header p-0 pt-1 border-bottom-0">
           <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
             <li class="nav-item">
-              <a class="nav-link active" id="custom-tabs-two-home-tab" data-toggle="pill" href="#custom-tabs-two-home" role="tab" aria-controls="custom-tabs-two-home" aria-selected="true">Integrante periodo anterior</a>
+              <a
+                class="nav-link active"
+                id="custom-tabs-two-home-tab"
+                data-toggle="pill"
+                href="#custom-tabs-two-home"
+                role="tab"
+                aria-controls="custom-tabs-two-home"
+                aria-selected="true"
+              >Integrante periodo anterior</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="custom-tabs-two-profile-tab" data-toggle="pill" href="#custom-tabs-two-profile" role="tab" aria-controls="custom-tabs-two-profile" aria-selected="false">Integrante nuevo</a>
-            </li>            
+              <a
+                class="nav-link"
+                id="custom-tabs-two-profile-tab"
+                data-toggle="pill"
+                href="#custom-tabs-two-profile"
+                role="tab"
+                aria-controls="custom-tabs-two-profile"
+                aria-selected="false"
+              >Integrante nuevo</a>
+            </li>
           </ul>
         </div>
         <div class="card-body">
           <div class="tab-content" id="custom-tabs-two-tabContent">
-            <div class="tab-pane fade show active" id="custom-tabs-two-home" role="tabpanel" aria-labelledby="custom-tabs-two-home-tab">
-              <table id="add-integrantes" class="table table-bordered table-hover" style="width: 100%">
+            <div
+              class="tab-pane fade show active"
+              id="custom-tabs-two-home"
+              role="tabpanel"
+              aria-labelledby="custom-tabs-two-home-tab"
+            >
+              <table
+                id="add-integrantes"
+                class="table table-bordered table-hover"
+                style="width: 100%"
+              >
                 <thead>
                   <tr>
                     <th>Documento</th>
                     <th>Nombre</th>
-                    <th>Apellido</th>                         
+                    <th>Apellido</th>
                     <th>Email</th>
                     <th>Tipo usuario</th>
                     <th>Acciones</th>
@@ -34,29 +58,34 @@
                 </thead>
                 <tbody>
                   <tr v-if="integrantes.length == 0">
-                    <td colspan="6" style="text-align: center; font-size: 1.6em;">No hay integrantes de periodos anteriores...</td>
+                    <td
+                      colspan="6"
+                      style="text-align: center; font-size: 1.6em;"
+                    >No hay integrantes de periodos anteriores...</td>
                   </tr>
                   <tr v-for="item in integrantes" :key="item.id_usuario">
                     <td>{{ item.documento }}</td>
                     <td>{{ item.nombre_usuario }}</td>
-                    <td>{{ item.apellido_usuario }}</td>                         
+                    <td>{{ item.apellido_usuario }}</td>
                     <td>{{ item.email }}</td>
                     <td>{{ item.tipo_usuario }}</td>
-                    
+
                     <td>
                       <div class="btn-group" role="group">
-                        <button                         
-                          class="btn btn-primary">
-                        Agregar
-                        </button>                        
+                        <button class="btn btn-primary">Agregar</button>
                       </div>
                     </td>
                   </tr>
                 </tbody>
-            </table>
+              </table>
             </div>
 
-            <div class="tab-pane fade" id="custom-tabs-two-profile" role="tabpanel" aria-labelledby="custom-tabs-two-profile-tab">
+            <div
+              class="tab-pane fade"
+              id="custom-tabs-two-profile"
+              role="tabpanel"
+              aria-labelledby="custom-tabs-two-profile-tab"
+            >
               <section class="content">
                 <div style="width: 50%; margin: 0 auto;">
                   <div class="card card-success">
@@ -145,7 +174,11 @@
                         <div class="form-group">
                           <label for="estado">Estado</label>
                           <br />
-                          <select class="custom-select browser-default" @change="onChange($event)" required>
+                          <select
+                            class="custom-select browser-default"
+                            @change="onChange($event)"
+                            required
+                          >
                             <option value>Por favor seleccione un Elemento</option>
                             <option
                               v-for="option in options"
@@ -174,7 +207,7 @@
                             >{{ item.tipo_usuario }}</option>
                           </select>
                         </div>
-                                      
+
                         <br />
                         <div class="form-group">
                           <button class="btn btn-primary">Guardar</button>
@@ -182,15 +215,14 @@
                       </div>
                     </form>
                   </div>
-                
                 </div>
               </section>
             </div>
-            
           </div>
         </div>
         <!-- /.card -->
       </div>
+      <pre>{{$data}}</pre>
     </div>
   </div>
 </template>
@@ -201,9 +233,9 @@ import ApiService from "../services/api.service";
 
 export default {
   data() {
-    return {      
+    return {
       periodo: {},
-      integrantes: [],                  
+      integrantes: [],
       options: [
         { text: "Activo", value: "1" },
         { text: "Inactivo", value: "0" }
@@ -223,19 +255,19 @@ export default {
     };
   },
   created() {
-    ApiService.get(`/integrante/semillero/noperiodo/${this.$route.params.id}`).then(response => {
-      this.integrantes = response.data;      
-    })
-    .then( res => {
-      $("#add-integrantes").DataTable({
-            responsive: true
+    ApiService.get(`/integrante/semillero/noperiodo/${this.$route.params.id}`)
+      .then(response => {
+        this.integrantes = response.data;
       })
-    })
+      .then(res => {
+        $("#add-integrantes").DataTable({
+          responsive: true
+        });
+      });
 
     ApiService.get(`/periodo/${this.$route.params.id}`).then(response => {
-      this.periodo = response.data[0];      
+      this.periodo = response.data[0];
     });
-
   },
   //Obtiene las tipos de usuarios una vez se llama al componente
   mounted() {
@@ -276,11 +308,10 @@ export default {
   },
   methods: {
     addUsuario() {
+      this.usuario.id_rol = 4;
       ApiService.post("/usuario", this.objectUsuario).catch(function(response) {
         alert("No se pudo crear el Usuario");
       });
-
-      
 
       /*  ApiService.post("/director" id_grupo: this.director.id_grupo}).then(response => {
         this.$router.push({ name: "directores" });
@@ -295,8 +326,8 @@ export default {
       this.appear(); */
     },
 
-    back(){
-      this.$router.go(-1)
+    back() {
+      this.$router.go(-1);
     },
     getTipos_Usuarios() {
       ApiService.get("/tipousuario").then(response => {
@@ -333,18 +364,18 @@ export default {
         return;
       }
       //asigna como usuario un Director
-      this.usuario.id_rol = 2;
+      this.usuario.id_rol = 4;
       /* Almacenar el usuario */
-      var id_gr = this.usuario.id_grupo;
+      var id_gr = this.periodo.id_periodo;
       ApiService.post("/usuario", this.usuario).then(function(value) {
         /*  console.log(value); */
         retornado = value.data;
-        console.log(retornado);
+        console.log("retornado: " + retornado);
 
         console.log(id_gr);
-        ApiService.post("/director", {
+        ApiService.post("/integrante", {
           id_usuario: value.data,
-          id_grupo: id_gr
+          id_periodo: id_gr
         }).then(function(value) {
           console.log(value);
         });

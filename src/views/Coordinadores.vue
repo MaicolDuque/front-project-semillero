@@ -1,22 +1,9 @@
 <template>
   <div style="padding:25px">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="collapse navbar-collapse">
-        <div class="navbar-nav">
-          <router-link to="/addcoordinador" class="nav-item nav-link">Agregar Coordinador</router-link>
-        </div>
-      </div>
-    </nav>
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Coordinadores</h1>
-          </div>
-        </div>
-      </div>
-    </section>
+    <h3 class="text-center">Coordinadores</h3>
+    <div style="text-align: right; padding: 14px 1px;">
+      <router-link to="/addcoordinador" tag="button" class="btn btn-outline-success">Agregar</router-link>
+    </div>
     <section class="content">
       <div class="row">
         <div class="col-12">
@@ -57,10 +44,12 @@
                       <div class="btn-group" role="group">
                         <router-link
                           :to="{name: 'editcoordinador', params: { id: item.id_usuario}}"
-                          class="btn btn-primary"
+                          class="btn btn-outline-primary"
+                          style="margin: 2px"
                         >Editar</router-link>
                         <button
-                          class="btn btn-danger"
+                          style="margin: 2px"
+                          class="btn btn-outline-danger"
                           @click="deleteDirector(item.id_usuario)"
                         >Eliminar</button>
                       </div>

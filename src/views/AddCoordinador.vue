@@ -149,7 +149,7 @@
                 </div>-->
                 <br />
                 <div class="form-group">
-                  <button class="btn btn-primary">Guardar</button>
+                  <button class="btn btn-outline-success">Guardar</button>
                 </div>
               </div>
             </form>

@@ -98,7 +98,7 @@
                 </div>
                 <br />
                 <div class="form-group">
-                  <button class="btn btn-primary">Guardar</button>
+                  <button class="btn btn-outline-success">Guardar</button>
                 </div>
               </div>
             </form>
@@ -155,6 +155,15 @@ export default {
     }
   },
   methods: {
+    showAlertGrupoExistente() {
+      this.$swal({
+        type: "warning",
+        text: "El grupo ya existe",
+        timer: 2000,
+        showCancelButton: false,
+        showConfirmButton: false
+      });
+    },
     /* Despliega mensaje de exito al guardar un registro */
     showAlert() {
       this.$swal({
@@ -180,11 +189,11 @@ export default {
     },
     addGrupo() {
       ApiService.post("/grupo", this.grupo)
-        .then(function(res) {
-          if (res.status == 200) {
-            alert(res.data);
-          } else if (res.status == 221) {
-            alert(res.data);
+        .then(response => {
+          if (response.status == 200) {
+            this.showAlert();
+          } else if (response.status == 221) {
+            this.showAlertGrupoExistente();
           }
         })
         .then(response => this.$router.push({ name: "grupos" }))

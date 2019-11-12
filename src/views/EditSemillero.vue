@@ -67,7 +67,7 @@
                   >{{ grupo.grupo }}</option>
                 </select>
               </div>
-              <button type="submit" class="btn btn-primary">Actualizar</button>
+              <button type="submit" class="btn btn-outline-success">Actualizar</button>
             </div>
           </form>
         </div>

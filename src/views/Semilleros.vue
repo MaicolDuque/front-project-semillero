@@ -1,10 +1,9 @@
 <template>
   <div style="padding:25px">
     <h3 class="text-center">Semilleros de Investigación</h3>
-    <br />
-    <nav class="nav justify-content-end grey lighten-4 py-4">
-      <router-link style="color: #008000" to="/addsemillero" tag="button">Agregar</router-link>
-    </nav>
+    <div style="text-align: right; padding: 14px 1px;">
+      <router-link to="/addsemillero" tag="button" class="btn btn-outline-success">Agregar</router-link>
+    </div>
     <section class="content">
       <div class="row">
         <div class="col-12">
@@ -35,15 +34,18 @@
                       <div class="btn-group" role="group">
                         <router-link
                           :to="{name: 'editsemillero', params: { id: item.id_semillero}}"
-                          class="btn btn-primary"
+                          class="btn btn-outline-primary"
+                          style="margin: 2px"
                         >Editar</router-link>
                         <button
-                          class="btn btn-danger"
+                          style="margin: 2px"
+                          class="btn btn-outline-danger"
                           @click="deleteSemillero(item.id_semillero)"
                         >Eliminar</button>
                         <router-link
                           :to="{name: 'periodos', params: { id: item.id_semillero}}"
-                          class="btn btn-warning"
+                          style="margin: 2px"
+                          class="btn btn-outline-warning"
                         >Periodos</router-link>
                       </div>
                     </td>
