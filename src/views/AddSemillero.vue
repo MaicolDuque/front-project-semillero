@@ -129,6 +129,15 @@ export default {
   },
 
   methods: {
+    showAlertSemilleroExistente() {
+      this.$swal({
+        type: "warning",
+        text: "El semillero ya existe",
+        timer: 2000,
+        showCancelButton: false,
+        showConfirmButton: false
+      });
+    },
     /* Despliega mensaje de exito al guardar un registro */
     showAlert() {
       this.$swal({
@@ -147,10 +156,17 @@ export default {
 
     addSemillero() {
       ApiService.post("/semillero", this.semillero)
+        .then(response => {
+          if (response.status == 200) {
+            this.showAlert();
+          } else if (response.status == 221) {
+            this.showAlertSemilleroExistente();
+          }
+        })
         .then(response => this.$router.push({ name: "semilleros" }))
         .catch(error => console.log(error))
         .finally(() => (this.loading = false));
-      this.showAlert();
+      //
     },
     /*
     Cuendo se seleciona una opción del elemento <select></select>
