@@ -22,6 +22,9 @@ import EditPeriodo from './views/EditPeriodo'
 import EditIntegrante from './views/EditIntegrante.vue'
 import AddIntegrante from './views/AddIntegrante.vue'
 
+//ACtividades
+import AddActividad from './views/AddActividad.vue'
+
 import Coordinadores from './views/Coordinadores.vue'
 
 import EditCoordinador from './views/EditCoordinador.vue'
@@ -77,6 +80,7 @@ const router = new Router({
     { path: '/editar-integrante/:id', name: 'editar-integrante', component: EditIntegrante },
     { path: '/periodo/:id/agregar-integrante', name: 'agregar-integrante', component: AddIntegrante },
     { path: '/periodo/:id/addperiodo', name: 'addperiodo', component: AddPeriodo },
+    { path: '/periodo/:id/agregar-actividad/:periodo', name: 'agregar-actividad', component: AddActividad }
 
   ]
 })
