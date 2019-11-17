@@ -13,9 +13,9 @@
             aria-expanded="false"
             aria-controls="collapseOne1"
           >
-            <h5 class="mb-0">
+            <h5 class="mb-0 text-success">
               Facultad de Administración
-              <i class="fas fa-angle-down rotate-icon"></i>
+              <i class="fas fa-angle-down rotate-icon text-success"></i>
             </h5>
           </a>
         </div>
@@ -29,37 +29,39 @@
           data-parent="#accordionEx"
         >
           <div class="card-body">
-            ADMINITRACI
             <!-- Table responsive wrapper -->
             <div class="table-responsive mx-3">
               <!--Table-->
               <div>
                 <!-- <input type="text" placeholder="buscar" class="form-control" v-model="name" /> -->
               </div>
-              <table class="table table-bordered">
+              <table
+                id="tblGrupos"
+                class="table table-striped table-bordered dt-responsive nowrap"
+                style="width:100%"
+              >
                 <thead>
                   <tr>
                     <th>Nombre</th>
                     <th>Categoria</th>
                     <th>Codigo Colciencias</th>
                     <th>Vinculo</th>
-                    <th>Facultad</th>
                     <th>Director</th>
                     <th>Correo</th>
-                    <!-- <th>Acciones</th> -->
+                    <th>Telefono</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="item in grupos" :key="item.id_grupo">
+                  <tr v-for="item in searchGruposAdministracion" :key="item.id_grupo">
                     <td>{{item.grupo }}</td>
                     <td>{{ item.categoria }}</td>
                     <td>{{ item.cod_colciencias }}</td>
-
-                    <a :href="item.vinculo">{{item.vinculo}}</a>
-
-                    <td>{{ item.facultad }}</td>
+                    <td>
+                      <a :href="item.vinculo">{{item.vinculo}}</a>
+                    </td>
                     <td>{{ item.nombre_usuario }}</td>
                     <td>{{ item.email }}</td>
+                    <td>{{ item.telefono }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -83,7 +85,7 @@
             aria-expanded="false"
             aria-controls="collapseTwo2"
           >
-            <h5 class="mb-0">
+            <h5 class="mb-0 text-success">
               Facultad de Ciencias Agrarias
               <i class="fas fa-angle-down rotate-icon"></i>
             </h5>
@@ -100,24 +102,47 @@
         >
           <div class="card">
             <div class="card-body elegant-color white-text rounded-bottom">
-              <!-- Social shares button -->
-              <a class="activator waves-effect mr-4">
-                <i class="fas fa-share-alt white-text"></i>
-              </a>
-              <!-- Title -->
-              <h4 class="card-title">Card title</h4>
-              <hr class="hr-light" />
-              <!-- Text -->
-              <p
-                class="card-text white-text mb-4"
-              >Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <!-- Link -->
-              <a href="#!" class="white-text d-flex justify-content-end">
-                <h5>
-                  Read more
-                  <i class="fas fa-angle-double-right"></i>
-                </h5>
-              </a>
+              <div class="card-body">
+                <!-- Table responsive wrapper -->
+                <div class="table-responsive mx-3">
+                  <!--Table-->
+                  <div>
+                    <!-- <input type="text" placeholder="buscar" class="form-control" v-model="name" /> -->
+                  </div>
+                  <table
+                    class="table table-striped table-bordered dt-responsive nowrap"
+                    style="width:100%"
+                    id="tblGrupos2"
+                  >
+                    <thead>
+                      <tr>
+                        <th>Nombre</th>
+                        <th>Categoria</th>
+                        <th>Codigo Colciencias</th>
+                        <th>Vinculo</th>
+                        <th>Director</th>
+                        <th>Correo</th>
+                        <th>Telefono</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="item in searchGruposAgrarias" :key="item.id_grupo">
+                        <td>{{item.grupo }}</td>
+                        <td>{{ item.categoria }}</td>
+                        <td>{{ item.cod_colciencias }}</td>
+                        <td>
+                          <a :href="item.vinculo">{{item.vinculo}}</a>
+                        </td>
+                        <td>{{ item.nombre_usuario }}</td>
+                        <td>{{ item.email }}</td>
+                        <td>{{ item.telefono }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <!--Table-->
+                </div>
+                <!-- Table responsive wrapper -->
+              </div>
             </div>
           </div>
         </div>
@@ -136,7 +161,7 @@
             aria-expanded="false"
             aria-controls="collapseThree3"
           >
-            <h5 class="mb-0">
+            <h5 class="mb-0 text-success">
               Facultad de Ciencias Básicas, Sociales y Humanas
               <i
                 class="fas fa-angle-down rotate-icon"
@@ -154,13 +179,47 @@
           data-parent="#accordionEx"
         >
           <div class="card-body">
-            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
-            wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
-            eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
-            assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
-            nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
-            farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
-            labore sustainable VHS.
+            <div class="card-body">
+              <!-- Table responsive wrapper -->
+              <div class="table-responsive mx-3">
+                <!--Table-->
+                <div>
+                  <!-- <input type="text" placeholder="buscar" class="form-control" v-model="name" /> -->
+                </div>
+                <table
+                  class="table table-striped table-bordered dt-responsive nowrap"
+                  style="width:100%"
+                  id="tblGrupos3"
+                >
+                  <thead>
+                    <tr>
+                      <th>Nombre</th>
+                      <th>Categoria</th>
+                      <th>Codigo Colciencias</th>
+                      <th>Vinculo</th>
+                      <th>Director</th>
+                      <th>Correo</th>
+                      <th>Telefono</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="item in searchGruposBasicas" :key="item.id_grupo">
+                      <td>{{item.grupo }}</td>
+                      <td>{{ item.categoria }}</td>
+                      <td>{{ item.cod_colciencias }}</td>
+                      <td>
+                        <a :href="item.vinculo">{{item.vinculo}}</a>
+                      </td>
+                      <td>{{ item.nombre_usuario }}</td>
+                      <td>{{ item.email }}</td>
+                      <td>{{ item.telefono }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!--Table-->
+              </div>
+              <!-- Table responsive wrapper -->
+            </div>
           </div>
         </div>
       </div>
@@ -177,7 +236,7 @@
             aria-expanded="false"
             aria-controls="collapseThree4"
           >
-            <h5 class="mb-0">
+            <h5 class="mb-0 text-success">
               Facultad Comunicación Audiovisual
               <i class="fas fa-angle-down rotate-icon"></i>
             </h5>
@@ -193,13 +252,47 @@
           data-parent="#accordionEx"
         >
           <div class="card-body">
-            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
-            wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
-            eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
-            assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
-            nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
-            farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
-            labore sustainable VHS.
+            <div class="card-body">
+              <!-- Table responsive wrapper -->
+              <div class="table-responsive mx-3">
+                <!--Table-->
+                <div>
+                  <!-- <input type="text" placeholder="buscar" class="form-control" v-model="name" /> -->
+                </div>
+                <table
+                  class="table table-striped table-bordered dt-responsive nowrap"
+                  style="width:100%"
+                  id="tblGrupos4"
+                >
+                  <thead>
+                    <tr>
+                      <th>Nombre</th>
+                      <th>Categoria</th>
+                      <th>Codigo Colciencias</th>
+                      <th>Vinculo</th>
+                      <th>Director</th>
+                      <th>Correo</th>
+                      <th>Telefono</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="item in searchGruposVisuales" :key="item.id_grupo">
+                      <td>{{item.grupo }}</td>
+                      <td>{{ item.categoria }}</td>
+                      <td>{{ item.cod_colciencias }}</td>
+                      <td>
+                        <a :href="item.vinculo">{{item.vinculo}}</a>
+                      </td>
+                      <td>{{ item.nombre_usuario }}</td>
+                      <td>{{ item.email }}</td>
+                      <td>{{ item.telefono }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!--Table-->
+              </div>
+              <!-- Table responsive wrapper -->
+            </div>
           </div>
         </div>
       </div>
@@ -215,7 +308,7 @@
             aria-expanded="false"
             aria-controls="collapseThree5"
           >
-            <h5 class="mb-0">
+            <h5 class="mb-0 text-success">
               Facultad Educación Física Recreación y Deporte
               <i
                 class="fas fa-angle-down rotate-icon"
@@ -233,13 +326,47 @@
           data-parent="#accordionEx"
         >
           <div class="card-body">
-            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
-            wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
-            eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
-            assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
-            nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
-            farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
-            labore sustainable VHS.
+            <div class="card-body">
+              <!-- Table responsive wrapper -->
+              <div class="table-responsive mx-3">
+                <!--Table-->
+                <div>
+                  <!-- <input type="text" placeholder="buscar" class="form-control" v-model="name" /> -->
+                </div>
+                <table
+                  class="table table-striped table-bordered dt-responsive nowrap"
+                  style="width:100%"
+                  id="tblGrupos5"
+                >
+                  <thead>
+                    <tr>
+                      <th>Nombre</th>
+                      <th>Categoria</th>
+                      <th>Codigo Colciencias</th>
+                      <th>Vinculo</th>
+                      <th>Director</th>
+                      <th>Correo</th>
+                      <th>Telefono</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="item in searchGruposDeportes" :key="item.id_grupo">
+                      <td>{{item.grupo }}</td>
+                      <td>{{ item.categoria }}</td>
+                      <td>{{ item.cod_colciencias }}</td>
+                      <td>
+                        <a :href="item.vinculo">{{item.vinculo}}</a>
+                      </td>
+                      <td>{{ item.nombre_usuario }}</td>
+                      <td>{{ item.email }}</td>
+                      <td>{{ item.telefono }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!--Table-->
+              </div>
+              <!-- Table responsive wrapper -->
+            </div>
           </div>
         </div>
       </div>
@@ -255,7 +382,7 @@
             aria-expanded="false"
             aria-controls="collapseThree6"
           >
-            <h5 class="mb-0">
+            <h5 class="mb-0 text-success">
               Facultad Ingenieria
               <i class="fas fa-angle-down rotate-icon"></i>
             </h5>
@@ -271,13 +398,47 @@
           data-parent="#accordionEx"
         >
           <div class="card-body">
-            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
-            wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
-            eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
-            assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
-            nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
-            farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
-            labore sustainable VHS.
+            <div class="card-body">
+              <!-- Table responsive wrapper -->
+              <div class="table-responsive mx-3">
+                <!--Table-->
+                <div>
+                  <!-- <input type="text" placeholder="buscar" class="form-control" v-model="name" /> -->
+                </div>
+                <table
+                  class="table table-striped table-bordered dt-responsive nowrap"
+                  style="width:100%"
+                  id="tblGrupos6"
+                >
+                  <thead>
+                    <tr>
+                      <th>Nombre</th>
+                      <th>Categoria</th>
+                      <th>Codigo Colciencias</th>
+                      <th>Vinculo</th>
+                      <th>Director</th>
+                      <th>Correo</th>
+                      <th>Telefono</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="item in searchGruposIngenieria" :key="item.id_grupo">
+                      <td>{{item.grupo }}</td>
+                      <td>{{ item.categoria }}</td>
+                      <td>{{ item.cod_colciencias }}</td>
+                      <td>
+                        <a :href="item.vinculo">{{item.vinculo}}</a>
+                      </td>
+                      <td>{{ item.nombre_usuario }}</td>
+                      <td>{{ item.email }}</td>
+                      <td>{{ item.telefono }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!--Table-->
+              </div>
+              <!-- Table responsive wrapper -->
+            </div>
           </div>
         </div>
       </div>
@@ -294,6 +455,7 @@ export default {
   data() {
     return {
       grupos: [],
+
       name: "",
       lorem:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
@@ -306,17 +468,106 @@ export default {
       isActive: null
     };
   },
-  created() {
-    ApiService.get("/grupo/informacion").then(response => {
-      this.grupos = response.data;
+  /* created() {
+    ApiService.get("/grupo/información").then(response => {
+      this.grupos = response.data.filter(
+        res => res.facultad == "Administración"
+      );
     });
+  }, */
+  created() {
+    ApiService.get("/grupo/informacion")
+      .then(response => {
+        this.grupos = response.data;
+      })
+      .then(res => {
+        $("#tblGrupos").DataTable({
+          language: {},
+          responsive: true
+        });
+      })
+      .then(res => {
+        $("#tblGrupos2").DataTable({
+          language: {},
+          responsive: true
+        });
+      })
+      .then(res => {
+        $("#tblGrupos3").DataTable({
+          language: {},
+          responsive: true
+        });
+      })
+      .then(res => {
+        $("#tblGrupos4").DataTable({
+          language: {},
+          responsive: true
+        });
+      })
+      .then(res => {
+        $("#tblGrupos5").DataTable({
+          language: {},
+          responsive: true
+        });
+      })
+      .then(res => {
+        $("#tblGrupos6").DataTable({
+          language: {},
+          responsive: true
+        });
+      });
   },
   computed: {
-    searchGrupo: function() {
+    searchGruposAdministracion: function() {
       /* return this.grupos.filter(item => item.grupo.includes(this.name)); */
 
       return this.grupos.filter(function(item) {
-        if (item.id_facultad == 2) {
+        if (item.facultad == "Administración") {
+          return item;
+        }
+      });
+    },
+    searchGruposAgrarias: function() {
+      /* return this.grupos.filter(item => item.grupo.includes(this.name)); */
+
+      return this.grupos.filter(function(item) {
+        if (item.facultad == "Ciencias Agrarias") {
+          return item;
+        }
+      });
+    },
+    searchGruposBasicas: function() {
+      /* return this.grupos.filter(item => item.grupo.includes(this.name)); */
+
+      return this.grupos.filter(function(item) {
+        if (item.facultad == "Ciencias Básicas, Sociales y Humanas") {
+          return item;
+        }
+      });
+    },
+    searchGruposVisuales: function() {
+      /* return this.grupos.filter(item => item.grupo.includes(this.name)); */
+
+      return this.grupos.filter(function(item) {
+        if (item.facultad == "Comunicación Audiovisual") {
+          return item;
+        }
+      });
+    },
+    searchGruposDeportes: function() {
+      /* return this.grupos.filter(item => item.grupo.includes(this.name)); */
+
+      return this.grupos.filter(function(item) {
+        if (item.facultad == "Educación Física Recreación y Deporte") {
+          return item;
+        }
+      });
+    },
+    searchGruposIngenieria: function() {
+      /* return this.grupos.filter(item => item.grupo.includes(this.name)); */
+
+      return this.grupos.filter(function(item) {
+        if (item.facultad == "Ingeniería") {
           return item;
         }
       });

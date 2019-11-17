@@ -69,10 +69,10 @@
                     class="form-control"
                     :class="{ 'is-invalid': submitted && $v.usuario.email.$error }"
                   />
-                  <div
-                    v-if="submitted && !$v.usuario.email.required"
-                    class="invalid-feedback"
-                  >El campo correo es requerido</div>
+                  <div v-if="submitted && $v.usuario.email.$error" class="invalid-feedback">
+                    <span v-if="!$v.usuario.email.required">El campo correo es requerido</span>
+                    <span v-if="!$v.usuario.email">Email no Valido</span>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label for="telefono">Telefono</label>
@@ -162,7 +162,7 @@
 </template>
 
 <script>
-import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
+import { required, email, minLength } from "vuelidate/lib/validators";
 import ApiService from "../services/api.service";
 
 export default {
@@ -234,7 +234,7 @@ export default {
       documento: { required },
       nombre_usuario: { required },
       apellido_usuario: { required },
-      email: { required },
+      email: { required, email },
       telefono: { required },
       estado: { required },
       id_tipo_usuario: { required }

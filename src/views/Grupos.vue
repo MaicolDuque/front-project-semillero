@@ -83,7 +83,6 @@ export default {
     deleteGrupo(id) {
       this.$swal({
         title: "Estas seguro de eliminar el registro?",
-        text: "You won't be able to revert this!",
         type: "warning",
         showCancelButton: true,
         confirmButtonText: "Si, Eliminar!",

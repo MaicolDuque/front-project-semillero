@@ -37,6 +37,7 @@ extend('required', {
 });
 
 
+
 ApiService.init(process.env.VUE_APP_URL_API); // Config URL for services
 
 // If token exists set header

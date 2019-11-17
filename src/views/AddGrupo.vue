@@ -110,8 +110,9 @@
 </template>
 
 <script>
-import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
+import { required } from "vuelidate/lib/validators";
 import ApiService from "../services/api.service";
+// eslint-disable-line no-use-before-define
 import Swal from "sweetalert2/dist/sweetalert2.all.min.js";
 
 export default {

@@ -162,7 +162,7 @@
 </template>
 
 <script>
-import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
+import { required, email } from "vuelidate/lib/validators";
 import ApiService from "../services/api.service";
 
 export default {
@@ -234,7 +234,7 @@ export default {
       documento: { required },
       nombre_usuario: { required },
       apellido_usuario: { required },
-      email: { required },
+      email: { required, email },
       telefono: { required },
       estado: { required },
       id_tipo_usuario: { required }
@@ -300,12 +300,13 @@ export default {
         /*  console.log(value); */
         retornado = value.data;
         console.log(retornado);
-
+        // eslint-disable-line no-use-before-define
         console.log(id_gr);
         ApiService.post("/coordinador", {
           id_usuario: value.data,
           id_semillero: id_gr
         }).then(function(value) {
+          // eslint-disable-line no-use-before-define
           console.log(value);
         });
       });

@@ -97,7 +97,7 @@
 <script>
 import ApiService from "../services/api.service";
 import Swal from "sweetalert2/dist/sweetalert2.all.min.js";
-import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
+import { required, email, sameAs } from "vuelidate/lib/validators";
 export default {
   data() {
     return {

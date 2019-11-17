@@ -8,7 +8,12 @@
           </div>
         </div>
       </div>
-      <button class="btn btn-outline-success" @click="AddPeriodo()">Agregar</button>
+      <button
+        class="btn btn-outline-success"
+        data-toggle="modal"
+        data-target="#exampleModal"
+      >Agregar</button>
+      <!--  <button class="btn btn-outline-success" @click="AddPeriodo()">Agregar</button> -->
     </section>
     <section class="content">
       <div class="row">
@@ -28,8 +33,8 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="periodo in periodos" :key="periodo.id_periodo">
-                    <td style="width: 70%">
+                  <tr v-for="periodo in periodos"  :key="'periodo-'+periodo.id_periodo">
+                    <td style="width: 70%"> 
                       <div style="cursor:pointer">
                         <a @click="showInfoPeriodo(periodo.id_periodo)">{{periodo.periodo}}</a>
                       </div>
@@ -38,11 +43,13 @@
                       <div class="btn-group" role="group">
                         <router-link
                           :to="{name: 'edit-periodo', params: { id: periodo.id_periodo}}"
-                          class="btn btn-primary"
+                          class="btn btn-outline-primary"
+                          style="margin: 2px"
                         >Editar</router-link>
                         <button
-                          class="btn btn-danger"
-                          @click="deletePeriodo(periodo.id_periodo)"
+                          style="margin: 2px"
+                          class="btn btn-outline-danger"
+                          @click="deleteperiodo(periodo.id_periodo)"
                         >Eliminar</button>
                       </div>
                     </td>
@@ -126,7 +133,7 @@
                           style="text-align: center; font-size: 1.6em;"
                         >Seleccione un periodo...</td>
                       </tr>
-                      <tr v-for="item in integrantes" :key="item.id_usuario">
+                      <tr v-for="item in integrantes" :key="'integrantes'+item.id_usuario">
                         <td>{{ item.documento }}</td>
                         <td>{{ item.nombre_usuario }}</td>
                         <td>{{ item.apellido_usuario }}</td>
@@ -180,7 +187,7 @@
                           style="text-align: center; font-size: 1.6em;"
                         >Seleccione un periodo...</td>
                       </tr>
-                      <tr v-for="actividad in actividades" :key="actividad.id_actividad">
+                      <tr v-for="actividad in actividades" :key="'actividades'+actividad.id_actividad">
                         <td>{{actividad.actividad}}</td>
                         <td>{{actividad.responsable}}</td>
                         <td>{{actividad.recursos}}</td>
@@ -215,21 +222,119 @@
         </div>
       </div>
     </section>
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="close"  data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            .
+            <div style="width: 50%; margin: 0 auto;">
+              <div class="card card-success">
+                <form @submit.prevent="handleSubmit">
+                  <div class="card-body">
+                    <div class="form-group">
+                      <label for="grupo">Periodo</label>
+                      <input
+                        type="text"
+                        v-model="periodo.periodo"
+                        id="periodo"
+                        name="periodo"
+                        placeholder="Periodo"
+                        class="form-control"
+                        :class="{ 'is-invalid': submitted && $v.periodo.periodo.$error }"
+                      />
+                      <div
+                        v-if="submitted && !$v.periodo.periodo.required"
+                        class="invalid-feedback"
+                      >El campo periodo es requerido</div>
+                    </div>
+                    <div class="form-group">
+                      <label for="grupo">Fecha Inicio</label>
+                      <input
+                        type="date"
+                        v-model="periodo.fecha_inicio"
+                        id="fecha_inicio"
+                        name="fecha_inicio"
+                        placeholder="fecha inicio"
+                        class="form-control"
+                        :class="{ 'is-invalid': submitted && $v.periodo.fecha_inicio.$error }"
+                      />
+                      <div
+                        v-if="submitted && !$v.periodo.fecha_inicio.required"
+                        class="invalid-feedback"
+                      >El campo fecha inicio es requerido</div>
+                    </div>
+                    <div class="form-group">
+                      <label for="grupo">Fecha Fin</label>
+                      <input
+                        type="date"
+                        v-model="periodo.fecha_fin"
+                        id="fecha_fin"
+                        name="fecha_fin"
+                        placeholder="fecha_fin"
+                        class="form-control"
+                        :class="{ 'is-invalid': submitted && $v.periodo.fecha_fin.$error }"
+                      />
+                      <div
+                        v-if="submitted && !$v.periodo.fecha_fin.required"
+                        class="invalid-feedback"
+                      >El campo fecha fin es requerido</div>
+                    </div>
+                    <div class="card-footer">
+                      <div class="modal-footer">
+                        <button type="submit" class="btn btn-outline-success">Guardar</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <!--  <button type="button" class="btn btn-primary">Save changes</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import ApiService from "../services/api.service";
+import Swal from "sweetalert2/dist/sweetalert2.all.min.js";
+import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
 export default {
   data() {
     return {
+      date: new Date(),
       nombre: "Semillero 1",
       periodos: [],
       semillero: {},
       integrantes: [],
       actividades: [],
       controlIntegrantes: 1,
-      idPeriodo: 0
+      idPeriodo: 0,
+      periodo: {
+        periodo: "",
+        fecha_inicio: "",
+        fecha_fin: "",
+        id_semillero: ""
+      },
+      submitted: false
     };
   },
 
@@ -253,16 +358,55 @@ export default {
     //       responsive: true
     // })
   },
+  //Reglas de validacion para VueValidate
+  validations: {
+    periodo: {
+      periodo: { required },
+      fecha_inicio: { required },
+      fecha_fin: { required }
+    }
+  },
   methods: {
-    deletePeriodo(id) {
-      alert(id);
+    handleSubmit(e) {
+      this.submitted = true;
+
+      // Se detiene aqui si es invalido, de lo contrario ejecuta el submit()
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        return;
+      }
+      /* this.updatePeriodo(); */
+      this.periodo.id_semillero = this.semillero.id_semillero;
+      this.addPeriodo();
+      /* alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.periodo)); */
+    },
+    deleteperiodo(id) {
+      this.$swal({
+        title: "Estas seguro de eliminar el registro?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Si, Eliminar!",
+        cancelButtonText: "Cancelar",
+        showCloseButton: true,
+        showLoaderOnConfirm: true
+      }).then(result => {
+        if (result.value) {
+          ApiService.delete(`/periodo/${id}`).then(response => {
+            let i = this.periodos.map(item => item.id_periodo).indexOf(id); // find index of your object
+            this.periodos.splice(i, 1);
+          });
+          this.$swal("Registro Eliminado");
+        } else {
+          this.$swal(" Accion Cancelada");
+        }
+      });
     },
 
     deleteIntegrante(id) {
       alert(id);
     },
 
-    showInfoPeriodo(id) {
+    showInfoPeriodo(id) {      
       this.idPeriodo = id;
       ApiService.get(`/integrante/semillero/periodo/${id}`)
         .then(response => {
@@ -303,9 +447,20 @@ export default {
 
     addActividad() {
       if (this.idPeriodo) {
-        return console.log("Ruta add integrante");
+        return  this.$router.push({
+          name: "agregar-actividad",
+          params: { id: this.$route.params.id, periodo: this.idPeriodo }
+        });
       }
       alert("Debe seleccionar un periodo..");
+    },
+    addPeriodo() {
+
+      ApiService.post("/periodo", this.periodo)
+      .then( newPeriodo => {
+        this.periodos.push(this.periodo)
+      })
+      .catch(function(response) {});
     }
   }
 };

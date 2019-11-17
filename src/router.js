@@ -22,6 +22,9 @@ import EditPeriodo from './views/EditPeriodo'
 import EditIntegrante from './views/EditIntegrante.vue'
 import AddIntegrante from './views/AddIntegrante.vue'
 
+//ACtividades
+import AddActividad from './views/AddActividad.vue'
+
 import Coordinadores from './views/Coordinadores.vue'
 
 import EditCoordinador from './views/EditCoordinador.vue'
@@ -37,6 +40,7 @@ import AsignarSemillero from './views/AsignarSemillero.vue'
 //
 import VistaGruposVisitante from './views/VistaGruposVisitante.vue'
 
+import AddPeriodo from './views/AddPeriodo.vue'
 //Periodos
 import Periodos from './views/Periodos.vue'
 
@@ -75,7 +79,9 @@ const router = new Router({
     { path: '/grupos_visitante', name: 'grupos_visitante', component: VistaGruposVisitante },
     { path: '/editar-integrante/:id', name: 'editar-integrante', component: EditIntegrante },
     { path: '/periodo/:id/agregar-integrante', name: 'agregar-integrante', component: AddIntegrante },
-    
+    { path: '/periodo/:id/addperiodo', name: 'addperiodo', component: AddPeriodo },
+    { path: '/periodo/:id/agregar-actividad/:periodo', name: 'agregar-actividad', component: AddActividad }
+
   ]
 })
 
