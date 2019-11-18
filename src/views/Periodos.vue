@@ -33,7 +33,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="periodo in periodos" :key="periodo.id_periodo">
+                  <tr v-for="periodo in periodos" :key="'periodo-'+periodo.id_periodo">
                     <td style="width: 70%">
                       <div style="cursor:pointer">
                         <a @click="showInfoPeriodo(periodo.id_periodo)">{{periodo.periodo}}</a>
@@ -133,7 +133,7 @@
                           style="text-align: center; font-size: 1.6em;"
                         >Seleccione un periodo...</td>
                       </tr>
-                      <tr v-for="item in integrantes" :key="item.id_usuario">
+                      <tr v-for="item in integrantes" :key="'integrantes'+item.id_usuario">
                         <td>{{ item.documento }}</td>
                         <td>{{ item.nombre_usuario }}</td>
                         <td>{{ item.apellido_usuario }}</td>
@@ -187,7 +187,10 @@
                           style="text-align: center; font-size: 1.6em;"
                         >Seleccione un periodo...</td>
                       </tr>
-                      <tr v-for="actividad in actividades" :key="actividad.id_actividad">
+                      <tr
+                        v-for="actividad in actividades"
+                        :key="'actividades'+actividad.id_actividad"
+                      >
                         <td>{{actividad.actividad}}</td>
                         <td>{{actividad.responsable}}</td>
                         <td>{{actividad.recursos}}</td>
@@ -375,6 +378,7 @@ export default {
   data() {
     return {
       proyectos: [],
+      date: new Date(),
       nombre: "Semillero 1",
       periodos: [],
       semillero: {},
@@ -541,12 +545,19 @@ export default {
 
     addActividad() {
       if (this.idPeriodo) {
-        return console.log("Ruta add integrante");
+        return this.$router.push({
+          name: "agregar-actividad",
+          params: { id: this.$route.params.id, periodo: this.idPeriodo }
+        });
       }
       alert("Debe seleccionar un periodo..");
     },
     addPeriodo() {
-      ApiService.post("periodo/", this.periodo).catch(function(response) {});
+      ApiService.post("/periodo", this.periodo)
+        .then(newPeriodo => {
+          this.periodos.push(this.periodo);
+        })
+        .catch(function(response) {});
     }
   }
 };
