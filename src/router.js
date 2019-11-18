@@ -22,6 +22,8 @@ import EditPeriodo from './views/EditPeriodo'
 import EditIntegrante from './views/EditIntegrante.vue'
 import AddIntegrante from './views/AddIntegrante.vue'
 
+import AddProyecto from './views/AddProyecto.vue'
+
 import Coordinadores from './views/Coordinadores.vue'
 
 import EditCoordinador from './views/EditCoordinador.vue'
@@ -41,8 +43,9 @@ import AddPeriodo from './views/AddPeriodo.vue'
 //Periodos
 import Periodos from './views/Periodos.vue'
 
+import EditProyecto from './views/EditProyecto.vue'
 
-
+import AddProductosProyectos from './views/AddProductosProyectos.vue'
 
 import Login from './views/Login.vue'
 import { TokenService } from "./services/storage.service"
@@ -76,7 +79,10 @@ const router = new Router({
     { path: '/grupos_visitante', name: 'grupos_visitante', component: VistaGruposVisitante },
     { path: '/editar-integrante/:id', name: 'editar-integrante', component: EditIntegrante },
     { path: '/periodo/:id/agregar-integrante', name: 'agregar-integrante', component: AddIntegrante },
+    { path: '/periodo/:id/agregar-proyecto', name: 'agregar-proyecto', component: AddProyecto },
     { path: '/periodo/:id/addperiodo', name: 'addperiodo', component: AddPeriodo },
+    { path: '/editproyecto/:id', name: 'editproyecto', component: EditProyecto },
+    { path: '/proyecto/:id/agregar-proyecto-producto', name: 'agregar-proyecto-producto', component: AddProductosProyectos },
 
   ]
 })

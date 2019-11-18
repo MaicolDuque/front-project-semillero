@@ -69,7 +69,12 @@ export default {
   created() {
     ApiService.get("/grupo")
       .then(response => {
-        this.grupos = response.data;
+        if (response.status === 204) {
+          alert("Not grupos ");
+          this.grupos = response.data;
+        } else {
+          this.grupos = response.data;
+        }
       })
       .then(res => {
         $("#tblGrupos").DataTable({

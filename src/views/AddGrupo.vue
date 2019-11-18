@@ -13,6 +13,7 @@
                 <div class="form-group">
                   <label for="grupo">Grupo</label>
                   <input
+                    pattern="[A-Za-z0-9_-/.]{1,50}"
                     type="text"
                     v-model="grupo.grupo"
                     id="grupo"
@@ -21,10 +22,13 @@
                     class="form-control"
                     :class="{ 'is-invalid': submitted && $v.grupo.grupo.$error }"
                   />
-                  <div
-                    v-if="submitted && !$v.grupo.grupo.required "
-                    class="invalid-feedback"
-                  >El campo grupo es requerido</div>
+
+                  <div v-if="submitted && $v.grupo.grupo.$error" class="invalid-feedback">
+                    <span v-if="!$v.grupo.grupo.required">El campo nombre es requerido</span>
+                    <span
+                      v-if="!$v.grupo.grupo.maxLength"
+                    >El nombre no debe superar los 50 caracteres</span>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label for="facultad">Categoria</label>
@@ -96,6 +100,7 @@
                     >{{ item.facultad }}</option>
                   </select>
                 </div>
+
                 <br />
                 <div class="form-group">
                   <button class="btn btn-outline-success">Guardar</button>
@@ -110,7 +115,7 @@
 </template>
 
 <script>
-import { required } from "vuelidate/lib/validators";
+import { required, minLength, maxLength } from "vuelidate/lib/validators";
 import ApiService from "../services/api.service";
 // eslint-disable-line no-use-before-define
 import Swal from "sweetalert2/dist/sweetalert2.all.min.js";
@@ -148,7 +153,10 @@ export default {
   //Reglas de validacion para VueValidate
   validations: {
     grupo: {
-      grupo: { required },
+      grupo: {
+        required,
+        maxLength: maxLength(50)
+      },
       id_categoria: { required },
       cod_colciencias: { required },
       id_facultad: { required },
@@ -193,7 +201,7 @@ export default {
         .then(response => {
           if (response.status == 200) {
             this.showAlert();
-          } else if (response.status == 221) {
+          } else if (response.status == 400) {
             this.showAlertGrupoExistente();
           }
         })

@@ -79,6 +79,10 @@ export default {
       .then(response => {
         this.usuarios = response.data;
       })
+      .catch(error => {
+        // handle this error here
+        alert("Not good man :(");
+      })
       .then(ress =>
         $("#coordinadores").DataTable({
           responsive: true

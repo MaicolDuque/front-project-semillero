@@ -166,7 +166,6 @@ export default {
         .then(response => this.$router.push({ name: "semilleros" }))
         .catch(error => console.log(error))
         .finally(() => (this.loading = false));
-      //
     },
     /*
     Cuendo se seleciona una opción del elemento <select></select>

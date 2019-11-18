@@ -478,7 +478,10 @@ export default {
   created() {
     ApiService.get("/grupo/informacion")
       .then(response => {
-        this.grupos = response.data;
+        if (response.status === 200) {
+          console.log(response.status);
+          this.grupos = response.data;
+        }
       })
       .then(res => {
         $("#tblGrupos").DataTable({
