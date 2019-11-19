@@ -175,8 +175,7 @@
                         <th>Nombre</th>
                         <th>Responsable</th>
                         <th>Recursos</th>
-                        <th>Registro</th>
-                        <th>Inicio / fin</th>
+                        <th>Registro</th>                        
                         <th>Acciones</th>
                       </tr>
                     </thead>
@@ -191,19 +190,24 @@
                         <td>{{actividad.actividad}}</td>
                         <td>{{actividad.responsable}}</td>
                         <td>{{actividad.recursos}}</td>
-                        <td>{{actividad.registro}}</td>
-                        <td>meses</td>
+                        <td>{{actividad.registro}}</td>                       
                         <td>
                           <div class="btn-group" role="group">
-                            <router-link
-                              :to="{name: 'editar-actividad', params: { id: actividad.id_actividad}}"
+                            <button                              
+                              @click="editActividad(actividad.id_actividad)"
                               class="btn btn-primary"
-                            >Editar</router-link>
+                            >Editar</button>
                             <button
                               class="btn btn-danger"
-                              @click="deleteIntegrante(actividad.id_actividad)"
+                              @click="deleteActividad(actividad.id_actividad)"
                             >Eliminar</button>
+
+                            <button
+                              class="btn btn-warning"
+                              @click="verProductos(actividad.id_actividad)"
+                            >Ver Productos</button>
                           </div>
+                          
                         </td>
                       </tr>
                     </tbody>
@@ -327,7 +331,7 @@ export default {
       integrantes: [],
       actividades: [],
       controlIntegrantes: 1,
-      idPeriodo: 0,
+      idPeriodo: 1,
       periodo: {
         periodo: "",
         fecha_inicio: "",
@@ -423,7 +427,7 @@ export default {
         });
 
       ApiService.get(`/actividad/periodo/semillero/${id}`)
-        .then(response => {
+        .then(response => {                    
           this.actividades = response.data;
         })
         .then(res => {
@@ -454,6 +458,16 @@ export default {
       }
       alert("Debe seleccionar un periodo..");
     },
+
+    editActividad(id){
+      if (this.idPeriodo) {
+        return  this.$router.push({
+          name: "editar-actividad",
+          params: { id: id, periodo: this.idPeriodo }
+        });
+      }
+      alert("Debe seleccionar un periodo..");
+    },
     addPeriodo() {
 
       ApiService.post("/periodo", this.periodo)
@@ -461,6 +475,21 @@ export default {
         this.periodos.push(newPeriodo.data)
       })
       .catch(function(response) {});
+    },
+
+    deleteActividad(id){
+      alert();
+      // ApiService.delete(`/actividadmes/${id}`)
+      // .then(r => {
+      //   ApiService.delete(`/producto/${id}`)
+      // })
+      // .then(r2 => {
+      //   ApiService.delete(`/actividad/${id}`)
+      // })
+    },
+
+    verProductos(id){
+      alert(id)
     }
   }
 };
