@@ -203,7 +203,7 @@ export default {
       ApiService.put(`/actividad/${this.$route.params.id}`, this.actividad)
       .then(id => {
         this.id_actividad = id.data
-        ApiService.put("/actividadmes", this.objectMesesSelected)
+        ApiService.put(`/actividadmes/${this.$route.params.id}`, this.objectMesesSelected)
       })
       .then(res =>{
         this.$router.go(-1);
