@@ -31,6 +31,7 @@
                       <th>Nombre</th>
                       <th>Categoria</th>
                       <th>Código Colciencias</th>
+                      <th>Vinculo Colciencias</th>
                       <th>Facultad</th>
                       <th>Acciones</th>
                     </tr>
@@ -40,6 +41,7 @@
                       <td>{{ item.grupo }}</td>
                       <td>{{ item.categoria }}</td>
                       <td>{{ item.cod_colciencias }}</td>
+                      <td>{{ item.vinculo }}</td>
                       <td>{{ item.facultad }}</td>
                       <td style="text-align: center">
                         <div class="btn-group" role="group">
@@ -92,7 +94,6 @@ export default {
       })
       .then(res => {
         $("#tblGrupos").DataTable({
-          language: {},
           responsive: true
         });
       })
@@ -115,10 +116,29 @@ export default {
         showLoaderOnConfirm: true
       }).then(result => {
         if (result.value) {
-          ApiService.delete(`/grupo/${id}`).then(response => {
+          ApiService.delete(`/grupo/${id}`)
+            .then(response => {
+              if (response.status === 200) {
+                let i = this.grupos.map(item => item.id_grupo).indexOf(id); // find index of your object
+                this.grupos.splice(i, 1);
+                this.$swal.fire({
+                  type: "success",
+                  title: "Eliminado con exito",
+                  showConfirmButton: false,
+                  timer: 1500
+                });
+              } else if (response.status === 222) {
+                alert("no se puedo borrar el registro");
+              }
+            })
+            .catch(error => {
+              console.log(error);
+              this.errored = true;
+            });
+          /* ApiService.delete(`/grupo/${id}`).then(response => {
             let i = this.grupos.map(item => item.id_grupo).indexOf(id); // find index of your object
-            this.grupos.splice(i, 1);
-          });
+            this.grupos.splice(i, 1); */
+
           this.$swal("Registro Eliminado");
         } else {
           this.$swal(" Accion Cancelada");

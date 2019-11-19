@@ -388,7 +388,7 @@ export default {
       integrantes: [],
       actividades: [],
       controlIntegrantes: 1,
-      idPeriodo: 1,
+      idPeriodo: 0,
       periodo: {
         periodo: "",
         fecha_inicio: "",

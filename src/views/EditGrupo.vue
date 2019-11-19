@@ -4,94 +4,115 @@
     <nav class="nav grey lighten-4 py-4">
       <router-link to="/grupos" class="nav-item nav-link">Grupos</router-link>
     </nav>
-    <section class="content">
-      <div style="width: 50%; margin: 0 auto;">
-        <div class="card card-success">
-          <form @submit.prevent="handleSubmit" role="form">
-            <div class="card-body">
-              <div class="form-group">
-                <label for="grupo">Grupo</label>
-                <input
-                  type="text"
-                  pattern="[ A-Za-z0-9 ]+"
-                  title=" Solo Letras y números. Tamaño máximo: 50"
-                  v-model="grupo.grupo"
-                  id="grupo"
-                  name="grupo"
-                  placeholder="Nombre"
-                  class="form-control"
-                  :class="{ 'is-invalid': submitted && $v.grupo.grupo.$error }"
-                />
-                <div v-if="submitted && $v.grupo.grupo.$error" class="invalid-feedback">
-                  <span v-if="!$v.grupo.grupo.required">El campo nombre es requerido</span>
-                  <span v-if="!$v.grupo.grupo.maxLength">El campo no debe superar los 50 caracteres</span>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="cod_colciencias">Codigo Colciencias</label>
-                <input
-                  type="text"
-                  v-model="grupo.cod_colciencias"
-                  id="cod_colciencias"
-                  name="cod_colciencias"
-                  class="form-control"
-                  placeholder="Codigo Colciencias"
-                  :class="{ 'is-invalid': submitted && $v.grupo.cod_colciencias.$error }"
-                />
-                <div
-                  v-if="submitted && !$v.grupo.cod_colciencias.required"
-                  class="invalid-feedback"
-                >El campo Codigo de cod_colciencias es requerido</div>
-              </div>
-              <div class="form-group">
-                <label for="cod_colciencias">Codigo cod_colciencias</label>
-                <input
-                  type="text"
-                  v-model="grupo.vinculo"
-                  id="vinculo"
-                  name="vinculo"
-                  class="form-control"
-                  placeholder="Vinculo Colciencias"
-                  :class="{ 'is-invalid': submitted && $v.grupo.vinculo.$error }"
-                />
-                <div
-                  v-if="submitted && !$v.grupo.vinculo.required"
-                  class="invalid-feedback"
-                >El campo vinculo cod_colciencias es requerido</div>
-              </div>
-              <div class="form-group">
-                <label>Categoria</label>
-                <select
-                  class="form-control"
-                  required="required"
-                  style="width: 100%;"
-                  v-model="grupo.id_categoria"
-                >
-                  <option
-                    v-for="option in categorias"
-                    v-bind:key="option.id_categoria"
-                    :value="option.id_categoria"
-                  >{{ option.categoria }}</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Facultad</label>
-                <select class="form-control" style="width: 100%;" v-model="grupo.id_facultad">
-                  <option
-                    v-for="facultad in facultades"
-                    v-bind:key="facultad.id_facultad"
-                    :value="facultad.id_facultad"
-                  >{{ facultad.facultad }}</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <button class="btn btn-outline-success">Actualizar</button>
-              </div>
-            </div>
-          </form>
+    <section v-if="errored">
+      <p>Lo sentimos, no es posible Actualizar el registro en este momento</p>
+    </section>
+    <section v-else>
+      <div v-if="loading">
+        cargando..
+        <div class="spinner-border text-success" role="status">
+          <span class="sr-only">Loading...</span>
         </div>
       </div>
-      <pre>{{$data}}</pre>
+      <div v-else></div>
+      <section class="content">
+        <div style="width: 50%; margin: 0 auto;">
+          <div class="card card-success">
+            <form @submit.prevent="handleSubmit" role="form">
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="grupo">Grupo</label>
+                  <input
+                    type="text"
+                    pattern="[ A-Za-z0-9 ]+"
+                    title=" Solo Letras y números. Tamaño máximo: 50"
+                    v-model="grupo.grupo"
+                    id="grupo"
+                    name="grupo"
+                    placeholder="Nombre"
+                    class="form-control"
+                    :class="{ 'is-invalid': submitted && $v.grupo.grupo.$error }"
+                  />
+                  <div v-if="submitted && $v.grupo.grupo.$error" class="invalid-feedback">
+                    <span v-if="!$v.grupo.grupo.required">El campo nombre es requerido</span>
+                    <span
+                      v-if="!$v.grupo.grupo.maxLength"
+                    >El campo no debe superar los 50 caracteres</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="cod_colciencias">Código Colciencias</label>
+                  <input
+                    type="text"
+                    pattern="[A-Za-z0-9 ]+"
+                    title=" Solo Letras y números. Tamaño máximo: 10 caracteres"
+                    v-model="grupo.cod_colciencias"
+                    id="cod_colciencias"
+                    name="cod_colciencias"
+                    class="form-control"
+                    placeholder="Codigo Colciencias"
+                    :class="{ 'is-invalid': submitted && $v.grupo.cod_colciencias.$error }"
+                  />
+                  <div v-if="submitted && $v.grupo.cod_colciencias.$error" class="invalid-feedback">
+                    <span v-if="!$v.grupo.cod_colciencias.required">El campo es requerido</span>
+                    <span
+                      v-if="!$v.grupo.cod_colciencias.maxLength"
+                    >El campo no debe superar los 10 caracteres</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="cod_colciencias">Vinculo Codigo Colciencias</label>
+                  <input
+                    type="text"
+                    pattern="[A-Za-z0-9 ./]+"
+                    title=" Solo Letras, números,punto, '/' Tamaño máximo: 150 caracteres"
+                    v-model="grupo.vinculo"
+                    id="vinculo"
+                    name="vinculo"
+                    class="form-control"
+                    placeholder="Vinculo Colciencias"
+                    :class="{ 'is-invalid': submitted && $v.grupo.vinculo.$error }"
+                  />
+                  <div v-if="submitted && $v.grupo.vinculo.$error" class="invalid-feedback">
+                    <span v-if="!$v.grupo.vinculo.required">El campo es requerido</span>
+                    <span
+                      v-if="!$v.grupo.vinculo.maxLength"
+                    >El nombre no debe superar los 150 caracteres</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Categoria</label>
+                  <select
+                    class="form-control"
+                    required="required"
+                    style="width: 100%;"
+                    v-model="grupo.id_categoria"
+                  >
+                    <option
+                      v-for="option in categorias"
+                      v-bind:key="option.id_categoria"
+                      :value="option.id_categoria"
+                    >{{ option.categoria }}</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Facultad</label>
+                  <select class="form-control" style="width: 100%;" v-model="grupo.id_facultad">
+                    <option
+                      v-for="facultad in facultades"
+                      v-bind:key="facultad.id_facultad"
+                      :value="facultad.id_facultad"
+                    >{{ facultad.facultad }}</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <button class="btn btn-outline-success">Actualizar</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
     </section>
   </div>
 </template>
@@ -103,6 +124,8 @@ import { required, maxLength } from "vuelidate/lib/validators";
 export default {
   data() {
     return {
+      loading: true,
+      errored: false,
       categorias: [],
       facultades: [],
       grupo: {
@@ -117,28 +140,50 @@ export default {
   },
 
   created() {
-    console.log(this.$route.params.id);
-    ApiService.get(`/grupo/${this.$route.params.id}/edit`).then(response => {
-      this.grupo = response.data;
-    });
+    ApiService.get(`/grupo/${this.$route.params.id}/edit`)
+      .then(response => {
+        if (response.status === 204) {
+          alert("No se encontro un grupo  ");
+        } else if (response.status === 200) {
+          this.grupo = response.data;
+        }
+      })
+      .catch(error => {
+        console.log(error);
+        this.errored = true;
+      })
+      .finally(() => (this.loading = false));
 
-    ApiService.get("/categoria").then(res => (this.categorias = res.data));
+    ApiService.get("/categoria")
+      .then(res => (this.categorias = res.data))
+      .catch(error => {
+        console.log(error);
+        this.errored = true;
+      });
     // .then(res2 => $('.select2').select2())
 
-    ApiService.get("/facultad").then(response => {
-      this.facultades = response.data;
-    });
+    ApiService.get("/facultad")
+      .then(response => {
+        this.facultades = response.data;
+      })
+      .catch(error => {
+        console.log(error);
+        this.errored = true;
+      });
   },
   mounted() {},
   computed: {},
   //Reglas de validacion para VueValidate
   validations: {
     grupo: {
-      grupo: { required },
+      grupo: {
+        required,
+        maxLength: maxLength(50)
+      },
       id_categoria: { required },
-      cod_colciencias: { required },
+      cod_colciencias: { required, maxLength: maxLength(10) },
       id_facultad: { required },
-      vinculo: { required }
+      vinculo: { required, maxLength: maxLength(150) }
     }
   },
   methods: {
@@ -166,11 +211,16 @@ export default {
     updateGrupo(event) {
       ApiService.put(`/grupo/${this.$route.params.id}`, this.grupo)
         .then(response => {
-          this.showAlert();
-          this.$router.push({ name: "grupos" });
+          if (response.status === 200) {
+            this.showAlert();
+            this.$router.push({ name: "grupos" });
+          } else if (response.status === 204) {
+            alert("este grupo no existe");
+          }
         })
-        .catch(function(response) {
-          alert("No se pudo crear el grupo");
+        .catch(error => {
+          console.log(error);
+          this.errored = true;
         });
     }
   }
