@@ -196,7 +196,7 @@
                         <td>
                           <div class="btn-group" role="group">
                             <router-link
-                              :to="{name: 'editar-integrante', params: { id: actividad.id_actividad}}"
+                              :to="{name: 'editar-actividad', params: { id: actividad.id_actividad}}"
                               class="btn btn-primary"
                             >Editar</router-link>
                             <button
@@ -458,7 +458,7 @@ export default {
 
       ApiService.post("/periodo", this.periodo)
       .then( newPeriodo => {
-        this.periodos.push(this.periodo)
+        this.periodos.push(newPeriodo.data)
       })
       .catch(function(response) {});
     }
