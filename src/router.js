@@ -25,6 +25,7 @@ import AddIntegrante from './views/AddIntegrante.vue'
 import AddProyecto from './views/AddProyecto.vue'
 //ACtividades
 import AddActividad from './views/AddActividad.vue'
+import EditActividad from './views/EditActividad.vue'
 
 import Coordinadores from './views/Coordinadores.vue'
 
@@ -85,7 +86,8 @@ const router = new Router({
     { path: '/periodo/:id/addperiodo', name: 'addperiodo', component: AddPeriodo },
     { path: '/editproyecto/:id', name: 'editproyecto', component: EditProyecto },
     { path: '/proyecto/:id/agregar-proyecto-producto', name: 'agregar-proyecto-producto', component: AddProductosProyectos },
-    { path: '/periodo/:id/agregar-actividad/:periodo', name: 'agregar-actividad', component: AddActividad }
+    { path: '/periodo/:id/agregar-actividad/:periodo', name: 'agregar-actividad', component: AddActividad },
+    { path: '/periodo/:periodo/editar-actividad/:id', name: 'editar-actividad', component: EditActividad },
 
   ]
 })
