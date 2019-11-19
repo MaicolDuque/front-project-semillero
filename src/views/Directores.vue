@@ -10,49 +10,65 @@
           <div class="card">
             <!-- /.card-header -->
             <div class="card-body">
-              <table id="example2" class="table table-bordered table-hover" style="width: 100%">
-                <thead>
-                  <tr>
-                    <th>Documento</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Telefono</th>
-                    <th>Estado</th>
-                    <th>Email</th>
-                    <th>Tipo usuario</th>
+              <section v-if="errored">
+                <p>Lo sentimos, no es posible obtener la información en este momento, por favor intente nuevamente mas tarde</p>
+              </section>
+              <section v-else>
+                <div v-if="loading">
+                  cargando..
+                  <div class="spinner-border text-success" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                </div>
+                <div v-else></div>
+                <table
+                  id="tblexample2"
+                  class="table table-bordered table-hover"
+                  style="width: 100%"
+                >
+                  <thead>
+                    <tr>
+                      <th>Documento</th>
+                      <th>Nombre</th>
+                      <th>Apellido</th>
+                      <th>Telefono</th>
+                      <th>Estado</th>
+                      <th>Email</th>
+                      <th>Tipo usuario</th>
 
-                    <th>Grupo</th>
-                    <th data-priority="2">Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="item in usuarios" :key="item.id_usuario">
-                    <td>{{ item.documento }}</td>
-                    <td>{{ item.nombre_usuario }}</td>
-                    <td>{{ item.apellido_usuario }}</td>
-                    <td>{{ item.telefono }}</td>
-                    <td>{{ item.estado }}</td>
-                    <td>{{ item.email }}</td>
-                    <td>{{ item.tipo_usuario }}</td>
+                      <th>Grupo</th>
+                      <th data-priority="2">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="item in usuarios" :key="item.id_usuario">
+                      <td>{{ item.documento }}</td>
+                      <td>{{ item.nombre_usuario }}</td>
+                      <td>{{ item.apellido_usuario }}</td>
+                      <td>{{ item.telefono }}</td>
+                      <td>{{ item.estado }}</td>
+                      <td>{{ item.email }}</td>
+                      <td>{{ item.tipo_usuario }}</td>
 
-                    <td>{{ item.grupo }}</td>
-                    <td>
-                      <div class="btn-group" role="group">
-                        <router-link
-                          :to="{name: 'editdirector', params: { id: item.id_usuario}}"
-                          class="btn btn-outline-primary"
-                          style="margin: 2px"
-                        >Editar</router-link>
-                        <button
-                          style="margin: 2px"
-                          class="btn btn-outline-danger"
-                          @click="deleteDirector(item.id_usuario)"
-                        >Eliminar</button>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                      <td>{{ item.grupo }}</td>
+                      <td>
+                        <div class="btn-group" role="group">
+                          <router-link
+                            :to="{name: 'editdirector', params: { id: item.id_usuario}}"
+                            class="btn btn-outline-primary"
+                            style="margin: 2px"
+                          >Editar</router-link>
+                          <button
+                            style="margin: 2px"
+                            class="btn btn-outline-danger"
+                            @click="deleteDirector(item.id_usuario)"
+                          >Eliminar</button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
             </div>
             <!-- /.card-body -->
           </div>
@@ -67,19 +83,31 @@ import ApiService from "../services/api.service";
 export default {
   data() {
     return {
+      loading: true,
+      errored: false,
       usuarios: []
     };
   },
   created() {
     ApiService.get("/usuario/director")
       .then(response => {
-        this.usuarios = response.data;
+        if (response.status === 204) {
+          alert("No existen usuarios para mostrar ");
+          this.usuarios = response.data;
+        } else {
+          this.usuarios = response.data;
+        }
       })
-      .then(ress =>
-        $("#example2").DataTable({
+      .then(res => {
+        $("#tblexample2").DataTable({
           responsive: true
-        })
-      );
+        });
+      })
+      .catch(error => {
+        console.log(error);
+        this.errored = true;
+      })
+      .finally(() => (this.loading = false));
   },
   methods: {
     showAlert() {

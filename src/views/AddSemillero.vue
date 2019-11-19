@@ -17,10 +17,9 @@
               <label for="semillero">Nombre</label>
               <input
                 type="text"
-                required
-                pattern="[/^\s*$/A-Za-z0-9 ]+"
+                pattern="[A-Za-z0-9 ]+"
                 title=" Solo Letras y números. Tamaño máximo: 50"
-                v-model="semillero.semillero"
+                v-model.trim="semillero.semillero"
                 id="semillero"
                 name="semillero"
                 placeholder="Nombre"
@@ -39,9 +38,9 @@
               <label for="objetivo">Objetivo</label>
               <input
                 type="text"
-                pattern="[ A-Za-z0-9 ]+"
+                pattern="[A-Za-z0-9 ]+"
                 title=" Solo Letras y números. Tamaño máximo: 200"
-                v-model="semillero.objetivo"
+                v-model.trim="semillero.objetivo"
                 id="objetivo"
                 name="objetivo"
                 placeholder="objetivo"
@@ -59,9 +58,9 @@
               <label for="descripcion">Descripción</label>
               <input
                 type="text"
-                pattern="[ A-Za-z 0-9]+"
+                pattern="[A-Za-z0-9 ]+"
                 title=" Solo Letras y números. Tamaño máximo: 200"
-                v-model="semillero.descripcion"
+                v-model.trim="semillero.descripcion"
                 id="descripcion"
                 name="descripcion"
                 placeholder="descripcion"
@@ -95,7 +94,6 @@
               <button class="btn btn-primary">Guardar</button>
             </div>
           </form>
-          <!-- <pre>{{$data}}</pre> -->
         </div>
       </div>
     </div>
@@ -137,8 +135,7 @@ export default {
     semillero: {
       semillero: {
         required,
-        maxLength: maxLength(50),
-        minLength: minLength(1)
+        maxLength: maxLength(50)
       },
       objetivo: { required, maxLength: maxLength(200) },
       descripcion: { required, maxLength: maxLength(200) },
@@ -210,7 +207,7 @@ export default {
       if (this.$v.$invalid) {
         return;
       }
-      /* this.addSemillero(); */
+      this.addSemillero();
       /* alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.semillero)); */
     }
   }
