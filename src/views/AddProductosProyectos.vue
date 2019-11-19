@@ -72,6 +72,54 @@
           </div>
         </div>
       </section>
+      <section class="content">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table
+                  id="tblproductosTabal"
+                  class="table table-striped table-bordered dt-responsive nowrap"
+                  style="width:100%"
+                >
+                  <thead>
+                    <tr>
+                      <th>Nombre</th>
+                      <th>Tipo</th>
+                      <th>vinculo</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="item in productosTabal" :key="item.id_producto">
+                      <td>{{ item.producto }}</td>
+                      <td>{{ item.tipo_producto }}</td>
+                      <td>{{ item.vinculo }}</td>
+                      <td style="text-align: center">
+                        <div class="btn-group" role="group">
+                          <router-link
+                            :to="{name: 'editgrupo', params: { id: item.id_grupo}}"
+                            class="btn btn-outline-primary"
+                            style="margin: 2px"
+                          >Editar</router-link>
+
+                          <button
+                            style="margin: 2px"
+                            class="btn btn-outline-danger"
+                            @click="deleteGrupo(item.id_grupo)"
+                          >Eliminar</button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
 
     <pre>{{$data}}</pre>
@@ -86,6 +134,7 @@ import Swal from "sweetalert2/dist/sweetalert2.all.min.js";
 export default {
   data() {
     return {
+      productosTabal: {},
       //Almacena como respuesta las categorias enviadas por el Api
       tipoProducto: {},
       //Almacena los datos del producto a crear
@@ -95,6 +144,18 @@ export default {
       },
       submitted: false
     };
+  },
+  created() {
+    console.log(this.$route.params.id);
+    ApiService.get(`/producto/proyecto/${this.$route.params.id}`)
+      .then(response => {
+        this.productosTabal = response.data;
+      })
+      .then(ress =>
+        $("#tblproductosTabal").DataTable({
+          responsive: true
+        })
+      );
   },
   //Obtiene las falcultades una vez se llama al componente
   mounted() {

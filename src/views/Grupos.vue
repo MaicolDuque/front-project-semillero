@@ -10,44 +10,56 @@
           <div class="card">
             <!-- /.card-header -->
             <div class="card-body">
-              <table
-                id="tblGrupos"
-                class="table table-striped table-bordered dt-responsive nowrap"
-                style="width:100%"
-              >
-                <thead>
-                  <tr>
-                    <th>Nombre</th>
-                    <th>Categoria</th>
-                    <th>Codigo Colciencias</th>
-                    <th>Facultad</th>
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="item in grupos" :key="item.id_grupo">
-                    <td>{{ item.grupo }}</td>
-                    <td>{{ item.categoria }}</td>
-                    <td>{{ item.cod_colciencias }}</td>
-                    <td>{{ item.facultad }}</td>
-                    <td style="text-align: center">
-                      <div class="btn-group" role="group">
-                        <router-link
-                          :to="{name: 'editgrupo', params: { id: item.id_grupo}}"
-                          class="btn btn-outline-primary"
-                          style="margin: 2px"
-                        >Editar</router-link>
+              <section v-if="errored">
+                <p>Lo sentimos, no es posible obtener la información en este momento, por favor intente nuevamente mas tarde</p>
+              </section>
+              <section v-else>
+                <div v-if="loading">
+                  cargando..
+                  <div class="spinner-border text-success" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                </div>
+                <div v-else></div>
+                <table
+                  id="tblGrupos"
+                  class="table table-striped table-bordered dt-responsive nowrap"
+                  style="width:100%"
+                >
+                  <thead>
+                    <tr>
+                      <th>Nombre</th>
+                      <th>Categoria</th>
+                      <th>Código Colciencias</th>
+                      <th>Facultad</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="item in grupos" :key="item.id_grupo">
+                      <td>{{ item.grupo }}</td>
+                      <td>{{ item.categoria }}</td>
+                      <td>{{ item.cod_colciencias }}</td>
+                      <td>{{ item.facultad }}</td>
+                      <td style="text-align: center">
+                        <div class="btn-group" role="group">
+                          <router-link
+                            :to="{name: 'editgrupo', params: { id: item.id_grupo}}"
+                            class="btn btn-outline-primary"
+                            style="margin: 2px"
+                          >Editar</router-link>
 
-                        <button
-                          style="margin: 2px"
-                          class="btn btn-outline-danger"
-                          @click="deleteGrupo(item.id_grupo)"
-                        >Eliminar</button>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                          <button
+                            style="margin: 2px"
+                            class="btn btn-outline-danger"
+                            @click="deleteGrupo(item.id_grupo)"
+                          >Eliminar</button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
             </div>
             <!-- /.card-body -->
           </div>
@@ -63,6 +75,8 @@ import Swal from "sweetalert2/dist/sweetalert2.all.min.js";
 export default {
   data() {
     return {
+      loading: true,
+      errored: false,
       grupos: []
     };
   },
@@ -70,7 +84,7 @@ export default {
     ApiService.get("/grupo")
       .then(response => {
         if (response.status === 204) {
-          alert("Not grupos ");
+          alert("No existen grupos para mostrar ");
           this.grupos = response.data;
         } else {
           this.grupos = response.data;
@@ -81,7 +95,12 @@ export default {
           language: {},
           responsive: true
         });
-      });
+      })
+      .catch(error => {
+        console.log(error);
+        this.errored = true;
+      })
+      .finally(() => (this.loading = false));
   },
   mounted: function() {},
   methods: {
