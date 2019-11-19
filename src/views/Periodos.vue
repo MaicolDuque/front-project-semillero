@@ -35,8 +35,8 @@
                 <tbody>
                   <tr v-for="periodo in periodos" :key="'periodo-'+periodo.id_periodo">
                     <td style="width: 70%">
-                      <div style="cursor:pointer">
-                        <a @click="showInfoPeriodo(periodo.id_periodo)">{{periodo.periodo}}</a>
+                      <div style="cursor:pointer" @click="showInfoPeriodo(periodo.id_periodo)">
+                        <a >{{periodo.periodo}}</a>
                       </div>
                     </td>
                     <td style="width: 30%">
@@ -573,15 +573,14 @@ export default {
         .catch(function(response) {});
     },
 
-    deleteActividad(id) {
-      alert();
-      // ApiService.delete(`/actividadmes/${id}`)
-      // .then(r => {
-      //   ApiService.delete(`/producto/${id}`)
-      // })
-      // .then(r2 => {
-      //   ApiService.delete(`/actividad/${id}`)
-      // })
+    deleteActividad(id) {      
+      ApiService.delete(`/actividad/${id}`)
+      .then(r => {
+        let i = this.actividades.map(item => item.id_actividad).indexOf(id); // find index of your object
+        this.actividades.splice(i, 1);
+        alert("Actividad eliminada correctamente!")
+      })
+      .catch(r2 => alert("Error al eliminar actividad!"))
     },
 
     verProductos(id) {
