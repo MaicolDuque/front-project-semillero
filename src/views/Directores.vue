@@ -22,7 +22,7 @@
                     <th>Tipo usuario</th>
 
                     <th>Grupo</th>
-                    <th>Acciones</th>
+                    <th data-priority="2">Acciones</th>
                   </tr>
                 </thead>
                 <tbody>

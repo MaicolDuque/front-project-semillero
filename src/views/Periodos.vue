@@ -118,12 +118,12 @@
                   >
                     <thead>
                       <tr>
-                        <th>Documento</th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Email</th>
-                        <th>Tipo usuario</th>
-                        <th>Acciones</th>
+                        <th data-priority="1">Documento</th>
+                        <th data-priority="3">Nombre</th>
+                        <th data-priority="4">Apellido</th>
+                        <th data-priority="5">Email</th>
+                        <th data-priority="6">Tipo usuario</th>
+                        <th data-priority="2">Acciones</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -176,7 +176,7 @@
                         <th>Responsable</th>
                         <th>Recursos</th>
                         <th>Registro</th>
-                        <th>Acciones</th>
+                        <th data-priority="2">Acciones</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -388,7 +388,7 @@ export default {
       integrantes: [],
       actividades: [],
       controlIntegrantes: 1,
-      idPeriodo: 1,
+      idPeriodo: 0,
       periodo: {
         periodo: "",
         fecha_inicio: "",
