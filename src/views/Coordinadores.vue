@@ -26,7 +26,7 @@
                     <th>Tipo usuario</th>
                     <!-- <th>Rol</th> -->
                     <th>Semillero</th>
-                    <th>Acciones</th>
+                    <th data-priority="2">Acciones</th>
                   </tr>
                 </thead>
                 <tbody>

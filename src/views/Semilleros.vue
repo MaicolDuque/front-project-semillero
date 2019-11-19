@@ -64,6 +64,48 @@
                   </tbody>
                 </table>
               </section>
+              <table
+                id="tblGrupos"
+                class="table table-striped table-bordered dt-responsive nowrap"
+                style="width:100%"
+              >
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Objetivo</th>
+                    <th>Descripción</th>
+                    <th>Grupo</th>
+                    <th data-priority="2">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="item in semilleros" :key="item.id_semillero">
+                    <td>{{ item.semillero }}</td>
+                    <td>{{ item.objetivo }}</td>
+                    <td>{{ item.descripcion }}</td>
+                    <td>{{ item.grupo }}</td>
+                    <td>
+                      <div class="btn-group" role="group">
+                        <router-link
+                          :to="{name: 'editsemillero', params: { id: item.id_semillero}}"
+                          class="btn btn-outline-primary"
+                          style="margin: 2px"
+                        >Editar</router-link>
+                        <button
+                          style="margin: 2px"
+                          class="btn btn-outline-danger"
+                          @click="deleteSemillero(item.id_semillero)"
+                        >Eliminar</button>
+                        <router-link
+                          :to="{name: 'periodos', params: { id: item.id_semillero}}"
+                          style="margin: 2px"
+                          class="btn btn-outline-warning"
+                        >Periodos</router-link>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
             <!-- /.card-body -->
           </div>
