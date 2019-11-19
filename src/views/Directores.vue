@@ -22,7 +22,7 @@
                     <th>Tipo usuario</th>
 
                     <th>Grupo</th>
-                    <th>Acciones</th>
+                    <th data-priority="2">Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -92,6 +92,7 @@ export default {
       });
     },
     deleteDirector(id) {
+      alert("aca");
       ApiService.delete(`/usuario/${id}`).then(response => {
         let i = this.usuarios.map(item => item.id_usuario).indexOf(id); // find index of your object
         this.usuarios.splice(i, 1);

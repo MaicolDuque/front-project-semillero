@@ -5,6 +5,9 @@
       <nav class="nav grey lighten-4 py-4">
         <router-link to="/grupos" class="nav-item nav-link">Grupos</router-link>
       </nav>
+      <section v-if="errored">
+        <p>Lo sentimos, no es posible Guardar el registro en este momento</p>
+      </section>
       <section class="content">
         <div style="width: 50%; margin: 0 auto;">
           <div class="card card-success">
@@ -14,6 +17,8 @@
                   <label for="grupo">Grupo</label>
                   <input
                     type="text"
+                    pattern="[ A-Za-z0-9 ]+"
+                    title=" Solo Letras y números. Tamaño máximo: 50"
                     v-model="grupo.grupo"
                     id="grupo"
                     name="grupo"
@@ -21,10 +26,13 @@
                     class="form-control"
                     :class="{ 'is-invalid': submitted && $v.grupo.grupo.$error }"
                   />
-                  <div
-                    v-if="submitted && !$v.grupo.grupo.required "
-                    class="invalid-feedback"
-                  >El campo grupo es requerido</div>
+
+                  <div v-if="submitted && $v.grupo.grupo.$error" class="invalid-feedback">
+                    <span v-if="!$v.grupo.grupo.required">El campo nombre es requerido</span>
+                    <span
+                      v-if="!$v.grupo.grupo.maxLength"
+                    >El nombre no debe superar los 50 caracteres</span>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label for="facultad">Categoria</label>
@@ -46,9 +54,11 @@
                   </select>
                 </div>
                 <div class="form-group">
-                  <label for="cod_colciencias">Codigo cod_colciencias</label>
+                  <label for="cod_colciencias">Código Colciencias</label>
                   <input
                     type="text"
+                    pattern="[A-Za-z0-9 ]+"
+                    title=" Solo Letras y números. Tamaño máximo: 10 caracteres"
                     v-model="grupo.cod_colciencias"
                     id="cod_colciencias"
                     name="cod_colciencias"
@@ -56,15 +66,19 @@
                     placeholder="Codigo Colciencias"
                     :class="{ 'is-invalid': submitted && $v.grupo.cod_colciencias.$error }"
                   />
-                  <div
-                    v-if="submitted && !$v.grupo.cod_colciencias.required"
-                    class="invalid-feedback"
-                  >El campo Codigo de cod_colciencias es requerido</div>
+                  <div v-if="submitted && $v.grupo.cod_colciencias.$error" class="invalid-feedback">
+                    <span v-if="!$v.grupo.cod_colciencias.required">El campo es requerido</span>
+                    <span
+                      v-if="!$v.grupo.cod_colciencias.maxLength"
+                    >El campo no debe superar los 10 caracteres</span>
+                  </div>
                 </div>
                 <div class="form-group">
-                  <label for="cod_colciencias">Codigo cod_colciencias</label>
+                  <label for="cod_colciencias">Vinculo Colciencias</label>
                   <input
                     type="text"
+                    pattern="[A-Za-z0-9 ./]+"
+                    title=" Solo Letras, números,punto, '/' Tamaño máximo: 150 caracteres"
                     v-model="grupo.vinculo"
                     id="vinculo"
                     name="vinculo"
@@ -72,10 +86,12 @@
                     placeholder="Vinculo Colciencias"
                     :class="{ 'is-invalid': submitted && $v.grupo.vinculo.$error }"
                   />
-                  <div
-                    v-if="submitted && !$v.grupo.vinculo.required"
-                    class="invalid-feedback"
-                  >El campo vinculo cod_colciencias es requerido</div>
+                  <div v-if="submitted && $v.grupo.vinculo.$error" class="invalid-feedback">
+                    <span v-if="!$v.grupo.vinculo.required">El campo es requerido</span>
+                    <span
+                      v-if="!$v.grupo.vinculo.maxLength"
+                    >El nombre no debe superar los 150 caracteres</span>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label for="facultad">Facultad</label>
@@ -110,14 +126,14 @@
 </template>
 
 <script>
-import { required } from "vuelidate/lib/validators";
+import { required, minLength, maxLength } from "vuelidate/lib/validators";
 import ApiService from "../services/api.service";
-// eslint-disable-line no-use-before-define
 import Swal from "sweetalert2/dist/sweetalert2.all.min.js";
 
 export default {
   data() {
     return {
+      errored: false,
       //Almacena como respuesta las facultadas enviadas por el Api
       facultades: {},
       //Almacena como respuesta las categorias enviadas por el Api
@@ -148,17 +164,21 @@ export default {
   //Reglas de validacion para VueValidate
   validations: {
     grupo: {
-      grupo: { required },
+      grupo: {
+        required,
+        maxLength: maxLength(50)
+      },
       id_categoria: { required },
-      cod_colciencias: { required },
+      cod_colciencias: { required, maxLength: maxLength(10) },
       id_facultad: { required },
-      vinculo: { required }
+      vinculo: { required, maxLength: maxLength(150) }
     }
   },
   methods: {
     showAlertGrupoExistente() {
       this.$swal({
-        type: "warning",
+        type: "error",
+        title: "Oops",
         text: "El grupo ya existe",
         timer: 2000,
         showCancelButton: false,
@@ -193,12 +213,15 @@ export default {
         .then(response => {
           if (response.status == 200) {
             this.showAlert();
+            this.$router.push({ name: "grupos" });
           } else if (response.status == 221) {
             this.showAlertGrupoExistente();
           }
         })
-        .then(response => this.$router.push({ name: "grupos" }))
-        .catch(error => console.log(error))
+        .catch(error => {
+          console.log(error);
+          this.errored = true;
+        })
         .finally(() => (this.loading = false));
       //
     },

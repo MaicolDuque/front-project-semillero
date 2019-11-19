@@ -33,8 +33,8 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="periodo in periodos"  :key="'periodo-'+periodo.id_periodo">
-                    <td style="width: 70%"> 
+                  <tr v-for="periodo in periodos" :key="'periodo-'+periodo.id_periodo">
+                    <td style="width: 70%">
                       <div style="cursor:pointer">
                         <a @click="showInfoPeriodo(periodo.id_periodo)">{{periodo.periodo}}</a>
                       </div>
@@ -118,12 +118,12 @@
                   >
                     <thead>
                       <tr>
-                        <th>Documento</th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Email</th>
-                        <th>Tipo usuario</th>
-                        <th>Acciones</th>
+                        <th data-priority="1">Documento</th>
+                        <th data-priority="3">Nombre</th>
+                        <th data-priority="4">Apellido</th>
+                        <th data-priority="5">Email</th>
+                        <th data-priority="6">Tipo usuario</th>
+                        <th data-priority="2">Acciones</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -176,8 +176,7 @@
                         <th>Responsable</th>
                         <th>Recursos</th>
                         <th>Registro</th>
-                        <th>Inicio / fin</th>
-                        <th>Acciones</th>
+                        <th data-priority="2">Acciones</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -187,22 +186,29 @@
                           style="text-align: center; font-size: 1.6em;"
                         >Seleccione un periodo...</td>
                       </tr>
-                      <tr v-for="actividad in actividades" :key="'actividades'+actividad.id_actividad">
+                      <tr
+                        v-for="actividad in actividades"
+                        :key="'actividades'+actividad.id_actividad"
+                      >
                         <td>{{actividad.actividad}}</td>
                         <td>{{actividad.responsable}}</td>
                         <td>{{actividad.recursos}}</td>
                         <td>{{actividad.registro}}</td>
-                        <td>meses</td>
                         <td>
                           <div class="btn-group" role="group">
-                            <router-link
-                              :to="{name: 'editar-integrante', params: { id: actividad.id_actividad}}"
+                            <button
+                              @click="editActividad(actividad.id_actividad)"
                               class="btn btn-primary"
-                            >Editar</router-link>
+                            >Editar</button>
                             <button
                               class="btn btn-danger"
-                              @click="deleteIntegrante(actividad.id_actividad)"
+                              @click="deleteActividad(actividad.id_actividad)"
                             >Eliminar</button>
+
+                            <button
+                              class="btn btn-warning"
+                              @click="verProductos(actividad.id_actividad)"
+                            >Ver Productos</button>
                           </div>
                         </td>
                       </tr>
@@ -214,7 +220,61 @@
                   id="custom-tabs-two-messages"
                   role="tabpanel"
                   aria-labelledby="custom-tabs-two-messages-tab"
-                >Morbi turpis dolor, vulputate vitae felis non, tincidunt congue mauris. Phasellus volutpat augue id mi placerat mollis. Vivamus faucibus eu massa eget condimentum. Fusce nec hendrerit sem, ac tristique nulla. Integer vestibulum orci odio. Cras nec augue ipsum. Suspendisse ut velit condimentum, mattis urna a, malesuada nunc. Curabitur eleifend facilisis velit finibus tristique. Nam vulputate, eros non luctus efficitur, ipsum odio volutpat massa, sit amet sollicitudin est libero sed ipsum. Nulla lacinia, ex vitae gravida fermentum, lectus ipsum gravida arcu, id fermentum metus arcu vel metus. Curabitur eget sem eu risus tincidunt eleifend ac ornare magna.</div>
+                >
+                  <div style="text-align: right; padding: 14px 1px;">
+                    <button class="btn btn-success" @click="addProyecto()">Agregar</button>
+                  </div>
+                  <section class="content">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="card">
+                          <!-- /.card-header -->
+                          <div class="card-body">
+                            <table
+                              id="tblGrupos"
+                              class="table table-striped table-bordered dt-responsive nowrap"
+                              style="width:100%"
+                            >
+                              <thead>
+                                <tr>
+                                  <th>Nombre</th>
+                                  <th>Acciones</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr v-for="item in proyectos" :key="item.id_proyecto">
+                                  <td>{{ item.proyecto }}</td>
+
+                                  <td style="text-align: center">
+                                    <div class="btn-group" role="group">
+                                      <router-link
+                                        :to="{name: 'editproyecto', params: { id: item.id_proyecto}}"
+                                        class="btn btn-outline-primary"
+                                        style="margin: 2px"
+                                      >Editar</router-link>
+
+                                      <button
+                                        style="margin: 2px"
+                                        class="btn btn-outline-danger"
+                                        @click="deleteProyecto(item.id_proyecto)"
+                                      >Eliminar</button>
+                                      <router-link
+                                        :to="{name: 'agregar-proyecto-producto', params: { id: item.id_proyecto}}"
+                                        class="btn btn-outline-primary"
+                                        style="margin: 2px"
+                                      >Productos</router-link>
+                                    </div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <!-- /.card-body -->
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
               </div>
             </div>
             <!-- /.card -->
@@ -235,7 +295,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            <button type="button" class="close"  data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -320,6 +380,7 @@ import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
 export default {
   data() {
     return {
+      proyectos: [],
       date: new Date(),
       nombre: "Semillero 1",
       periodos: [],
@@ -345,6 +406,15 @@ export default {
       })
       .then(ress =>
         $("#periodos").DataTable({
+          responsive: true
+        })
+      );
+    ApiService.get(`/proyecto/periodo/semillero/${this.$route.params.id}`)
+      .then(response => {
+        this.proyectos = response.data;
+      })
+      .then(ress =>
+        $("#proyectos").DataTable({
           responsive: true
         })
       );
@@ -380,6 +450,27 @@ export default {
       this.addPeriodo();
       /* alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.periodo)); */
     },
+    deleteProyecto(id) {
+      this.$swal({
+        title: "Estas seguro de eliminar el registro?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Si, Eliminar!",
+        cancelButtonText: "Cancelar",
+        showCloseButton: true,
+        showLoaderOnConfirm: true
+      }).then(result => {
+        if (result.value) {
+          ApiService.delete(`/proyecto/${id}`).then(response => {
+            let i = this.proyectos.map(item => item.id_poyectoo).indexOf(id); // find index of your object
+            this.proyectos.splice(i, 1);
+          });
+          this.$swal("Registro Eliminado");
+        } else {
+          this.$swal(" Accion Cancelada");
+        }
+      });
+    },
     deleteperiodo(id) {
       this.$swal({
         title: "Estas seguro de eliminar el registro?",
@@ -406,7 +497,7 @@ export default {
       alert(id);
     },
 
-    showInfoPeriodo(id) {      
+    showInfoPeriodo(id) {
       this.idPeriodo = id;
       ApiService.get(`/integrante/semillero/periodo/${id}`)
         .then(response => {
@@ -435,6 +526,16 @@ export default {
         });
     },
 
+    addProyecto() {
+      if (this.idPeriodo) {
+        return this.$router.push({
+          name: "agregar-proyecto",
+          params: { id: this.$route.params.id }
+        });
+      }
+      alert("Debe seleccionar un periodo..");
+    },
+
     addIntegrante() {
       if (this.idPeriodo) {
         return this.$router.push({
@@ -447,20 +548,44 @@ export default {
 
     addActividad() {
       if (this.idPeriodo) {
-        return  this.$router.push({
+        return this.$router.push({
           name: "agregar-actividad",
           params: { id: this.$route.params.id, periodo: this.idPeriodo }
         });
       }
       alert("Debe seleccionar un periodo..");
     },
-    addPeriodo() {
 
+    editActividad(id) {
+      if (this.idPeriodo) {
+        return this.$router.push({
+          name: "editar-actividad",
+          params: { id: id, periodo: this.idPeriodo }
+        });
+      }
+      alert("Debe seleccionar un periodo..");
+    },
+    addPeriodo() {
       ApiService.post("/periodo", this.periodo)
-      .then( newPeriodo => {
-        this.periodos.push(this.periodo)
-      })
-      .catch(function(response) {});
+        .then(newPeriodo => {
+          this.periodos.push(newPeriodo.data);
+        })
+        .catch(function(response) {});
+    },
+
+    deleteActividad(id) {
+      alert();
+      // ApiService.delete(`/actividadmes/${id}`)
+      // .then(r => {
+      //   ApiService.delete(`/producto/${id}`)
+      // })
+      // .then(r2 => {
+      //   ApiService.delete(`/actividad/${id}`)
+      // })
+    },
+
+    verProductos(id) {
+      alert(id);
     }
   }
 };

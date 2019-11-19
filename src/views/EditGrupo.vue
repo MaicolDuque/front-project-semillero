@@ -13,6 +13,8 @@
                 <label for="grupo">Grupo</label>
                 <input
                   type="text"
+                  pattern="[ A-Za-z0-9 ]+"
+                  title=" Solo Letras y números. Tamaño máximo: 50"
                   v-model="grupo.grupo"
                   id="grupo"
                   name="grupo"
@@ -20,13 +22,13 @@
                   class="form-control"
                   :class="{ 'is-invalid': submitted && $v.grupo.grupo.$error }"
                 />
-                <div
-                  v-if="submitted && !$v.grupo.grupo.required"
-                  class="invalid-feedback"
-                >El campo grupo es requerido</div>
+                <div v-if="submitted && $v.grupo.grupo.$error" class="invalid-feedback">
+                  <span v-if="!$v.grupo.grupo.required">El campo nombre es requerido</span>
+                  <span v-if="!$v.grupo.grupo.maxLength">El campo no debe superar los 50 caracteres</span>
+                </div>
               </div>
               <div class="form-group">
-                <label for="cod_colciencias">Codigo cod_colciencias</label>
+                <label for="cod_colciencias">Codigo Colciencias</label>
                 <input
                   type="text"
                   v-model="grupo.cod_colciencias"
@@ -97,7 +99,7 @@
 <script>
 import ApiService from "../services/api.service";
 import Swal from "sweetalert2/dist/sweetalert2.all.min.js";
-import { required, email, sameAs } from "vuelidate/lib/validators";
+import { required, maxLength } from "vuelidate/lib/validators";
 export default {
   data() {
     return {

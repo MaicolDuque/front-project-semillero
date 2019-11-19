@@ -3,12 +3,20 @@
     <div class="row">
       <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
         <div class="card card-signin my-5">
+          <h5 align="center">
+            <center>
+              <img
+                src="https://pbs.twimg.com/profile_images/1128335908913258496/hHZklt21_400x400.png"
+              />
+            </center>
+          </h5>
           <div class="card-body">
             <h5 class="text-center">Ingresa con email del poli:</h5>
             <hr class="my-4" />
             <button
-              @click="AuthProvider('google')"
+              style="background-color: #196844"
               class="btn btn-lg btn-google btn-block text-uppercase"
+              @click="AuthProvider('google')"
             >
               <i class="fab fa-google mr-2"></i> Sign in with Google
             </button>
@@ -78,9 +86,9 @@ export default {
       ApiService.setHeader();
 
       ApiService.mount401Interceptor();
-      localStorage.user  = JSON.stringify(data.infoToken.user)
-      this.$store.commit('setLogin', true)
-      this.$router.push({ name: 'home'})
+      localStorage.user = JSON.stringify(data.infoToken.user);
+      this.$store.commit("setLogin", true);
+      this.$router.push({ name: "home" });
     }
   }
 };
