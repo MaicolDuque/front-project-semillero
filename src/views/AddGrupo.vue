@@ -15,18 +15,18 @@
               <div class="card-body">
                 <div class="form-group">
                   <label for="grupo">Grupo</label>
+
                   <input
                     type="text"
-                    pattern="[ A-Za-z0-9 ]+"
+                    pattern="[A-Za-z0-9 ]+"
                     title=" Solo Letras y números. Tamaño máximo: 50"
-                    v-model="grupo.grupo"
+                    v-model.trim="grupo.grupo"
                     id="grupo"
                     name="grupo"
                     placeholder="Nombre"
                     class="form-control"
                     :class="{ 'is-invalid': submitted && $v.grupo.grupo.$error }"
                   />
-
                   <div v-if="submitted && $v.grupo.grupo.$error" class="invalid-feedback">
                     <span v-if="!$v.grupo.grupo.required">El campo nombre es requerido</span>
                     <span
@@ -59,7 +59,7 @@
                     type="text"
                     pattern="[A-Za-z0-9 ]+"
                     title=" Solo Letras y números. Tamaño máximo: 10 caracteres"
-                    v-model="grupo.cod_colciencias"
+                    v-model.trim="grupo.cod_colciencias"
                     id="cod_colciencias"
                     name="cod_colciencias"
                     class="form-control"
@@ -79,7 +79,7 @@
                     type="text"
                     pattern="[A-Za-z0-9 ./]+"
                     title=" Solo Letras, números,punto, '/' Tamaño máximo: 150 caracteres"
-                    v-model="grupo.vinculo"
+                    v-model.trim="grupo.vinculo"
                     id="vinculo"
                     name="vinculo"
                     class="form-control"
@@ -198,15 +198,25 @@ export default {
 
     /* Obtiene las categorias que se cargan en un <select> */
     getCategorias() {
-      ApiService.get("/categoria").then(response => {
-        this.categorias = response.data;
-      });
+      ApiService.get("/categoria")
+        .then(response => {
+          this.categorias = response.data;
+        })
+        .catch(error => {
+          console.log(error);
+          this.errored = true;
+        });
     },
     /* Obtiene las Facultades que se cargan en un <select> */
     getFacultades() {
-      ApiService.get("/facultad").then(response => {
-        this.facultades = response.data;
-      });
+      ApiService.get("/facultad")
+        .then(response => {
+          this.facultades = response.data;
+        })
+        .catch(error => {
+          console.log(error);
+          this.errored = true;
+        });
     },
     addGrupo() {
       ApiService.post("/grupo", this.grupo)
@@ -259,6 +269,7 @@ export default {
       if (this.$v.$invalid) {
         return;
       }
+
       this.addGrupo();
       /* alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.grupo)); */
     }

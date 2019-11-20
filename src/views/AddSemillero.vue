@@ -3,9 +3,9 @@
     <h3 class="text-center">Agregar Semillero</h3>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="collapse navbar-collapse">
-        <div class="navbar-nav">
-          <router-link to="/semilleros" class="nav-item nav-link">semilleros</router-link>
-        </div>
+        <nav class="nav grey lighten-4 py-4">
+          <router-link to="/semilleros" class="nav-item nav-link">Semilleros</router-link>
+        </nav>
       </div>
     </nav>
     <div class="row">
@@ -17,49 +17,62 @@
               <label for="semillero">Nombre</label>
               <input
                 type="text"
-                v-model="semillero.semillero"
+                pattern="[A-Za-z0-9 ]+"
+                title=" Solo Letras y números. Tamaño máximo: 50"
+                v-model.trim="semillero.semillero"
                 id="semillero"
                 name="semillero"
                 placeholder="Nombre"
                 class="form-control"
                 :class="{ 'is-invalid': submitted && $v.semillero.semillero.$error }"
               />
-              <div
-                v-if="submitted && !$v.semillero.semillero.required"
-                class="invalid-feedback"
-              >El campo nombre es requerido</div>
+              <div v-if="submitted && $v.semillero.semillero.$error" class="invalid-feedback">
+                <span v-if="!$v.semillero.semillero.required">El campo es requerido</span>
+                <span
+                  v-if="!$v.semillero.semillero.maxLength"
+                >El campo no debe superar los 50 caracteres</span>
+                <span v-if="!$v.semillero.semillero === ''">El campo</span>
+              </div>
             </div>
             <div class="form-group">
               <label for="objetivo">Objetivo</label>
               <input
                 type="text"
-                v-model="semillero.objetivo"
+                pattern="[A-Za-z0-9 ]+"
+                title=" Solo Letras y números. Tamaño máximo: 200"
+                v-model.trim="semillero.objetivo"
                 id="objetivo"
                 name="objetivo"
                 placeholder="objetivo"
                 class="form-control"
                 :class="{ 'is-invalid': submitted && $v.semillero.objetivo.$error }"
               />
-              <div
-                v-if="submitted && !$v.semillero.objetivo.required"
-                class="invalid-feedback"
-              >El campo Objetivo es requerido</div>
+              <div v-if="submitted && $v.semillero.objetivo.$error" class="invalid-feedback">
+                <span v-if="!$v.semillero.objetivo.required">El campo es requerido</span>
+                <span
+                  v-if="!$v.semillero.objetivo.maxLength"
+                >El campo no debe superar los 200 caracteres</span>
+              </div>
             </div>
             <div class="form-group">
               <label for="descripcion">Descripción</label>
               <input
                 type="text"
-                v-model="semillero.descripcion"
+                pattern="[A-Za-z0-9 ]+"
+                title=" Solo Letras y números. Tamaño máximo: 200"
+                v-model.trim="semillero.descripcion"
                 id="descripcion"
                 name="descripcion"
                 placeholder="descripcion"
                 class="form-control"
                 :class="{ 'is-invalid': submitted && $v.semillero.descripcion.$error }"
               />
-              <div
-                v-if="submitted && !$v.semillero.descripcion.required"
-                class="invalid-feedback"
-              >El campo descripcion es requerido</div>
+              <div v-if="submitted && $v.semillero.descripcion.$error" class="invalid-feedback">
+                <span v-if="!$v.semillero.descripcion.required">El campo es requerido</span>
+                <span
+                  v-if="!$v.semillero.descripcion.maxLength"
+                >El campo no debe superar los 200 caracteres</span>
+              </div>
             </div>
             <div class="form-group">
               <label for="id_grupo">Grupo Investigación</label>
@@ -81,7 +94,6 @@
               <button class="btn btn-primary">Guardar</button>
             </div>
           </form>
-          <!-- <pre>{{$data}}</pre> -->
         </div>
       </div>
     </div>
@@ -89,7 +101,7 @@
 </template>
 
 <script>
-import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
+import { required, maxLength, minLength } from "vuelidate/lib/validators";
 import ApiService from "../services/api.service";
 
 export default {
@@ -121,9 +133,12 @@ export default {
   //Reglas de validacion para VueValidate
   validations: {
     semillero: {
-      semillero: { required },
-      objetivo: { required },
-      descripcion: { required },
+      semillero: {
+        required,
+        maxLength: maxLength(50)
+      },
+      objetivo: { required, maxLength: maxLength(200) },
+      descripcion: { required, maxLength: maxLength(200) },
       id_grupo: { required }
     }
   },

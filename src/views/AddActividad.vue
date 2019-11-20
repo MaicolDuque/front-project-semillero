@@ -5,7 +5,6 @@
       <nav class="nav grey lighten-4 py-4">
         <a @click="back" class="nav-item nav-link">Periodos</a>
       </nav>
-      
 
       <section class="content">
         <div style="width: 50%; margin: 0 auto;">
@@ -20,9 +19,8 @@
                     id="Nombre"
                     name="Nombre"
                     placeholder="Nombre"
-                    class="form-control"                   
+                    class="form-control"
                   />
-                  
                 </div>
                 <div class="form-group">
                   <label for="responsable">Responsable</label>
@@ -33,9 +31,7 @@
                     name="responsable"
                     placeholder="responsable"
                     class="form-control"
-                   
                   />
-                  
                 </div>
                 <div class="form-group">
                   <label for="recursos">Recursos</label>
@@ -46,9 +42,7 @@
                     name="recursos"
                     placeholder="recursos"
                     class="form-control"
-                   
                   />
-                  
                 </div>
 
                 <div class="form-group">
@@ -60,46 +54,51 @@
                     name="registro"
                     placeholder="registro"
                     class="form-control"
-                   
                   />
-                  
                 </div>
-
 
                 <div class="form-group">
                   <label for="Meses">Meses</label>
                   <div v-for="mes in mesesPeriodo" :key="mes.value">
                     <div class="custom-control custom-checkbox">
-                      <input class="custom-control-input" type="checkbox" :id="mes.name" name="meses" :value="mes.value" v-model="mesesSelected">
+                      <input
+                        class="custom-control-input"
+                        type="checkbox"
+                        :id="mes.name"
+                        name="meses"
+                        :value="mes.value"
+                        v-model="mesesSelected"
+                      />
                       <label :for="mes.name" class="custom-control-label">{{mes.name}}</label>
                     </div>
-                  </div>                  
-                                
-                 
+                  </div>
                 </div>
-                  
+
                 <div class="form-group">
                   <label for="estado">Estado</label>
                   <br />
-                  <select class="custom-select browser-default" @change="onChange($event)" v-model="actividad.estado" required>
+                  <select
+                    class="custom-select browser-default"
+                    @change="onChange($event)"
+                    v-model="actividad.estado"
+                    required
+                  >
                     <option value>Por favor seleccione un estado</option>
                     <option
                       v-for="option in options"
                       v-bind:key="option.value"
                       class="form-control"
-                     
                     >{{ option.text }}</option>
                   </select>
                 </div>
-   
+
                 <br />
                 <div class="form-group">
                   <button class="btn btn-primary">Guardar</button>
                 </div>
-
               </div>
             </form>
-          </div>        
+          </div>
         </div>
       </section>
     </div>
@@ -112,7 +111,7 @@ import ApiService from "../services/api.service";
 
 export default {
   data() {
-    return {     
+    return {
       actividad: {
         actividad: "",
         responsable: "",
@@ -130,88 +129,80 @@ export default {
         { text: "Inactivo", value: "0" }
       ],
       meses1: [
-        {name: "Febrero", value: 2},
-        {name: "Marzo", value: 3},     
-        {name: "Abril", value: 4},
-        {name: "Mayo", value: 5},
-        {name: "Junio", value: 6}
+        { name: "Febrero", value: 2 },
+        { name: "Marzo", value: 3 },
+        { name: "Abril", value: 4 },
+        { name: "Mayo", value: 5 },
+        { name: "Junio", value: 6 }
       ],
-       meses2: [
-        {name: "Agosto", value: 8},
-        {name: "Septiembre", value: 9},     
-        {name: "Octubre", value: 10},
-        {name: "Noviembre", value: 11},
-        {name: "Diciembre", value: 12}
+      meses2: [
+        { name: "Agosto", value: 8 },
+        { name: "Septiembre", value: 9 },
+        { name: "Octubre", value: 10 },
+        { name: "Noviembre", value: 11 },
+        { name: "Diciembre", value: 12 }
       ]
     };
   },
   created() {
     ApiService.get(`/periodo/${this.$route.params.periodo}`).then(response => {
-      this.periodo = response.data[0]
+      this.periodo = response.data[0];
     });
   },
   //Obtiene las tipos de usuarios una vez se llama al componente
-  mounted() {
-   
-  },
+  mounted() {},
   //comvierte el objeto->en un arreglo
+  computed: {},
   computed: {
-    
-  },
-  computed: {    
-    mesesPeriodo(){
-      if(this.periodo.periodo){
-        let idPeriodo = this.periodo.periodo.split('-')[1]
-        if(idPeriodo == "1"){
-          return this.meses1
+    mesesPeriodo() {
+      if (this.periodo.periodo) {
+        let idPeriodo = this.periodo.periodo.split("-")[1];
+        if (idPeriodo == "1") {
+          return this.meses1;
         }
-        return this.meses2
+        return this.meses2;
       }
     },
 
-    objectMesesSelected(){
+    objectMesesSelected() {
       return this.mesesSelected.map(mes => {
         return {
           id_actividad: this.id_actividad,
           id_mes: mes
-        }        
-      })
+        };
+      });
     }
-    
   },
 
   //Reglas de validacion para VueValidate
- 
+
   methods: {
     back() {
       this.$router.go(-1);
     },
     handleSubmit(e) {
-      console.log("uno ")
+      console.log("uno ");
       ApiService.post("/actividad", this.actividad)
-      .then(id => {
-        this.id_actividad = id.data
-        ApiService.post("/actividadmes", this.objectMesesSelected)
-      })
-      .then(res =>{
-         this.$router.push({
+        .then(id => {
+          this.id_actividad = id.data;
+          ApiService.post("/actividadmes", this.objectMesesSelected);
+        })
+        .then(res => {
+          this.$router.push({
             name: "periodos",
             params: { id: this.$route.params.id }
           });
-      })
-      .catch(function(response) {
-        alert("No se pudo crear el Usuario");
-      });
-
+        })
+        .catch(function(response) {
+          alert("No se pudo crear el Usuario");
+        });
     },
-    onChange(e){
+    onChange(e) {}
 
-    }
+    /* logica de enviar api de creacion de usuario y asignacion de grupo */
 
-      /* logica de enviar api de creacion de usuario y asignacion de grupo */
-
-      //this.addUsuario();
-      /* alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.usuario)); */
-    }
+    //this.addUsuario();
+    /* alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.usuario)); */
   }
+};
 </script>

@@ -5,6 +5,9 @@
       <nav class="nav grey lighten-4 py-4">
         <router-link to="/directores" class="nav-item nav-link">Directores</router-link>
       </nav>
+      <section v-if="errored">
+        <p>Lo sentimos, no es posible Guardar el registro en este momento</p>
+      </section>
       <section class="content">
         <div style="width: 50%; margin: 0 auto;">
           <div class="card card-success">
@@ -14,23 +17,29 @@
                   <label for="documento">Documento</label>
                   <input
                     type="text"
-                    v-model="usuario.documento"
+                    pattern="[0-9]+"
+                    title=" Solo números. Tamaño máximo: 12"
+                    v-model.trim="usuario.documento"
                     id="documento"
                     name="documento"
                     placeholder="Documento"
                     class="form-control"
                     :class="{ 'is-invalid': submitted && $v.usuario.documento.$error }"
                   />
-                  <div
-                    v-if="submitted && !$v.usuario.documento.required"
-                    class="invalid-feedback"
-                  >El campo Documento es requerido</div>
+                  <div v-if="submitted && $v.usuario.documento.$error" class="invalid-feedback">
+                    <span v-if="!$v.usuario.documento.required">El campo nombre es requerido</span>
+                    <span
+                      v-if="!$v.usuario.documento.maxLength"
+                    >El nombre no debe superar los 50 caracteres</span>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label for="nombre_usuario">Nombre</label>
                   <input
                     type="text"
-                    v-model="usuario.nombre_usuario"
+                    pattern="[A-Za-z ]+"
+                    title=" Solo Letras. Tamaño máximo: 50"
+                    v-model.trim="usuario.nombre_usuario"
                     id="nombre_usuario"
                     name="nombre_usuario"
                     placeholder="Nombre"
@@ -38,15 +47,22 @@
                     :class="{ 'is-invalid': submitted && $v.usuario.nombre_usuario.$error }"
                   />
                   <div
-                    v-if="submitted && !$v.usuario.nombre_usuario.required"
+                    v-if="submitted && $v.usuario.nombre_usuario.$error"
                     class="invalid-feedback"
-                  >El campo Nombre es requerido</div>
+                  >
+                    <span v-if="!$v.usuario.nombre_usuario.required">El campo es requerido</span>
+                    <span
+                      v-if="!$v.usuario.nombre_usuario.maxLength"
+                    >El campo no debe superar los 50 caracteres</span>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label for="apellido_usuario">Apellido</label>
                   <input
                     type="text"
-                    v-model="usuario.apellido_usuario"
+                    pattern="[A-Za-z ]+"
+                    title=" Solo Letras. Tamaño máximo: 50"
+                    v-model.trim="usuario.apellido_usuario"
                     id="apellido_usuario"
                     name="apellido_usuario"
                     placeholder="Apellido"
@@ -54,15 +70,20 @@
                     :class="{ 'is-invalid': submitted && $v.usuario.apellido_usuario.$error }"
                   />
                   <div
-                    v-if="submitted && !$v.usuario.apellido_usuario.required"
+                    v-if="submitted && $v.usuario.apellido_usuario.$error"
                     class="invalid-feedback"
-                  >El campo apellido es requerido</div>
+                  >
+                    <span v-if="!$v.usuario.apellido_usuario.required">El campo es requerido</span>
+                    <span
+                      v-if="!$v.usuario.apellido_usuario.maxLength"
+                    >El campo no debe superar los 50 caracteres</span>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label for="correo">correo</label>
                   <input
                     type="text"
-                    v-model="usuario.email"
+                    v-model.trim="usuario.email"
                     id="email"
                     name="email"
                     placeholder="Correo"
@@ -72,24 +93,32 @@
                   <div v-if="submitted && $v.usuario.email.$error" class="invalid-feedback">
                     <span v-if="!$v.usuario.email.required">El campo correo es requerido</span>
                     <span v-if="!$v.usuario.email">Email no Valido</span>
+                    <span
+                      v-if="!$v.usuario.email.maxLength"
+                    >El campo no debe superar los 100 caracteres</span>
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="telefono">Telefono</label>
                   <input
                     type="text"
-                    v-model="usuario.telefono"
+                    pattern="[0-9]+"
+                    title=" Solo Numeros. Tamaño máximo: 10"
+                    v-model.trim="usuario.telefono"
                     id="telefono"
                     name="telefono"
                     placeholder="telefono"
                     class="form-control"
                     :class="{ 'is-invalid': submitted && $v.usuario.telefono.$error }"
                   />
-                  <div
-                    v-if="submitted && !$v.usuario.telefono.required"
-                    class="invalid-feedback"
-                  >El campo telefono es requerido</div>
+                  <div v-if="submitted && $v.usuario.telefono.$error" class="invalid-feedback">
+                    <span v-if="!$v.usuario.telefono.required">El campo es requerido</span>
+                    <span
+                      v-if="!$v.usuario.telefono.maxLength"
+                    >El campo no debe superar los 10 caracteres</span>
+                  </div>
                 </div>
+
                 <div class="form-group">
                   <label for="estado">Estado</label>
                   <br />
@@ -154,7 +183,6 @@
               </div>
             </form>
           </div>
-          <pre>{{$data}}</pre>
         </div>
       </section>
     </div>
@@ -162,12 +190,14 @@
 </template>
 
 <script>
-import { required, email, minLength } from "vuelidate/lib/validators";
+import { required, maxLength, email } from "vuelidate/lib/validators";
 import ApiService from "../services/api.service";
+import Swal from "sweetalert2/dist/sweetalert2.all.min.js";
 
 export default {
   data() {
     return {
+      errored: false,
       direct: {
         id_usuario: "",
         id_grupo: ""
@@ -195,13 +225,18 @@ export default {
     };
   },
   created() {
-    ApiService.get("/grupo/disponible").then(response => {
-      this.grupos = response.data;
-      this.grupos.push({
-        grupo: this.usuario.grupo,
-        id_grupo: this.usuario.id_grupo
+    ApiService.get("/grupo/disponible")
+      .then(response => {
+        this.grupos = response.data;
+        this.grupos.push({
+          grupo: this.usuario.grupo,
+          id_grupo: this.usuario.id_grupo
+        });
+      })
+      .catch(error => {
+        console.log(error);
+        this.errored = true;
       });
-    });
   },
   //Obtiene las tipos de usuarios una vez se llama al componente
   mounted() {
@@ -231,15 +266,16 @@ export default {
   //Reglas de validacion para VueValidate
   validations: {
     usuario: {
-      documento: { required },
-      nombre_usuario: { required },
-      apellido_usuario: { required },
-      email: { required, email },
-      telefono: { required },
+      documento: { required, maxLength: maxLength(12) },
+      nombre_usuario: { required, maxLength: maxLength(50) },
+      apellido_usuario: { required, maxLength: maxLength(50) },
+      email: { required, email, maxLength: maxLength(100) },
+      telefono: { required, maxLength: maxLength(10) },
       estado: { required },
       id_tipo_usuario: { required }
     }
   },
+
   methods: {
     addUsuario() {
       ApiService.post("/usuario", this.objectUsuario).catch(function(response) {
@@ -282,22 +318,31 @@ export default {
       }
       //asigna como usuario un Director
       this.usuario.id_rol = 2;
-      /* Almacenar el usuario */
       var id_gr = this.usuario.id_grupo;
-      ApiService.post("/usuario", this.usuario).then(function(value) {
-        /*  console.log(value); */
-        retornado = value.data;
-        console.log(retornado);
-
-        console.log(id_gr);
-        ApiService.post("/director", {
-          id_usuario: value.data,
-          id_grupo: id_gr
-        }).then(function(value) {
-          console.log(value);
+      ApiService.post("/usuario", this.usuario)
+        .then(function(response) {
+          console.log("response =", response);
+          //return response.json();
+        })
+        .then(function(data) {
+          console.log("data = ", data);
+        })
+        .catch(function(err) {
+          console.error(err);
         });
-      });
 
+      /* .then(response value => {
+          if (response.status == 200) {
+            console.log(value.data);
+          } else if (response.status == 221) {
+            alert("ya existe");
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          this.errored = true;
+        }); */
+      /* Almacenar el usuario */
       /* logica de enviar api de creacion de usuario y asignacion de grupo */
 
       //this.addUsuario();
