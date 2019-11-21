@@ -30,6 +30,7 @@ import EditActividad from './views/EditActividad.vue'
 //Productos
 import Productos from './views/Productos.vue'
 import EditProducto from './views/EditProducto.vue'
+import AddProducto from './views/AddProducto.vue'
 
 
 import Coordinadores from './views/Coordinadores.vue'
@@ -95,6 +96,7 @@ const router = new Router({
     { path: '/periodo/:periodo/editar-actividad/:id', name: 'editar-actividad', component: EditActividad },
     { path: '/actividad/:id/productos', name: 'productos', component: Productos },
     { path: '/actividad/:id/productos/editar', name: 'editar-producto', component: EditProducto },
+    { path: '/actividad/:id/productos/agregar', name: 'agregar-producto', component: AddProducto },
 
   ]
 })

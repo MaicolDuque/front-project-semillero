@@ -2,7 +2,7 @@
   <div style="padding:25px" class="container">
     <h3 class="text-center">Productos</h3>
     <div style="text-align: right; padding: 14px 1px;">
-      <router-link to="/adduserdirector" tag="button" class="btn btn-outline-success">Agregar</router-link>
+      <a @click="addProducto" tag="button" class="btn btn-outline-success">Agregar</a>
     </div>
     <section class="card card-primary card-outline">
       <div class="row">
@@ -99,6 +99,9 @@ export default {
       .finally(() => (this.loading = false));
   },
   methods: {
+    addProducto(){
+      this.$router.push({ name: "agregar-producto", id: this.$route.params.id });
+    },
     showAlert() {
       this.$swal({
         type: "success",
