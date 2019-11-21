@@ -406,7 +406,7 @@ export default {
   },
 
   created() {
-    ApiService.get("/periodo")
+    ApiService.get(`/periodo/${this.$route.params.id}`)
       .then(response => {
         this.periodos = response.data;
       })
