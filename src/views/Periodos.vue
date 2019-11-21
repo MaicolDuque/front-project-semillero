@@ -8,11 +8,16 @@
           </div>
         </div>
       </div>
-      <button
+      <!-- <button
         class="btn btn-outline-success"
         data-toggle="modal"
         data-target="#exampleModal"
-      >Agregar</button>
+      >Agregar</button>-->
+      <router-link
+        :to="{name: 'addPeriodo', params: { id: this.$route.params.id}}"
+        class="btn btn-outline-primary"
+        style="margin: 2px"
+      >Agregar Periodo</router-link>
       <!--  <button class="btn btn-outline-success" @click="AddPeriodo()">Agregar</button> -->
     </section>
     <section class="content">
@@ -51,6 +56,11 @@
                           class="btn btn-outline-danger"
                           @click="deleteperiodo(periodo.id_periodo)"
                         >Eliminar</button>
+                        <router-link
+                          :to="{name: 'informe', params: { id: periodo.id_periodo}}"
+                          class="btn btn-outline-primary"
+                          style="margin: 2px"
+                        >informe</router-link>
                       </div>
                     </td>
                   </tr>
@@ -625,6 +635,17 @@ export default {
 
     verProductos(id) {
       alert(id);
+    },
+    generarInforme(id) {
+      alert(id);
+      ApiService.get(`exportar/pdf/${id}`)
+        .then(response => {
+          alert("el docuemnto sera descargado en unos momentos");
+        })
+        .catch(error => {
+          console.log(error);
+          this.errored = true;
+        });
     }
   }
 };

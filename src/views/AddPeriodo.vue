@@ -1,6 +1,9 @@
 <template>
   <div>
-    <h3 class="text-center">Editar Periodo</h3>
+    <h3 class="text-center">
+      Agregar
+      Periodo
+    </h3>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="collapse navbar-collapse">
         <div class="navbar-nav">
@@ -69,7 +72,6 @@
             </div>
           </form>
         </div>
-        <pre>{{$data}}</pre>
       </div>
     </section>
   </div>
@@ -91,11 +93,7 @@ export default {
       submitted: false
     };
   },
-  created() {
-    ApiService.get(`/periodo/${this.$route.params.id}`).then(response => {
-      this.periodo = response.data[0];
-    });
-  },
+
   //Reglas de validacion para VueValidate
   validations: {
     periodo: {
@@ -122,24 +120,28 @@ export default {
       if (this.$v.$invalid) {
         return;
       }
-      this.updatePeriodo();
+      /* this.addPeriodo(); */
       /*  alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.objectPeriodo)); */
     },
     back() {
       this.$router.go(-1);
     },
 
-    updatePeriodo() {
-      ApiService.put(`periodo/${this.$route.params.id}`, this.objectPeriodo)
+    addPeriodo() {
+      ApiService.post("/periodo", this.objectPeriodo)
         .then(response => {
-          this.$router.push({
-            name: "periodos",
-            params: { id: this.$route.params.id }
-          });
+          if (response.status == 200) {
+            this.showAlert();
+            this.$router.push({ name: "grupos" });
+          } else if (response.status == 221) {
+            this.showAlertGrupoExistente();
+          }
         })
-        .catch(function(response) {
-          alert(this.periodo.id_semillero);
-        });
+        .catch(error => {
+          console.log(error);
+          this.errored = true;
+        })
+        .finally(() => (this.loading = false));
     }
   }
 };
