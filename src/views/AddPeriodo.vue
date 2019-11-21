@@ -62,7 +62,9 @@
                 >El campo fecha fin es requerido</div>
               </div>
               <div class="card-footer">
-                <button type="submit" class="btn btn-outline-success">Actualizar</button>
+                <div class="modal-footer">
+                  <button id="btn_modal" type="submit" class="btn btn-outline-success">Guardar</button>
+                </div>
               </div>
             </div>
           </form>
@@ -105,9 +107,7 @@ export default {
   computed: {
     objectPeriodo() {
       return JSON.parse(`{
-          "periodo":        "${this.periodo.periodo}",
-          "fecha_inicio":   "${this.periodo.fecha_inicio}",
-          "fecha_fin":           "${this.periodo.fecha_fin},
+         
           "id_semillero": ${this.periodo.id_semillero},
           
         }`);

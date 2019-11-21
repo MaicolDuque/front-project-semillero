@@ -32,7 +32,7 @@
                       <th>Nombre</th>
                       <th>Apellido</th>
                       <th>Telefono</th>
-                      <th>Estado</th>
+                      <!-- <th>Estado</th> -->
                       <th>Email</th>
                       <th>Tipo usuario</th>
 
@@ -46,7 +46,7 @@
                       <td>{{ item.nombre_usuario }}</td>
                       <td>{{ item.apellido_usuario }}</td>
                       <td>{{ item.telefono }}</td>
-                      <td>{{ item.estado }}</td>
+                      <!-- <td>{{ item.estado }}</td> -->
                       <td>{{ item.email }}</td>
                       <td>{{ item.tipo_usuario }}</td>
 
@@ -120,12 +120,51 @@ export default {
       });
     },
     deleteDirector(id) {
-      alert("aca");
-      ApiService.delete(`/usuario/${id}`).then(response => {
+      this.$swal({
+        title: "Estas seguro de eliminar el registro?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Si, Eliminar!",
+        cancelButtonText: "Cancelar",
+        showCloseButton: true,
+        showLoaderOnConfirm: true
+      }).then(result => {
+        if (result.value) {
+          ApiService.delete(`/director/${id}`)
+            .then(response => {
+              if (response.status === 200) {
+                let i = this.usuarios.map(item => item.id_usuario).indexOf(id); // find index of your object
+                this.usuarios.splice(i, 1);
+                this.$swal.fire({
+                  type: "success",
+                  title: "Eliminado con exito",
+                  showConfirmButton: false,
+                  timer: 1500
+                });
+              } else if (response.status === 222) {
+                alert("no se puedo borrar el registro");
+              }
+            })
+            .catch(error => {
+              console.log(error);
+              this.errored = true;
+            });
+
+          this.$swal("Registro Eliminado");
+        } else {
+          this.$swal(" Accion Cancelada");
+        }
+      });
+    }
+    /* deleteDirector(id) {
+      console.log(id);
+      ApiService.delete(`/director/${id}`).then(response => {
+        console.log(response.data);
+        console.log(response.status);
         let i = this.usuarios.map(item => item.id_usuario).indexOf(id); // find index of your object
         this.usuarios.splice(i, 1);
       });
-    }
+    } */
   }
 };
 </script>

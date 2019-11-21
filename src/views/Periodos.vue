@@ -36,7 +36,7 @@
                   <tr v-for="periodo in periodos" :key="'periodo-'+periodo.id_periodo">
                     <td style="width: 70%">
                       <div style="cursor:pointer" @click="showInfoPeriodo(periodo.id_periodo)">
-                        <a >{{periodo.periodo}}</a>
+                        <a>{{periodo.periodo}}</a>
                       </div>
                     </td>
                     <td style="width: 30%">
@@ -231,7 +231,7 @@
                           <!-- /.card-header -->
                           <div class="card-body">
                             <table
-                              id="tblGrupos"
+                              id="tblProyectos"
                               class="table table-striped table-bordered dt-responsive nowrap"
                               style="width:100%"
                             >
@@ -242,6 +242,12 @@
                                 </tr>
                               </thead>
                               <tbody>
+                                <tr v-if="integrantes.length == 0">
+                                  <td
+                                    colspan="6"
+                                    style="text-align: center; font-size: 1.6em;"
+                                  >Seleccione un periodo...</td>
+                                </tr>
                                 <tr v-for="item in proyectos" :key="item.id_proyecto">
                                   <td>{{ item.proyecto }}</td>
 
@@ -355,7 +361,7 @@
                     </div>
                     <div class="card-footer">
                       <div class="modal-footer">
-                        <button type="submit" class="btn btn-outline-success">Guardar</button>
+                        <button id="btn_modal" type="submit" class="btn btn-outline-success">Guardar</button>
                       </div>
                     </div>
                   </div>
@@ -409,7 +415,7 @@ export default {
           responsive: true
         })
       );
-    ApiService.get(`/proyecto/periodo/semillero/${this.$route.params.id}`)
+    /* ApiService.get(`/proyecto/periodo/semillero/${this.$route.params.id}`)
       .then(response => {
         this.proyectos = response.data;
       })
@@ -417,7 +423,7 @@ export default {
         $("#proyectos").DataTable({
           responsive: true
         })
-      );
+      ); */
 
     ApiService.get(`/semillero/${this.$route.params.id}`).then(response => {
       this.semillero = response.data[0];
@@ -447,7 +453,9 @@ export default {
       }
       /* this.updatePeriodo(); */
       this.periodo.id_semillero = this.semillero.id_semillero;
+
       this.addPeriodo();
+
       /* alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.periodo)); */
     },
     deleteProyecto(id) {
@@ -494,7 +502,28 @@ export default {
     },
 
     deleteIntegrante(id) {
-      alert(id);
+      this.$swal({
+        title: "Estas seguro de eliminar el registro?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Si, Eliminar!",
+        cancelButtonText: "Cancelar",
+        showCloseButton: true,
+        showLoaderOnConfirm: true
+      }).then(result => {
+        if (result.value) {
+          console.log(id);
+          ApiService.delete(`/usuario/${id}`).then(response => {
+            let i = this.integrantes
+              .map(item => item.id_integrante)
+              .indexOf(id); // find index of your object
+            this.integrantes.splice(i, 1);
+          });
+          this.$swal("Registro Eliminado");
+        } else {
+          this.$swal(" Accion Cancelada");
+        }
+      });
     },
 
     showInfoPeriodo(id) {
@@ -511,6 +540,17 @@ export default {
               searching: false
             });
           }
+        });
+
+      ApiService.get(`/proyecto/periodo/semillero/${id}`)
+        .then(response => {
+          this.proyectos = response.data;
+        })
+        .then(res => {
+          $("#tblProyectos").DataTable({
+            responsive: true,
+            searching: false
+          });
         });
 
       ApiService.get(`/actividad/periodo/semillero/${id}`)
@@ -573,14 +613,14 @@ export default {
         .catch(function(response) {});
     },
 
-    deleteActividad(id) {      
+    deleteActividad(id) {
       ApiService.delete(`/actividad/${id}`)
-      .then(r => {
-        let i = this.actividades.map(item => item.id_actividad).indexOf(id); // find index of your object
-        this.actividades.splice(i, 1);
-        alert("Actividad eliminada correctamente!")
-      })
-      .catch(r2 => alert("Error al eliminar actividad!"))
+        .then(r => {
+          let i = this.actividades.map(item => item.id_actividad).indexOf(id); // find index of your object
+          this.actividades.splice(i, 1);
+          alert("Actividad eliminada correctamente!");
+        })
+        .catch(r2 => alert("Error al eliminar actividad!"));
     },
 
     verProductos(id) {

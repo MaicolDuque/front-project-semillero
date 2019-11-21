@@ -152,29 +152,33 @@
                   </select>
                 </div>
                 <div class="form-group">
+                  <label for="grupo">Grupo</label>
+                  <br />
+                  <select
+                    class="custom-select browser-default"
+                    @change=" selectChangeGrupo"
+                    required
+                  >
+                    <option value>Por favor seleccione un Elemento</option>
+                    <option
+                      v-for="grupo in grupos"
+                      v-bind:key="grupo.id_grupo"
+                      id="id_grupo"
+                      name="id_grupo"
+                      class="form-control"
+                    >{{ grupo.grupo }}</option>
+                  </select>
+                </div>
+                <!-- <div class="form-group">
                   <label>Grupo</label>
                   <select class="form-control" style="width: 100%;" v-model="usuario.id_grupo">
+                    <option value>Por favor seleccione un Elemento</option>
                     <option
                       v-for="grupo in grupos"
                       v-bind:key="grupo.id_grupo"
                       :value="grupo.id_grupo"
                     >{{ grupo.grupo }}</option>
                   </select>
-                </div>
-                <!-- <div class="form-group">
-              <label for="facultad">Rol</label>
-              <br />
-              <select class="custom-select browser-default" @change="selectChangeFacultad" required>
-                <option value>Por favor seleccione un Elemento</option>
-                <option
-                  v-for="item in facultades"
-                  v-bind:key="item.value"
-                  id="id_rol"
-                  name="id_rol"
-                  class="form-control"
-                  :class="{ 'is-invalid': submitted && $v.grupo.id_facultad.$error }"
-                >{{ item.facultad }}</option>
-              </select>
                 </div>-->
                 <br />
                 <div class="form-group">
@@ -198,13 +202,12 @@ export default {
   data() {
     return {
       errored: false,
-      direct: {
-        id_usuario: "",
+      /* director: {}, */
+      grupos: [],
+      grupoSeleccionado: {
         id_grupo: ""
       },
-      director: {},
-      grupos: [],
-      value: "",
+      /* value: "", */
       options: [
         { text: "Activo", value: "1" },
         { text: "Inactivo", value: "0" }
@@ -228,10 +231,10 @@ export default {
     ApiService.get("/grupo/disponible")
       .then(response => {
         this.grupos = response.data;
-        this.grupos.push({
+        /* this.grupos.push({
           grupo: this.usuario.grupo,
           id_grupo: this.usuario.id_grupo
-        });
+        }); */
       })
       .catch(error => {
         console.log(error);
@@ -274,6 +277,9 @@ export default {
       estado: { required },
       id_tipo_usuario: { required }
     }
+    /* grupo: {
+      id_grupo: { required }
+    } */
   },
 
   methods: {
@@ -307,8 +313,20 @@ export default {
       });
       this.usuario.id_tipo_usuario = i;
     },
+    selectChangeGrupo(event) {
+      var i;
+      this.grupos.forEach(function(element) {
+        if (element.grupo == event.target.value) {
+          i = element.id_grupo;
+        }
+      });
+
+      this.grupoSeleccionado.id_grupo = i;
+      /* alert(this.grupoSeleccionado.id_grupo); */
+    },
     //Valida el formulario
     handleSubmit(e) {
+      console.log("aca1");
       this.submitted = true;
       var retornado = "";
       // Se detiene aqui si es invalido, de lo contrario ejecuta el submit()
@@ -316,20 +334,41 @@ export default {
       if (this.$v.$invalid) {
         return;
       }
+      console.log("aca2");
       //asigna como usuario un Director
       this.usuario.id_rol = 2;
-      var id_gr = this.usuario.id_grupo;
-      ApiService.post("/usuario", this.usuario)
-        .then(function(response) {
+      /*  */
+      var id_gr = this.grupoSeleccionado.id_grupo;
+      ApiService.post("/usuario", this.usuario).then(response => {
+        if (response.status == 200) {
           console.log("response =", response);
-          //return response.json();
-        })
-        .then(function(data) {
-          console.log("data = ", data);
-        })
-        .catch(function(err) {
+          /* si fue 200 se creo el usario con exito,
+            se llama al endpoint que lo asigna como un director de grupo */
+          ApiService.post("/director", {
+            //contine el id_usuario que me retorna el endpoint de agregar uauario
+            id_usuario: response.data,
+            id_grupo: id_gr
+          })
+            .then(response => {
+              console.log("response =", response);
+              if (response.status == 200) {
+                console.log("asignado");
+                this.$router.push({ name: "directores" });
+              } else if (response.status == 221) {
+                alert("El usuario ya es director de otro grupo");
+              }
+            })
+            .catch(function(err) {
+              console.error(err);
+            });
+        } else if (response.status == 221) {
+          alert("ya existe");
+        }
+        //return response.json();
+      });
+      /* .catch(function(err) {
           console.error(err);
-        });
+        }); */
 
       /* .then(response value => {
           if (response.status == 200) {
