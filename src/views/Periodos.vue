@@ -584,7 +584,10 @@ export default {
     },
 
     verProductos(id) {
-      alert(id);
+      this.$router.push({
+          name: "productos",
+          params: { id: id }
+      });
     }
   }
 };
