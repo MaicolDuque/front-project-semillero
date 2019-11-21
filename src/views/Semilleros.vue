@@ -36,27 +36,30 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="item in semilleros" :key="item.id_semillero">
+                    <tr v-for="item in showSemilleros" :key="item.id_semillero">
                       <td>{{ item.semillero }}</td>
                       <td>{{ item.objetivo }}</td>
                       <td>{{ item.descripcion }}</td>
                       <td>{{ item.grupo }}</td>
                       <td>
                         <div class="btn-group" role="group">
-                          <router-link
-                            :to="{name: 'editsemillero', params: { id: item.id_semillero}}"
-                            class="btn btn-outline-primary"
-                            style="margin: 2px"
-                          >Editar</router-link>
-                          <button
-                            style="margin: 2px"
-                            class="btn btn-outline-danger"
-                            @click="deleteSemillero(item.id_semillero)"
-                          >Eliminar</button>
+                          <div v-if="rol < 3">
+                            <router-link
+                              :to="{name: 'editsemillero', params: { id: item.id_semillero}}"
+                              class="btn btn-outline-primary"
+                              style="margin: 2px"
+                            >Editar</router-link>
+                            <button
+                              style="margin: 2px"
+                              class="btn btn-outline-danger"
+                              @click="deleteSemillero(item.id_semillero)"
+                            >Eliminar</button>
+                          </div>
                           <router-link
                             :to="{name: 'periodos', params: { id: item.id_semillero}}"
                             style="margin: 2px"
                             class="btn btn-outline-warning"
+                            v-if="rol != 2"
                           >Periodos</router-link>
                         </div>
                       </td>
@@ -143,6 +146,27 @@ export default {
           this.$swal(" Accion Cancelada");
         }
       });
+    }
+  },
+
+
+  computed: {
+    showSemilleros(){
+      let rol     = this.$store.state.user.id_rol
+      let grupo   = this.$store.state.user.id_grupo
+      if(rol == 2){        
+        return  this.semilleros.filter(semi => semi.id_grupo == grupo);
+      }
+      if(rol == 3){   
+        let semillero   = this.$store.state.user.id_semillero 
+        return  this.semilleros.filter(semi => semi.id_semillero == semillero);
+      }
+      
+      return  this.semilleros
+      
+    },
+    rol(){
+       return this.$store.state.user.id_rol
     }
   }
 };

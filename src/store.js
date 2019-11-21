@@ -34,7 +34,7 @@ export default new Vuex.Store({
     infoUserCoordinador(context, id){
       return userService.infoUserCoordinador(id)
         .then(res => {
-            context.commit('MUTATION_info_user', res)
+            context.commit('MUTATION_info_user', res[0])
             return res
         })
     }

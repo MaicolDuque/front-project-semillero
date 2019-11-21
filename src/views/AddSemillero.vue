@@ -80,7 +80,7 @@
               <select class="custom-select browser-default" @change="selectChangeGrupo" required>
                 <option value>Por favor seleccione un Elemento</option>
                 <option
-                  v-for="item in grupos_investigación"
+                  v-for="item in showGruposInvestigacion"
                   v-bind:key="item.value"
                   id="id_grupo"
                   name="id_grupo"
@@ -108,7 +108,7 @@ export default {
   data() {
     return {
       //Almacena grupos
-      grupos_investigación: {},
+      grupos_investigación: [],
       //Almacena los datos del semillero a crear
       semillero: {
         semillero: "",
@@ -127,7 +127,18 @@ export default {
   computed: {
     formateargrupos_investigación() {
       return Object.values(this.grupos_investigación);
+    },
+
+    showGruposInvestigacion(){
+      let rol     = this.$store.state.user.id_rol
+      let grupo   = this.$store.state.user.id_grupo
+      if(rol > 1){
+        return  this.grupos_investigación.filter(semi => semi.id_grupo == grupo);
+      }
+      return  this.grupos_investigación
     }
+
+    
   },
 
   //Reglas de validacion para VueValidate

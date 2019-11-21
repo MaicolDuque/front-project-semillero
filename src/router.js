@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import About from './views/About.vue'
 import store from './store'
+
 //
 import Grupos from './views/Grupos.vue'
 import AddGrupo from './views/AddGrupo.vue'
@@ -58,7 +59,7 @@ import EditProyecto from './views/EditProyecto.vue'
 import AddProductosProyectos from './views/AddProductosProyectos.vue'
 
 import Login from './views/Login.vue'
-import { TokenService } from "./services/storage.service"
+
 
 Vue.use(Router)
 
@@ -124,6 +125,7 @@ router.beforeEach((to, from, next) => {
     return next({ name: 'home' })
   }
   let user = router.app.$store.state.user
+  
   if(user.id_rol > 1){
     let rutasNoPermitidas = {
       2: ["directores", "grupos"],

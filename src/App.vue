@@ -38,7 +38,7 @@ export default {
     if(localStorage.user){
       let user =   JSON.parse(localStorage.user)     
       let rol = user.id_rol
-      console.log("ccccccccccccccccccccc"+rol)
+      
       if(rol == 2){
         this.$store.dispatch('infoUserDirector',user.id_usuario)
       }else if(rol == 3){
