@@ -646,6 +646,10 @@ export default {
           console.log(error);
           this.errored = true;
         });
+      this.$router.push({
+        name: "productos",
+        params: { id: id }
+      });
     }
   }
 };
