@@ -1,9 +1,6 @@
 <template>
   <div>
-    <h3 class="text-center">
-      Agregar
-      Periodo
-    </h3>
+    <h3 class="text-center">Editar Periodo</h3>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="collapse navbar-collapse">
         <div class="navbar-nav">
@@ -72,6 +69,7 @@
             </div>
           </form>
         </div>
+        <pre>{{$data}}</pre>
       </div>
     </section>
   </div>
@@ -93,7 +91,11 @@ export default {
       submitted: false
     };
   },
-
+  created() {
+    ApiService.get(`/periodo/${this.$route.params.id}`).then(response => {
+      this.periodo = response.data[0];
+    });
+  },
   //Reglas de validacion para VueValidate
   validations: {
     periodo: {
@@ -112,16 +114,6 @@ export default {
     }
   },
   methods: {
-    /* Despliega mensaje de exito al guardar un registro */
-    showAlert() {
-      this.$swal({
-        type: "success",
-        text: "Registro creado con exito",
-        timer: 2000,
-        showCancelButton: false,
-        showConfirmButton: false
-      });
-    },
     handleSubmit(e) {
       this.submitted = true;
 
@@ -130,29 +122,24 @@ export default {
       if (this.$v.$invalid) {
         return;
       }
-      this.periodo.id_semillero = this.$route.params.id;
-      this.addPeriodo();
+      this.updatePeriodo();
       /*  alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.objectPeriodo)); */
     },
     back() {
       this.$router.go(-1);
     },
 
-    addPeriodo() {
-      ApiService.post("/periodo", this.periodo)
+    updatePeriodo() {
+      ApiService.put(`periodo/${this.$route.params.id}`, this.objectPeriodo)
         .then(response => {
-          if (response.status == 200) {
-            this.showAlert();
-            this.back();
-          } else if (response.status == 221) {
-            alert("aca");
-          }
+          this.$router.push({
+            name: "periodos",
+            params: { id: this.$route.params.id }
+          });
         })
-        .catch(error => {
-          console.log(error);
-          this.errored = true;
-        })
-        .finally(() => (this.loading = false));
+        .catch(function(response) {
+          alert(this.periodo.id_semillero);
+        });
     }
   }
 };

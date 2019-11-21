@@ -56,10 +56,6 @@ import EditProyecto from './views/EditProyecto.vue'
 
 import AddProductosProyectos from './views/AddProductosProyectos.vue'
 
-import informe from './views/informe.vue'
-
-
-
 import Login from './views/Login.vue'
 import { TokenService } from "./services/storage.service"
 
@@ -98,8 +94,6 @@ const router = new Router({
     { path: '/proyecto/:id/agregar-proyecto-producto', name: 'agregar-proyecto-producto', component: AddProductosProyectos },
     { path: '/periodo/:id/agregar-actividad/:periodo', name: 'agregar-actividad', component: AddActividad },
     { path: '/periodo/:periodo/editar-actividad/:id', name: 'editar-actividad', component: EditActividad },
-    { path: '/informe/:id', name: 'informe', component: informe },
-    { path: '/addPeriodo/:id', name: 'addPeriodo', component: AddPeriodo },
     { path: '/actividad/:id/productos', name: 'productos', component: Productos },
     { path: '/actividad/:id/productos/editar', name: 'editar-producto', component: EditProducto },
     { path: '/actividad/:id/productos/agregar', name: 'agregar-producto', component: AddProducto },
