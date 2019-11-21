@@ -65,6 +65,7 @@ export default {
   methods: {
     logout() {
       this.$store.commit("setLogin", false);
+      this.$store.commit("MUTATION_info_user", []);
       TokenService.removeToken();
       TokenService.removeTokenCustom("user");
       TokenService.removeRefreshToken();

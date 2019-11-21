@@ -26,6 +26,11 @@ const UserService = {
             .then(res => res.data)
     },
 
+    infoUser(id){
+        return ApiService.get(`/usuario/${id}`)
+            .then(res => res.data)
+    },
+
     /**
      * Logout the current user by removing the token from storage. 
      * 

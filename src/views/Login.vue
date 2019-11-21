@@ -87,8 +87,22 @@ export default {
 
       ApiService.mount401Interceptor();
       localStorage.user = JSON.stringify(data.infoToken.user);
+      
+    
       this.$store.commit("setLogin", true);
       this.$router.push({ name: "home" });
+
+      //Validaciones ROL
+      let user =   JSON.parse(localStorage.user)        
+      let rol  =   user.id_rol      
+      if(rol == 2){
+        this.$store.dispatch('infoUserDirector',user.id_usuario)
+      }else if(rol == 3){
+        this.$store.dispatch('infoUserCoordinador',user.id_usuario)
+      }else{
+        this.$store.dispatch('infoUser',user.id_usuario)
+      }
+
     }
   }
 };
