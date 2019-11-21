@@ -37,6 +37,16 @@ export default new Vuex.Store({
             context.commit('MUTATION_info_user', res[0])
             return res
         })
+    },
+
+
+    infoUser(context, id){
+      return userService.infoUser(id)
+        .then(res => {
+            context.commit('MUTATION_info_user', res[0])
+            return res
+        })
     }
+    
   }
 })

@@ -99,6 +99,8 @@ export default {
         this.$store.dispatch('infoUserDirector',user.id_usuario)
       }else if(rol == 3){
         this.$store.dispatch('infoUserCoordinador',user.id_usuario)
+      }else{
+        this.$store.dispatch('infoUser',user.id_usuario)
       }
 
     }

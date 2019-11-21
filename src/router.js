@@ -125,6 +125,7 @@ router.beforeEach((to, from, next) => {
     return next({ name: 'home' })
   }
   let user = router.app.$store.state.user
+  console.log(user.id_rol)
   
   if(user.id_rol > 1){
     let rutasNoPermitidas = {
