@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import About from './views/About.vue'
+import store from './store'
 //
 import Grupos from './views/Grupos.vue'
 import AddGrupo from './views/AddGrupo.vue'
@@ -102,32 +103,37 @@ const router = new Router({
 })
 
 
+const isAuthenticated = () => {
+  return localStorage.access_token
+}
+
 router.beforeEach((to, from, next) => {
-  const loggedIn = !!TokenService.getToken();
-
   // if (!to.meta.isPublic && !loggedIn) {
-  //   return next({ name: 'login' })
+    //   return next({ name: 'login' })
+    // }
+    
+    // if (to.name === 'login' && loggedIn) {
+  //   return next({ name: 'home' })
   // }
-
-  if (to.name === 'login' && loggedIn) {
+  // const loggedIn = !!TokenService.getToken();
+  
+  
+  
+  // Do not allow user to visit login page or register page if they are logged in
+  if (to.name === 'login' && isAuthenticated()) {
     return next({ name: 'home' })
   }
-
-
-
-  // Do not allow user to visit login page or register page if they are logged in
-  // if (loggedIn && onlyWhenLoggedOut) {
-  //   return next('/')
-  // }
-
-  // const isAdmin = function() {
-  //     let info = JSON.parse(localStorage.user)
-  //     return info.is_admin
-  // }
-  // if ((to.name === 'usuarios' || to.name === 'grupos' || to.name === 'ocupaciones') && !isAdmin()) {
-  //     return next({ name: 'home' })
-  // }
-
+  let user = router.app.$store.state.user
+  if(user.id_rol > 1){
+    let rutasNoPermitidas = {
+      2: ["directores", "grupos"],
+      3: ["directores", "grupos", "coordinadores"]
+    }
+    let rutasNoAccesoRol = rutasNoPermitidas[user.id_rol]    
+    if (rutasNoAccesoRol.indexOf(to.name) > -1) {
+        return next({ name: 'home' })
+    }
+  }
 
 
   next();

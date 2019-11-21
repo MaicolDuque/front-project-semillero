@@ -35,6 +35,17 @@ export default {
       // this.$store.commit('addUser', JSON.parse(localStorage.user))
     }
 
+    if(localStorage.user){
+      let user =   JSON.parse(localStorage.user)     
+      let rol = user.id_rol
+      console.log("ccccccccccccccccccccc"+rol)
+      if(rol == 2){
+        this.$store.dispatch('infoUserDirector',user.id_usuario)
+      }else if(rol == 3){
+        this.$store.dispatch('infoUserCoordinador',user.id_usuario)
+      }
+    }
+
     
   },
   computed: {

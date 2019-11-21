@@ -43,20 +43,20 @@
               Home
             </router-link>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" v-if="idRol == 1" >
             <router-link to="/grupos" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               Grupos de investigación
             </router-link>
           </li>
 
-          <li class="nav-item">
+          <li class="nav-item"  v-if="idRol == 1">
             <router-link to="/directores" class="nav-link">
               <i class="nav-icon fas fa-user-tie"></i>
               Directores
             </router-link>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" v-if="idRol == 2">
             <router-link to="/coordinadores" class="nav-link">
               <i class="nav-icon fas fa-user"></i>
               Coordinadores
@@ -116,11 +116,21 @@
 </template>
 <script>
 export default {
+  data(){
+    return {
+      
+    }
+  },
   mounted: () => {
     if (localStorage.user) {
       let user = JSON.parse(localStorage.user);
       $("#nameUser").text(user.nombre_usuario);
       $("#imageUser").attr("src", user.imagen);
+    }
+  },
+  computed: {
+    idRol(){
+      return this.$store.state.user.id_rol
     }
   }
 };
