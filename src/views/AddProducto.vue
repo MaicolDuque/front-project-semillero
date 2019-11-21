@@ -52,7 +52,7 @@
                     >{{ producto.tipo_producto }}</option>
                   </select>
                 </div>
-                <button type="submit" class="btn btn-outline-success">Actualizar</button>
+                <button type="submit" class="btn btn-outline-success">Agregar</button>
               </div>
             </form>
           </div>

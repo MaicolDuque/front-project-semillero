@@ -50,7 +50,7 @@
                           <button
                             style="margin: 2px"
                             class="btn btn-outline-danger"
-                            @click="deleteDirector(item.id_producto)"
+                            @click="deleteProducto(item.id_producto)"
                           >Eliminar</button>
                         </div>
                       </td>
@@ -111,11 +111,11 @@ export default {
         showConfirmButton: false
       });
     },
-    deleteDirector(id) {
-      alert("aca");
-      ApiService.delete(`/usuario/${id}`).then(response => {
-        let i = this.usuarios.map(item => item.id_usuario).indexOf(id); // find index of your object
-        this.usuarios.splice(i, 1);
+    deleteProducto(id) {      
+      ApiService.delete(`/producto/${id}`).then(response => {
+        let i = this.productos.map(item => item.id_usuario).indexOf(id); // find index of your object
+        this.productos.splice(i, 1);
+        alert("Producto eliminado correctamente!")      
       });
     }
   }
