@@ -59,9 +59,9 @@ export default {
     };
   },
   created() {
-    ApiService.get(`/periodo/${this.$route.params.id}`).then(response => {
+    /*  ApiService.get(`/periodo/${this.$route.params.id}`).then(response => {
       this.periodo = response.data[0];
-    });
+    }); */
   },
 
   //Reglas de validacion para VueValidate
@@ -86,11 +86,12 @@ export default {
         .then(response => {
           if (response.status == 200) {
             this.showAlert();
+            this.back();
           } else if (response.status == 400) {
             this.showAlertGrupoExistente();
           }
         })
-        .then(response => this.$router.push({ name: "agregar-proyecto" }))
+
         .catch(error => console.log(error))
         .finally(() => (this.loading = false));
     },
