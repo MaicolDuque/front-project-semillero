@@ -51,6 +51,34 @@
                           class="btn btn-outline-danger"
                           @click="deleteperiodo(periodo.id_periodo)"
                         >Eliminar</button>
+
+                        
+                            <button
+                              class="btn btn-success"
+                               style="margin: 2px"
+                              @click="exportar(periodo.id_periodo, 1)"
+                              >
+                              FIN13-I
+                            </button>
+
+                            <button
+                              class="btn btn-success"
+                               style="margin: 2px"
+                              @click="exportar(periodo.id_periodo, 2)"
+                              >
+                              FIN13-F
+                            </button>
+
+                            <button
+                              class="btn btn-danger"
+                               style="margin: 2px"
+                              @click="exportar(periodo.id_periodo, 3)"
+                              >
+                              Reporte
+                            </button>
+
+                           
+
                       </div>
                     </td>
                   </tr>
@@ -209,6 +237,8 @@
                               class="btn btn-warning"
                               @click="verProductos(actividad.id_actividad)"
                             >Ver Productos</button>
+
+
                           </div>
                         </td>
                       </tr>
@@ -415,6 +445,7 @@ export default {
           responsive: true
         })
       );
+
     /* ApiService.get(`/proyecto/periodo/semillero/${this.$route.params.id}`)
       .then(response => {
         this.proyectos = response.data;
@@ -443,6 +474,15 @@ export default {
     }
   },
   methods: {
+    exportar(id, tipo){
+      if(tipo == 1){
+        return location.href=process.env.VUE_APP_URL_API+'/exportar/inicial/'+id
+      } 
+      if(tipo == 2){
+        return location.href=process.env.VUE_APP_URL_API+'/exportar/final/'+id
+      }     
+      return location.href=process.env.VUE_APP_URL_API+'/exportar/pdf/'+id
+    },
     handleSubmit(e) {
       this.submitted = true;
 
