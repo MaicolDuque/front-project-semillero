@@ -14,7 +14,7 @@
             aria-controls="collapseOne1"
           >
             <h5 class="mb-0 text-success">
-              Facultad de Administración
+              Facultad Administración
               <i class="fas fa-angle-down rotate-icon text-success"></i>
             </h5>
           </a>
@@ -42,10 +42,9 @@
               >
                 <thead>
                   <tr>
+                    <th>Codigo Colciencias</th>
                     <th>Nombre</th>
                     <th>Categoria</th>
-                    <th>Codigo Colciencias</th>
-                    <th>Vinculo</th>
                     <th>Director</th>
                     <th>Correo</th>
                     <th>Telefono</th>
@@ -53,12 +52,11 @@
                 </thead>
                 <tbody>
                   <tr v-for="item in searchGruposAdministracion" :key="item.id_grupo">
-                    <td>{{item.grupo }}</td>
-                    <td>{{ item.categoria }}</td>
                     <td>{{ item.cod_colciencias }}</td>
                     <td>
-                      <a :href="item.vinculo">{{item.vinculo}}</a>
+                      <a :href="item.vinculo">{{item.grupo }}</a>
                     </td>
+                    <td>{{ item.categoria }}</td>
                     <td>{{ item.nombre_usuario }}</td>
                     <td>{{ item.email }}</td>
                     <td>{{ item.telefono }}</td>
@@ -86,7 +84,7 @@
             aria-controls="collapseTwo2"
           >
             <h5 class="mb-0 text-success">
-              Facultad de Ciencias Agrarias
+              Facultad Ciencias Agrarias
               <i class="fas fa-angle-down rotate-icon"></i>
             </h5>
           </a>
@@ -116,10 +114,9 @@
                   >
                     <thead>
                       <tr>
+                        <th>Codigo Colciencias</th>
                         <th>Nombre</th>
                         <th>Categoria</th>
-                        <th>Codigo Colciencias</th>
-                        <th>Vinculo</th>
                         <th>Director</th>
                         <th>Correo</th>
                         <th>Telefono</th>
@@ -127,12 +124,11 @@
                     </thead>
                     <tbody>
                       <tr v-for="item in searchGruposAgrarias" :key="item.id_grupo">
-                        <td>{{item.grupo }}</td>
-                        <td>{{ item.categoria }}</td>
                         <td>{{ item.cod_colciencias }}</td>
                         <td>
-                          <a :href="item.vinculo">{{item.vinculo}}</a>
+                          <a :href="item.vinculo">{{item.grupo}}</a>
                         </td>
+                        <td>{{ item.categoria }}</td>
                         <td>{{ item.nombre_usuario }}</td>
                         <td>{{ item.email }}</td>
                         <td>{{ item.telefono }}</td>
@@ -162,7 +158,7 @@
             aria-controls="collapseThree3"
           >
             <h5 class="mb-0 text-success">
-              Facultad de Ciencias Básicas, Sociales y Humanas
+              Facultad Ciencias Básicas, Sociales y Humanas
               <i
                 class="fas fa-angle-down rotate-icon"
               ></i>
@@ -193,10 +189,9 @@
                 >
                   <thead>
                     <tr>
+                      <th>Codigo Colciencias</th>
                       <th>Nombre</th>
                       <th>Categoria</th>
-                      <th>Codigo Colciencias</th>
-                      <th>Vinculo</th>
                       <th>Director</th>
                       <th>Correo</th>
                       <th>Telefono</th>
@@ -204,12 +199,11 @@
                   </thead>
                   <tbody>
                     <tr v-for="item in searchGruposBasicas" :key="item.id_grupo">
-                      <td>{{item.grupo }}</td>
-                      <td>{{ item.categoria }}</td>
                       <td>{{ item.cod_colciencias }}</td>
                       <td>
-                        <a :href="item.vinculo">{{item.vinculo}}</a>
+                        <a :href="item.vinculo">{{item.grupo}}</a>
                       </td>
+                      <td>{{ item.categoria }}</td>
                       <td>{{ item.nombre_usuario }}</td>
                       <td>{{ item.email }}</td>
                       <td>{{ item.telefono }}</td>
@@ -266,10 +260,9 @@
                 >
                   <thead>
                     <tr>
+                      <th>Codigo Colciencias</th>
                       <th>Nombre</th>
                       <th>Categoria</th>
-                      <th>Codigo Colciencias</th>
-                      <th>Vinculo</th>
                       <th>Director</th>
                       <th>Correo</th>
                       <th>Telefono</th>
@@ -277,12 +270,11 @@
                   </thead>
                   <tbody>
                     <tr v-for="item in searchGruposVisuales" :key="item.id_grupo">
-                      <td>{{item.grupo }}</td>
-                      <td>{{ item.categoria }}</td>
                       <td>{{ item.cod_colciencias }}</td>
                       <td>
-                        <a :href="item.vinculo">{{item.vinculo}}</a>
+                        <a :href="item.vinculo">{{item.grupo }}</a>
                       </td>
+                      <td>{{ item.categoria }}</td>
                       <td>{{ item.nombre_usuario }}</td>
                       <td>{{ item.email }}</td>
                       <td>{{ item.telefono }}</td>
@@ -343,7 +335,6 @@
                       <th>Nombre</th>
                       <th>Categoria</th>
                       <th>Codigo Colciencias</th>
-                      <th>Vinculo</th>
                       <th>Director</th>
                       <th>Correo</th>
                       <th>Telefono</th>
@@ -351,12 +342,11 @@
                   </thead>
                   <tbody>
                     <tr v-for="item in searchGruposDeportes" :key="item.id_grupo">
-                      <td>{{item.grupo }}</td>
-                      <td>{{ item.categoria }}</td>
                       <td>{{ item.cod_colciencias }}</td>
                       <td>
-                        <a :href="item.vinculo">{{item.vinculo}}</a>
+                        <a :href="item.vinculo">{{item.grupo }}</a>
                       </td>
+                      <td>{{ item.categoria }}</td>
                       <td>{{ item.nombre_usuario }}</td>
                       <td>{{ item.email }}</td>
                       <td>{{ item.telefono }}</td>
@@ -383,7 +373,7 @@
             aria-controls="collapseThree6"
           >
             <h5 class="mb-0 text-success">
-              Facultad Ingenieria
+              Facultad Ingenierias
               <i class="fas fa-angle-down rotate-icon"></i>
             </h5>
           </a>
@@ -412,10 +402,9 @@
                 >
                   <thead>
                     <tr>
+                      <th>Codigo Colciencias</th>
                       <th>Nombre</th>
                       <th>Categoria</th>
-                      <th>Codigo Colciencias</th>
-                      <th>Vinculo</th>
                       <th>Director</th>
                       <th>Correo</th>
                       <th>Telefono</th>
@@ -423,12 +412,11 @@
                   </thead>
                   <tbody>
                     <tr v-for="item in searchGruposIngenieria" :key="item.id_grupo">
-                      <td>{{item.grupo }}</td>
-                      <td>{{ item.categoria }}</td>
                       <td>{{ item.cod_colciencias }}</td>
                       <td>
-                        <a :href="item.vinculo">{{item.vinculo}}</a>
+                        <a :href="item.vinculo">{{item.grupo}}</a>
                       </td>
+                      <td>{{ item.categoria }}</td>
                       <td>{{ item.nombre_usuario }}</td>
                       <td>{{ item.email }}</td>
                       <td>{{ item.telefono }}</td>
