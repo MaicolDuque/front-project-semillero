@@ -112,6 +112,16 @@ export default {
     }
   },
   methods: {
+    /* Despliega mensaje de exito al guardar un registro */
+    showAlert() {
+      this.$swal({
+        type: "success",
+        text: "Registro creado con exito",
+        timer: 2000,
+        showCancelButton: false,
+        showConfirmButton: false
+      });
+    },
     handleSubmit(e) {
       this.submitted = true;
 
@@ -120,7 +130,8 @@ export default {
       if (this.$v.$invalid) {
         return;
       }
-      /* this.addPeriodo(); */
+      this.periodo.id_semillero = this.$route.params.id;
+      this.addPeriodo();
       /*  alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.objectPeriodo)); */
     },
     back() {
@@ -128,13 +139,13 @@ export default {
     },
 
     addPeriodo() {
-      ApiService.post("/periodo", this.objectPeriodo)
+      ApiService.post("/periodo", this.periodo)
         .then(response => {
           if (response.status == 200) {
             this.showAlert();
-            this.$router.push({ name: "grupos" });
+            this.back();
           } else if (response.status == 221) {
-            this.showAlertGrupoExistente();
+            alert("aca");
           }
         })
         .catch(error => {

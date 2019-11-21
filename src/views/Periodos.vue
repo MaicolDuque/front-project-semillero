@@ -8,11 +8,11 @@
           </div>
         </div>
       </div>
-      <!-- <button
+      <button
         class="btn btn-outline-success"
         data-toggle="modal"
         data-target="#exampleModal"
-      >Agregar</button>-->
+      >Agregar</button>
       <router-link
         :to="{name: 'addPeriodo', params: { id: this.$route.params.id}}"
         class="btn btn-outline-primary"
