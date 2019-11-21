@@ -313,6 +313,16 @@ export default {
       });
       this.usuario.id_tipo_usuario = i;
     },
+    /* Despliega mensaje de exito al guardar un registro */
+    showAlert() {
+      this.$swal({
+        type: "success",
+        text: "Registro creado con exito",
+        timer: 2000,
+        showCancelButton: false,
+        showConfirmButton: false
+      });
+    },
     selectChangeGrupo(event) {
       var i;
       this.grupos.forEach(function(element) {
@@ -334,7 +344,7 @@ export default {
       if (this.$v.$invalid) {
         return;
       }
-      console.log("aca2");
+      /* console.log("aca2"); */
       //asigna como usuario un Director
       this.usuario.id_rol = 2;
       /*  */
@@ -352,7 +362,8 @@ export default {
             .then(response => {
               console.log("response =", response);
               if (response.status == 200) {
-                console.log("asignado");
+                this.showAlert();
+                /* console.log("asignado"); */
                 this.$router.push({ name: "directores" });
               } else if (response.status == 221) {
                 alert("El usuario ya es director de otro grupo");

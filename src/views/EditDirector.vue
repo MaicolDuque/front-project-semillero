@@ -258,9 +258,9 @@ export default {
       this.tipoUsuarios = response.data;
     });
 
-    ApiService.get("/rol").then(response => {
+    /*  ApiService.get("/rol").then(response => {
       this.roles = response.data;
-    });
+    }); */
   },
   //Reglas de validacion para VueValidate
   validations: {
