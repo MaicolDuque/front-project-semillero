@@ -56,7 +56,7 @@
               Directores
             </router-link>
           </li>
-          <li class="nav-item" v-if="idRol == 2">
+          <li class="nav-item" v-if="idRol == 2 || idRol == 1">
             <router-link to="/coordinadores" class="nav-link">
               <i class="nav-icon fas fa-user"></i>
               Coordinadores
