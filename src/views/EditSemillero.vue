@@ -85,7 +85,7 @@
                   <label>Grupo</label>
                   <select class="form-control" style="width: 100%;" v-model="semillero.id_grupo">
                     <option
-                      v-for="grupo in grupos_investigacion"
+                      v-for="grupo in showGruposInvestigacion"
                       v-bind:key="grupo.id_grupo"
                       :value="grupo.id_grupo"
                     >{{ grupo.grupo }}</option>
@@ -110,7 +110,7 @@ export default {
     return {
       loading: true,
       errored: false,
-      grupos_investigacion: {},
+      grupos_investigacion: [],
       semillero: {
         semillero: "",
         objetivo: "",
@@ -193,6 +193,19 @@ export default {
           console.log(error);
           this.errored = true;
         });
+    }
+  },
+
+  computed: {
+    showGruposInvestigacion(){
+      if(this.grupos_investigacion){
+        let rol     = this.$store.state.user.id_rol
+        let grupo   = this.$store.state.user.id_grupo
+        if(rol > 1){
+          return  this.grupos_investigacion.filter(semi => semi.id_grupo == grupo);
+        }
+        return  this.grupos_investigacion
+      }
     }
   }
 };
