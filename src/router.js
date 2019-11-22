@@ -126,12 +126,13 @@ router.beforeEach((to, from, next) => {
   if (to.name === 'login' && isAuthenticated()) {
     return next({ name: 'home' })
   }
-  let user = router.app.$store.state.user
+  /* let user = router.app.$store.state.user */
+  let user = JSON.parse(localStorage.user)
   console.log(user.id_rol)
   
   if(user.id_rol > 1){
     let rutasNoPermitidas = {
-      2: ["directores", "grupos"],
+      2: ["directores", "grupos","periodos"],
       3: ["directores", "grupos", "coordinadores"]
     }
     let rutasNoAccesoRol = rutasNoPermitidas[user.id_rol]    
