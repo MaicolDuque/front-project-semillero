@@ -87,7 +87,7 @@ const router = new Router({
     { path: '/asignarsemillero', name: 'asignarsemillero', component: AsignarSemillero },
     { path: '/periodos/:id', name: 'periodos', component: Periodos },
     { path: '/periodos/edit/:id', name: 'edit-periodo', component: EditPeriodo },
-    { path: '/grupos_visitante', name: 'grupos_visitante', component: VistaGruposVisitante },
+    { path: '/grupos_visitante', name: 'grupos_visitante', component: VistaGruposVisitante, meta: { isPublic: true } },
     { path: '/editar-integrante/:id', name: 'editar-integrante', component: EditIntegrante },
     { path: '/periodo/:id/agregar-integrante', name: 'agregar-integrante', component: AddIntegrante },
     { path: '/periodo/:id/agregar-proyecto', name: 'agregar-proyecto', component: AddProyecto },
@@ -118,7 +118,9 @@ router.beforeEach((to, from, next) => {
   // }
   // const loggedIn = !!TokenService.getToken();
   
-  
+  // if (to.meta.isPublic && !isAuthenticated()) {
+  //   return next();
+  // }
   
   // Do not allow user to visit login page or register page if they are logged in
   if (to.name === 'login' && isAuthenticated()) {

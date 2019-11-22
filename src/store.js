@@ -7,6 +7,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     isLogin: false,
+    isVisitante: "si",
     user: {}
   },
   getters: {
@@ -20,6 +21,9 @@ export default new Vuex.Store({
     },
     MUTATION_info_user(state, info){
       state.user = info
+    },
+    setVisitante(state, val){
+      state.isVisitante = val
     }
   },
   actions: {
@@ -47,6 +51,6 @@ export default new Vuex.Store({
             return res
         })
     }
-    
+
   }
 })

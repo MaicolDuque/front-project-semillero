@@ -1,16 +1,12 @@
 <template>
   <!-- Navbar -->
   <nav
-    style="background-color: #196844"
+    style="background-color: #196844; width: 100%; margin:0"
     class="main-header navbar navbar-expand navbar-white navbar-light"
   >
     <!-- Left navbar links -->
     <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#">
-          <i class="fas fa-bars"></i>
-        </a>
-      </li>
+      
       <header class="header" role="banner">
         <div class="header-inner clearfix">
           <h5>
@@ -50,7 +46,7 @@
       <!-- Notifications Dropdown Menu -->
 
       <li class="nav-item d-none d-sm-inline-block">
-        <a @click="logout" style="cursor: pointer; color: red" class="nav-link">Cerrar sesión</a>
+        <a @click="irLogin" style="cursor: pointer; color: red" class="nav-link">LOGIN</a>
       </li>
     </ul>
   </nav>
@@ -65,21 +61,22 @@ export default {
   props: {
     tipo: Number
   },
-  created(){
-
-  },
   methods: {
     logout() {
       this.$store.commit("setLogin", false);
       this.$store.commit("MUTATION_info_user", []);
 
       TokenService.saveTokenCustom("visitante", "si")
-      this.$store.commit("setVisitante", "si");
+
       TokenService.removeToken();
       TokenService.removeTokenCustom("user");
       TokenService.removeRefreshToken();
       ApiService.unmount401Interceptor();
       this.$router.push("login");
+    },
+    irLogin(){
+      localStorage.visitante = "no"
+      this.$store.commit("setVisitante", "no");      
     }
   }
 };
