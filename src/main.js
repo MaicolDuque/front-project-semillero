@@ -44,6 +44,10 @@ if (TokenService.getToken()) {
   ApiService.setHeader();
 }
 
+if(!TokenService.getItemCustom('visitante')){
+  TokenService.saveTokenCustom('visitante', "si")
+}
+
 
 Vue.component('ValidationProvider', ValidationProvider);
 Vue.use(VueSweetalert2);

@@ -23,6 +23,9 @@ const TokenService = {
         localStorage.setItem(ITEM, value)
     },
 
+    getItemCustom(ITEM) {
+        localStorage.getItem(ITEM)
+    },
     removeToken() {
         localStorage.removeItem(TOKEN_KEY)
     },

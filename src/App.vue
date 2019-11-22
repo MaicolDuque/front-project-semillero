@@ -9,7 +9,16 @@
     <SPfooter />
   </div>
 
-  <Login v-else />
+  <div v-if="!isAuth && isVisitante == 'si'">
+    <SPHeaderVisitante />
+    <SPVisitantes />
+    <SPfooter />
+  </div>
+
+  <div v-if="!isAuth && isVisitante == 'no'" >
+    <Login />
+  </div>
+
 </div>
 
 </template>
@@ -20,19 +29,26 @@ import SPleftMenu from "./components/LeftMenu";
 import SPfooter from "./components/Footer";
 import Login from "./views/Login";
 import { TokenService } from "./services/storage.service"
-
+import SPHeaderVisitante from './components/HeaderVisitante'
+import SPVisitantes from './views/VistaGruposVisitante'
 
 export default {
-  components: { SPheader, SPleftMenu, SPfooter, Login },
+  components: { SPheader, SPleftMenu, SPfooter, Login,SPHeaderVisitante, SPVisitantes },
   data () {
     return {
       // auth: false
     }
   },
   created () {
+    
     if(localStorage.access_token) {
       this.$store.commit('setLogin', true)          
       // this.$store.commit('addUser', JSON.parse(localStorage.user))
+    }
+
+    this.$store.commit('setVisitante', "no")                
+    if(localStorage.visitante == "si") {
+      this.$store.commit('setVisitante', "si")                
     }
 
     if(localStorage.user){
@@ -53,6 +69,9 @@ export default {
   computed: {
     isAuth() {
       return this.$store.state.isLogin
+    },
+    isVisitante() {
+      return this.$store.state.isVisitante
     }
   }
 };
