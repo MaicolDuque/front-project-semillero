@@ -142,7 +142,7 @@ export default {
                   timer: 1500
                 });
               } else if (response.status === 222) {
-                alert("no se puedo borrar el registro");
+                alert("No se pudo borrar el registro");
               }
             })
             .catch(error => {
@@ -152,7 +152,7 @@ export default {
 
           this.$swal("Registro Eliminado");
         } else {
-          this.$swal(" Accion Cancelada");
+          this.$swal("Accion Cancelada");
         }
       });
     }

@@ -90,10 +90,14 @@ export default {
     };
   },
   created() {
-    ApiService.get("/usuario/coordinador")
+    let user = JSON.parse(localStorage.user)
+    console.log(user.id_usuario)
+    ApiService.get(`/usuario/coordinador/${user.id_usuario}`)
       .then(response => {
+        console.log(response.status)
+        console.log(response.data)
         if (response.status === 204) {
-          alert("No existen Coordinadores para mostrar para mostrar ");
+          alert("No existen Coordinadores para mostrar para mostrar");
           this.usuarios = response.data;
         } else {
           this.usuarios = response.data;

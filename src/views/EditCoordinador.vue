@@ -158,7 +158,7 @@
                     >
                       <option value>Por favor seleccione un Elemento</option>
                       <option
-                        v-for="semillero in semilleros"
+                        v-for="semillero in showSemilleros"
                         v-bind:key="semillero.id_semillero"
                         id="id_semillero"
                         name="id_semillero"
@@ -210,7 +210,7 @@ export default {
     };
   },
   created() {
-    ApiService.get("/usuario/coordinador")
+    ApiService.get(`/usuario/coordinador/${this.$route.params.id}/edit`)
       .then(response => {
         if (response.status === 204) {
           alert("No se encontro un grupo  ");
@@ -370,7 +370,17 @@ export default {
           "id_rol":           ${this.coordinador.id_rol},
           "id_tipo_usuario":  ${this.coordinador.id_tipo_usuario}
         }`);
+    },
+
+    showSemilleros(){
+      let rol     = this.$store.state.user.id_rol
+      let semillero   = this.$store.state.user.id_semillero
+      if(rol > 1){
+        return  this.semilleros.filter(semi => semi.id_semillero == semillero);
+      }
+      return  this.semilleros
     }
+
   }
 };
 </script>
