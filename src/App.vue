@@ -50,11 +50,12 @@ export default {
     if(localStorage.visitante == "si") {
       this.$store.commit('setVisitante', "si")                
     }
-
+    console.log("aca1"+localStorage.user)
     if(localStorage.user){
+      console.log("aca2"+localStorage.user)
       let user =   JSON.parse(localStorage.user)     
       let rol  = user.id_rol
-      
+      console.log("Rol="+rol)
       if(rol == 2){
         this.$store.dispatch('infoUserDirector',user.id_usuario)
       }else if(rol == 3){
