@@ -110,34 +110,34 @@ const isAuthenticated = () => {
 
 router.beforeEach((to, from, next) => {
   // if (!to.meta.isPublic && !loggedIn) {
-    //   return next({ name: 'login' })
-    // }
-    
-    // if (to.name === 'login' && loggedIn) {
+  //   return next({ name: 'login' })
+  // }
+
+  // if (to.name === 'login' && loggedIn) {
   //   return next({ name: 'home' })
   // }
   // const loggedIn = !!TokenService.getToken();
-  
+
   // if (to.meta.isPublic && !isAuthenticated()) {
   //   return next();
   // }
-  
+
   // Do not allow user to visit login page or register page if they are logged in
   if (to.name === 'login' && isAuthenticated()) {
     return next({ name: 'home' })
   }
-  /* let user = router.app.$store.state.user */
-  let user = JSON.parse(localStorage.user)
+  let user = router.app.$store.state.user
+  /* let user = JSON.parse(localStorage.user) */
   console.log(user.id_rol)
-  
-  if(user.id_rol > 1){
+
+  if (user.id_rol > 1) {
     let rutasNoPermitidas = {
-      2: ["directores", "grupos","periodos"],
+      2: ["directores", "grupos", "periodos"],
       3: ["directores", "grupos", "coordinadores"]
     }
-    let rutasNoAccesoRol = rutasNoPermitidas[user.id_rol]    
+    let rutasNoAccesoRol = rutasNoPermitidas[user.id_rol]
     if (rutasNoAccesoRol.indexOf(to.name) > -1) {
-        return next({ name: 'home' })
+      return next({ name: 'home' })
     }
   }
 

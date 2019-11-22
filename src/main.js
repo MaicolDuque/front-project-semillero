@@ -21,8 +21,8 @@ import VueCollapse from 'vue2-collapse'
 import Multiselect from 'vue-multiselect'  //Select with search
 
 //Import API for setter anf getter localstorage
-import ApiService from "./services/api.service";
-import { TokenService } from './services/storage.service'
+import ApiService from './services/api.service';
+import { TokenService } from './services/storage.service';
 
 Vue.component('multiselect', Multiselect)
 Vue.use(Vuelidate)
@@ -44,7 +44,7 @@ if (TokenService.getToken()) {
   ApiService.setHeader();
 }
 
-if(!TokenService.getItemCustom('visitante')){
+if (!TokenService.getItemCustom('visitante')) {
   TokenService.saveTokenCustom('visitante', "si")
 }
 

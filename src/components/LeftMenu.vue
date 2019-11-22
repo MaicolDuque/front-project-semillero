@@ -130,6 +130,7 @@ export default {
   },
   computed: {
     idRol(){
+      alert(this.$store.state.user.id_rol)
       return this.$store.state.user.id_rol
     }
   }
