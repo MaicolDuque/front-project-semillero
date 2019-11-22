@@ -52,33 +52,23 @@
                           @click="deleteperiodo(periodo.id_periodo)"
                         >Eliminar</button>
 
-                        
-                            <button
-                              class="btn btn-success"
-                               style="margin: 2px"
-                              @click="exportar(periodo.id_periodo, 1)"
-                              >
-                              FIN13-I
-                            </button>
+                        <button
+                          class="btn btn-success"
+                          style="margin: 2px"
+                          @click="exportar(periodo.id_periodo, 1)"
+                        >FIN13-I</button>
 
-                            <button
-                              class="btn btn-success"
-                               style="margin: 2px"
-                              @click="exportar(periodo.id_periodo, 2)"
-                              >
-                              FIN13-F
-                            </button>
+                        <button
+                          class="btn btn-success"
+                          style="margin: 2px"
+                          @click="exportar(periodo.id_periodo, 2)"
+                        >FIN13-F</button>
 
-                            <button
-                              class="btn btn-danger"
-                               style="margin: 2px"
-                              @click="exportar(periodo.id_periodo, 3)"
-                              >
-                              Reporte
-                            </button>
-
-                           
-
+                        <button
+                          class="btn btn-danger"
+                          style="margin: 2px"
+                          @click="exportar(periodo.id_periodo, 3)"
+                        >Reporte</button>
                       </div>
                     </td>
                   </tr>
@@ -237,8 +227,6 @@
                               class="btn btn-warning"
                               @click="verProductos(actividad.id_actividad)"
                             >Ver Productos</button>
-
-
                           </div>
                         </td>
                       </tr>
@@ -294,11 +282,10 @@
                                         class="btn btn-outline-danger"
                                         @click="deleteProyecto(item.id_proyecto)"
                                       >Eliminar</button>
-                                      <router-link
-                                        :to="{name: 'agregar-proyecto-producto', params: { id: item.id_proyecto}}"
-                                        class="btn btn-outline-primary"
-                                        style="margin: 2px"
-                                      >Productos</router-link>
+                                      <button
+                                        class="btn btn-warning"
+                                        @click="verProductosP(item.id_proyecto)"
+                                      >Ver Productos</button>
                                     </div>
                                   </td>
                                 </tr>
@@ -474,14 +461,17 @@ export default {
     }
   },
   methods: {
-    exportar(id, tipo){
-      if(tipo == 1){
-        return location.href=process.env.VUE_APP_URL_API+'/exportar/inicial/'+id
-      } 
-      if(tipo == 2){
-        return location.href=process.env.VUE_APP_URL_API+'/exportar/final/'+id
-      }     
-      return location.href=process.env.VUE_APP_URL_API+'/exportar/pdf/'+id
+    exportar(id, tipo) {
+      if (tipo == 1) {
+        return (location.href =
+          process.env.VUE_APP_URL_API + "/exportar/inicial/" + id);
+      }
+      if (tipo == 2) {
+        return (location.href =
+          process.env.VUE_APP_URL_API + "/exportar/final/" + id);
+      }
+      return (location.href =
+        process.env.VUE_APP_URL_API + "/exportar/pdf/" + id);
     },
     handleSubmit(e) {
       this.submitted = true;
@@ -610,7 +600,7 @@ export default {
       if (this.idPeriodo) {
         return this.$router.push({
           name: "agregar-proyecto",
-          params: { id: this.$route.params.id }
+          params: { id: this.$route.params.id, periodo: this.idPeriodo }
         });
       }
       alert("Debe seleccionar un periodo..");
@@ -665,8 +655,15 @@ export default {
 
     verProductos(id) {
       this.$router.push({
-          name: "productos",
-          params: { id: id }
+        name: "productos",
+        params: { id: id }
+      });
+    },
+
+    verProductosP(id) {
+      this.$router.push({
+        name: "productosP",
+        params: { id: id }
       });
     }
   }

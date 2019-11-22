@@ -11,7 +11,7 @@
 
   <div v-if="!isAuth && isVisitante == 'si'">
     <SPHeaderVisitante />
-    <SPVisitantes />
+    <Principal />
     <SPfooter />
   </div>
 
@@ -30,10 +30,11 @@ import SPfooter from "./components/Footer";
 import Login from "./views/Login";
 import { TokenService } from "./services/storage.service"
 import SPHeaderVisitante from './components/HeaderVisitante'
-import SPVisitantes from './views/VistaGruposVisitante'
+import Principal from './views/Principal';
+/* import SPVisitantes from './views/VistaGruposVisitante' */
 
 export default {
-  components: { SPheader, SPleftMenu, SPfooter, Login,SPHeaderVisitante, SPVisitantes },
+  components: { SPheader, SPleftMenu, SPfooter, Login,SPHeaderVisitante/* , SPVisitantes */,Principal },
   data () {
     return {
       // auth: false

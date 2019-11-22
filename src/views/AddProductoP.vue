@@ -9,7 +9,7 @@
     </section>
     <section v-else>
       <div v-if="loading">
-        cargando..
+        Cargando..
         <div class="spinner-border text-success" role="status">
           <span class="sr-only">Loading...</span>
         </div>
@@ -72,17 +72,11 @@ export default {
       loading: true,
       errored: false,
       tipoProductos: {},
-      semillero: {
-        semillero: "",
-        objetivo: "",
-        descripcion: "",
-        id_grupo: ""
-      },
       submitted: false,
       producto: {
         producto: "",
         id_tipo_producto: 0,
-        id_actividad: this.$route.params.id
+        id_proyecto: this.$route.params.id
       }
     };
   },
@@ -120,7 +114,7 @@ export default {
       if (this.$v.$invalid) {
         return;
       }
-      this.updateProducto();
+      this.addProductoP();
       /* alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.grupo)); */
     },
     
@@ -131,15 +125,15 @@ export default {
     showAlert() {
       this.$swal({
         type: "success",
-        text: "Registro Agregado con exito",
+        text: "Registro agregado con exito",
         timer: 2000,
         showCancelButton: false,
         showConfirmButton: false
       });
     },
 
-    updateProducto(event) {
-      ApiService.post(`/producto/actividad`, this.producto)
+    addProductoP(event) {
+      ApiService.post(`/producto/proyecto`, this.producto)
         .then(response => {         
           this.showAlert();
           this.back()         

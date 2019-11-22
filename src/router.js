@@ -60,6 +60,12 @@ import AddProductosProyectos from './views/AddProductosProyectos.vue'
 
 import Login from './views/Login.vue'
 
+import ProductosP from './views/ProductosP'
+
+import AddProyectoP from './views/AddProyectoP';
+
+import AddProductoP from './views/AddProductoP';
+
 
 Vue.use(Router)
 
@@ -90,13 +96,15 @@ const router = new Router({
     { path: '/grupos_visitante', name: 'grupos_visitante', component: VistaGruposVisitante, meta: { isPublic: true } },
     { path: '/editar-integrante/:id', name: 'editar-integrante', component: EditIntegrante },
     { path: '/periodo/:id/agregar-integrante', name: 'agregar-integrante', component: AddIntegrante },
-    { path: '/periodo/:id/agregar-proyecto', name: 'agregar-proyecto', component: AddProyecto },
+    /* { path: '/periodo/:id/agregar-proyecto', name: 'agregar-proyecto', component: AddProyecto }, */
     { path: '/periodo/:id/addperiodo', name: 'addperiodo', component: AddPeriodo },
     { path: '/editproyecto/:id', name: 'editproyecto', component: EditProyecto },
-    { path: '/proyecto/:id/agregar-proyecto-producto', name: 'agregar-proyecto-producto', component: AddProductosProyectos },
+    { path: '/proyecto/:id/agregar-proyecto-producto', name: 'agregar-proyecto-producto', component: AddProductoP },
     { path: '/periodo/:id/agregar-actividad/:periodo', name: 'agregar-actividad', component: AddActividad },
+    { path: '/periodo/:id/agregar-proyecto/:periodo', name: 'agregar-proyecto', component: AddProyectoP },
     { path: '/periodo/:periodo/editar-actividad/:id', name: 'editar-actividad', component: EditActividad },
     { path: '/actividad/:id/productos', name: 'productos', component: Productos },
+    { path: '/proyectos/:id/productos', name: 'productosP', component: ProductosP },
     { path: '/actividad/:id/productos/editar', name: 'editar-producto', component: EditProducto },
     { path: '/actividad/:id/productos/agregar', name: 'agregar-producto', component: AddProducto },
 
