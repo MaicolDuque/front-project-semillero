@@ -66,6 +66,10 @@ import AddProyectoP from './views/AddProyectoP';
 
 import AddProductoP from './views/AddProductoP';
 
+import Soportes from './views/Soportes';
+import AddSoporte from './views/AddSoporte';
+import EditSoporte from './views/EditSoporte';
+
 
 Vue.use(Router)
 
@@ -107,6 +111,9 @@ const router = new Router({
     { path: '/proyectos/:id/productos', name: 'productosP', component: ProductosP },
     { path: '/actividad/:id/productos/editar', name: 'editar-producto', component: EditProducto },
     { path: '/actividad/:id/productos/agregar', name: 'agregar-producto', component: AddProducto },
+    { path: '/soportes/:id/', name: 'soportes', component: Soportes},
+    { path: '/agregarsoporte/:id', name: 'agregar-soporte', component: AddSoporte },
+    { path: '/editar-soporte/:id', name: 'editar-soporte', component: EditSoporte },
 
   ]
 })

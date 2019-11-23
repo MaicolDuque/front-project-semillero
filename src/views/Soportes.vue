@@ -1,8 +1,8 @@
 <template>
   <div style="padding:25px" class="container">
-    <h3 class="text-center">Productos</h3>
+    <h3 class="text-center">Soportes</h3>
     <div style="text-align: right; padding: 14px 1px;">
-      <a @click="addProducto" tag="button" class="btn btn-outline-success">Agregar</a>
+      <a @click="addSoporte" tag="button" class="btn btn-outline-success">Agregar</a>
     </div>
     <section class="card card-primary card-outline">
       <div class="row">
@@ -15,7 +15,7 @@
               </section>
               <section v-else>
                 <div v-if="loading">
-                  cargando..
+                  Cargando..
                   <div class="spinner-border text-success" role="status">
                     <span class="sr-only">Loading...</span>
                   </div>
@@ -29,33 +29,34 @@
                   <thead>
                     <tr>
                       <th>ID</th>
-                      <th>Nombre</th>
-                      <th>Tipo</th>
+                      <th>Soporte</th>
+                      <th>Vinculo</th>
                       <th data-priority="2">Acciones</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="item in productos" :key="item.id_producto">
-                      <td>{{ item.id_producto }}</td>
-                      <td>{{ item.producto }}</td>
-                      <td>{{ item.tipo_producto }}</td>
-
+                    <tr v-for="item in soportes" :key="item.id_soporte">
+                      <td>{{ item.id_soporte }}</td>
+                      <td>{{ item.soporte }}</td>
+                      <td>
+                        <a :href="item.vinculo">Ruta</a>
+                      </td>
                       <td>
                         <div class="btn-group" role="group">
                           <router-link
-                            :to="{name: 'editar-producto', params: { id: item.id_producto}}"
+                            :to="{name: 'editar-soporte', params: {id: item.id_soporte}}"
                             class="btn btn-outline-primary"
                             style="margin: 2px"
                           >Editar</router-link>
                           <button
                             style="margin: 2px"
                             class="btn btn-outline-danger"
-                            @click="deleteProducto(item.id_producto)"
+                            @click="deleteProducto(item.id_soporte)"
                           >Eliminar</button>
-                          <button
+                          <!-- <button
                             class="btn btn-warning"
-                            @click="verSoportes(item.id_producto)"
-                          >Ver Soportes</button>
+                            @click="verSoportes(item.id_soporte)"
+                          >Ver soportes</button>-->
                         </div>
                       </td>
                     </tr>
@@ -78,18 +79,20 @@ export default {
     return {
       loading: true,
       errored: false,
-      productos: []
+      soportes: []
     };
   },
   created() {
-    ApiService.get(`/producto/proyecto/${this.$route.params.id}`)
+    console.log(this.$route.params.id);
+    ApiService.get(`/soporte/${this.$route.params.id}`)
       .then(response => {
         if (response.status === 204) {
-          alert("No existen productos para mostrar ");
-          this.productos = response.data;
+          alert("No existen soportes para mostrar ");
+          this.soportes = response.data;
         } else {
+          console.log(response.status);
           console.log(response.data);
-          this.productos = response.data;
+          this.soportes = response.data;
         }
       })
       .then(res => {
@@ -104,10 +107,10 @@ export default {
       .finally(() => (this.loading = false));
   },
   methods: {
-    addProducto() {
+    addSoporte() {
       console.log(this.$route.params.id);
       this.$router.push({
-        name: "agregar-proyecto-producto",
+        name: "agregar-soporte",
         id: this.$route.params.id
       });
     },
@@ -121,18 +124,20 @@ export default {
       });
     },
     deleteProducto(id) {
-      ApiService.delete(`/producto/${id}`).then(response => {
-        let i = this.productos.map(item => item.id_usuario).indexOf(id); // find index of your object
-        this.productos.splice(i, 1);
-        alert("Producto eliminado correctamente!");
-      });
-    },
-    verSoportes(id) {
-      this.$router.push({
-        name: "soportes",
-        params: { id: id }
+      ApiService.delete(`/soporte/${id}`).then(response => {
+        let i = this.soportes.map(item => item.id_usuario).indexOf(id); // find index of your object
+        this.soportes.splice(i, 1);
+        alert("Soporte eliminado correctamente!");
       });
     }
   }
+  /* computed:{
+    verSoportes(id) {
+      this.$router.push({
+        name: "soportesP",
+        params: { id: id }
+      });
+    }
+  } */
 };
 </script>
