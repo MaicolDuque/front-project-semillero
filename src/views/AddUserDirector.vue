@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container">
-      <h3 class="text-center">Agregar Usuario Director</h3>
+      
       <nav class="nav grey lighten-4 py-4">
         <router-link to="/directores" class="nav-item nav-link">Directores</router-link>
       </nav>
@@ -13,6 +13,7 @@
           <div class="card card-success">
             <form @submit.prevent="handleSubmit">
               <div class="card-body">
+                <h3 class="text-center">Agregar Director</h3>
                 <div class="form-group">
                   <label for="documento">Documento</label>
                   <input
@@ -37,7 +38,7 @@
                   <label for="nombre_usuario">Nombre</label>
                   <input
                     type="text"
-                    pattern="[A-Za-z ]+"
+                    pattern="[A-Za-z á é í ú ´ ó]+"
                     title=" Solo Letras. Tamaño máximo: 50"
                     v-model.trim="usuario.nombre_usuario"
                     id="nombre_usuario"
@@ -60,7 +61,7 @@
                   <label for="apellido_usuario">Apellido</label>
                   <input
                     type="text"
-                    pattern="[A-Za-z ]+"
+                    pattern="[A-Za-z á é í ú ´ ó]+"
                     title=" Solo Letras. Tamaño máximo: 50"
                     v-model.trim="usuario.apellido_usuario"
                     id="apellido_usuario"
@@ -80,13 +81,13 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="correo">correo</label>
+                  <label for="email">Email</label>
                   <input
                     type="text"
                     v-model.trim="usuario.email"
                     id="email"
                     name="email"
-                    placeholder="Correo"
+                    placeholder="Email"
                     class="form-control"
                     :class="{ 'is-invalid': submitted && $v.usuario.email.$error }"
                   />
@@ -119,19 +120,7 @@
                   </div>
                 </div>
 
-                <div class="form-group">
-                  <label for="estado">Estado</label>
-                  <br />
-                  <select class="custom-select browser-default" @change="onChange($event)" required>
-                    <option value>Por favor seleccione un Elemento</option>
-                    <option
-                      v-for="option in options"
-                      v-bind:key="option.value"
-                      class="form-control"
-                      :class="{ 'is-invalid': submitted && $v.usuario.estado.$error }"
-                    >{{ option.text }}</option>
-                  </select>
-                </div>
+                
                 <div class="form-group">
                   <label for="tipo">Tipo</label>
                   <br />
@@ -220,7 +209,7 @@ export default {
         apellido_usuario: "",
         email: "",
         telefono: "",
-        estado: "",
+        estado: 1,
         id_tipo_usuario: "",
         id_rol: ""
       },
@@ -256,7 +245,7 @@ export default {
       return JSON.parse(`{
           "documento":        "${this.usuario.documento}",
           "nombre_usuario":   "${this.usuario.nombre_usuario}",
-          "estado":           ${this.usuario.estado},
+          "estado":           1,
           "apellido_usuario": "${this.usuario.apellido_usuario}",
           "telefono":         "${this.usuario.telefono}",
           "email":            "${this.usuario.email}",

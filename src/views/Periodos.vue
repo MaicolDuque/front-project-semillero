@@ -35,7 +35,7 @@
                 <tbody>
                   <tr v-for="periodo in periodos" :key="'periodo-'+periodo.id_periodo">
                     <td style="width: 70%">
-                      <div style="cursor:pointer" @click="showInfoPeriodo(periodo.id_periodo)">
+                      <div class="btn btn-info" style="cursor:pointer" @click="showInfoPeriodo(periodo.id_periodo)">
                         <a>{{periodo.periodo}}</a>
                       </div>
                     </td>
@@ -162,10 +162,12 @@
                           <div class="btn-group" role="group">
                             <router-link
                               :to="{name: 'editar-integrante', params: { id: item.id_usuario}}"
-                              class="btn btn-primary"
+                              class="btn btn-outline-primary"
+                              style="margin: 2px"
                             >Editar</router-link>
                             <button
-                              class="btn btn-danger"
+                              class="btn btn-outline-danger"
+                              style="margin: 2px"
                               @click="deleteIntegrante(item.id_usuario)"
                             >Eliminar</button>
                           </div>
@@ -216,15 +218,18 @@
                           <div class="btn-group" role="group">
                             <button
                               @click="editActividad(actividad.id_actividad)"
-                              class="btn btn-primary"
+                              class="btn btn-outline-primary"
+                              style="margin: 2px"
                             >Editar</button>
                             <button
-                              class="btn btn-danger"
+                              class="btn btn-outline-danger"
+                              style="margin: 2px"
                               @click="deleteActividad(actividad.id_actividad)"
                             >Eliminar</button>
 
                             <button
-                              class="btn btn-warning"
+                              class="btn btn-outline-warning"
+                              style="margin: 2px"
                               @click="verProductos(actividad.id_actividad)"
                             >Ver Productos</button>
                           </div>
@@ -270,17 +275,20 @@
                                 <td>{{ item.proyecto }}</td>
 
                                 <td>
-                                  <div class="btn-group" role="group">
+                                  <div class="btn-group" style="margin: 2px" role="group">
                                     <router-link
-                                      :to="{name: 'editar-integrante', params: { id: item.id_usuario}}"
-                                      class="btn btn-primary"
+                                      :to="{name: 'editar-proyecto', params: { id: item.id_proyecto}}"
+                                      class="btn btn-outline-primary"
+                                      style="margin: 2px"
                                     >Editar</router-link>
                                     <button
-                                      class="btn btn-danger"
-                                      @click="deleteIntegrante(item.id_usuario)"
+                                      class="btn btn-outline-danger"
+                                      style="margin: 2px"
+                                      @click="deleteIntegrante(item.id_proyecto)"
                                     >Eliminar</button>
                                     <button
-                                      class="btn btn-warning"
+                                      class="btn btn-outline-warning"
+                                      style="margin: 2px"
                                       @click="verProductosP(item.id_proyecto)"
                                     >Ver Productos</button>
                                   </div>
@@ -426,7 +434,8 @@ export default {
       })
       .then(ress =>
         $("#periodos").DataTable({
-          responsive: true
+          responsive: true,
+          retrieve: true
         })
       );
 
@@ -564,7 +573,8 @@ export default {
             this.controlIntegrantes = 0;
             $("#integrantes").DataTable({
               responsive: true,
-              searching: false
+              searching: false,
+              retrieve: true
             });
           }
         });
@@ -577,7 +587,8 @@ export default {
         .then(res => {
           $("#tblProyectos").DataTable({
             responsive: true,
-            searching: false
+            searching: false,
+            retrieve: true
           });
         });
 

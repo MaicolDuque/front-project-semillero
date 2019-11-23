@@ -11,7 +11,7 @@
 
     <div v-if="!isAuth && isVisitante == 'si'">
       <SPHeaderVisitante />
-      <Principal />
+      <SPVisitantes />
       <SPfooter />
     </div>
 
@@ -29,7 +29,7 @@ import Login from "./views/Login";
 import { TokenService } from "./services/storage.service";
 import SPHeaderVisitante from "./components/HeaderVisitante";
 import Principal from "./views/Principal";
-/* import SPVisitantes from './views/VistaGruposVisitante' */
+import SPVisitantes from "./views/VistaGruposVisitante";
 
 export default {
   components: {
@@ -37,7 +37,8 @@ export default {
     SPleftMenu,
     SPfooter,
     Login,
-    SPHeaderVisitante /* , SPVisitantes */,
+    SPHeaderVisitante,
+    SPVisitantes,
     Principal
   },
   data() {
@@ -55,12 +56,10 @@ export default {
     if (localStorage.visitante == "si") {
       this.$store.commit("setVisitante", "si");
     }
-    console.log("aca1" + localStorage.user);
+
     if (localStorage.user) {
-      console.log("aca2" + localStorage.user);
       let user = JSON.parse(localStorage.user);
       let rol = user.id_rol;
-      console.log("Rol=" + rol);
       if (rol == 2) {
         this.$store.dispatch("infoUserDirector", user.id_usuario);
       } else if (rol == 3) {

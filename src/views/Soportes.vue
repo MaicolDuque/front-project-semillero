@@ -1,6 +1,6 @@
 <template>
   <div style="padding:25px" class="container">
-    <h3 class="text-center">Soportes</h3>
+  
     <div style="text-align: right; padding: 14px 1px;">
       <a @click="addSoporte" tag="button" class="btn btn-outline-success">Agregar</a>
     </div>
@@ -8,6 +8,7 @@
       <div class="row">
         <div class="col-12">
           <div class="card">
+              <h3 class="text-center">Soportes</h3>
             <!-- /.card-header -->
             <div class="card-body">
               <section v-if="errored">

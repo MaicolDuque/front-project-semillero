@@ -7,9 +7,9 @@
           <div class="card">
             <!-- /.card-header -->
             <div class="card-body"></div>
-            <div v-if="this.$store.state.user.id_rol ==1">Bievenido administrador</div>
-            <div v-if="this.$store.state.user.id_rol ==2">Biemvenido Director</div>
-            <div v-if="this.$store.state.user.id_rol ==3">Biemvenido Coordiandor</div>
+            <div class="container" v-if="this.$store.state.user.id_rol ==1">Bienvenido Administrador</div>
+            <div v-if="this.$store.state.user.id_rol ==2">Bienvenido Director</div>
+            <div v-if="this.$store.state.user.id_rol ==3">Bienvenido Coordinador</div>
             <!-- /.card-body -->
           </div>
         </div>

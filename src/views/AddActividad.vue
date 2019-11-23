@@ -125,8 +125,10 @@ export default {
       periodo: {},
       value: "",
       options: [
-        { text: "Activo", value: "1" },
-        { text: "Inactivo", value: "0" }
+        { text: " ", value: "0" },
+        { text: "Se realizó", value: "1" },
+        { text: "Se aplazó", value: "2" },
+        { text: "No se realizó", value: "3" }
       ],
       meses1: [
         { name: "Febrero", value: 2 },

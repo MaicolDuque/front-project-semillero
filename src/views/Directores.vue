@@ -1,6 +1,5 @@
 <template>
   <div style="padding:25px">
-    <h3 class="text-center">Directores</h3>
     <div style="text-align: right; padding: 14px 1px;">
       <router-link to="/adduserdirector" tag="button" class="btn btn-outline-success">Agregar</router-link>
     </div>
@@ -8,6 +7,8 @@
       <div class="row">
         <div class="col-12">
           <div class="card">
+            <br>
+            <h3 class="text-center">Directores</h3>
             <!-- /.card-header -->
             <div class="card-body">
               <section v-if="errored">

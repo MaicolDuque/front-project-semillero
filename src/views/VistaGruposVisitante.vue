@@ -341,12 +341,12 @@
                 >
                   <thead>
                     <tr>
-                      <th>Nombre</th>
-                      <th>Categoria</th>
-                      <th>Codigo Colciencias</th>
-                      <th>Director</th>
-                      <th>Correo</th>
-                      <th>Telefono</th>
+                      <th data-priority="1">Nombre</th>
+                      <th data-priority="2">Categoria</th>
+                      <th data-priority="3">Codigo Colciencias</th>
+                      <th data-priority="4">Director</th>
+                      <th data-priority="5">Correo</th>
+                      <th data-priority="6">Telefono</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -425,17 +425,16 @@
                       <!-- <td>{{ item.id_grupo }}</td> -->
 
                       <td>
-                        <a :href="item.vinculo">{{item.cod_colciencias}}</a>
+                        <a :href="item.vinculo" target="_blank">{{item.cod_colciencias}}</a>
                       </td>
                       <td>
                         <router-link
                           :to="{name: 'semilleros-visitante', params: { id: item.id_grupo}}"
-                          class="btn btn-outline-primary"
                           style="margin: 2px"
                         >{{ item.grupo }}</router-link>
                       </td>
                       <td>{{ item.categoria }}</td>
-                      <td>{{ item.nombre_usuario }}</td>
+                      <td>{{ item.nombre_usuario }} {{ item.apellido_usuario }}</td>
 
                       <td>{{ item.email }}</td>
                       <!--  <td>{{ item.telefono }}</td> -->
@@ -568,7 +567,32 @@ export default {
       .then(res => {
         $("#tblGrupos6").DataTable({
           language: {},
-          responsive: true
+          responsive: true,
+          bAutoWidth: false,
+          /* sScrollX: "60%", */
+          sScrollXInner: "30%",
+          sWidth: "100%",
+          bScrollCollapse: true,
+          autoWidth: false,
+          /* loadingRecords: "Cargando...",
+          processing: "Procesando...",
+          zeroRecords: "No se ha encontrado nada  atraves de ese filtrado.",
+          paginate: {
+            first: "Primera",
+            last: "Última",
+            next: "Siguiente",
+            previous: "Anterior"
+          }, */
+          columnDefs: [
+            { width: "10%", targets: 0 },
+            { width: "30%", targets: 1 },
+            { width: "5%", targets: 2 },
+            { width: "20%", targets: 3 },
+            { width: "30%", targets: 4 }
+            /*  { "width": "80%", "targets": 1 },
+           { "width": "90%", "targets": 2 },
+          { "width": "80%", "targets": 1 } */
+          ]
         });
       });
   },

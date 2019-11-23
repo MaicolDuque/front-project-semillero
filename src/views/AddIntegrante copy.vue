@@ -1,12 +1,13 @@
 <template>
   <div>
     <div class="container">
-      <h3 class="text-center">Agregar Integrante - {{this.periodo.periodo}}</h3>
+      
       <nav class="nav grey lighten-4 py-4">
         <a @click="back" class="nav-item nav-link">Periodos</a>
       </nav>
 
       <div class="card card-primary card-outline">
+        
         <div class="card-header p-0 pt-1 border-bottom-0">
           <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
             <li class="nav-item">

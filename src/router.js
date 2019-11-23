@@ -69,6 +69,9 @@ import AddProductoP from './views/AddProductoP';
 import Soportes from './views/Soportes';
 import AddSoporte from './views/AddSoporte';
 import EditSoporte from './views/EditSoporte';
+import semillerosVisitante from './views/semillerosVisitante.vue';
+import semilleroEspecifico from './views/semilleroEspecifico.vue'
+
 
 ///
 import semillerosVisitante from './views/semillerosVisitante.vue'
@@ -109,7 +112,7 @@ const router = new Router({
     { path: '/periodo/:id/agregar-integrante', name: 'agregar-integrante', component: AddIntegrante },
     /* { path: '/periodo/:id/agregar-proyecto', name: 'agregar-proyecto', component: AddProyecto }, */
     { path: '/periodo/:id/addperiodo', name: 'addperiodo', component: AddPeriodo },
-    { path: '/editproyecto/:id', name: 'editproyecto', component: EditProyecto },
+    { path: '/editproyecto/:id', name: 'editar-proyecto', component: EditProyecto },
     { path: '/proyecto/:id/agregar-proyecto-producto', name: 'agregar-proyecto-producto', component: AddProductoP },
     { path: '/periodo/:id/agregar-actividad/:periodo', name: 'agregar-actividad', component: AddActividad },
     { path: '/periodo/:id/agregar-proyecto/:periodo', name: 'agregar-proyecto', component: AddProyectoP },

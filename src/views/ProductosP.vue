@@ -1,6 +1,5 @@
 <template>
   <div style="padding:25px" class="container">
-    <h3 class="text-center">Productos</h3>
     <div style="text-align: right; padding: 14px 1px;">
       <a @click="addProducto" tag="button" class="btn btn-outline-success">Agregar</a>
     </div>
@@ -8,6 +7,7 @@
       <div class="row">
         <div class="col-12">
           <div class="card">
+            <h3 class="text-center">Productos</h3>
             <!-- /.card-header -->
             <div class="card-body">
               <section v-if="errored">
@@ -53,7 +53,8 @@
                             @click="deleteProducto(item.id_producto)"
                           >Eliminar</button>
                           <button
-                            class="btn btn-warning"
+                            class="btn btn-outline-warning"
+                            style="margin: 2px"
                             @click="verSoportes(item.id_producto)"
                           >Ver Soportes</button>
                         </div>
