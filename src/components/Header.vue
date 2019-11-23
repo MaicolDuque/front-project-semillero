@@ -50,7 +50,9 @@
       <!-- Notifications Dropdown Menu -->
 
       <li class="nav-item d-none d-sm-inline-block">
-        <a @click="logout" style="cursor: pointer; color: red" class="nav-link">Cerrar sesión</a>
+        <button class= "btn btn-light">
+          <a @click="logout" style="cursor: pointer; color: black" class="nav-link">Cerrar sesión</a>
+        </button>
       </li>
     </ul>
   </nav>
@@ -65,15 +67,13 @@ export default {
   props: {
     tipo: Number
   },
-  created(){
-
-  },
+  created() {},
   methods: {
     logout() {
       this.$store.commit("setLogin", false);
       this.$store.commit("MUTATION_info_user", []);
 
-      TokenService.saveTokenCustom("visitante", "si")
+      TokenService.saveTokenCustom("visitante", "si");
       this.$store.commit("setVisitante", "si");
       TokenService.removeToken();
       TokenService.removeTokenCustom("user");

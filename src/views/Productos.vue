@@ -52,6 +52,10 @@
                             class="btn btn-outline-danger"
                             @click="deleteProducto(item.id_producto)"
                           >Eliminar</button>
+                          <button
+                            class="btn btn-warning"
+                            @click="verSoportes(item.id_producto)"
+                          >Ver Soportes</button>
                         </div>
                       </td>
                     </tr>
@@ -118,6 +122,14 @@ export default {
         alert("Producto eliminado correctamente!")      
       });
     }
+    ,
+    verSoportes(id) {
+      this.$router.push({
+        name: "soportes",
+        params: { id: id }
+      });
+    }
   }
+  
 };
 </script>

@@ -247,51 +247,48 @@
                       <div class="col-12">
                         <div class="card">
                           <!-- /.card-header -->
-                          <div class="card-body">
-                            <table
-                              id="tblProyectos"
-                              class="table table-striped table-bordered dt-responsive nowrap"
-                              style="width:100%"
-                            >
-                              <thead>
-                                <tr>
-                                  <th>Nombre</th>
-                                  <th>Acciones</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr v-if="integrantes.length == 0">
-                                  <td
-                                    colspan="6"
-                                    style="text-align: center; font-size: 1.6em;"
-                                  >Seleccione un periodo...</td>
-                                </tr>
-                                <tr v-for="item in proyectos" :key="item.id_proyecto">
-                                  <td>{{ item.proyecto }}</td>
 
-                                  <td style="text-align: center">
-                                    <div class="btn-group" role="group">
-                                      <router-link
-                                        :to="{name: 'editproyecto', params: { id: item.id_proyecto}}"
-                                        class="btn btn-outline-primary"
-                                        style="margin: 2px"
-                                      >Editar</router-link>
+                          <table
+                            id="tblProyectos"
+                            class="table table-bordered table-hover"
+                            style="width: 100%"
+                          >
+                            <thead>
+                              <tr>
+                                <th data-priority="1">Nombre</th>
+                                <th data-priority="2">Acciones</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr v-if="proyectos.length == 0">
+                                <td
+                                  colspan="6"
+                                  style="text-align: center; font-size: 1.6em;"
+                                >Seleccione un periodo...</td>
+                              </tr>
+                              <tr v-for="item in proyectos" :key="'proyectos'+item.id_proyecto">
+                                <td>{{ item.proyecto }}</td>
 
-                                      <button
-                                        style="margin: 2px"
-                                        class="btn btn-outline-danger"
-                                        @click="deleteProyecto(item.id_proyecto)"
-                                      >Eliminar</button>
-                                      <button
-                                        class="btn btn-warning"
-                                        @click="verProductosP(item.id_proyecto)"
-                                      >Ver Productos</button>
-                                    </div>
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
+                                <td>
+                                  <div class="btn-group" role="group">
+                                    <router-link
+                                      :to="{name: 'editar-integrante', params: { id: item.id_usuario}}"
+                                      class="btn btn-primary"
+                                    >Editar</router-link>
+                                    <button
+                                      class="btn btn-danger"
+                                      @click="deleteIntegrante(item.id_usuario)"
+                                    >Eliminar</button>
+                                    <button
+                                      class="btn btn-warning"
+                                      @click="verProductosP(item.id_proyecto)"
+                                    >Ver Productos</button>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+
                           <!-- /.card-body -->
                         </div>
                       </div>
@@ -575,6 +572,7 @@ export default {
       ApiService.get(`/proyecto/periodo/semillero/${id}`)
         .then(response => {
           this.proyectos = response.data;
+          console.log(this.proyectos)
         })
         .then(res => {
           $("#tblProyectos").DataTable({
