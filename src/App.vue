@@ -1,26 +1,24 @@
 <template>
-<div>
-  <div id="app" v-if="isAuth">
-    <SPheader></SPheader>
-    <SPleftMenu />
-    <div class="content-wrapper">
-      <router-view></router-view>
+  <div>
+    <div id="app" v-if="isAuth">
+      <SPheader></SPheader>
+      <SPleftMenu />
+      <div class="content-wrapper">
+        <router-view></router-view>
+      </div>
+      <SPfooter />
     </div>
-    <SPfooter />
+
+    <div v-if="!isAuth && isVisitante == 'si'">
+      <SPHeaderVisitante />
+      <Principal />
+      <SPfooter />
+    </div>
+
+    <div v-if="!isAuth && isVisitante == 'no'">
+      <Login />
+    </div>
   </div>
-
-  <div v-if="!isAuth && isVisitante == 'si'">
-    <SPHeaderVisitante />
-    <Principal />
-    <SPfooter />
-  </div>
-
-  <div v-if="!isAuth && isVisitante == 'no'" >
-    <Login />
-  </div>
-
-</div>
-
 </template>
 
 <script>
@@ -28,52 +26,56 @@ import SPheader from "./components/Header";
 import SPleftMenu from "./components/LeftMenu";
 import SPfooter from "./components/Footer";
 import Login from "./views/Login";
-import { TokenService } from "./services/storage.service"
-import SPHeaderVisitante from './components/HeaderVisitante'
-import Principal from './views/Principal';
+import { TokenService } from "./services/storage.service";
+import SPHeaderVisitante from "./components/HeaderVisitante";
+import Principal from "./views/Principal";
 /* import SPVisitantes from './views/VistaGruposVisitante' */
 
 export default {
-  components: { SPheader, SPleftMenu, SPfooter, Login,SPHeaderVisitante/* , SPVisitantes */,Principal },
-  data () {
+  components: {
+    SPheader,
+    SPleftMenu,
+    SPfooter,
+    Login,
+    SPHeaderVisitante /* , SPVisitantes */,
+    Principal
+  },
+  data() {
     return {
       // auth: false
-    }
+    };
   },
-  created () {
-    
-    if(localStorage.access_token) {
-      this.$store.commit('setLogin', true)          
+  created() {
+    if (localStorage.access_token) {
+      this.$store.commit("setLogin", true);
       // this.$store.commit('addUser', JSON.parse(localStorage.user))
     }
 
-    this.$store.commit('setVisitante', "no")                
-    if(localStorage.visitante == "si") {
-      this.$store.commit('setVisitante', "si")                
+    this.$store.commit("setVisitante", "no");
+    if (localStorage.visitante == "si") {
+      this.$store.commit("setVisitante", "si");
     }
-    console.log("aca1"+localStorage.user)
-    if(localStorage.user){
-      console.log("aca2"+localStorage.user)
-      let user =   JSON.parse(localStorage.user)     
-      let rol  = user.id_rol
-      console.log("Rol="+rol)
-      if(rol == 2){
-        this.$store.dispatch('infoUserDirector',user.id_usuario)
-      }else if(rol == 3){
-        this.$store.dispatch('infoUserCoordinador',user.id_usuario)
-      }else{
-        this.$store.dispatch('infoUser',user.id_usuario)
+    console.log("aca1" + localStorage.user);
+    if (localStorage.user) {
+      console.log("aca2" + localStorage.user);
+      let user = JSON.parse(localStorage.user);
+      let rol = user.id_rol;
+      console.log("Rol=" + rol);
+      if (rol == 2) {
+        this.$store.dispatch("infoUserDirector", user.id_usuario);
+      } else if (rol == 3) {
+        this.$store.dispatch("infoUserCoordinador", user.id_usuario);
+      } else {
+        this.$store.dispatch("infoUser", user.id_usuario);
       }
     }
-
-    
   },
   computed: {
     isAuth() {
-      return this.$store.state.isLogin
+      return this.$store.state.isLogin;
     },
     isVisitante() {
-      return this.$store.state.isVisitante
+      return this.$store.state.isVisitante;
     }
   }
 };

@@ -70,6 +70,13 @@ import Soportes from './views/Soportes';
 import AddSoporte from './views/AddSoporte';
 import EditSoporte from './views/EditSoporte';
 
+///
+import semillerosVisitante from './views/semillerosVisitante.vue'
+
+//
+
+import semilleroEspecifico from './views/semilleroEspecifico.vue'
+
 
 Vue.use(Router)
 
@@ -111,9 +118,11 @@ const router = new Router({
     { path: '/proyectos/:id/productos', name: 'productosP', component: ProductosP },
     { path: '/actividad/:id/productos/editar', name: 'editar-producto', component: EditProducto },
     { path: '/actividad/:id/productos/agregar', name: 'agregar-producto', component: AddProducto },
-    { path: '/soportes/:id/', name: 'soportes', component: Soportes},
+    { path: '/soportes/:id/', name: 'soportes', component: Soportes },
     { path: '/agregarsoporte/:id', name: 'agregar-soporte', component: AddSoporte },
     { path: '/editar-soporte/:id', name: 'editar-soporte', component: EditSoporte },
+    { path: '/semilleros-visitante/:id', name: 'semilleros-visitante', component: semillerosVisitante },
+    { path: '/semillero-especifico/:id', name: 'semillero-especifico', component: semilleroEspecifico },
 
   ]
 })
@@ -148,7 +157,8 @@ router.beforeEach((to, from, next) => {
   if (user.id_rol > 1) {
     let rutasNoPermitidas = {
       2: ["directores", "grupos", "periodos"],
-      3: ["directores", "grupos", "coordinadores"]
+      3: ["directores", "grupos", "coordinadores"],
+
     }
     let rutasNoAccesoRol = rutasNoPermitidas[user.id_rol]
     if (rutasNoAccesoRol.indexOf(to.name) > -1) {
