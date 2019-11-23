@@ -1,17 +1,19 @@
 <template>
   <div>
-    <div class="container">
-      <h3 class="text-center">Editar Soporte</h3>
+    <div class="container">      
       <nav class="nav grey lighten-4 py-4">
-        <a @click="back" class="nav-item nav-link">Periodos</a>
+        <a @click="back" class="nav-item nav-link">Soportes</a>
       </nav>
 
       <section class="content">
-        <div style="width: 50%; margin: 0 auto;">
+        <div style="width: 70%; margin: 0 auto;">
           <div class="card card-success">
             <form @submit.prevent="handleSubmit">
-              <div class="card-body">
+              <div class="card-body"> 
+                <br>
+                <h3 class="text-center">Editar Soporte</h3>
                 <div class="form-group">
+                  
                   <label for="Nombre">Nombre </label>
                   <input
                     type="text"

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h3 class="text-center">Editar Grupo</h3>
+    
     <nav class="nav grey lighten-4 py-4">
-      <router-link to="/grupos" class="nav-item nav-link">Grupos</router-link>
+     
     </nav>
     <section v-if="errored">
       <p>Lo sentimos, no es posible Actualizar el registro en este momento</p>
@@ -18,13 +18,18 @@
       <section class="content">
         <div style="width: 50%; margin: 0 auto;">
           <div class="card card-success">
+            <router-link to="/grupos" class="nav-item nav-link">Grupos</router-link>
+            <br>
+            
+            <h3 class="text-center">Editar Grupo</h3>
+            
             <form @submit.prevent="handleSubmit" role="form">
               <div class="card-body">
                 <div class="form-group">
                   <label for="grupo">Grupo</label>
                   <input
                     type="text"
-                    pattern="[ A-Za-z0-9 ]+"
+                    pattern='[ A-Za-z0-9 "" á é í ú ´ ó]+'
                     title=" Solo Letras y números. Tamaño máximo: 50"
                     v-model.trim="grupo.grupo"
                     id="grupo"
@@ -64,7 +69,7 @@
                   <label for="cod_colciencias">Vinculo Codigo Colciencias</label>
                   <input
                     type="text"
-                    pattern="[A-Za-z0-9 ./]+"
+                    pattern="[A-Za-z0-9 ./ ? = @  :]+"
                     title=" Solo Letras, números,punto, '/' Tamaño máximo: 150 caracteres"
                     v-model.trim="grupo.vinculo"
                     id="vinculo"

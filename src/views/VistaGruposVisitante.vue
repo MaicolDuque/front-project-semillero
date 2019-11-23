@@ -114,6 +114,7 @@
                   >
                     <thead>
                       <tr>
+                        <th>id grupo</th>
                         <th>Codigo Colciencias</th>
                         <th>Nombre</th>
                         <th>Categoria</th>
@@ -124,6 +125,7 @@
                     </thead>
                     <tbody>
                       <tr v-for="item in searchGruposAgrarias" :key="item.id_grupo">
+                        <td>{{ item.id_grupo }}</td>
                         <td>{{ item.cod_colciencias }}</td>
                         <td>
                           <a :href="item.vinculo">{{item.grupo}}</a>
@@ -132,6 +134,15 @@
                         <td>{{ item.nombre_usuario }}</td>
                         <td>{{ item.email }}</td>
                         <td>{{ item.telefono }}</td>
+                        <td style="text-align: center">
+                          <div class="btn-group" role="group">
+                            <router-link
+                              :to="{name: 'semilleros-visitante', params: { id: item.id_grupo}}"
+                              class="btn btn-outline-primary"
+                              style="margin: 2px"
+                            >Semilleros</router-link>
+                          </div>
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -159,9 +170,7 @@
           >
             <h5 class="mb-0 text-success">
               Facultad Ciencias Básicas, Sociales y Humanas
-              <i
-                class="fas fa-angle-down rotate-icon"
-              ></i>
+              <i class="fas fa-angle-down rotate-icon"></i>
             </h5>
           </a>
         </div>
@@ -332,12 +341,12 @@
                 >
                   <thead>
                     <tr>
-                      <th>Nombre</th>
-                      <th>Categoria</th>
-                      <th>Codigo Colciencias</th>
-                      <th>Director</th>
-                      <th>Correo</th>
-                      <th>Telefono</th>
+                      <th data-priority="1">Nombre</th>
+                      <th data-priority="2">Categoria</th>
+                      <th data-priority="3">Codigo Colciencias</th>
+                      <th data-priority="4">Director</th>
+                      <th data-priority="5">Correo</th>
+                      <th data-priority="6">Telefono</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -402,24 +411,42 @@
                 >
                   <thead>
                     <tr>
+                      <!-- <th>id grupo</th> -->
                       <th>Codigo Colciencias</th>
                       <th>Nombre</th>
                       <th>Categoria</th>
                       <th>Director</th>
                       <th>Correo</th>
-                      <th>Telefono</th>
+                      <!--  <th>Telefono</th> -->
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="item in searchGruposIngenieria" :key="item.id_grupo">
-                      <td>{{ item.cod_colciencias }}</td>
+                      <!-- <td>{{ item.id_grupo }}</td> -->
+
                       <td>
-                        <a :href="item.vinculo">{{item.grupo}}</a>
+                        <a :href="item.vinculo" target="_blank">{{item.cod_colciencias}}</a>
+                      </td>
+                      <td>
+                        <router-link
+                          :to="{name: 'semilleros-visitante', params: { id: item.id_grupo}}"
+                          style="margin: 2px"
+                        >{{ item.grupo }}</router-link>
                       </td>
                       <td>{{ item.categoria }}</td>
-                      <td>{{ item.nombre_usuario }}</td>
+                      <td>{{ item.nombre_usuario }} {{ item.apellido_usuario }}</td>
+
                       <td>{{ item.email }}</td>
-                      <td>{{ item.telefono }}</td>
+                      <!--  <td>{{ item.telefono }}</td> -->
+                      <!-- <td style="text-align: center">
+                         <div class="btn-group" role="group">
+                          <router-link
+                            :to="{name: 'semilleros-visitante', params: { id: item.id_grupo}}"
+                            class="btn btn-outline-primary"
+                            style="margin: 2px"
+                          >{{ item.categoria }}</router-link>
+                        </div>
+                      </td>-->
                     </tr>
                   </tbody>
                 </table>
@@ -431,6 +458,51 @@
         </div>
       </div>
     </div>
+    <!-- Semilleros de investigacion -->
+    <!-- <template>
+      <h1>Semilleros de investigación</h1>
+      <table
+        id="tblGrupos"
+        class="table table-striped table-bordered dt-responsive nowrap"
+        style="width:100%"
+      >
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Categoria</th>
+            <th>Código Colciencias</th>
+            <th>Vinculo Colciencias</th>
+            <th>Facultad</th>
+            <th data-priority="2">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in grupos" :key="item.id_grupo">
+            <td>{{ item.grupo }}</td>
+            <td>{{ item.categoria }}</td>
+            <td>{{ item.cod_colciencias }}</td>
+            <td>{{ item.vinculo }}</td>
+            <td>{{ item.facultad }}</td>
+            <td style="text-align: center">
+              <div class="btn-group" role="group">
+                <router-link
+                  :to="{name: 'editgrupo', params: { id: item.id_grupo}}"
+                  class="btn btn-outline-primary"
+                  style="margin: 2px"
+                >Editar</router-link>
+
+                <button
+                  style="margin: 2px"
+                  class="btn btn-outline-danger"
+                  @click="deleteGrupo(item.id_grupo)"
+                >Eliminar</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </template>-->
+
     <!-- Accordion wrapper -->
   </div>
 </template>
@@ -504,7 +576,32 @@ export default {
       .then(res => {
         $("#tblGrupos6").DataTable({
           language: {},
-          responsive: true
+          responsive: true,
+          bAutoWidth: false,
+          /* sScrollX: "60%", */
+          sScrollXInner: "30%",
+          sWidth: "100%",
+          bScrollCollapse: true,
+          autoWidth: false,
+          /* loadingRecords: "Cargando...",
+          processing: "Procesando...",
+          zeroRecords: "No se ha encontrado nada  atraves de ese filtrado.",
+          paginate: {
+            first: "Primera",
+            last: "Última",
+            next: "Siguiente",
+            previous: "Anterior"
+          }, */
+          columnDefs: [
+            { width: "10%", targets: 0 },
+            { width: "30%", targets: 1 },
+            { width: "5%", targets: 2 },
+            { width: "20%", targets: 3 },
+            { width: "30%", targets: 4 }
+            /*  { "width": "80%", "targets": 1 },
+           { "width": "90%", "targets": 2 },
+          { "width": "80%", "targets": 1 } */
+          ]
         });
       });
   },

@@ -46,7 +46,9 @@
       <!-- Notifications Dropdown Menu -->
 
       <li class="nav-item d-none d-sm-inline-block">
-        <a @click="irLogin" style="cursor: pointer; color: red" class="nav-link">LOGIN</a>
+        <button class= "btn btn-light">
+        <a @click="irLogin" style="cursor: pointer; color: black" class="nav-link">Ingresar</a>
+        </button>
       </li>
     </ul>
   </nav>

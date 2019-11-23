@@ -1,12 +1,14 @@
 <template>
   <div>
     <div class="container">
-      <h3 class="text-center">Agregar Integrante - {{this.periodo.periodo}}</h3>
+      
       <nav class="nav grey lighten-4 py-4">
-        <a @click="back" class="nav-item nav-link">Periodos</a>
+        
       </nav>
 
       <div class="card card-primary card-outline">
+        <h3 class="text-center">Agregar Integrante - {{this.periodo.periodo}}</h3>
+        <a @click="back" class="nav-item nav-link">Periodos</a>
         <div class="card-header p-0 pt-1 border-bottom-0">
           <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
             <li class="nav-item">
@@ -52,7 +54,7 @@
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>Email</th>
-                    <th>Tipo usuario</th>
+                    <!-- <th>Tipo usuario</th> -->
                     <th>Acciones</th>
                   </tr>
                 </thead>
@@ -68,7 +70,7 @@
                     <td>{{ item.nombre_usuario }}</td>
                     <td>{{ item.apellido_usuario }}</td>
                     <td>{{ item.email }}</td>
-                    <td>{{ item.tipo_usuario }}</td>
+                    <!-- <td>{{ item.tipo_usuario }}</td> -->
 
                     <td>
                       <div class="btn-group" role="group">
@@ -200,23 +202,7 @@
                             >El campo no debe superar los 100 caracteres</span>
                           </div>
                         </div>
-                        <div class="form-group">
-                          <label for="estado">Estado</label>
-                          <br />
-                          <select
-                            class="custom-select browser-default"
-                            @change="onChange($event)"
-                            required
-                          >
-                            <option value>Por favor seleccione un Elemento</option>
-                            <option
-                              v-for="option in options"
-                              v-bind:key="option.value"
-                              class="form-control"
-                              :class="{ 'is-invalid': submitted && $v.usuario.estado.$error }"
-                            >{{ option.text }}</option>
-                          </select>
-                        </div>
+                        
                         <div class="form-group">
                           <label for="tipo">Tipo</label>
                           <br />
@@ -275,7 +261,7 @@ export default {
         apellido_usuario: "",
         email: "",
         telefono: "",
-        estado: "",
+        estado: 1,
         id_tipo_usuario: "",
         id_rol: ""
       },
@@ -312,7 +298,7 @@ export default {
       return JSON.parse(`{
           "documento":        "${this.usuario.documento}",
           "nombre_usuario":   "${this.usuario.nombre_usuario}",
-          "estado":           ${this.usuario.estado},
+          "estado":           1,
           "apellido_usuario": "${this.usuario.apellido_usuario}",
           "telefono":         "${this.usuario.telefono}",
           "email":            "${this.usuario.email}",

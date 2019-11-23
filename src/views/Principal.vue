@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="collapse show">
         <div>
             <h1>Vista inicial</h1>
         </div>
