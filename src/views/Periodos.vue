@@ -28,48 +28,52 @@
               >
                 <thead>
                   <tr>
-                    <th>Periodos</th>
+                    <th data-priority="1">Periodos</th>
                     <th>Acciones</th>
+                    <th data-priority="1">Exportar</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="periodo in periodos" :key="'periodo-'+periodo.id_periodo">
-                    <td style="width: 70%">
+                    <td style="width: 5%">
                       <div
-                        class="btn btn-info"
+                        class="btn btn-xs btn-info"
                         style="cursor:pointer"
                         @click="showInfoPeriodo(periodo.id_periodo)"
                       >
                         <a>{{periodo.periodo}}</a>
                       </div>
                     </td>
-                    <td style="width: 30%">
+                    <td style="width: 5%">
                       <div class="btn-group" role="group">
                         <router-link
                           :to="{name: 'edit-periodo', params: { id: periodo.id_periodo}}"
-                          class="btn btn-outline-primary"
+                          class="btn btn-outline-success btn-xs"
                           style="margin: 2px"
                         >Editar</router-link>
                         <button
                           style="margin: 2px"
-                          class="btn btn-outline-danger"
+                          class="btn btn-outline-danger btn-xs"
                           @click="deleteperiodo(periodo.id_periodo)"
                         >Eliminar</button>
-
+                      </div>
+                    </td>
+                    <td style="width: 5%">
+                      <div class="btn-group" role="group">
                         <button
-                          class="btn btn-success"
+                          class="btn btn-outline-success btn-xs"
                           style="margin: 2px"
                           @click="exportar(periodo.id_periodo, 1)"
                         >FIN13-I</button>
 
                         <button
-                          class="btn btn-success"
+                          class="btn btn-outline-success btn-xs"
                           style="margin: 2px"
                           @click="exportar(periodo.id_periodo, 2)"
                         >FIN13-F</button>
 
                         <button
-                          class="btn btn-danger"
+                          class="btn btn-outline-danger btn-xs"
                           style="margin: 2px"
                           @click="exportar(periodo.id_periodo, 3)"
                         >Reporte</button>
@@ -204,7 +208,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-if="integrantes.length == 0">
+                      <tr v-if="actividades.length == 0">
                         <td
                           colspan="6"
                           style="text-align: center; font-size: 1.6em;"
@@ -659,9 +663,10 @@ export default {
 
     addIntegrante() {
       if (this.idPeriodo) {
+        console.log(this.idPeriodo);
         return this.$router.push({
           name: "agregar-integrante",
-          params: { id: this.$route.params.id }
+          params: { id: this.idPeriodo }
         });
       }
       this.$swal({
