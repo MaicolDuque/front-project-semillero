@@ -1,9 +1,5 @@
 <template>
   <div>
-    <h3 class="text-center">Editar Semillero</h3>
-    <nav class="nav grey lighten-4 py-4">
-      <router-link to="/semilleros" class="nav-item nav-link">Semilleros</router-link>
-    </nav>
     <section v-if="errored">
       <p>Lo sentimos, no es posible Actualizar el registro en este momento</p>
     </section>
@@ -18,6 +14,8 @@
       <section class="content">
         <div style="width: 50%; margin: 0 auto;">
           <div class="card card-success">
+            <router-link to="/semilleros" class="nav-item nav-link">Semilleros</router-link>
+            <h3 class="text-center">Editar Semillero</h3>
             <form @submit.prevent="handleSubmit">
               <div class="card-body">
                 <div class="form-group">
@@ -65,7 +63,7 @@
                   <label for="semillero">Descripción</label>
                   <input
                     type="text"
-                    pattern="[A-Za-z0-9 ]+"
+                    pattern="[A-Za-z0-9. ]+"
                     title=" Solo Letras y números. Tamaño máximo: 200"
                     v-model.trim="semillero.descripcion"
                     id="descripcion"
@@ -125,7 +123,13 @@ export default {
     ApiService.get(`/semillero/${this.$route.params.id}/edit`)
       .then(response => {
         if (response.status === 204) {
-          alert("No se encontro un semillero  ");
+          this.$swal({
+            type: "info",
+            text: "fallo al cargar datos del semillero",
+            timer: 2000,
+            showCancelButton: false,
+            showConfirmButton: false
+          });
         } else if (response.status === 200) {
           this.semillero = response.data;
         }
@@ -186,7 +190,13 @@ export default {
             this.showAlert();
             this.$router.push({ name: "semilleros" });
           } else if (response.status === 204) {
-            alert("este semillero no existe");
+            this.$swal({
+              type: "warning",
+              text: "el semillero no existe",
+              timer: 2000,
+              showCancelButton: false,
+              showConfirmButton: false
+            });
           }
         })
         .catch(error => {
@@ -197,14 +207,16 @@ export default {
   },
 
   computed: {
-    showGruposInvestigacion(){
-      if(this.grupos_investigacion){
-        let rol     = this.$store.state.user.id_rol
-        let grupo   = this.$store.state.user.id_grupo
-        if(rol > 1){
-          return  this.grupos_investigacion.filter(semi => semi.id_grupo == grupo);
+    showGruposInvestigacion() {
+      if (this.grupos_investigacion) {
+        let rol = this.$store.state.user.id_rol;
+        let grupo = this.$store.state.user.id_grupo;
+        if (rol > 1) {
+          return this.grupos_investigacion.filter(
+            semi => semi.id_grupo == grupo
+          );
         }
-        return  this.grupos_investigacion
+        return this.grupos_investigacion;
       }
     }
   }

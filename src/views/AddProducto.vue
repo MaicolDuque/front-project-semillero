@@ -1,9 +1,6 @@
 <template>
   <div>
-    <h3 class="text-center">Agregar Producto</h3>
-    <nav class="nav grey lighten-4 py-4">
-      <a @click="back" class="nav-item nav-link">Atras</a>
-    </nav>
+    <br />
     <section v-if="errored">
       <p>Lo sentimos, no es posible Actualizar el registro en este momento</p>
     </section>
@@ -18,6 +15,10 @@
       <section class="content">
         <div style="width: 50%; margin: 0 auto;">
           <div class="card card-success">
+            <nav class="nav grey lighten-4 py-4">
+              <a @click="back" class="nav-item nav-link">Atras</a>
+            </nav>
+            <h3 class="text-center">Agregar Producto actividad</h3>
             <form @submit.prevent="handleSubmit">
               <div class="card-body">
                 <div class="form-group">
@@ -41,10 +42,16 @@
                     <span v-if="!$v.producto.producto === ''">El campo</span>
                   </div>
                 </div>
-                
+
                 <div class="form-group">
                   <label>Tipo Producto</label>
-                  <select class="form-control" style="width: 100%;" v-model="producto.id_tipo_producto">
+                  <select
+                    class="form-control"
+                    style="width: 100%;"
+                    required
+                    v-model="producto.id_tipo_producto"
+                  >
+                    <option value>Por favor seleccione un Elemento</option>
                     <option
                       v-for="producto in tipoProductos"
                       v-bind:key="producto.id_tipo_producto"
@@ -88,17 +95,25 @@ export default {
   },
 
   created() {
-    
     //
     ApiService.get("/tipoproducto")
       .then(response => {
         this.tipoProductos = response.data;
-        this.loading = false
+        this.loading = false;
       })
       .catch(error => {
         console.log(error);
         this.errored = true;
       });
+  },
+  mounted() {
+    this.getTipoUsuarios();
+  },
+  //comvierte el objeto->en un arreglo
+  computed: {
+    formateartipoproductos() {
+      return Object.values(this.tipoProductos);
+    }
   },
 
   //Reglas de validacion para VueValidate
@@ -113,6 +128,31 @@ export default {
   },
 
   methods: {
+    /* Obtiene las categorias que se cargan en un <select> */
+    getTipoUsuarios() {
+      ApiService.get("/tipoproducto")
+        .then(response => {
+          this.tipoProductos = response.data;
+          this.loading = false;
+        })
+        .catch(error => {
+          console.log(error);
+          this.errored = true;
+        });
+    },
+    selectChangeTipoProducto(event) {
+      var i;
+      alert("aca 1");
+      this.tipoProductos.forEach(function(element) {
+        if (element.tipo_producto == event.target.value) {
+          i = element.id_tipo_producto;
+          alert("aca");
+        }
+      });
+      //asigna el el id segun facultad selecionada
+      this.producto.id_tipo_producto = i;
+    },
+
     handleSubmit(e) {
       this.submitted = true;
       // Se detiene aqui si es invalido, de lo contrario ejecuta el submit()
@@ -123,7 +163,7 @@ export default {
       this.updateProducto();
       /* alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.grupo)); */
     },
-    
+
     back() {
       this.$router.go(-1);
     },
@@ -140,9 +180,9 @@ export default {
 
     updateProducto(event) {
       ApiService.post(`/producto/actividad`, this.producto)
-        .then(response => {         
+        .then(response => {
           this.showAlert();
-          this.back()         
+          this.back();
         })
         .catch(error => {
           console.log(error);

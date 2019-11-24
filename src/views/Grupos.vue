@@ -1,6 +1,5 @@
 <template>
   <div style="padding:25px">
-    
     <div style="text-align: right; padding: 14px 1px;">
       <router-link to="/addGrupos" tag="button" class="btn btn-outline-success">Agregar</router-link>
     </div>
@@ -87,7 +86,13 @@ export default {
     ApiService.get("/grupo")
       .then(response => {
         if (response.status === 204) {
-          alert("No existen grupos para mostrar ");
+          this.$swal({
+            type: "info",
+            text: "No hay grupos para mostrar",
+            timer: 2000,
+            showCancelButton: false,
+            showConfirmButton: false
+          });
           this.grupos = response.data;
         } else {
           this.grupos = response.data;
@@ -129,17 +134,19 @@ export default {
                   timer: 1500
                 });
               } else if (response.status === 222) {
-                alert("no se puedo borrar el registro");
+                this.$swal({
+                  type: "warning",
+                  text: "fallo, no se ha podido eliminar el registro",
+                  timer: 2000,
+                  showCancelButton: false,
+                  showConfirmButton: false
+                });
               }
             })
             .catch(error => {
               console.log(error);
               this.errored = true;
             });
-          /* ApiService.delete(`/grupo/${id}`).then(response => {
-            let i = this.grupos.map(item => item.id_grupo).indexOf(id); // find index of your object
-            this.grupos.splice(i, 1); */
-
           this.$swal("Registro Eliminado");
         } else {
           this.$swal(" Accion Cancelada");

@@ -1,5 +1,8 @@
 <template>
   <div style="padding:25px" class="container">
+    <nav class="nav grey lighten-4 py-4">
+      <a @click="back" class="nav-item nav-link">Atras</a>
+    </nav>
     <div style="text-align: right; padding: 14px 1px;">
       <a @click="addProducto" tag="button" class="btn btn-outline-success">Agregar</a>
     </div>
@@ -7,7 +10,7 @@
       <div class="row">
         <div class="col-12">
           <div class="card">
-            <h3 class="text-center">Productos</h3>
+            <h3 class="text-center">Productos proyectos</h3>
             <!-- /.card-header -->
             <div class="card-body">
               <section v-if="errored">
@@ -86,10 +89,16 @@ export default {
     ApiService.get(`/producto/proyecto/${this.$route.params.id}`)
       .then(response => {
         if (response.status === 204) {
-          alert("No existen productos para mostrar ");
+          this.$swal({
+            type: "info",
+            text: "No hay grupos para mostrar",
+            timer: 2000,
+            showCancelButton: false,
+            showConfirmButton: false
+          });
           this.productos = response.data;
         } else {
-          console.log(response.data);
+          /*  console.log(response.data); */
           this.productos = response.data;
         }
       })
@@ -105,6 +114,9 @@ export default {
       .finally(() => (this.loading = false));
   },
   methods: {
+    back() {
+      this.$router.go(-1);
+    },
     addProducto() {
       console.log(this.$route.params.id);
       this.$router.push({
@@ -122,12 +134,57 @@ export default {
       });
     },
     deleteProducto(id) {
+      this.$swal({
+        title: "Estas seguro de eliminar el registro?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Si, Eliminar!",
+        cancelButtonText: "Cancelar",
+        showCloseButton: true,
+        showLoaderOnConfirm: true
+      }).then(result => {
+        if (result.value) {
+          ApiService.delete(`/producto/${id}`)
+            .then(response => {
+              if (response.status === 200) {
+                let i = this.productos
+                  .map(item => item.id_producto)
+                  .indexOf(id); // find index of your object
+                this.productos.splice(i, 1);
+                this.$swal.fire({
+                  type: "success",
+                  title: "Eliminado con exito",
+                  showConfirmButton: false,
+                  timer: 1500
+                });
+              } else if (response.status === 222) {
+                this.$swal({
+                  type: "warning",
+                  text: "fallo, no se ha podido eliminar el registro",
+                  timer: 2000,
+                  showCancelButton: false,
+                  showConfirmButton: false
+                });
+              }
+            })
+            .catch(error => {
+              console.log(error);
+              this.errored = true;
+            });
+          this.$swal("Registro Eliminado");
+        } else {
+          this.$swal(" Accion Cancelada");
+        }
+      });
+    },
+
+    /* deleteProducto(id) {
       ApiService.delete(`/producto/${id}`).then(response => {
         let i = this.productos.map(item => item.id_usuario).indexOf(id); // find index of your object
         this.productos.splice(i, 1);
         alert("Producto eliminado correctamente!");
       });
-    },
+    }, */
     verSoportes(id) {
       this.$router.push({
         name: "soportes",

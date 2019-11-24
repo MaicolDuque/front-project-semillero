@@ -1,184 +1,163 @@
 <template>
   <div>
-    <div class="container">
-      
-      <nav class="nav grey lighten-4 py-4">
-        <router-link to="/directores" class="nav-item nav-link">Directores</router-link>
-      </nav>
-      <section v-if="errored">
-        <p>Lo sentimos, no es posible Guardar el registro en este momento</p>
-      </section>
-      <section class="content">
-        <div style="width: 50%; margin: 0 auto;">
-          <div class="card card-success">
-            <form @submit.prevent="handleSubmit">
-              <div class="card-body">
-                <h3 class="text-center">Agregar Director</h3>
-                <div class="form-group">
-                  <label for="documento">Documento</label>
-                  <input
-                    type="text"
-                    pattern="[0-9]+"
-                    title=" Solo números. Tamaño máximo: 12"
-                    v-model.trim="usuario.documento"
-                    id="documento"
-                    name="documento"
-                    placeholder="Documento"
-                    class="form-control"
-                    :class="{ 'is-invalid': submitted && $v.usuario.documento.$error }"
-                  />
-                  <div v-if="submitted && $v.usuario.documento.$error" class="invalid-feedback">
-                    <span v-if="!$v.usuario.documento.required">El campo nombre es requerido</span>
-                    <span
-                      v-if="!$v.usuario.documento.maxLength"
-                    >El nombre no debe superar los 50 caracteres</span>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="nombre_usuario">Nombre</label>
-                  <input
-                    type="text"
-                    pattern="[A-Za-z á é í ú ´ ó]+"
-                    title=" Solo Letras. Tamaño máximo: 50"
-                    v-model.trim="usuario.nombre_usuario"
-                    id="nombre_usuario"
-                    name="nombre_usuario"
-                    placeholder="Nombre"
-                    class="form-control"
-                    :class="{ 'is-invalid': submitted && $v.usuario.nombre_usuario.$error }"
-                  />
-                  <div
-                    v-if="submitted && $v.usuario.nombre_usuario.$error"
-                    class="invalid-feedback"
-                  >
-                    <span v-if="!$v.usuario.nombre_usuario.required">El campo es requerido</span>
-                    <span
-                      v-if="!$v.usuario.nombre_usuario.maxLength"
-                    >El campo no debe superar los 50 caracteres</span>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="apellido_usuario">Apellido</label>
-                  <input
-                    type="text"
-                    pattern="[A-Za-z á é í ú ´ ó]+"
-                    title=" Solo Letras. Tamaño máximo: 50"
-                    v-model.trim="usuario.apellido_usuario"
-                    id="apellido_usuario"
-                    name="apellido_usuario"
-                    placeholder="Apellido"
-                    class="form-control"
-                    :class="{ 'is-invalid': submitted && $v.usuario.apellido_usuario.$error }"
-                  />
-                  <div
-                    v-if="submitted && $v.usuario.apellido_usuario.$error"
-                    class="invalid-feedback"
-                  >
-                    <span v-if="!$v.usuario.apellido_usuario.required">El campo es requerido</span>
-                    <span
-                      v-if="!$v.usuario.apellido_usuario.maxLength"
-                    >El campo no debe superar los 50 caracteres</span>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="email">Email</label>
-                  <input
-                    type="text"
-                    v-model.trim="usuario.email"
-                    id="email"
-                    name="email"
-                    placeholder="Email"
-                    class="form-control"
-                    :class="{ 'is-invalid': submitted && $v.usuario.email.$error }"
-                  />
-                  <div v-if="submitted && $v.usuario.email.$error" class="invalid-feedback">
-                    <span v-if="!$v.usuario.email.required">El campo correo es requerido</span>
-                    <span v-if="!$v.usuario.email">Email no Valido</span>
-                    <span
-                      v-if="!$v.usuario.email.maxLength"
-                    >El campo no debe superar los 100 caracteres</span>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="telefono">Telefono</label>
-                  <input
-                    type="text"
-                    pattern="[0-9]+"
-                    title=" Solo Numeros. Tamaño máximo: 10"
-                    v-model.trim="usuario.telefono"
-                    id="telefono"
-                    name="telefono"
-                    placeholder="telefono"
-                    class="form-control"
-                    :class="{ 'is-invalid': submitted && $v.usuario.telefono.$error }"
-                  />
-                  <div v-if="submitted && $v.usuario.telefono.$error" class="invalid-feedback">
-                    <span v-if="!$v.usuario.telefono.required">El campo es requerido</span>
-                    <span
-                      v-if="!$v.usuario.telefono.maxLength"
-                    >El campo no debe superar los 10 caracteres</span>
-                  </div>
-                </div>
-
-                
-                <div class="form-group">
-                  <label for="tipo">Tipo</label>
-                  <br />
-                  <select
-                    class="custom-select browser-default"
-                    @change="selectChangeTipoUsuario"
-                    required
-                  >
-                    <option value>Por favor seleccione un Elemento</option>
-                    <option
-                      v-for="item in Tipos_Usuarios"
-                      v-bind:key="item.value"
-                      id="id_tipo_usuario"
-                      name="id_tipo_usuario"
-                      class="form-control"
-                      :class="{ 'is-invalid': submitted && $v.usuario.id_tipo_usuario.$error }"
-                    >{{ item.tipo_usuario }}</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="grupo">Grupo</label>
-                  <br />
-                  <select
-                    class="custom-select browser-default"
-                    @change=" selectChangeGrupo"
-                    required
-                  >
-                    <option value>Por favor seleccione un Elemento</option>
-                    <option
-                      v-for="grupo in grupos"
-                      v-bind:key="grupo.id_grupo"
-                      id="id_grupo"
-                      name="id_grupo"
-                      class="form-control"
-                    >{{ grupo.grupo }}</option>
-                  </select>
-                </div>
-                <!-- <div class="form-group">
-                  <label>Grupo</label>
-                  <select class="form-control" style="width: 100%;" v-model="usuario.id_grupo">
-                    <option value>Por favor seleccione un Elemento</option>
-                    <option
-                      v-for="grupo in grupos"
-                      v-bind:key="grupo.id_grupo"
-                      :value="grupo.id_grupo"
-                    >{{ grupo.grupo }}</option>
-                  </select>
-                </div>-->
-                <br />
-                <div class="form-group">
-                  <button class="btn btn-primary">Guardar</button>
+    <nav class="nav grey lighten-4 py-4"></nav>
+    <section v-if="errored">
+      <p>Lo sentimos, no es posible Guardar el registro en este momento</p>
+    </section>
+    <section class="content">
+      <div style="width: 50%; margin: 0 auto;">
+        <div class="card card-success">
+          <form @submit.prevent="handleSubmit">
+            <div class="card-body">
+              <nav>
+                <router-link to="/directores" class="nav-item nav-link">Directores</router-link>
+              </nav>
+              <h3 class="text-center">Agregar Director</h3>
+              <div class="form-group">
+                <label for="documento">Documento</label>
+                <input
+                  type="text"
+                  pattern="[0-9]+"
+                  title=" Solo números. Tamaño máximo: 12"
+                  v-model.trim="usuario.documento"
+                  id="documento"
+                  name="documento"
+                  placeholder="Documento"
+                  class="form-control"
+                  :class="{ 'is-invalid': submitted && $v.usuario.documento.$error }"
+                />
+                <div v-if="submitted && $v.usuario.documento.$error" class="invalid-feedback">
+                  <span v-if="!$v.usuario.documento.required">El campo nombre es requerido</span>
+                  <span
+                    v-if="!$v.usuario.documento.maxLength"
+                  >El nombre no debe superar los 50 caracteres</span>
                 </div>
               </div>
-            </form>
-          </div>
+              <div class="form-group">
+                <label for="nombre_usuario">Nombre</label>
+                <input
+                  type="text"
+                  pattern="[A-Za-z á é í ú ´ ó]+"
+                  title=" Solo Letras. Tamaño máximo: 50"
+                  v-model.trim="usuario.nombre_usuario"
+                  id="nombre_usuario"
+                  name="nombre_usuario"
+                  placeholder="Nombre"
+                  class="form-control"
+                  :class="{ 'is-invalid': submitted && $v.usuario.nombre_usuario.$error }"
+                />
+                <div v-if="submitted && $v.usuario.nombre_usuario.$error" class="invalid-feedback">
+                  <span v-if="!$v.usuario.nombre_usuario.required">El campo es requerido</span>
+                  <span
+                    v-if="!$v.usuario.nombre_usuario.maxLength"
+                  >El campo no debe superar los 50 caracteres</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="apellido_usuario">Apellido</label>
+                <input
+                  type="text"
+                  pattern="[A-Za-z á é í ú ´ ó]+"
+                  title=" Solo Letras. Tamaño máximo: 50"
+                  v-model.trim="usuario.apellido_usuario"
+                  id="apellido_usuario"
+                  name="apellido_usuario"
+                  placeholder="Apellido"
+                  class="form-control"
+                  :class="{ 'is-invalid': submitted && $v.usuario.apellido_usuario.$error }"
+                />
+                <div
+                  v-if="submitted && $v.usuario.apellido_usuario.$error"
+                  class="invalid-feedback"
+                >
+                  <span v-if="!$v.usuario.apellido_usuario.required">El campo es requerido</span>
+                  <span
+                    v-if="!$v.usuario.apellido_usuario.maxLength"
+                  >El campo no debe superar los 50 caracteres</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input
+                  type="text"
+                  v-model.trim="usuario.email"
+                  id="email"
+                  name="email"
+                  placeholder="Email"
+                  class="form-control"
+                  :class="{ 'is-invalid': submitted && $v.usuario.email.$error }"
+                />
+                <div v-if="submitted && $v.usuario.email.$error" class="invalid-feedback">
+                  <span v-if="!$v.usuario.email.required">El campo correo es requerido</span>
+                  <span v-if="!$v.usuario.email">Email no Valido</span>
+                  <span
+                    v-if="!$v.usuario.email.maxLength"
+                  >El campo no debe superar los 100 caracteres</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="telefono">Telefono</label>
+                <input
+                  type="text"
+                  pattern="[0-9]+"
+                  title=" Solo Numeros. Tamaño máximo: 10"
+                  v-model.trim="usuario.telefono"
+                  id="telefono"
+                  name="telefono"
+                  placeholder="telefono"
+                  class="form-control"
+                  :class="{ 'is-invalid': submitted && $v.usuario.telefono.$error }"
+                />
+                <div v-if="submitted && $v.usuario.telefono.$error" class="invalid-feedback">
+                  <span v-if="!$v.usuario.telefono.required">El campo es requerido</span>
+                  <span
+                    v-if="!$v.usuario.telefono.maxLength"
+                  >El campo no debe superar los 10 caracteres</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="tipo">Tipo</label>
+                <br />
+                <select
+                  class="custom-select browser-default"
+                  @change="selectChangeTipoUsuario"
+                  required
+                >
+                  <option value>Por favor seleccione un Elemento</option>
+                  <option
+                    v-for="item in Tipos_Usuarios"
+                    v-bind:key="item.value"
+                    id="id_tipo_usuario"
+                    name="id_tipo_usuario"
+                    class="form-control"
+                    :class="{ 'is-invalid': submitted && $v.usuario.id_tipo_usuario.$error }"
+                  >{{ item.tipo_usuario }}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="grupo">Grupo</label>
+                <br />
+                <select class="custom-select browser-default" @change=" selectChangeGrupo" required>
+                  <option value>Por favor seleccione un Elemento</option>
+                  <option
+                    v-for="grupo in grupos"
+                    v-bind:key="grupo.id_grupo"
+                    id="id_grupo"
+                    name="id_grupo"
+                    class="form-control"
+                  >{{ grupo.grupo }}</option>
+                </select>
+              </div>
+              <br />
+              <div class="form-group">
+                <button class="btn btn-primary">Guardar</button>
+              </div>
+            </div>
+          </form>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -274,7 +253,13 @@ export default {
   methods: {
     addUsuario() {
       ApiService.post("/usuario", this.objectUsuario).catch(function(response) {
-        alert("No se pudo crear el Usuario");
+        this.$swal({
+          type: "warning",
+          text: "No se pudo crear el usuario",
+          timer: 2000,
+          showCancelButton: false,
+          showConfirmButton: false
+        });
       });
     },
     getTipos_Usuarios() {
@@ -325,7 +310,6 @@ export default {
     },
     //Valida el formulario
     handleSubmit(e) {
-      console.log("aca1");
       this.submitted = true;
       var retornado = "";
       // Se detiene aqui si es invalido, de lo contrario ejecuta el submit()
@@ -340,7 +324,6 @@ export default {
       var id_gr = this.grupoSeleccionado.id_grupo;
       ApiService.post("/usuario", this.usuario).then(response => {
         if (response.status == 200) {
-          console.log("response =", response);
           /* si fue 200 se creo el usario con exito,
             se llama al endpoint que lo asigna como un director de grupo */
           ApiService.post("/director", {
@@ -349,7 +332,7 @@ export default {
             id_grupo: id_gr
           })
             .then(response => {
-              console.log("response =", response);
+              /* console.log("response =", response); */
               if (response.status == 200) {
                 this.showAlert();
                 /* console.log("asignado"); */
@@ -362,30 +345,16 @@ export default {
               console.error(err);
             });
         } else if (response.status == 221) {
-          alert("ya existe");
+          this.$swal({
+            type: "warning",
+            text: "el usuario ya existe",
+            timer: 2000,
+            showCancelButton: false,
+            showConfirmButton: false
+          });
         }
         //return response.json();
       });
-      /* .catch(function(err) {
-          console.error(err);
-        }); */
-
-      /* .then(response value => {
-          if (response.status == 200) {
-            console.log(value.data);
-          } else if (response.status == 221) {
-            alert("ya existe");
-          }
-        })
-        .catch(error => {
-          console.log(error);
-          this.errored = true;
-        }); */
-      /* Almacenar el usuario */
-      /* logica de enviar api de creacion de usuario y asignacion de grupo */
-
-      //this.addUsuario();
-      /* alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.usuario)); */
     }
   }
 };

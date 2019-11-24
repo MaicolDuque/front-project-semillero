@@ -1,62 +1,96 @@
 <template>
   <div>
+    <br />
     <div class="container">
-      <h3 class="text-center">Agregar Actividad</h3>
-      <nav class="nav grey lighten-4 py-4">
-        <a @click="back" class="nav-item nav-link">Periodos</a>
-      </nav>
-
       <section class="content">
         <div style="width: 50%; margin: 0 auto;">
           <div class="card card-success">
+            <nav class="nav grey lighten-4 py-4">
+              <a @click="back" class="nav-item nav-link">Periodos</a>
+            </nav>
+            <h3 class="text-center">Agregar Actividad</h3>
             <form @submit.prevent="handleSubmit">
               <div class="card-body">
                 <div class="form-group">
-                  <label for="Nombre">Nombre</label>
+                  <label for="grupo">Nombre</label>
                   <input
                     type="text"
-                    v-model="actividad.actividad"
-                    id="Nombre"
-                    name="Nombre"
+                    pattern="[A-Za-z0-9 ]+"
+                    title=" Solo Letras y números. Tamaño máximo: 50"
+                    v-model.trim="actividad.actividad"
+                    id="actividad"
+                    name="actividad"
                     placeholder="Nombre"
                     class="form-control"
+                    :class="{ 'is-invalid': submitted && $v.actividad.actividad.$error }"
                   />
+                  <div v-if="submitted && $v.actividad.actividad.$error" class="invalid-feedback">
+                    <span v-if="!$v.actividad.actividad.required">El campo requerido</span>
+                    <span
+                      v-if="!$v.actividad.actividad.maxLength"
+                    >El nombre no debe superar los 50 caracteres</span>
+                  </div>
                 </div>
                 <div class="form-group">
-                  <label for="responsable">Responsable</label>
+                  <label for="grupo">Responsable</label>
                   <input
                     type="text"
-                    v-model="actividad.responsable"
+                    pattern="[A-Za-z0-9_-:' á é í ú ´ ó ]+"
+                    title=" Solo Letras y números. Tamaño máximo: 50"
+                    v-model.trim="actividad.responsable"
                     id="responsable"
                     name="responsable"
-                    placeholder="responsable"
+                    placeholder="Responsable"
                     class="form-control"
+                    :class="{ 'is-invalid': submitted && $v.actividad.responsable.$error }"
                   />
+                  <div v-if="submitted && $v.actividad.responsable.$error" class="invalid-feedback">
+                    <span v-if="!$v.actividad.responsable.required">El campo requerido</span>
+                    <span
+                      v-if="!$v.actividad.responsable.maxLength"
+                    >El nombre no debe superar los 50 caracteres</span>
+                  </div>
                 </div>
                 <div class="form-group">
-                  <label for="recursos">Recursos</label>
+                  <label for="grupo">Recursos</label>
                   <input
                     type="text"
-                    v-model="actividad.recursos"
+                    pattern="[A-Za-z0-9_-:' á é í ú ´ ó ]+"
+                    title=" Solo Letras y números. Tamaño máximo: 50"
+                    v-model.trim="actividad.recursos"
                     id="recursos"
                     name="recursos"
-                    placeholder="recursos"
+                    placeholder="Recursos"
                     class="form-control"
+                    :class="{ 'is-invalid': submitted && $v.actividad.recursos.$error }"
                   />
+                  <div v-if="submitted && $v.actividad.recursos.$error" class="invalid-feedback">
+                    <span v-if="!$v.actividad.recursos.required">El campo requerido</span>
+                    <span
+                      v-if="!$v.actividad.recursos.maxLength"
+                    >El nombre no debe superar los 50 caracteres</span>
+                  </div>
                 </div>
-
                 <div class="form-group">
-                  <label for="registro">Registro</label>
+                  <label for="grupo">Registro</label>
                   <input
                     type="text"
-                    v-model="actividad.registro"
+                    pattern="[A-Za-z0-9_-:' á é í ú ´ ó ]+"
+                    title=" Solo Letras y números. Tamaño máximo: 50"
+                    v-model.trim="actividad.registro"
                     id="registro"
                     name="registro"
-                    placeholder="registro"
+                    placeholder="Registro"
                     class="form-control"
+                    :class="{ 'is-invalid': submitted && $v.actividad.registro.$error }"
                   />
+                  <div v-if="submitted && $v.actividad.registro.$error" class="invalid-feedback">
+                    <span v-if="!$v.actividad.registro.required">El campo requerido</span>
+                    <span
+                      v-if="!$v.actividad.registro.maxLength"
+                    >El nombre no debe superar los 50 caracteres</span>
+                  </div>
                 </div>
-
                 <div class="form-group">
                   <label for="Meses">Meses</label>
                   <div v-for="mes in mesesPeriodo" :key="mes.value">
@@ -81,7 +115,6 @@
                     class="custom-select browser-default"
                     @change="onChange($event)"
                     v-model="actividad.estado"
-                    required
                   >
                     <option value>Por favor seleccione un estado</option>
                     <option
@@ -94,7 +127,7 @@
 
                 <br />
                 <div class="form-group">
-                  <button class="btn btn-primary">Guardar</button>
+                  <button class="btn btn-outline-success">Actualizar</button>
                 </div>
               </div>
             </form>
@@ -106,12 +139,14 @@
 </template>
 
 <script>
-import { required, email, minLength } from "vuelidate/lib/validators";
+import { required, minLength, maxLength } from "vuelidate/lib/validators";
 import ApiService from "../services/api.service";
+import Swal from "sweetalert2/dist/sweetalert2.all.min.js";
 
 export default {
   data() {
     return {
+      submitted: false,
       actividad: {
         actividad: "",
         responsable: "",
@@ -125,7 +160,7 @@ export default {
       periodo: {},
       value: "",
       options: [
-        { text: " ", value: "0" },
+        /*  { text: " ", value: "0" }, */
         { text: "Se realizó", value: "1" },
         { text: "Se aplazó", value: "2" },
         { text: "No se realizó", value: "3" }
@@ -147,9 +182,14 @@ export default {
     };
   },
   created() {
-    ApiService.get(`/periodo/${this.$route.params.periodo}`).then(response => {
-      this.periodo = response.data[0];
-    });
+    ApiService.get(`/periodo/${this.$route.params.periodo}`)
+      .then(response => {
+        this.periodo = response.data[0];
+      })
+      .catch(error => {
+        console.log(error);
+        this.errored = true;
+      });
   },
   //Obtiene las tipos de usuarios una vez se llama al componente
   mounted() {},
@@ -177,17 +217,37 @@ export default {
   },
 
   //Reglas de validacion para VueValidate
-
+  validations: {
+    actividad: {
+      actividad: {
+        required,
+        maxLength: maxLength(50)
+      },
+      responsable: { required },
+      recursos: { required, maxLength: maxLength(10) },
+      registro: { required }
+    }
+  },
   methods: {
     back() {
       this.$router.go(-1);
     },
-    handleSubmit(e) {
-      console.log("uno ");
+    /* Despliega mensaje de exito al guardar un registro */
+    showAlert() {
+      this.$swal({
+        type: "success",
+        text: "Registro creado con exito",
+        timer: 2000,
+        showCancelButton: false,
+        showConfirmButton: false
+      });
+    },
+    addActividad() {
       ApiService.post("/actividad", this.actividad)
         .then(id => {
           this.id_actividad = id.data;
           ApiService.post("/actividadmes", this.objectMesesSelected);
+          this.showAlert();
         })
         .then(res => {
           this.$router.push({
@@ -196,15 +256,29 @@ export default {
           });
         })
         .catch(function(response) {
-          alert("No se pudo crear el Usuario");
+          this.$swal({
+            type: "warning",
+            text: "fallo, no se ha podido crear la actividad",
+            timer: 2000,
+            showCancelButton: false,
+            showConfirmButton: false
+          });
         });
     },
+    handleSubmit(e) {
+      alert("aca1");
+      this.submitted = true;
+
+      // Se detiene aqui si es invalido, de lo contrario ejecuta el submit()
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        return;
+      }
+
+      this.addActividad();
+      /* alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.grupo)); */
+    },
     onChange(e) {}
-
-    /* logica de enviar api de creacion de usuario y asignacion de grupo */
-
-    //this.addUsuario();
-    /* alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.usuario)); */
   }
 };
 </script>

@@ -1,9 +1,6 @@
 <template>
   <div>
-    
-    <nav class="nav grey lighten-4 py-4">
-     
-    </nav>
+    <nav class="nav grey lighten-4 py-4"></nav>
     <section v-if="errored">
       <p>Lo sentimos, no es posible Actualizar el registro en este momento</p>
     </section>
@@ -19,17 +16,14 @@
         <div style="width: 50%; margin: 0 auto;">
           <div class="card card-success">
             <router-link to="/grupos" class="nav-item nav-link">Grupos</router-link>
-            <br>
-            
             <h3 class="text-center">Editar Grupo</h3>
-            
             <form @submit.prevent="handleSubmit" role="form">
               <div class="card-body">
                 <div class="form-group">
                   <label for="grupo">Grupo</label>
                   <input
                     type="text"
-                    pattern='[ A-Za-z0-9 "" á é í ú ´ ó]+'
+                    pattern="[ A-Za-z0-9 ' á é í ú ´ ó]+"
                     title=" Solo Letras y números. Tamaño máximo: 50"
                     v-model.trim="grupo.grupo"
                     id="grupo"
@@ -39,7 +33,7 @@
                     :class="{ 'is-invalid': submitted && $v.grupo.grupo.$error }"
                   />
                   <div v-if="submitted && $v.grupo.grupo.$error" class="invalid-feedback">
-                    <span v-if="!$v.grupo.grupo.required">El campo nombre es requerido</span>
+                    <span v-if="!$v.grupo.grupo.required">El campo es requerido</span>
                     <span
                       v-if="!$v.grupo.grupo.maxLength"
                     >El campo no debe superar los 50 caracteres</span>
@@ -55,7 +49,7 @@
                     id="cod_colciencias"
                     name="cod_colciencias"
                     class="form-control"
-                    placeholder="Codigo Colciencias"
+                    placeholder="Código Colciencias"
                     :class="{ 'is-invalid': submitted && $v.grupo.cod_colciencias.$error }"
                   />
                   <div v-if="submitted && $v.grupo.cod_colciencias.$error" class="invalid-feedback">
@@ -148,7 +142,13 @@ export default {
     ApiService.get(`/grupo/${this.$route.params.id}/edit`)
       .then(response => {
         if (response.status === 204) {
-          alert("No se encontro un grupo  ");
+          this.$swal({
+            type: "info",
+            text: "fallo al cargar datos del grupo",
+            timer: 2000,
+            showCancelButton: false,
+            showConfirmButton: false
+          });
         } else if (response.status === 200) {
           this.grupo = response.data;
         }
@@ -220,7 +220,13 @@ export default {
             this.showAlert();
             this.$router.push({ name: "grupos" });
           } else if (response.status === 204) {
-            alert("este grupo no existe");
+            this.$swal({
+              type: "warning",
+              text: "el grupo no existe",
+              timer: 2000,
+              showCancelButton: false,
+              showConfirmButton: false
+            });
           }
         })
         .catch(error => {

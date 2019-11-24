@@ -1,9 +1,6 @@
 <template>
   <div>
-    <h3 class="text-center">Agregar Producto</h3>
-    <nav class="nav grey lighten-4 py-4">
-      <a @click="back" class="nav-item nav-link">Atras</a>
-    </nav>
+    <br />
     <section v-if="errored">
       <p>Lo sentimos, no es posible Actualizar el registro en este momento</p>
     </section>
@@ -18,6 +15,10 @@
       <section class="content">
         <div style="width: 50%; margin: 0 auto;">
           <div class="card card-success">
+            <nav class="nav grey lighten-4 py-4">
+              <a @click="back" class="nav-item nav-link">Atras</a>
+            </nav>
+            <h3 class="text-center">Agregar Producto</h3>
             <form @submit.prevent="handleSubmit">
               <div class="card-body">
                 <div class="form-group">
@@ -38,13 +39,18 @@
                     <span
                       v-if="!$v.producto.producto.maxLength"
                     >El campo no debe superar los 50 caracteres</span>
-                    <span v-if="!$v.producto.producto === ''">El campo</span>
                   </div>
                 </div>
-                
+
                 <div class="form-group">
                   <label>Tipo Producto</label>
-                  <select class="form-control" style="width: 100%;" v-model="producto.id_tipo_producto">
+                  <select
+                    class="form-control"
+                    style="width: 100%;"
+                    required
+                    v-model="producto.id_tipo_producto"
+                  >
+                    <option value>Por favor seleccione un Elemento</option>
                     <option
                       v-for="producto in tipoProductos"
                       v-bind:key="producto.id_tipo_producto"
@@ -82,12 +88,11 @@ export default {
   },
 
   created() {
-    
     //
     ApiService.get("/tipoproducto")
       .then(response => {
         this.tipoProductos = response.data;
-        this.loading = false
+        this.loading = false;
       })
       .catch(error => {
         console.log(error);
@@ -117,7 +122,7 @@ export default {
       this.addProductoP();
       /* alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.grupo)); */
     },
-    
+
     back() {
       this.$router.go(-1);
     },
@@ -134,9 +139,13 @@ export default {
 
     addProductoP(event) {
       ApiService.post(`/producto/proyecto`, this.producto)
-        .then(response => {         
-          this.showAlert();
-          this.back()         
+        .then(response => {
+          if (response.status == 200) {
+            this.showAlert();
+            this.back();
+          } else if (response.status == 221) {
+            this.showAlertGrupoExistente();
+          }
         })
         .catch(error => {
           console.log(error);

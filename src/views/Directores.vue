@@ -7,7 +7,7 @@
       <div class="row">
         <div class="col-12">
           <div class="card">
-            <br>
+            <br />
             <h3 class="text-center">Directores</h3>
             <!-- /.card-header -->
             <div class="card-body">
@@ -122,7 +122,7 @@ export default {
     },
     deleteDirector(id) {
       this.$swal({
-        title: "Estas seguro de eliminar el registro?",
+        title: "Estas seguro de eliminar el registro director?",
         type: "warning",
         showCancelButton: true,
         confirmButtonText: "Si, Eliminar!",
@@ -157,15 +157,6 @@ export default {
         }
       });
     }
-    /* deleteDirector(id) {
-      console.log(id);
-      ApiService.delete(`/director/${id}`).then(response => {
-        console.log(response.data);
-        console.log(response.status);
-        let i = this.usuarios.map(item => item.id_usuario).indexOf(id); // find index of your object
-        this.usuarios.splice(i, 1);
-      });
-    } */
   }
 };
 </script>

@@ -35,7 +35,11 @@
                 <tbody>
                   <tr v-for="periodo in periodos" :key="'periodo-'+periodo.id_periodo">
                     <td style="width: 70%">
-                      <div class="btn btn-info" style="cursor:pointer" @click="showInfoPeriodo(periodo.id_periodo)">
+                      <div
+                        class="btn btn-info"
+                        style="cursor:pointer"
+                        @click="showInfoPeriodo(periodo.id_periodo)"
+                      >
                         <a>{{periodo.periodo}}</a>
                       </div>
                     </td>
@@ -127,7 +131,7 @@
                   aria-labelledby="custom-tabs-two-home-tab"
                 >
                   <div style="text-align: right; padding: 14px 1px;">
-                    <button class="btn btn-success" @click="addIntegrante()">Agregar</button>
+                    <button class="btn btn-outline-success" @click="addIntegrante()">Agregar</button>
                   </div>
                   <table
                     id="integrantes"
@@ -183,7 +187,7 @@
                   aria-labelledby="custom-tabs-two-profile-tab"
                 >
                   <div style="text-align: right; padding: 14px 1px;">
-                    <button class="btn btn-success" @click="addActividad()">Agregar</button>
+                    <button class="btn btn-outline-success" @click="addActividad()">Agregar</button>
                   </div>
                   <table
                     id="actividades"
@@ -238,6 +242,7 @@
                     </tbody>
                   </table>
                 </div>
+                <!-- panel proyectos -->
                 <div
                   class="tab-pane fade"
                   id="custom-tabs-two-messages"
@@ -245,7 +250,7 @@
                   aria-labelledby="custom-tabs-two-messages-tab"
                 >
                   <div style="text-align: right; padding: 14px 1px;">
-                    <button class="btn btn-success" @click="addProyecto()">Agregar</button>
+                    <button class="btn btn-outline-success" @click="addProyecto()">Agregar</button>
                   </div>
                   <section class="content">
                     <div class="row">
@@ -284,7 +289,7 @@
                                     <button
                                       class="btn btn-outline-danger"
                                       style="margin: 2px"
-                                      @click="deleteIntegrante(item.id_proyecto)"
+                                      @click="deleteProyecto(item.id_proyecto)"
                                     >Eliminar</button>
                                     <button
                                       class="btn btn-outline-warning"
@@ -303,6 +308,7 @@
                     </div>
                   </section>
                 </div>
+                <!-- panel proyectos -->
               </div>
             </div>
             <!-- /.card -->
@@ -409,6 +415,8 @@ export default {
   data() {
     return {
       proyectos: [],
+      loadingProyecto: true,
+      erroredProyecto: false,
       date: new Date(),
       nombre: "Semillero 1",
       periodos: [],
@@ -549,7 +557,7 @@ export default {
       }).then(result => {
         if (result.value) {
           console.log(id);
-          ApiService.delete(`/usuario/${id}`).then(response => {
+          ApiService.delete(`/integrante/${id}`).then(response => {
             let i = this.integrantes
               .map(item => item.id_integrante)
               .indexOf(id); // find index of your object
@@ -581,8 +589,18 @@ export default {
 
       ApiService.get(`/proyecto/periodo/semillero/${id}`)
         .then(response => {
-          this.proyectos = response.data;
-          console.log(this.proyectos)
+          if (response.status === 204) {
+            /* this.$swal({
+              type: "info",
+              text: "No hay proyectos en este periodo para mostrar",
+              timer: 2000,
+              showCancelButton: false,
+              showConfirmButton: false
+            }); */
+            this.proyectos = response.data;
+          } else {
+            this.proyectos = response.data;
+          }
         })
         .then(res => {
           $("#tblProyectos").DataTable({
@@ -590,7 +608,25 @@ export default {
             searching: false,
             retrieve: true
           });
-        });
+        })
+        .catch(error => {
+          console.log(error);
+          this.errored = true;
+        })
+        .finally(() => (this.loading = false));
+
+      /* ApiService.get(`/proyecto/periodo/semillero/${id}`)
+        .then(response => {
+          this.proyectos = response.data;
+          console.log(this.proyectos);
+        })
+        .then(res => {
+          $("#tblProyectos").DataTable({
+            responsive: true,
+            searching: false,
+            retrieve: true
+          });
+        }); */
 
       ApiService.get(`/actividad/periodo/semillero/${id}`)
         .then(response => {
@@ -612,7 +648,13 @@ export default {
           params: { id: this.$route.params.id, periodo: this.idPeriodo }
         });
       }
-      alert("Debe seleccionar un periodo..");
+      this.$swal({
+        type: "info",
+        text: "Debe seleccionar un periodo",
+        timer: 2000,
+        showCancelButton: false,
+        showConfirmButton: true
+      });
     },
 
     addIntegrante() {
@@ -622,7 +664,13 @@ export default {
           params: { id: this.$route.params.id }
         });
       }
-      alert("Debe seleccionar un periodo..");
+      this.$swal({
+        type: "info",
+        text: "Debe seleccionar un periodo",
+        timer: 2000,
+        showCancelButton: false,
+        showConfirmButton: true
+      });
     },
 
     addActividad() {
@@ -632,7 +680,13 @@ export default {
           params: { id: this.$route.params.id, periodo: this.idPeriodo }
         });
       }
-      alert("Debe seleccionar un periodo..");
+      this.$swal({
+        type: "info",
+        text: "Debe seleccionar un periodo",
+        timer: 2000,
+        showCancelButton: false,
+        showConfirmButton: true
+      });
     },
 
     editActividad(id) {
@@ -642,7 +696,13 @@ export default {
           params: { id: id, periodo: this.idPeriodo }
         });
       }
-      alert("Debe seleccionar un periodo..");
+      this.$swal({
+        type: "info",
+        text: "Debe seleccionar un periodo",
+        timer: 2000,
+        showCancelButton: false,
+        showConfirmButton: true
+      });
     },
     addPeriodo() {
       ApiService.post("/periodo", this.periodo)
@@ -653,13 +713,48 @@ export default {
     },
 
     deleteActividad(id) {
-      ApiService.delete(`/actividad/${id}`)
-        .then(r => {
-          let i = this.actividades.map(item => item.id_actividad).indexOf(id); // find index of your object
-          this.actividades.splice(i, 1);
-          alert("Actividad eliminada correctamente!");
-        })
-        .catch(r2 => alert("Error al eliminar actividad!"));
+      this.$swal({
+        title: "Estas seguro de eliminar el registro?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Si, Eliminar!",
+        cancelButtonText: "Cancelar",
+        showCloseButton: true,
+        showLoaderOnConfirm: true
+      }).then(result => {
+        if (result.value) {
+          ApiService.delete(`/actividad/${id}`)
+            .then(response => {
+              if (response.status === 200) {
+                let i = this.actividades
+                  .map(item => item.id_actividad)
+                  .indexOf(id); // find index of your object
+                this.actividades.splice(i, 1);
+                this.$swal.fire({
+                  type: "success",
+                  title: "Eliminado con exito",
+                  showConfirmButton: false,
+                  timer: 1500
+                });
+              } else if (response.status === 222) {
+                this.$swal({
+                  type: "warning",
+                  text: "fallo, no se ha podido eliminar el registro",
+                  timer: 2000,
+                  showCancelButton: false,
+                  showConfirmButton: false
+                });
+              }
+            })
+            .catch(error => {
+              console.log(error);
+              this.errored = true;
+            });
+          this.$swal("Registro Eliminado");
+        } else {
+          this.$swal(" Accion Cancelada");
+        }
+      });
     },
 
     verProductos(id) {

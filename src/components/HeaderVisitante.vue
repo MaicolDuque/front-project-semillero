@@ -6,7 +6,6 @@
   >
     <!-- Left navbar links -->
     <ul class="navbar-nav">
-      
       <header class="header" role="banner">
         <div class="header-inner clearfix">
           <h5>
@@ -46,8 +45,8 @@
       <!-- Notifications Dropdown Menu -->
 
       <li class="nav-item d-none d-sm-inline-block">
-        <button class= "btn btn-light">
-        <a @click="irLogin" style="cursor: pointer; color: black" class="nav-link">Ingresar</a>
+        <button class="btn btn-light">
+          <a @click="irLogin" style="cursor: pointer; color: black">Ingresar</a>
         </button>
       </li>
     </ul>
@@ -68,7 +67,7 @@ export default {
       this.$store.commit("setLogin", false);
       this.$store.commit("MUTATION_info_user", []);
 
-      TokenService.saveTokenCustom("visitante", "si")
+      TokenService.saveTokenCustom("visitante", "si");
 
       TokenService.removeToken();
       TokenService.removeTokenCustom("user");
@@ -76,9 +75,9 @@ export default {
       ApiService.unmount401Interceptor();
       this.$router.push("login");
     },
-    irLogin(){
-      localStorage.visitante = "no"
-      this.$store.commit("setVisitante", "no");      
+    irLogin() {
+      localStorage.visitante = "no";
+      this.$store.commit("setVisitante", "no");
     }
   }
 };

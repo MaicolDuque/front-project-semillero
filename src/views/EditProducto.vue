@@ -1,9 +1,6 @@
 <template>
   <div>
-    <h3 class="text-center">Editar Producto</h3>
-    <nav class="nav grey lighten-4 py-4">
-      <a @click="back" class="nav-item nav-link">Atras</a>
-    </nav>
+    <br />
     <section v-if="errored">
       <p>Lo sentimos, no es posible Actualizar el registro en este momento</p>
     </section>
@@ -18,6 +15,10 @@
       <section class="content">
         <div style="width: 50%; margin: 0 auto;">
           <div class="card card-success">
+            <nav class="nav grey lighten-4 py-4">
+              <a @click="back" class="nav-item nav-link">Atras</a>
+            </nav>
+            <h3 class="text-center">Editar Producto</h3>
             <form @submit.prevent="handleSubmit">
               <div class="card-body">
                 <div class="form-group">
@@ -41,10 +42,14 @@
                     <span v-if="!$v.producto.producto === ''">El campo</span>
                   </div>
                 </div>
-                
+
                 <div class="form-group">
                   <label>Tipo Producto</label>
-                  <select class="form-control" style="width: 100%;" v-model="producto.id_tipo_producto">
+                  <select
+                    class="form-control"
+                    style="width: 100%;"
+                    v-model="producto.id_tipo_producto"
+                  >
                     <option
                       v-for="producto in tipoProductos"
                       v-bind:key="producto.id_tipo_producto"
@@ -87,7 +92,13 @@ export default {
     ApiService.get(`/producto/${this.$route.params.id}`)
       .then(response => {
         if (response.status === 204) {
-          alert("No se encontro un semillero  ");
+          this.$swal({
+            type: "info",
+            text: "fallo al cargar datos del producto",
+            timer: 2000,
+            showCancelButton: false,
+            showConfirmButton: false
+          });
         } else if (response.status === 200) {
           this.producto = response.data[0];
         }
@@ -130,7 +141,7 @@ export default {
       this.updateProducto();
       /* alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.grupo)); */
     },
-    
+
     back() {
       this.$router.go(-1);
     },
@@ -146,14 +157,22 @@ export default {
     },
 
     updateProducto(event) {
-      ApiService.put(`/producto/${this.$route.params.id}`, 
-      {producto: this.producto.producto, id_tipo_producto: this.producto.id_tipo_producto})
+      ApiService.put(`/producto/${this.$route.params.id}`, {
+        producto: this.producto.producto,
+        id_tipo_producto: this.producto.id_tipo_producto
+      })
         .then(response => {
           if (response.status === 200) {
             this.showAlert();
-            this.back()
+            this.back();
           } else if (response.status === 204) {
-            alert("este semillero no existe");
+            this.$swal({
+              type: "info",
+              text: "producto no existente",
+              timer: 2000,
+              showCancelButton: false,
+              showConfirmButton: false
+            });
           }
         })
         .catch(error => {

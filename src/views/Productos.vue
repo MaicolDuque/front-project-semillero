@@ -1,6 +1,8 @@
 <template>
   <div style="padding:25px" class="container">
-    <h3 class="text-center">Productos</h3>
+    <nav class="nav grey lighten-4 py-4">
+      <a @click="back" class="nav-item nav-link">Atras</a>
+    </nav>
     <div style="text-align: right; padding: 14px 1px;">
       <a @click="addProducto" tag="button" class="btn btn-outline-success">Agregar</a>
     </div>
@@ -8,6 +10,7 @@
       <div class="row">
         <div class="col-12">
           <div class="card">
+            <h3 class="text-center">Productos Actividad</h3>
             <!-- /.card-header -->
             <div class="card-body">
               <section v-if="errored">
@@ -30,7 +33,7 @@
                     <tr>
                       <th>ID</th>
                       <th>Nombre</th>
-                      <th>Tipo</th>                                                       
+                      <th>Tipo</th>
                       <th data-priority="2">Acciones</th>
                     </tr>
                   </thead>
@@ -38,8 +41,8 @@
                     <tr v-for="item in productos" :key="item.id_producto">
                       <td>{{ item.id_producto }}</td>
                       <td>{{ item.producto }}</td>
-                      <td>{{ item.tipo_producto }}</td>                    
-                      
+                      <td>{{ item.tipo_producto }}</td>
+
                       <td>
                         <div class="btn-group" role="group">
                           <router-link
@@ -53,7 +56,8 @@
                             @click="deleteProducto(item.id_producto)"
                           >Eliminar</button>
                           <button
-                            class="btn btn-warning"
+                            style="margin: 2px"
+                            class="btn btn-outline-warning"
                             @click="verSoportes(item.id_producto)"
                           >Ver Soportes</button>
                         </div>
@@ -85,7 +89,13 @@ export default {
     ApiService.get(`/producto/actividad/${this.$route.params.id}`)
       .then(response => {
         if (response.status === 204) {
-          alert("No existen productos para mostrar ");
+          this.$swal({
+            type: "info",
+            text: "No hay productos para mostrar",
+            timer: 2000,
+            showCancelButton: false,
+            showConfirmButton: false
+          });
           this.productos = response.data;
         } else {
           this.productos = response.data;
@@ -103,8 +113,14 @@ export default {
       .finally(() => (this.loading = false));
   },
   methods: {
-    addProducto(){
-      this.$router.push({ name: "agregar-producto", id: this.$route.params.id });
+    back() {
+      this.$router.go(-1);
+    },
+    addProducto() {
+      this.$router.push({
+        name: "agregar-producto",
+        id: this.$route.params.id
+      });
     },
     showAlert() {
       this.$swal({
@@ -115,14 +131,50 @@ export default {
         showConfirmButton: false
       });
     },
-    deleteProducto(id) {      
-      ApiService.delete(`/producto/${id}`).then(response => {
-        let i = this.productos.map(item => item.id_usuario).indexOf(id); // find index of your object
-        this.productos.splice(i, 1);
-        alert("Producto eliminado correctamente!")      
+    deleteProducto(id) {
+      this.$swal({
+        title: "Estas seguro de eliminar el registro?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Si, Eliminar!",
+        cancelButtonText: "Cancelar",
+        showCloseButton: true,
+        showLoaderOnConfirm: true
+      }).then(result => {
+        if (result.value) {
+          ApiService.delete(`/producto/${id}`)
+            .then(response => {
+              if (response.status === 200) {
+                let i = this.productos
+                  .map(item => item.id_producto)
+                  .indexOf(id); // find index of your object
+                this.productos.splice(i, 1);
+                this.$swal.fire({
+                  type: "success",
+                  title: "Eliminado con exito",
+                  showConfirmButton: false,
+                  timer: 1500
+                });
+              } else if (response.status === 222) {
+                this.$swal({
+                  type: "warning",
+                  text: "fallo, no se ha podido eliminar el registro",
+                  timer: 2000,
+                  showCancelButton: false,
+                  showConfirmButton: false
+                });
+              }
+            })
+            .catch(error => {
+              console.log(error);
+              this.errored = true;
+            });
+          this.$swal("Registro Eliminado");
+        } else {
+          this.$swal(" Accion Cancelada");
+        }
       });
-    }
-    ,
+    },
     verSoportes(id) {
       this.$router.push({
         name: "soportes",
@@ -130,6 +182,5 @@ export default {
       });
     }
   }
-  
 };
 </script>

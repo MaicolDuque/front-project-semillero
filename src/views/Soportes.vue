@@ -1,6 +1,8 @@
 <template>
   <div style="padding:25px" class="container">
-  
+    <nav class="nav grey lighten-4 py-4">
+      <a @click="back" class="nav-item nav-link">Atras</a>
+    </nav>
     <div style="text-align: right; padding: 14px 1px;">
       <a @click="addSoporte" tag="button" class="btn btn-outline-success">Agregar</a>
     </div>
@@ -8,7 +10,7 @@
       <div class="row">
         <div class="col-12">
           <div class="card">
-              <h3 class="text-center">Soportes</h3>
+            <h3 class="text-center">Soportes</h3>
             <!-- /.card-header -->
             <div class="card-body">
               <section v-if="errored">
@@ -52,7 +54,7 @@
                           <button
                             style="margin: 2px"
                             class="btn btn-outline-danger"
-                            @click="deleteProducto(item.id_soporte)"
+                            @click="deleteSoporte(item.id_soporte)"
                           >Eliminar</button>
                           <!-- <button
                             class="btn btn-warning"
@@ -88,11 +90,17 @@ export default {
     ApiService.get(`/soporte/${this.$route.params.id}`)
       .then(response => {
         if (response.status === 204) {
-          alert("No existen soportes para mostrar ");
+          this.$swal({
+            type: "info",
+            text: "No hay soportes para mostrar",
+            timer: 2000,
+            showCancelButton: false,
+            showConfirmButton: false
+          });
           this.soportes = response.data;
         } else {
-          console.log(response.status);
-          console.log(response.data);
+          /*  console.log(response.status);
+          console.log(response.data); */
           this.soportes = response.data;
         }
       })
@@ -108,6 +116,9 @@ export default {
       .finally(() => (this.loading = false));
   },
   methods: {
+    back() {
+      this.$router.go(-1);
+    },
     addSoporte() {
       console.log(this.$route.params.id);
       this.$router.push({
@@ -124,11 +135,46 @@ export default {
         showConfirmButton: false
       });
     },
-    deleteProducto(id) {
-      ApiService.delete(`/soporte/${id}`).then(response => {
-        let i = this.soportes.map(item => item.id_usuario).indexOf(id); // find index of your object
-        this.soportes.splice(i, 1);
-        alert("Soporte eliminado correctamente!");
+    deleteSoporte(id) {
+      this.$swal({
+        title: "Estas seguro de eliminar el registro?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Si, Eliminar!",
+        cancelButtonText: "Cancelar",
+        showCloseButton: true,
+        showLoaderOnConfirm: true
+      }).then(result => {
+        if (result.value) {
+          ApiService.delete(`/soporte/${id}`)
+            .then(response => {
+              if (response.status === 200) {
+                let i = this.soportes.map(item => item.id_soporte).indexOf(id); // find index of your object
+                this.soportes.splice(i, 1);
+                this.$swal.fire({
+                  type: "success",
+                  title: "Eliminado con exito",
+                  showConfirmButton: false,
+                  timer: 1500
+                });
+              } else if (response.status === 222) {
+                this.$swal({
+                  type: "warning",
+                  text: "fallo, no se ha podido eliminar el registro",
+                  timer: 2000,
+                  showCancelButton: false,
+                  showConfirmButton: false
+                });
+              }
+            })
+            .catch(error => {
+              console.log(error);
+              this.errored = true;
+            });
+          this.$swal("Registro Eliminado");
+        } else {
+          this.$swal(" Accion Cancelada");
+        }
       });
     }
   }

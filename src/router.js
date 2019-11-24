@@ -74,11 +74,10 @@ import semilleroEspecifico from './views/semilleroEspecifico.vue'
 
 
 ///
-import semillerosVisitante from './views/semillerosVisitante.vue'
+
 
 //
 
-import semilleroEspecifico from './views/semilleroEspecifico.vue'
 
 
 Vue.use(Router)

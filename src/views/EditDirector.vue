@@ -1,12 +1,7 @@
 <template>
   <div>
-    <h3 class="text-center">Editar director</h3>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="collapse navbar-collapse">
-        <div class="navbar-nav">
-          <router-link to="/directores" class="nav-item nav-link">Directores</router-link>
-        </div>
-      </div>
+      <div class="collapse navbar-collapse"></div>
     </nav>
     <section v-if="errored">
       <p>Lo sentimos, no es posible Actualizar el registro en este momento</p>
@@ -22,6 +17,10 @@
       <section class="content">
         <div style="width: 50%; margin: 0 auto;">
           <div class="card card-success">
+            <div class="navbar-nav">
+              <router-link to="/directores" class="nav-item nav-link">Directores</router-link>
+              <h3 class="text-center">Editar director</h3>
+            </div>
             <form @submit.prevent="handleSubmit" role="form">
               <div class="card-body">
                 <div class="form-group">
@@ -173,18 +172,6 @@
                       >{{ grupo.grupo }}</option>
                     </select>
                   </div>
-                  <!--  <div class="form-group">
-                    <label>Grupo</label>
-                    <select class="form-control" style="width: 100%;" @change="selectChangeGrupo">
-                      <option disabled>seleccione un elemento por favor</option>
-
-                      <option
-                        v-for="grupo in grupos"
-                        v-bind:key="grupo.id_grupo"
-                        :value="grupo.id_grupo"
-                      >{{ grupo.grupo }}</option>
-                    </select>
-                  </div>-->
                 </template>
                 <div class="card-footer">
                   <button type="submit" class="btn btn-primary">Actualizar</button>
@@ -232,7 +219,13 @@ export default {
     ApiService.get("/usuario/director")
       .then(response => {
         if (response.status === 204) {
-          alert("No se encontro un grupo  ");
+          this.$swal({
+            type: "warning",
+            text: "no se encontro datos del usuario director",
+            timer: 2000,
+            showCancelButton: false,
+            showConfirmButton: false
+          });
         } else if (response.status === 200) {
           this.director = response.data.filter(
             res => res.id_usuario == this.$route.params.id
@@ -311,12 +304,18 @@ export default {
     },
     updateDirector() {
       //event.preventDefault();
-      console.log(this.director);
+      /*  console.log(this.director); */
       ApiService.put(
         `usuario/${this.$route.params.id}`,
         this.objectDirector
       ).catch(function(response) {
-        alert("No se pudo actualizar el usuario");
+        this.$swal({
+          type: "warning",
+          text: "No se pudo actualizar el usuario",
+          timer: 2000,
+          showCancelButton: false,
+          showConfirmButton: false
+        });
       });
       /* console.log(this.$route.params.id);
       console.log("id grupo" + this.grupoSeleccionado.id_grupo); */
@@ -331,13 +330,18 @@ export default {
             this.$router.push({ name: "directores" });
           })
           .catch(function(response) {
-            alert("No se pudo actualizar el director");
+            this.$swal({
+              type: "warning",
+              text: "No se pudo actualizar el director",
+              timer: 2000,
+              showCancelButton: false,
+              showConfirmButton: false
+            });
           });
       } else if (this.director.grupo != null) {
-        alert("aca puto");
         //si  existe en la tabla directores lo actualizo
-        console.log(this.$route.params.id);
-        console.log("id grupo" + this.grupoSeleccionado.id_grupo);
+        /*  console.log(this.$route.params.id);
+        console.log("id grupo" + this.grupoSeleccionado.id_grupo); */
         ApiService.put(`director/${this.$route.params.id}`, {
           id_grupo: this.director.id_grupo
         })
@@ -346,20 +350,15 @@ export default {
             this.$router.push({ name: "directores" });
           })
           .catch(function(response) {
-            alert("No se pudo actualizar el director");
+            this.$swal({
+              type: "warning",
+              text: "no fue posible actualizar el registro",
+              timer: 2000,
+              showCancelButton: false,
+              showConfirmButton: false
+            });
           });
       }
-
-      /* ApiService.put(`director/${this.$route.params.id}`, {
-        id_grupo: this.grupoSeleccionado.id_grupo
-      })
-        .then(response => {
-          this.showAlert();
-          this.$router.push({ name: "directores" });
-        })
-        .catch(function(response) {
-          alert("No se pudo actualizar el director");
-        }); */
     }
   },
 

@@ -1,6 +1,5 @@
 <template>
   <div style="padding:25px">
-    <h3 class="text-center">Semilleros de Investigación</h3>
     <div style="text-align: right; padding: 14px 1px;">
       <router-link to="/addsemillero" tag="button" class="btn btn-outline-success">Agregar</router-link>
     </div>
@@ -9,6 +8,7 @@
         <div class="col-12">
           <div class="card">
             <!-- /.card-header -->
+            <h3 class="text-center">Semilleros de Investigación</h3>
             <div class="card-body">
               <section v-if="errored">
                 <p>Lo sentimos, no es posible obtener la información en este momento, por favor intente nuevamente mas tarde</p>
@@ -91,7 +91,13 @@ export default {
     ApiService.get("/semillero")
       .then(response => {
         if (response.status === 204) {
-          alert("No existen semilleros para mostrar ");
+          this.$swal({
+            type: "info",
+            text: "No hay semilleros para mostrar",
+            timer: 2000,
+            showCancelButton: false,
+            showConfirmButton: false
+          });
           this.semilleros = response.data;
         } else {
           this.semilleros = response.data;
@@ -149,24 +155,22 @@ export default {
     }
   },
 
-
   computed: {
-    showSemilleros(){
-      let rol     = this.$store.state.user.id_rol
-      let grupo   = this.$store.state.user.id_grupo
-      if(rol == 2){        
-        return  this.semilleros.filter(semi => semi.id_grupo == grupo);
+    showSemilleros() {
+      let rol = this.$store.state.user.id_rol;
+      let grupo = this.$store.state.user.id_grupo;
+      if (rol == 2) {
+        return this.semilleros.filter(semi => semi.id_grupo == grupo);
       }
-      if(rol == 3){   
-        let semillero   = this.$store.state.user.id_semillero 
-        return  this.semilleros.filter(semi => semi.id_semillero == semillero);
+      if (rol == 3) {
+        let semillero = this.$store.state.user.id_semillero;
+        return this.semilleros.filter(semi => semi.id_semillero == semillero);
       }
-      
-      return  this.semilleros
-      
+
+      return this.semilleros;
     },
-    rol(){
-       return this.$store.state.user.id_rol
+    rol() {
+      return this.$store.state.user.id_rol;
     }
   }
 };

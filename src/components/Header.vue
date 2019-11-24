@@ -50,8 +50,8 @@
       <!-- Notifications Dropdown Menu -->
 
       <li class="nav-item d-none d-sm-inline-block">
-        <button class= "btn btn-light">
-          <a @click="logout" style="cursor: pointer; color: black" class="nav-link">Cerrar sesión</a>
+        <button class="btn btn-light">
+          <a @click="logout" style="cursor: pointer; color: black">Cerrar sesión</a>
         </button>
       </li>
     </ul>

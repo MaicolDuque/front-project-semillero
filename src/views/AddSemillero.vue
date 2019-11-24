@@ -1,102 +1,102 @@
 <template>
-  <div class="container">
-    <h3 class="text-center">Agregar Semillero</h3>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="collapse navbar-collapse">
-        <nav class="nav grey lighten-4 py-4">
-          <router-link to="/semilleros" class="nav-item nav-link">Semilleros</router-link>
-        </nav>
-      </div>
-    </nav>
-    <div class="row">
-      <div class="col-sm-8 offset-sm-2">
-        <div>
-          <!-- <h2>Nuevo Grupo de Investigación</h2> -->
+  <div>
+    <nav class="nav grey lighten-4 py-4"></nav>
+    <section v-if="errored">
+      <p>Lo sentimos, no es posible Guardar el registro en este momento</p>
+    </section>
+    <section class="content">
+      <div style="width: 50%; margin: 0 auto;">
+        <div class="card card-success">
           <form @submit.prevent="handleSubmit">
-            <div class="form-group">
-              <label for="semillero">Nombre</label>
-              <input
-                type="text"
-                pattern="[A-Za-z0-9 ]+"
-                title=" Solo Letras y números. Tamaño máximo: 50"
-                v-model.trim="semillero.semillero"
-                id="semillero"
-                name="semillero"
-                placeholder="Nombre"
-                class="form-control"
-                :class="{ 'is-invalid': submitted && $v.semillero.semillero.$error }"
-              />
-              <div v-if="submitted && $v.semillero.semillero.$error" class="invalid-feedback">
-                <span v-if="!$v.semillero.semillero.required">El campo es requerido</span>
-                <span
-                  v-if="!$v.semillero.semillero.maxLength"
-                >El campo no debe superar los 50 caracteres</span>
-                <span v-if="!$v.semillero.semillero === ''">El campo</span>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="objetivo">Objetivo</label>
-              <input
-                type="text"
-                pattern="[A-Za-z0-9 ]+"
-                title=" Solo Letras y números. Tamaño máximo: 200"
-                v-model.trim="semillero.objetivo"
-                id="objetivo"
-                name="objetivo"
-                placeholder="objetivo"
-                class="form-control"
-                :class="{ 'is-invalid': submitted && $v.semillero.objetivo.$error }"
-              />
-              <div v-if="submitted && $v.semillero.objetivo.$error" class="invalid-feedback">
-                <span v-if="!$v.semillero.objetivo.required">El campo es requerido</span>
-                <span
-                  v-if="!$v.semillero.objetivo.maxLength"
-                >El campo no debe superar los 200 caracteres</span>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="descripcion">Descripción</label>
-              <input
-                type="text"
-                pattern="[A-Za-z0-9 ]+"
-                title=" Solo Letras y números. Tamaño máximo: 200"
-                v-model.trim="semillero.descripcion"
-                id="descripcion"
-                name="descripcion"
-                placeholder="descripcion"
-                class="form-control"
-                :class="{ 'is-invalid': submitted && $v.semillero.descripcion.$error }"
-              />
-              <div v-if="submitted && $v.semillero.descripcion.$error" class="invalid-feedback">
-                <span v-if="!$v.semillero.descripcion.required">El campo es requerido</span>
-                <span
-                  v-if="!$v.semillero.descripcion.maxLength"
-                >El campo no debe superar los 200 caracteres</span>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="id_grupo">Grupo Investigación</label>
-              <br />
-              <select class="custom-select browser-default" @change="selectChangeGrupo" required>
-                <option value>Por favor seleccione un Elemento</option>
-                <option
-                  v-for="item in showGruposInvestigacion"
-                  v-bind:key="item.value"
-                  id="id_grupo"
-                  name="id_grupo"
+            <div class="card-body">
+              <nav>
+                <router-link to="/semilleros" class="nav-item nav-link">Semilleros</router-link>
+              </nav>
+              <h3 class="text-center">Agregar semillero</h3>
+              <div class="form-group">
+                <label for="semillero">Nombre</label>
+                <input
+                  type="text"
+                  pattern="[A-Za-z0-9 ´ ]++"
+                  title=" Solo Letras y números. Tamaño máximo: 50"
+                  v-model.trim="semillero.semillero"
+                  id="semillero"
+                  name="semillero"
+                  placeholder="Nombre"
                   class="form-control"
-                  :class="{ 'is-invalid': submitted && $v.semillero.id_grupo.$error }"
-                >{{ item.grupo }}</option>
-              </select>
-            </div>
-            <br />
-            <div class="form-group">
-              <button class="btn btn-primary">Guardar</button>
+                  :class="{ 'is-invalid': submitted && $v.semillero.semillero.$error }"
+                />
+                <div v-if="submitted && $v.semillero.semillero.$error" class="invalid-feedback">
+                  <span v-if="!$v.semillero.semillero.required">El campo es requerido</span>
+                  <span
+                    v-if="!$v.semillero.semillero.maxLength"
+                  >El campo no debe superar los 50 caracteres</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="objetivo">Objetivo</label>
+                <input
+                  type="text"
+                  pattern="[A-Za-z0-9'´:- ]+"
+                  title=" Solo Letras y números. Tamaño máximo: 200"
+                  v-model.trim="semillero.objetivo"
+                  id="objetivo"
+                  name="objetivo"
+                  placeholder="objetivo"
+                  class="form-control"
+                  :class="{ 'is-invalid': submitted && $v.semillero.objetivo.$error }"
+                />
+                <div v-if="submitted && $v.semillero.objetivo.$error" class="invalid-feedback">
+                  <span v-if="!$v.semillero.objetivo.required">El campo es requerido</span>
+                  <span
+                    v-if="!$v.semillero.objetivo.maxLength"
+                  >El campo no debe superar los 200 caracteres</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="descripcion">Descripción</label>
+                <input
+                  type="text"
+                  pattern="[A-Za-z0-9'´: ]+"
+                  title=" Solo Letras y números. Tamaño máximo: 200"
+                  v-model.trim="semillero.descripcion"
+                  id="descripcion"
+                  name="descripcion"
+                  placeholder="descripcion"
+                  class="form-control"
+                  :class="{ 'is-invalid': submitted && $v.semillero.descripcion.$error }"
+                />
+                <div v-if="submitted && $v.semillero.descripcion.$error" class="invalid-feedback">
+                  <span v-if="!$v.semillero.descripcion.required">El campo es requerido</span>
+                  <span
+                    v-if="!$v.semillero.descripcion.maxLength"
+                  >El campo no debe superar los 200 caracteres</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="id_grupo">Grupo Investigación</label>
+                <br />
+                <select class="custom-select browser-default" @change="selectChangeGrupo" required>
+                  <option value>Por favor seleccione un Elemento</option>
+                  <option
+                    v-for="item in showGruposInvestigacion"
+                    v-bind:key="item.value"
+                    id="id_grupo"
+                    name="id_grupo"
+                    class="form-control"
+                    :class="{ 'is-invalid': submitted && $v.semillero.id_grupo.$error }"
+                  >{{ item.grupo }}</option>
+                </select>
+              </div>
+              <br />
+              <div class="form-group">
+                <button class="btn btn-primary">Guardar</button>
+              </div>
             </div>
           </form>
         </div>
       </div>
-    </div>
+    </section>
   </div>
 </template>
 
@@ -107,6 +107,7 @@ import ApiService from "../services/api.service";
 export default {
   data() {
     return {
+      errored: false,
       //Almacena grupos
       grupos_investigación: [],
       //Almacena los datos del semillero a crear
@@ -129,16 +130,14 @@ export default {
       return Object.values(this.grupos_investigación);
     },
 
-    showGruposInvestigacion(){
-      let rol     = this.$store.state.user.id_rol
-      let grupo   = this.$store.state.user.id_grupo
-      if(rol > 1){
-        return  this.grupos_investigación.filter(semi => semi.id_grupo == grupo);
+    showGruposInvestigacion() {
+      let rol = this.$store.state.user.id_rol;
+      let grupo = this.$store.state.user.id_grupo;
+      if (rol > 1) {
+        return this.grupos_investigación.filter(semi => semi.id_grupo == grupo);
       }
-      return  this.grupos_investigación
+      return this.grupos_investigación;
     }
-
-    
   },
 
   //Reglas de validacion para VueValidate
@@ -185,11 +184,11 @@ export default {
         .then(response => {
           if (response.status == 200) {
             this.showAlert();
+            this.$router.push({ name: "semilleros" });
           } else if (response.status == 221) {
             this.showAlertSemilleroExistente();
           }
         })
-        .then(response => this.$router.push({ name: "semilleros" }))
         .catch(error => console.log(error))
         .finally(() => (this.loading = false));
     },

@@ -1,10 +1,7 @@
 <template>
   <div>
     <div class="container">
-      
-      <nav class="nav grey lighten-4 py-4">
-        
-      </nav>
+      <nav class="nav grey lighten-4 py-4"></nav>
 
       <div class="card card-primary card-outline">
         <h3 class="text-center">Agregar Integrante - {{this.periodo.periodo}}</h3>
@@ -202,7 +199,7 @@
                             >El campo no debe superar los 100 caracteres</span>
                           </div>
                         </div>
-                        
+
                         <div class="form-group">
                           <label for="tipo">Tipo</label>
                           <br />
@@ -225,7 +222,7 @@
 
                         <br />
                         <div class="form-group">
-                          <button class="btn btn-primary">Guardar</button>
+                          <button class="btn btn-outline-success">Guardar</button>
                         </div>
                       </div>
                     </form>
@@ -277,6 +274,10 @@ export default {
         $("#add-integrantes").DataTable({
           responsive: true
         });
+      })
+      .catch(error => {
+        console.log(error);
+        this.errored = true;
       });
 
     ApiService.get(`/periodo/${this.$route.params.id}`).then(response => {
@@ -323,9 +324,20 @@ export default {
   methods: {
     addUsuario() {
       this.usuario.id_rol = 4;
-      ApiService.post("/usuario", this.objectUsuario).catch(function(response) {
-        alert("No se pudo crear el Usuario");
-      });
+      ApiService.post("/usuario", this.objectUsuario)
+        .catch(function(response) {
+          this.$swal({
+            type: "warning",
+            text: "No se pudo crear el usuario",
+            timer: 2000,
+            showCancelButton: false,
+            showConfirmButton: false
+          });
+        })
+        .catch(error => {
+          console.log(error);
+          this.errored = true;
+        });
 
       /*  ApiService.post("/director" id_grupo: this.director.id_grupo}).then(response => {
         this.$router.push({ name: "directores" });
@@ -344,9 +356,14 @@ export default {
       this.$router.go(-1);
     },
     getTipos_Usuarios() {
-      ApiService.get("/tipousuario").then(response => {
-        this.Tipos_Usuarios = response.data;
-      });
+      ApiService.get("/tipousuario")
+        .then(response => {
+          this.Tipos_Usuarios = response.data;
+        })
+        .catch(error => {
+          console.log(error);
+          this.errored = true;
+        });
     },
     onChange($event) {
       if (event.target.value == "Activo") {
@@ -368,6 +385,9 @@ export default {
       });
       this.usuario.id_tipo_usuario = i;
     },
+    back() {
+      this.$router.go(-1);
+    },
     //Valida el formulario
     handleSubmit(e) {
       this.submitted = true;
@@ -381,39 +401,44 @@ export default {
       this.usuario.id_rol = 4;
       var id_gr = this.periodo.id_periodo;
       ApiService.post("/usuario", this.usuario)
-        .then(function(response) {
-          console.log("response =", response);
+        .then(response => {
           if (response.status == 200) {
             ApiService.post("/integrante", {
               id_usuario: response.data,
               id_periodo: id_gr
             })
-              .then(function(response) {
-                console.log("response =", response);
+              .then(response => {
                 if (response.status == 200) {
-                  alert("Agregado el integrante");
-                  this.$router.push({ name: "grupos" });
+                  this.$swal({
+                    type: "success",
+                    text: "Registro creado con exito",
+                    timer: 2000,
+                    showCancelButton: false,
+                    showConfirmButton: false
+                  });
+                  this.back();
                 } else if (response.status == 221) {
                   alert("El usuario ya es director de otro grupo");
                 }
-
                 //return response.json();
               })
-
               .catch(function(err) {
                 console.error(err);
               });
           } else if (response.status == 221) {
-            alert("ya existe");
+            this.$swal({
+              type: "warning",
+              text: "ya existe el usuario",
+              timer: 2000,
+              showCancelButton: false,
+              showConfirmButton: false
+            });
           }
           //return response.json();
         })
         .catch(function(err) {
           console.error(err);
         });
-      /* Almacenar el usuario */
-      //this.addUsuario();
-      /* alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.usuario)); */
     }
   }
 };
