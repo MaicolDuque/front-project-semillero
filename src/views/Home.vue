@@ -14,7 +14,7 @@
 
             </div>
             
-            <!-- <!-- /.card-body -->
+            <!-- /.card-body -->
           </div>
         </div>
       </div>
