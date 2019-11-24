@@ -475,6 +475,16 @@ export default {
     }
   },
   methods: {
+    showAlertInicioDescarga() {
+      this.$swal({
+        type: "info",
+        title: "Procesando",
+        text: "el archivo empezara a descargarse en poco tiempo",
+
+        showCancelButton: false,
+        showConfirmButton: true
+      });
+    },
     exportar(id, tipo) {
       if (tipo == 1) {
         return (location.href =
@@ -484,8 +494,7 @@ export default {
         return (location.href =
           process.env.VUE_APP_URL_API + "/exportar/final/" + id);
       }
-      return (location.href =
-        process.env.VUE_APP_URL_API + "/exportar/pdf/" + id);
+      return process.env.VUE_APP_URL_API + "/exportar/pdf/" + id;
     },
     handleSubmit(e) {
       this.submitted = true;
