@@ -204,7 +204,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-if="integrantes.length == 0">
+                      <tr v-if="actividades.length == 0">
                         <td
                           colspan="6"
                           style="text-align: center; font-size: 1.6em;"
@@ -659,9 +659,10 @@ export default {
 
     addIntegrante() {
       if (this.idPeriodo) {
+        console.log(this.idPeriodo);
         return this.$router.push({
           name: "agregar-integrante",
-          params: { id: this.$route.params.id }
+          params: { id: this.idPeriodo }
         });
       }
       this.$swal({
