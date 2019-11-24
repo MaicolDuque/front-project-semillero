@@ -675,8 +675,11 @@ export default {
 
     addActividad() {
       if (this.idPeriodo) {
+        console.log("id: " + this.$route.params.id);
+        console.log("periodo: " + this.idPeriodo);
         return this.$router.push({
           name: "agregar-actividad",
+
           params: { id: this.$route.params.id, periodo: this.idPeriodo }
         });
       }
