@@ -8,6 +8,7 @@
       <div class="row">
         <div class="col-12">
           <div class="card">
+           <br>
             <h3 class="text-center">Grupos de investigación</h3>
             <!-- /.card-header -->
             <div class="card-body">

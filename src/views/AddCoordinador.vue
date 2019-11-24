@@ -1,9 +1,8 @@
 <template>
   <div>
     <div class="container">
-      <h3 class="text-center">Agregar Usuario coordinador</h3>
       <nav class="nav grey lighten-4 py-4">
-        <router-link to="/coordinadores" class="nav-item nav-link">coordinadores</router-link>
+        
       </nav>
       <section v-if="errored">
         <p>Lo sentimos, no es posible Guardar el registro en este momento</p>
@@ -11,6 +10,9 @@
       <section class="content">
         <div style="width: 50%; margin: 0 auto;">
           <div class="card card-success">
+            <router-link to="/coordinadores" class="nav-item nav-link">Coordinadores</router-link>
+            <br />
+            <h3 class="text-center">Agregar coordinador</h3>
             <form @submit.prevent="handleSubmit">
               <div class="card-body">
                 <div class="form-group">
@@ -37,7 +39,7 @@
                   <label for="nombre_usuario">Nombre</label>
                   <input
                     type="text"
-                    pattern="[A-Za-z ]+"
+                    pattern="[A-Za-z á é í ó ú ]+"
                     title=" Solo Letras. Tamaño máximo: 50"
                     v-model.trim="usuario.nombre_usuario"
                     id="nombre_usuario"
@@ -60,7 +62,7 @@
                   <label for="apellido_usuario">Apellido</label>
                   <input
                     type="text"
-                    pattern="[A-Za-z ]+"
+                    pattern="[A-Za-z á é í ó ú ]+"
                     title=" Solo Letras. Tamaño máximo: 50"
                     v-model.trim="usuario.apellido_usuario"
                     id="apellido_usuario"
@@ -80,13 +82,13 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="correo">correo</label>
+                  <label for="Email">Email</label>
                   <input
                     type="text"
                     v-model.trim="usuario.email"
-                    id="email"
-                    name="email"
-                    placeholder="Correo"
+                    id="Email"
+                    name="Email"
+                    placeholder="Email"
                     class="form-control"
                     :class="{ 'is-invalid': submitted && $v.usuario.email.$error }"
                   />
@@ -117,20 +119,6 @@
                       v-if="!$v.usuario.telefono.maxLength"
                     >El campo no debe superar los 10 caracteres</span>
                   </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="estado">Estado</label>
-                  <br />
-                  <select class="custom-select browser-default" @change="onChange($event)" required>
-                    <option value>Por favor seleccione un Elemento</option>
-                    <option
-                      v-for="option in options"
-                      v-bind:key="option.value"
-                      class="form-control"
-                      :class="{ 'is-invalid': submitted && $v.usuario.estado.$error }"
-                    >{{ option.text }}</option>
-                  </select>
                 </div>
                 <div class="form-group">
                   <label for="tipo">Tipo</label>
@@ -217,7 +205,7 @@ export default {
         apellido_usuario: "",
         email: "",
         telefono: "",
-        estado: "",
+        estado: 1,
         id_tipo_usuario: "",
         id_rol: ""
       },
@@ -253,7 +241,7 @@ export default {
           "telefono":         "${this.usuario.telefono}",
           "email":            "${this.usuario.email}",
           "id_rol":           ${this.usuario.id_rol},
-          "id_tipo_usuario":  ${this.usuario.id_tipo_usuario}
+          "id_tipo_usuario":  1
         }`);
     }
   },

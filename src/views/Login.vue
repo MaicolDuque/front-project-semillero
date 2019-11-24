@@ -53,7 +53,6 @@ export default {
       this.$auth
         .authenticate(provider)
         .then(response => {
-          console.log(response);
           self.SocialLogin(provider, response);
         })
         .catch(err => {
@@ -65,7 +64,6 @@ export default {
       ApiService.post("/sociallogin/" + provider, response)
         .then(response => {
           const infoUser = response.data.user;
-          console.log(response.data);
           if (infoUser.infoToken) {
             return this.loginSuccessful(response.data.user);
           }

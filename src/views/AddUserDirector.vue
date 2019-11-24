@@ -3,7 +3,7 @@
     <div class="container">
       
       <nav class="nav grey lighten-4 py-4">
-        <router-link to="/directores" class="nav-item nav-link">Directores</router-link>
+        
       </nav>
       <section v-if="errored">
         <p>Lo sentimos, no es posible Guardar el registro en este momento</p>
@@ -13,6 +13,7 @@
           <div class="card card-success">
             <form @submit.prevent="handleSubmit">
               <div class="card-body">
+                <router-link to="/directores" class="nav-item nav-link">Directores</router-link>
                 <h3 class="text-center">Agregar Director</h3>
                 <div class="form-group">
                   <label for="documento">Documento</label>
@@ -38,7 +39,7 @@
                   <label for="nombre_usuario">Nombre</label>
                   <input
                     type="text"
-                    pattern="[A-Za-z á é í ú ´ ó]+"
+                    pattern="[A-Za-z á é í ó ú ]+"
                     title=" Solo Letras. Tamaño máximo: 50"
                     v-model.trim="usuario.nombre_usuario"
                     id="nombre_usuario"
@@ -61,7 +62,7 @@
                   <label for="apellido_usuario">Apellido</label>
                   <input
                     type="text"
-                    pattern="[A-Za-z á é í ú ´ ó]+"
+                    pattern="[A-Za-z á é í ó ú ]+"
                     title=" Solo Letras. Tamaño máximo: 50"
                     v-model.trim="usuario.apellido_usuario"
                     id="apellido_usuario"

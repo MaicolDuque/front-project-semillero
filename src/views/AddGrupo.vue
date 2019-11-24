@@ -1,16 +1,16 @@
 <template>
   <div>
     <div class="container">
-      <h3 class="text-center">Agregar Grupo</h3>
-      <nav class="nav grey lighten-4 py-4">
-        <router-link to="/grupos" class="nav-item nav-link">Grupos</router-link>
-      </nav>
+      <nav class="nav grey lighten-4 py-4"></nav>
       <section v-if="errored">
         <p>Lo sentimos, no es posible Guardar el registro en este momento</p>
       </section>
       <section class="content">
         <div style="width: 50%; margin: 0 auto;">
           <div class="card card-success">
+            <router-link to="/grupos" class="nav-item nav-link">Grupos</router-link>
+            <br />
+            <h3 class="text-center">Agregar Grupo</h3>
             <form @submit.prevent="handleSubmit">
               <div class="card-body">
                 <div class="form-group">
@@ -18,8 +18,8 @@
 
                   <input
                     type="text"
-                    pattern="[A-Za-z0-9 ]+"
-                    title=" Solo Letras y números. Tamaño máximo: 50"
+                    pattern='[A-Z a-z 0-9 á é í ó ú / ()- - ]+'
+                    title=" Solo Letras y números. Tamaño máximo: 100"
                     v-model.trim="grupo.grupo"
                     id="grupo"
                     name="grupo"
@@ -31,7 +31,7 @@
                     <span v-if="!$v.grupo.grupo.required">El campo nombre es requerido</span>
                     <span
                       v-if="!$v.grupo.grupo.maxLength"
-                    >El nombre no debe superar los 50 caracteres</span>
+                    >El nombre no debe superar los 100 caracteres</span>
                   </div>
                 </div>
                 <div class="form-group">
@@ -77,8 +77,8 @@
                   <label for="cod_colciencias">Vinculo Colciencias</label>
                   <input
                     type="text"
-                    pattern="[A-Za-z0-9 ./]+"
-                    title=" Solo Letras, números,punto, '/' Tamaño máximo: 150 caracteres"
+                    pattern="[A-Za-z0-9 . - / ? @ / . () : =]+"
+                    title=" Solo Letras, números,punto, '/' Tamaño máximo: 255 caracteres"
                     v-model.trim="grupo.vinculo"
                     id="vinculo"
                     name="vinculo"
@@ -166,12 +166,12 @@ export default {
     grupo: {
       grupo: {
         required,
-        maxLength: maxLength(50)
+        maxLength: maxLength(100)
       },
       id_categoria: { required },
       cod_colciencias: { required, maxLength: maxLength(10) },
       id_facultad: { required },
-      vinculo: { required, maxLength: maxLength(150) }
+      vinculo: { required, maxLength: maxLength(255) }
     }
   },
   methods: {

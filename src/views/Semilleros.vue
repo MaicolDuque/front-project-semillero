@@ -1,6 +1,6 @@
 <template>
   <div style="padding:25px">
-    <h3 class="text-center">Semilleros de Investigación</h3>
+    
     <div style="text-align: right; padding: 14px 1px;">
       <router-link to="/addsemillero" tag="button" class="btn btn-outline-success">Agregar</router-link>
     </div>
@@ -10,6 +10,8 @@
           <div class="card">
             <!-- /.card-header -->
             <div class="card-body">
+              <br>
+              <h3 class="text-center">Semilleros de Investigación</h3>
               <section v-if="errored">
                 <p>Lo sentimos, no es posible obtener la información en este momento, por favor intente nuevamente mas tarde</p>
               </section>

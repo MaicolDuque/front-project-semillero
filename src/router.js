@@ -114,7 +114,7 @@ const router = new Router({
     { path: '/proyectos/:id/productos', name: 'productosP', component: ProductosP },
     { path: '/actividad/:id/productos/editar', name: 'editar-producto', component: EditProducto },
     { path: '/actividad/:id/productos/agregar', name: 'agregar-producto', component: AddProducto },
-    { path: '/soportes/:id/', name: 'soportes', component: Soportes},
+    { path: '/soportes/:id/', name: 'soportes', component: Soportes },
     { path: '/agregarsoporte/:id', name: 'agregar-soporte', component: AddSoporte },
     { path: '/editar-soporte/:id', name: 'editar-soporte', component: EditSoporte },
     { path: '/semilleros-visitante/:id', name: 'semilleros-visitante', component: semillerosVisitante },
@@ -130,18 +130,18 @@ const isAuthenticated = () => {
 
 router.beforeEach((to, from, next) => {
   // if (!to.meta.isPublic && !loggedIn) {
-    //   return next({ name: 'login' })
-    // }
-    
-    // if (to.name === 'login' && loggedIn) {
+  //   return next({ name: 'login' })
+  // }
+
+  // if (to.name === 'login' && loggedIn) {
   //   return next({ name: 'home' })
   // }
   // const loggedIn = !!TokenService.getToken();
-  
+
   // if (to.meta.isPublic && !isAuthenticated()) {
   //   return next();
   // }
-  
+
   // Do not allow user to visit login page or register page if they are logged in
   if (to.name === 'login' && isAuthenticated()) {
     return next({ name: 'home' })
@@ -149,15 +149,36 @@ router.beforeEach((to, from, next) => {
   /* let user = router.app.$store.state.user */
   let user = JSON.parse(localStorage.user)
   console.log(user.id_rol)
-  
-  if(user.id_rol > 1){
+
+  if (user.id_rol > 1) {
     let rutasNoPermitidas = {
-      2: ["directores", "grupos","periodos"],
-      3: ["directores", "grupos", "coordinadores"]
+      2: [
+        "directores", "grupos", "addgrupos"
+        , "editgrupo", "adduserDirector", "editdirector",
+        "periodos", "asignargrupo", "vistaDirectores",
+        "edit-periodo", "editar-integrante", "agregar-integrante",
+        'agregar-integrante', 'addperiodo', 'editar-proyecto',
+        'agregar-proyecto-producto', 'agregar-actividad',
+        'agregar-proyecto', 'editar-actividad', 'productos',
+        'productosP', 'editar-producto', 'agregar-producto',
+        'agregar-soporte', 'editar-soporte', 'soportes',
+
+
+
+
+      ],
+      3: ["directores", "grupos", "coordinadores",
+        "addgrupos", "editgrupo", "adduserDirector", "editdirector",
+        'adduserDirector','editdirector','coordinadores',
+        'addcoordinador','editcoordinador','asignargrupo',
+        'vistaDirectores','asignarsemillero',
+
+
+      ]
     }
-    let rutasNoAccesoRol = rutasNoPermitidas[user.id_rol]    
+    let rutasNoAccesoRol = rutasNoPermitidas[user.id_rol]
     if (rutasNoAccesoRol.indexOf(to.name) > -1) {
-        return next({ name: 'home' })
+      return next({ name: 'home' })
     }
   }
 
