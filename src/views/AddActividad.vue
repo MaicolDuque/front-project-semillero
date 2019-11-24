@@ -182,9 +182,11 @@ export default {
     };
   },
   created() {
-    ApiService.get(`/periodo/${this.$route.params.periodo}`)
+    console.log(this.$route.params.periodo)
+    ApiService.get(`/periodo/actividad/${this.$route.params.periodo}`)
       .then(response => {
         this.periodo = response.data[0];
+        console.log(this.periodo)
       })
       .catch(error => {
         console.log(error);

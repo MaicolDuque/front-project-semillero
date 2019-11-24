@@ -154,7 +154,7 @@
                     <select
                       class="custom-select browser-default"
                       @change=" selectChangeSemillero"
-                      required
+                      
                     >
                       <option value>Por favor seleccione un Elemento</option>
                       <option

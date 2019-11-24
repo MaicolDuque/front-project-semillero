@@ -8,7 +8,7 @@
         <div class="col-12">
           <div class="card">
             <!-- /.card-header -->
-            <h3 class="text-center">Semilleros de Investigación</h3>
+            
             <div class="card-body">
               <br />
               <h3 class="text-center">Semilleros de Investigación</h3>
