@@ -184,7 +184,7 @@ export default {
   },
   computed: {
     idRol() {
-      console.log(this.$store.state.user.id_rol);
+      console.log("Rioll",this.$store.state.user.id_rol);
       return this.$store.state.user.id_rol;
     }
   }

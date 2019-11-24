@@ -1,16 +1,20 @@
 <template>
   <div style="padding:25px">
-    <h3 class="text-center">Grupos de investigación</h3>
+    <!-- <h3 class="text-center">INICIO</h3> -->
     <section class="content">
       <div class="row">
         <div class="col-12">
           <div class="card">
             <!-- /.card-header -->
-            <div class="card-body"></div>
-            <div class="container" v-if="this.$store.state.user.id_rol ==1">Bienvenido Administrador</div>
-            <div v-if="this.$store.state.user.id_rol ==2">Bienvenido Director</div>
-            <div v-if="this.$store.state.user.id_rol ==3">Bienvenido Coordinador</div>
-            <!-- /.card-body -->
+            <div class="card-body">
+
+              <div style="text-align: center; font-size: 3em">
+                {{mensaje}}
+              </div>
+
+            </div>
+            
+            <!-- <!-- /.card-body -->
           </div>
         </div>
       </div>
@@ -37,6 +41,22 @@ export default {
   computed: {
     idRol() {
       return this.$store.state.user.id_rol;
+    },
+    mensaje(){
+      if(this.$store.state.user != undefined){
+        let rol = this.$store.state.user.id_rol
+        if(rol == 1){
+          return "Bienvenido Administrador"
+        }
+        if(rol == 2){
+          return "Bienvenido Director"
+        }
+        if(rol == 1){
+          return "Bienvenido Coordinador"
+        }
+      }else{
+        return "BIENVENIDO!"
+      }
     }
   }
 };

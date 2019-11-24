@@ -527,6 +527,7 @@ export default {
     });
   }, */
   created() {
+    // let url = `${process.env.VUE_APP_URL_API}/grupo/informacion`        
     ApiService.get("/grupo/informacion")
       .then(response => {
         if (response.status === 200) {

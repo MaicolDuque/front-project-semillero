@@ -15,7 +15,7 @@ import Vuelidate from 'vuelidate'
 import VuePaginate from 'vue-paginate';
 // Importa VeeValidate y el Validator
 import { ValidationProvider, extend } from 'vee-validate';
-import { required } from 'vee-validate/dist/rules';
+import { required, is } from 'vee-validate/dist/rules';
 // Import Vue and vue2-collapse
 import VueCollapse from 'vue2-collapse'
 import Multiselect from 'vue-multiselect'  //Select with search
@@ -39,10 +39,26 @@ extend('required', {
 
 ApiService.init(process.env.VUE_APP_URL_API); // Config URL for services
 
+
 // If token exists set header
-if (TokenService.getToken()) {
-  ApiService.setHeader();
+if (!TokenService.getToken()) {
+  TokenService.saveToken('');
 }
+
+//If user no exist in localStorage
+if(!localStorage.user){
+  let info = {id_rol: 1}
+  TokenService.saveTokenCustom('user', JSON.stringify(info))
+  let user = JSON.parse(localStorage.user)
+  console.log("USER=>>",user)
+  console.log("USER=>>",user.id_rol)
+}
+
+ApiService.setHeader();
+// }
+// if (TokenService.getToken()) {
+//   ApiService.setHeader();
+// }
 
 if (!TokenService.getItemCustom('visitante')) {
   TokenService.saveTokenCustom('visitante', "si")
