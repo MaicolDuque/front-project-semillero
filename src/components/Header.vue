@@ -76,7 +76,8 @@ export default {
       TokenService.saveTokenCustom("visitante", "si");
       this.$store.commit("setVisitante", "si");
       TokenService.removeToken();
-      TokenService.removeTokenCustom("user");
+      let info = {id_rol: 1}
+      TokenService.saveTokenCustom('user', JSON.stringify(info))
       TokenService.removeRefreshToken();
       ApiService.unmount401Interceptor();
       this.$router.push("login");

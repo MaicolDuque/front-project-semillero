@@ -184,8 +184,11 @@ export default {
   },
   computed: {
     idRol() {
-      console.log("Rioll",this.$store.state.user.id_rol);
-      return this.$store.state.user.id_rol;
+       if(this.$store.state.user){
+        console.log("Rioll",this.$store.state.user.id_rol);
+        return this.$store.state.user.id_rol;
+      }
+      return 1
     }
   }
 };
