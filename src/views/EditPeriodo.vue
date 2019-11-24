@@ -67,7 +67,6 @@
             </div>
           </form>
         </div>
-        <pre>{{$data}}</pre>
       </div>
     </section>
   </div>
@@ -90,8 +89,10 @@ export default {
     };
   },
   created() {
-    ApiService.get(`/periodo/${this.$route.params.id}`).then(response => {
-      this.periodo = response.data[0];
+    console.log(this.$route.params.id);
+    ApiService.get(`/periodo/${this.$route.params.id}/edit`).then(response => {
+      this.periodo = response.data;
+      console.log();
     });
   },
   //Reglas de validacion para VueValidate
@@ -102,7 +103,7 @@ export default {
       fecha_fin: { required }
     }
   },
-  computed: {
+  /*  computed: {
     objectPeriodo() {
       return JSON.parse(`{
           "periodo":        "${this.periodo.periodo}",
@@ -112,7 +113,7 @@ export default {
           
         }`);
     }
-  },
+  }, */
   methods: {
     handleSubmit(e) {
       this.submitted = true;
@@ -130,12 +131,9 @@ export default {
     },
 
     updatePeriodo() {
-      ApiService.put(`periodo/${this.$route.params.id}`, this.objectPeriodo)
+      ApiService.put(`periodo/${this.$route.params.id}`, this.periodo)
         .then(response => {
-          this.$router.push({
-            name: "periodos",
-            params: { id: this.$route.params.id }
-          });
+          this.back();
         })
         .catch(function(response) {
           alert(this.periodo.id_semillero);

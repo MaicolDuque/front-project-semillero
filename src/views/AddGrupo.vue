@@ -125,7 +125,13 @@
 import { required, minLength, maxLength } from "vuelidate/lib/validators";
 import ApiService from "../services/api.service";
 import Swal from "sweetalert2/dist/sweetalert2.all.min.js";
-
+$(function() {
+  $("#datepicker").datepicker({
+    dateFormat: "yy",
+    changeYear: true,
+    changeMonth: false
+  });
+});
 export default {
   data() {
     return {

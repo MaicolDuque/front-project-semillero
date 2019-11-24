@@ -52,14 +52,21 @@
                 </thead>
                 <tbody>
                   <tr v-for="item in searchGruposAdministracion" :key="item.id_grupo">
-                    <td>{{ item.cod_colciencias }}</td>
+                    <!-- <td>{{ item.id_grupo }}</td> -->
+
                     <td>
-                      <a :href="item.vinculo">{{item.grupo }}</a>
+                      <a :href="item.vinculo" target="_blank">{{item.cod_colciencias}}</a>
+                    </td>
+                    <td>
+                      <router-link
+                        :to="{name: 'semilleros-visitante', params: { id: item.id_grupo}}"
+                        style="margin: 2px"
+                      >{{ item.grupo }}</router-link>
                     </td>
                     <td>{{ item.categoria }}</td>
-                    <td>{{ item.nombre_usuario }}</td>
+                    <td>{{ item.nombre_usuario }} {{ item.apellido_usuario }}</td>
+
                     <td>{{ item.email }}</td>
-                    <td>{{ item.telefono }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -125,24 +132,21 @@
                     </thead>
                     <tbody>
                       <tr v-for="item in searchGruposAgrarias" :key="item.id_grupo">
-                        <td>{{ item.id_grupo }}</td>
-                        <td>{{ item.cod_colciencias }}</td>
+                        <!-- <td>{{ item.id_grupo }}</td> -->
+
                         <td>
-                          <a :href="item.vinculo">{{item.grupo}}</a>
+                          <a :href="item.vinculo" target="_blank">{{item.cod_colciencias}}</a>
+                        </td>
+                        <td>
+                          <router-link
+                            :to="{name: 'semilleros-visitante', params: { id: item.id_grupo}}"
+                            style="margin: 2px"
+                          >{{ item.grupo }}</router-link>
                         </td>
                         <td>{{ item.categoria }}</td>
-                        <td>{{ item.nombre_usuario }}</td>
+                        <td>{{ item.nombre_usuario }} {{ item.apellido_usuario }}</td>
+
                         <td>{{ item.email }}</td>
-                        <td>{{ item.telefono }}</td>
-                        <td style="text-align: center">
-                          <div class="btn-group" role="group">
-                            <router-link
-                              :to="{name: 'semilleros-visitante', params: { id: item.id_grupo}}"
-                              class="btn btn-outline-primary"
-                              style="margin: 2px"
-                            >Semilleros</router-link>
-                          </div>
-                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -208,14 +212,21 @@
                   </thead>
                   <tbody>
                     <tr v-for="item in searchGruposBasicas" :key="item.id_grupo">
-                      <td>{{ item.cod_colciencias }}</td>
+                      <!-- <td>{{ item.id_grupo }}</td> -->
+
                       <td>
-                        <a :href="item.vinculo">{{item.grupo}}</a>
+                        <a :href="item.vinculo" target="_blank">{{item.cod_colciencias}}</a>
+                      </td>
+                      <td>
+                        <router-link
+                          :to="{name: 'semilleros-visitante', params: { id: item.id_grupo}}"
+                          style="margin: 2px"
+                        >{{ item.grupo }}</router-link>
                       </td>
                       <td>{{ item.categoria }}</td>
-                      <td>{{ item.nombre_usuario }}</td>
+                      <td>{{ item.nombre_usuario }} {{ item.apellido_usuario }}</td>
+
                       <td>{{ item.email }}</td>
-                      <td>{{ item.telefono }}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -279,14 +290,21 @@
                   </thead>
                   <tbody>
                     <tr v-for="item in searchGruposVisuales" :key="item.id_grupo">
-                      <td>{{ item.cod_colciencias }}</td>
+                      <!-- <td>{{ item.id_grupo }}</td> -->
+
                       <td>
-                        <a :href="item.vinculo">{{item.grupo }}</a>
+                        <a :href="item.vinculo" target="_blank">{{item.cod_colciencias}}</a>
+                      </td>
+                      <td>
+                        <router-link
+                          :to="{name: 'semilleros-visitante', params: { id: item.id_grupo}}"
+                          style="margin: 2px"
+                        >{{ item.grupo }}</router-link>
                       </td>
                       <td>{{ item.categoria }}</td>
-                      <td>{{ item.nombre_usuario }}</td>
+                      <td>{{ item.nombre_usuario }} {{ item.apellido_usuario }}</td>
+
                       <td>{{ item.email }}</td>
-                      <td>{{ item.telefono }}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -351,14 +369,21 @@
                   </thead>
                   <tbody>
                     <tr v-for="item in searchGruposDeportes" :key="item.id_grupo">
-                      <td>{{ item.cod_colciencias }}</td>
+                      <!-- <td>{{ item.id_grupo }}</td> -->
+
                       <td>
-                        <a :href="item.vinculo">{{item.grupo }}</a>
+                        <a :href="item.vinculo" target="_blank">{{item.cod_colciencias}}</a>
+                      </td>
+                      <td>
+                        <router-link
+                          :to="{name: 'semilleros-visitante', params: { id: item.id_grupo}}"
+                          style="margin: 2px"
+                        >{{ item.grupo }}</router-link>
                       </td>
                       <td>{{ item.categoria }}</td>
-                      <td>{{ item.nombre_usuario }}</td>
+                      <td>{{ item.nombre_usuario }} {{ item.apellido_usuario }}</td>
+
                       <td>{{ item.email }}</td>
-                      <td>{{ item.telefono }}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -437,16 +462,6 @@
                       <td>{{ item.nombre_usuario }} {{ item.apellido_usuario }}</td>
 
                       <td>{{ item.email }}</td>
-                      <!--  <td>{{ item.telefono }}</td> -->
-                      <!-- <td style="text-align: center">
-                         <div class="btn-group" role="group">
-                          <router-link
-                            :to="{name: 'semilleros-visitante', params: { id: item.id_grupo}}"
-                            class="btn btn-outline-primary"
-                            style="margin: 2px"
-                          >{{ item.categoria }}</router-link>
-                        </div>
-                      </td>-->
                     </tr>
                   </tbody>
                 </table>

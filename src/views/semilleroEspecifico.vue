@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>semillero xxx</h1>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item">
         <a
@@ -398,7 +397,7 @@ export default {
     ApiService.get(`/integrante/semillero/actual/${this.$route.params.id}`)
       .then(response => {
         if (response.status === 204) {
-          alert("No existen integrantes para mostrar ");
+          /*  alert("No existen integrantes para mostrar "); */
           this.integrantes = response.data;
         } else {
           this.integrantes = response.data;

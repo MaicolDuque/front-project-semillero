@@ -61,6 +61,7 @@
                   class="invalid-feedback"
                 >El campo fecha fin es requerido</div>
               </div>
+
               <div class="card-footer">
                 <div class="modal-footer">
                   <button id="btn_modal" type="submit" class="btn btn-outline-success">Guardar</button>

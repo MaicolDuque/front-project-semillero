@@ -332,7 +332,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Agregar Periodo</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -363,6 +363,7 @@
                       <label for="grupo">Fecha Inicio</label>
                       <input
                         type="date"
+                        min="2019-01-01"
                         v-model="periodo.fecha_inicio"
                         id="fecha_inicio"
                         name="fecha_inicio"
@@ -375,10 +376,12 @@
                         class="invalid-feedback"
                       >El campo fecha inicio es requerido</div>
                     </div>
+
                     <div class="form-group">
                       <label for="grupo">Fecha Fin</label>
                       <input
                         type="date"
+                        min="2019-01-01"
                         v-model="periodo.fecha_fin"
                         id="fecha_fin"
                         name="fecha_fin"
@@ -435,7 +438,8 @@ export default {
         fecha_fin: "",
         id_semillero: ""
       },
-      submitted: false
+      submitted: false,
+      años: []
     };
   },
 
@@ -603,13 +607,13 @@ export default {
       ApiService.get(`/proyecto/periodo/semillero/${id}`)
         .then(response => {
           if (response.status === 204) {
-            /* this.$swal({
+            this.$swal({
               type: "info",
               text: "No hay proyectos en este periodo para mostrar",
               timer: 2000,
               showCancelButton: false,
               showConfirmButton: false
-            }); */
+            });
             this.proyectos = response.data;
           } else {
             this.proyectos = response.data;
@@ -653,7 +657,16 @@ export default {
           });
         });
     },
-
+    /* Despliega mensaje de exito al guardar un registro */
+    showAlert() {
+      this.$swal({
+        type: "success",
+        text: "Registro creado con exito",
+        timer: 2000,
+        showCancelButton: false,
+        showConfirmButton: false
+      });
+    },
     addProyecto() {
       if (this.idPeriodo) {
         return this.$router.push({
@@ -725,8 +738,13 @@ export default {
       ApiService.post("/periodo", this.periodo)
         .then(newPeriodo => {
           this.periodos.push(newPeriodo.data);
+          $("#exampleModal").modal("hide");
+          this.showAlert();
         })
-        .catch(function(response) {});
+        .catch(error => {
+          console.log(error);
+          this.errored = true;
+        });
     },
 
     deleteActividad(id) {

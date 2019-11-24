@@ -1,13 +1,11 @@
 <template>
   <div style="padding:25px">
-    <h3 class="text-center">semilleros</h3>
-    <div style="text-align: right; padding: 14px 1px;">
-      <router-link to="/addGrupos" tag="button" class="btn btn-outline-success">Agregar</router-link>
-    </div>
     <section class="content">
       <div class="row">
         <div class="col-12">
           <div class="card">
+            <h3 class="text-center">semilleros de Investigación</h3>
+
             <!-- /.card-header -->
             <div class="card-body">
               <section v-if="errored">
