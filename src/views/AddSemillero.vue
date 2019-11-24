@@ -145,10 +145,10 @@ export default {
     semillero: {
       semillero: {
         required,
-        maxLength: maxLength(50)
+        maxLength: maxLength(100)
       },
-      objetivo: { required, maxLength: maxLength(200) },
-      descripcion: { required, maxLength: maxLength(200) },
+      objetivo: { required, maxLength: maxLength(255) },
+      descripcion: { required, maxLength: maxLength(255) },
       id_grupo: { required }
     }
   },

@@ -1,10 +1,10 @@
 <template>
   <div>
-    <h3 class="text-center">Editar coordinador</h3>
+    
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="collapse navbar-collapse">
         <div class="navbar-nav">
-          <router-link to="/coordinadores" class="nav-item nav-link">coordinadores</router-link>
+         
         </div>
       </div>
     </nav>
@@ -22,6 +22,9 @@
       <section class="content">
         <div style="width: 50%; margin: 0 auto;">
           <div class="card card-success">
+             <router-link to="/coordinadores" class="nav-item nav-link">Coordinadores</router-link>
+            <br>
+            <h3 class="text-center">Editar coordinador</h3>
             <form @submit.prevent="handleSubmit" role="form">
               <div class="card-body">
                 <div class="form-group">

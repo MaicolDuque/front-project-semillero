@@ -158,9 +158,29 @@ router.beforeEach((to, from, next) => {
 
   if (user.id_rol > 1) {
     let rutasNoPermitidas = {
-      2: ["directores", "grupos", "periodos"],
-      3: ["directores", "grupos", "coordinadores"],
+      2: [
+        "directores", "grupos", "addgrupos"
+        , "editgrupo", "adduserDirector", "editdirector",
+        "periodos", "asignargrupo", "vistaDirectores",
+        "edit-periodo", "editar-integrante", "agregar-integrante",
+        'agregar-integrante', 'addperiodo', 'editar-proyecto',
+        'agregar-proyecto-producto', 'agregar-actividad',
+        'agregar-proyecto', 'editar-actividad', 'productos',
+        'productosP', 'editar-producto', 'agregar-producto',
+        'agregar-soporte', 'editar-soporte', 'soportes',
 
+
+
+
+      ],
+      3: ["directores", "grupos", "coordinadores",
+        "addgrupos", "editgrupo", "adduserDirector", "editdirector",
+        'adduserDirector', 'editdirector', 'coordinadores',
+        'addcoordinador', 'editcoordinador', 'asignargrupo',
+        'vistaDirectores', 'asignarsemillero',
+
+
+      ]
     }
     let rutasNoAccesoRol = rutasNoPermitidas[user.id_rol]
     if (rutasNoAccesoRol.indexOf(to.name) > -1) {

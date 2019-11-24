@@ -23,8 +23,8 @@
                   <label for="grupo">Grupo</label>
                   <input
                     type="text"
-                    pattern="[ A-Za-z0-9 ' á é í ú ´ ó]+"
-                    title=" Solo Letras y números. Tamaño máximo: 50"
+                    pattern="[A-Z a-z 0-9 á é í ó ú / ()- - ]+"
+                    title=" Solo Letras y números. Tamaño máximo: 100"
                     v-model.trim="grupo.grupo"
                     id="grupo"
                     name="grupo"
@@ -36,7 +36,7 @@
                     <span v-if="!$v.grupo.grupo.required">El campo es requerido</span>
                     <span
                       v-if="!$v.grupo.grupo.maxLength"
-                    >El campo no debe superar los 50 caracteres</span>
+                    >El campo no debe superar los 100 caracteres</span>
                   </div>
                 </div>
                 <div class="form-group">

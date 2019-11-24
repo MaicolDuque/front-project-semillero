@@ -1,7 +1,9 @@
 <template>
   <div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="collapse navbar-collapse"></div>
+      <div class="collapse navbar-collapse">
+        <div class="navbar-nav"></div>
+      </div>
     </nav>
     <section v-if="errored">
       <p>Lo sentimos, no es posible Actualizar el registro en este momento</p>
@@ -17,10 +19,9 @@
       <section class="content">
         <div style="width: 50%; margin: 0 auto;">
           <div class="card card-success">
-            <div class="navbar-nav">
-              <router-link to="/directores" class="nav-item nav-link">Directores</router-link>
-              <h3 class="text-center">Editar director</h3>
-            </div>
+            <router-link to="/directores" class="nav-item nav-link">Directores</router-link>
+            <br />
+            <h3 class="text-center">Editar director</h3>
             <form @submit.prevent="handleSubmit" role="form">
               <div class="card-body">
                 <div class="form-group">
@@ -47,7 +48,7 @@
                   <label for="nombre_usuario">Nombre</label>
                   <input
                     type="text"
-                    pattern="[A-Za-z ]+"
+                    pattern="[A-Za-z á é í ó ú ]+"
                     title=" Solo Letras. Tamaño máximo: 50"
                     v-model.trim="director.nombre_usuario"
                     id="nombre_usuario"
@@ -70,7 +71,7 @@
                   <label for="apellido_usuario">Apellido</label>
                   <input
                     type="text"
-                    pattern="[A-Za-z ]+"
+                    pattern="[A-Za-z á é í ó ú ]+"
                     title=" Solo Letras. Tamaño máximo: 50"
                     v-model.trim="director.apellido_usuario"
                     id="apellido_usuario"

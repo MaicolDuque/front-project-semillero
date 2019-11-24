@@ -1,5 +1,6 @@
 <template>
   <div>
+    <nav class="nav grey lighten-4 py-4"></nav>
     <section v-if="errored">
       <p>Lo sentimos, no es posible Actualizar el registro en este momento</p>
     </section>
@@ -15,6 +16,7 @@
         <div style="width: 50%; margin: 0 auto;">
           <div class="card card-success">
             <router-link to="/semilleros" class="nav-item nav-link">Semilleros</router-link>
+            <br />
             <h3 class="text-center">Editar Semillero</h3>
             <form @submit.prevent="handleSubmit">
               <div class="card-body">

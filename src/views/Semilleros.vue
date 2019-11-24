@@ -10,6 +10,8 @@
             <!-- /.card-header -->
             <h3 class="text-center">Semilleros de Investigación</h3>
             <div class="card-body">
+              <br />
+              <h3 class="text-center">Semilleros de Investigación</h3>
               <section v-if="errored">
                 <p>Lo sentimos, no es posible obtener la información en este momento, por favor intente nuevamente mas tarde</p>
               </section>
