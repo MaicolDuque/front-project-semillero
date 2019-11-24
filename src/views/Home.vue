@@ -30,14 +30,12 @@ export default {
     if (localStorage.user) {
       let user = JSON.parse(localStorage.user);
       $("#nameUser").text(user.nombre_usuario);
-      console.log(localStorage.user);
 
       $("#imageUser").attr("src", user.imagen);
     }
   },
   computed: {
     idRol() {
-      console.log(this.$store.state.user.id_rol);
       return this.$store.state.user.id_rol;
     }
   }

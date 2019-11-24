@@ -324,7 +324,7 @@ export default {
   methods: {
     addUsuario() {
       this.usuario.id_rol = 4;
-      ApiService.post("/usuario", this.objectUsuario)
+      ApiService.post("/usuario/integrante", this.objectUsuario)
         .catch(function(response) {
           this.$swal({
             type: "warning",
