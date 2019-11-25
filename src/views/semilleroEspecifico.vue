@@ -9,10 +9,16 @@
     >Solicitar registro</button>
     <br />
     <br />
-    
-            <div class="col-12 col align-self-end row justify-content-start">
-              <p>Prueba QQQQQQQQQQQQQQ</p>
-            </div>
+
+    <div class="col-12 col align-self-end row justify-content-start">
+      <h3>Objetivo</h3>
+      il
+      <br />
+      <p>{{semillero[0].objetivo}}</p>
+      <br />
+      <h3></h3>
+      <p>{{semillero[0].descripcion}}</p>
+    </div>
     <ul class="nav nav-tabs col-12 row justify-content-center" id="myTab" role="tablist">
       <li class="nav-item">
         <a
@@ -48,7 +54,7 @@
         >Actividades</a>
       </li>
     </ul>
-    
+
     <div class="row row justify-content-end"></div>
     <div class="tab-content" id="myTabContent">
       <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -98,7 +104,6 @@
                 </div>
               </div>
             </div>
-
           </section>
         </template>
       </div>
@@ -393,7 +398,8 @@ export default {
       })
       .then(res => {
         $("#tblintegrantes").DataTable({
-          responsive: true
+          responsive: true,
+          retrieve: true
         });
       })
       .catch(error => {
@@ -413,7 +419,8 @@ export default {
       })
       .then(res => {
         $("#tblactividad").DataTable({
-          responsive: true
+          responsive: true,
+          retrieve: true
         });
       })
       .catch(error => {
@@ -433,7 +440,8 @@ export default {
       })
       .then(res => {
         $("#tblproyectos").DataTable({
-          responsive: true
+          responsive: true,
+          retrieve: tru
         });
       })
       .catch(error => {
@@ -500,7 +508,6 @@ export default {
       if (this.$v.$invalid) {
         return;
       }
-
 
       this.enviarPreregistro();
       /* alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.grupo)); */
