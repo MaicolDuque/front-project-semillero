@@ -71,7 +71,10 @@
 
                     <td>
                       <div class="btn-group" role="group">
-                        <button class="btn btn-primary">Agregar</button>
+                        <button
+                          class="btn btn-primary"
+                          @click="añadirUsuario(item.id_usuario)"
+                        >Agregar</button>
                       </div>
                     </td>
                   </tr>
@@ -322,17 +325,53 @@ export default {
     }
   },
   methods: {
+    añadirUsuario(id_usuario) {
+      var id_gr = this.$route.params.id;
+      console.log(id_gr);
+      console.log(id_usuario);
+      ApiService.post("integrante", {
+        id_usuario: id_usuario,
+        id_periodo: id_gr
+      })
+        .then(response => {
+          if (response.status === 200) {
+            console.log('ingresado')
+            this.$swal({
+              type: "success",
+              text: "Registro creado con exito",
+              timer: 2000,
+              showCancelButton: false,
+              showConfirmButton: false
+            });
+          }else{
+            this.$swal({
+              type: "warning",
+              text: "Registro ya ha sido realizado ",
+              timer: 2000,
+              showCancelButton: false,
+              showConfirmButton: false
+            });
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          this.errored = true;
+        });
+    },
     addUsuario() {
       this.usuario.id_rol = 4;
-      ApiService.post("/usuario", this.objectUsuario)
+      ApiService.post("integrante", this.objectUsuario)
         .catch(function(response) {
-          this.$swal({
-            type: "warning",
-            text: "No se pudo crear el usuario",
-            timer: 2000,
-            showCancelButton: false,
-            showConfirmButton: false
-          });
+          if (response.status == 200) {
+            this.$swal({
+              type: "success",
+              text: "Registro creado con exito",
+              timer: 2000,
+              showCancelButton: false,
+              showConfirmButton: false
+            });
+            this.back();
+          }
         })
         .catch(error => {
           console.log(error);
@@ -400,7 +439,7 @@ export default {
       //asigna como usuario un Director
       this.usuario.id_rol = 4;
       var id_gr = this.periodo.id_periodo;
-      ApiService.post("/usuario", this.usuario)
+      ApiService.post("/usuario/integrante", this.usuario)
         .then(response => {
           if (response.status == 200) {
             ApiService.post("/integrante", {

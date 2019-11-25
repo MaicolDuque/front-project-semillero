@@ -11,7 +11,10 @@
 
     <div v-if="!isAuth && isVisitante == 'si'">
       <SPHeaderVisitante />
-      <SPVisitantes />
+         
+      <router-link to="/grupos_visitante" class="nav-item nav-link" style="text-align: center; font-size: 1.5em">Ver Facultades</router-link>      
+      <router-view></router-view>
+      
       <SPfooter />
     </div>
 
@@ -29,7 +32,7 @@ import Login from "./views/Login";
 import { TokenService } from "./services/storage.service";
 import SPHeaderVisitante from "./components/HeaderVisitante";
 import Principal from "./views/Principal";
-import SPVisitantes from "./views/VistaGruposVisitante";
+// import SPVisitantes from "./views/VistaGruposVisitante";
 
 export default {
   components: {
@@ -38,7 +41,7 @@ export default {
     SPfooter,
     Login,
     SPHeaderVisitante,
-    SPVisitantes,
+    // SPVisitantes,
     Principal
   },
   data() {
@@ -59,6 +62,7 @@ export default {
 
     if (localStorage.user) {
       let user = JSON.parse(localStorage.user);
+      console.log(user)
       let rol = user.id_rol;
       if (rol == 2) {
         this.$store.dispatch("infoUserDirector", user.id_usuario);

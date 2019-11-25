@@ -152,7 +152,8 @@ router.beforeEach((to, from, next) => {
   if (to.name === 'login' && isAuthenticated()) {
     return next({ name: 'home' })
   }
-  /* let user = router.app.$store.state.user */
+  /*  let user = router.app.$store.state.user */
+
   let user = JSON.parse(localStorage.user)
   console.log(user.id_rol)
 
