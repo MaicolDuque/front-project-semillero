@@ -29,9 +29,9 @@
                 >
                   <thead>
                     <tr>
+                      <th>Código Colciencias</th>
                       <th>Nombre</th>
                       <th>Categoria</th>
-                      <th>Código Colciencias</th>
                       <th>Vinculo Colciencias</th>
                       <th>Facultad</th>
                       <th data-priority="2">Acciones</th>
@@ -39,9 +39,9 @@
                   </thead>
                   <tbody>
                     <tr v-for="item in grupos" :key="item.id_grupo">
-                      <td>{{ item.grupo }}</td>
-                      <td>{{ item.categoria }}</td>
                       <td>{{ item.cod_colciencias }}</td>
+                      <td>{{ item.grupo }}</td>
+                      <td>{{ item.categoria }}</td>                      
                       <td>{{ item.vinculo }}</td>
                       <td>{{ item.facultad }}</td>
                       <td style="text-align: center">

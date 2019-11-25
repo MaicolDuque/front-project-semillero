@@ -431,6 +431,7 @@ export default {
         fecha_fin: "",
         id_semillero: ""
       },
+      whointegrante: {},
       submitted: false
     };
   },
@@ -556,8 +557,12 @@ export default {
         showLoaderOnConfirm: true
       }).then(result => {
         if (result.value) {
+            var datos= {
+                id_periodo : this.periodos,
+                id_usuario : id
+            };
           console.log(id);
-          ApiService.delete(`/integrante/${id}`).then(response => {
+          ApiService.delete(`integrante/periodo/${$id}`,datos).then(response => {
             let i = this.integrantes
               .map(item => item.id_integrante)
               .indexOf(id); // find index of your object

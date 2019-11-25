@@ -80,7 +80,7 @@ export default {
       TokenService.saveTokenCustom('user', JSON.stringify(info))
       TokenService.removeRefreshToken();
       ApiService.unmount401Interceptor();
-      this.$router.push("login");
+     this.$router.push({name: "home"});
     }
   }
 };

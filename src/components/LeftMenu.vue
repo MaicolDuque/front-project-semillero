@@ -3,7 +3,7 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
-      <a href="index3.html" class="brand-link">
+      <a href="/" class="brand-link">
         <img
           src="/img/AdminLTELogo.png"
           alt="AdminLTE Logo"
@@ -70,13 +70,13 @@
                 Semilleros
               </router-link>
             </li>
-
+<!-- 
             <li class="nav-item">
               <router-link to="/grupos_visitante" class="nav-link">
                 <i class="nav-icon far fa-image"></i>
                 Visitante
               </router-link>
-            </li>
+            </li> -->
             <li class="nav-item">
               <router-link
                 class="nav-link"
@@ -162,7 +162,7 @@
               </p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-outline-success" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-outline-success" data-dismiss="modal">Cerrar</button>
             </div>
           </div>
         </div>
