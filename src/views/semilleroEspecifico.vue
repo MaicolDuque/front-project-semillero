@@ -1,202 +1,222 @@
 <template>
   <div>
-    <h3>¿Quieres participar del semillero?</h3>
-    <button
-      class="btn btn-outline-primary"
-      style="margin:5px"
-      data-toggle="modal"
-      data-target="#preregistro"
-    >Solicitar registro</button>
-    <br />
-    <br />
     
+    <div class="section" style="margin: 50px">
+      <div class="row">
+        <div class="col-sm-12 col-lg-6">
+          <div>
+            <h3>¿Quieres participar del semillero?</h3>
+            <button
+              class="btn btn-outline-primary"
+              style="margin:5px"
+              data-toggle="modal"
+              data-target="#preregistro"
+            >Solicitar registro</button>
+            <br />
+            <br />            
             <div class="col-12 col align-self-end row justify-content-start">
               <p>Prueba QQQQQQQQQQQQQQ</p>
             </div>
-    <ul class="nav nav-tabs col-12 row justify-content-center" id="myTab" role="tablist">
-      <li class="nav-item">
-        <a
-          class="nav-link active"
-          id="home-tab"
-          data-toggle="tab"
-          href="#home"
-          role="tab"
-          aria-controls="home"
-          aria-selected="true"
-        >Integrantes</a>
-      </li>
-      <li class="nav-item">
-        <a
-          class="nav-link"
-          id="profile-tab"
-          data-toggle="tab"
-          href="#profile"
-          role="tab"
-          aria-controls="profile"
-          aria-selected="false"
-        >Proyectos</a>
-      </li>
-      <li class="nav-item">
-        <a
-          class="nav-link"
-          id="contact-tab"
-          data-toggle="tab"
-          href="#contact"
-          role="tab"
-          aria-controls="contact"
-          aria-selected="false"
-        >Actividades</a>
-      </li>
-    </ul>
-    
-    <div class="row row justify-content-end"></div>
-    <div class="tab-content" id="myTabContent">
-      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-        <template>
-          <section class="content">
-            <div class="row row justify-content-center">
-              <div class="col-6">
-                <div class="card">
-                  <!-- /.card-header -->
-                  <div class="card-body">
-                    <section v-if="errored">
-                      <p>Lo sentimos, no es posible obtener la información en este momento, por favor intente nuevamente mas tarde</p>
-                    </section>
-                    <section v-else>
-                      <div v-if="loading">
-                        cargando..
-                        <div class="spinner-border text-success" role="status">
-                          <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+
+        <!-- Opciones -->
+        <div class="col-sm-12 col-lg-6">
+          <ul class="nav nav-tabs col-12 row justify-content-center" id="myTab" role="tablist">
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  id="home-tab"
+                  data-toggle="tab"
+                  href="#home"
+                  role="tab"
+                  aria-controls="home"
+                  aria-selected="true"
+                >Integrantes</a>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="profile-tab"
+                  data-toggle="tab"
+                  href="#profile"
+                  role="tab"
+                  aria-controls="profile"
+                  aria-selected="false"
+                >Proyectos</a>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="contact-tab"
+                  data-toggle="tab"
+                  href="#contact"
+                  role="tab"
+                  aria-controls="contact"
+                  aria-selected="false"
+                >Actividades</a>
+              </li>
+            </ul>
+            
+            <!-- <div class="row  justify-content-end"></div> -->
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <template>
+                  <section class="content">
+                    <div class="row ">
+                      <div class="col">
+                        <div class="card">
+                          <!-- /.card-header -->
+                          <div class="card-body">
+                            <section v-if="errored">
+                              <p>Lo sentimos, no es posible obtener la información en este momento, por favor intente nuevamente mas tarde</p>
+                            </section>
+                            <section v-else>
+                              <div v-if="loading">
+                                cargando..
+                                <div class="spinner-border text-success" role="status">
+                                  <span class="sr-only">Loading...</span>
+                                </div>
+                              </div>
+                              <div v-else></div>
+                              <table
+                                id="tblintegrantes"
+                                class="table table-striped table-bordered dt-responsive nowrap"
+                                style="width:100%"
+                              >
+                                <thead>
+                                  <tr>
+                                    <th>Nombre</th>
+                                    <th>apellido</th>
+                                    <th>Correo</th>
+                                    <th>Tipo integrante</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr v-for="item in integrantes" :key="item.id_integrante">
+                                    <td>{{ item.nombre_usuario }}</td>
+                                    <td>{{ item.apellido_usuario }}</td>
+                                    <td>{{ item.email }}</td>
+                                    <td>{{item.tipo_usuario}}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </section>
+                          </div>
+                          <!-- /.card-body -->
                         </div>
                       </div>
-                      <div v-else></div>
-                      <table
-                        id="tblintegrantes"
-                        class="table table-striped table-bordered dt-responsive nowrap"
-                        style="width:100%"
-                      >
-                        <thead>
-                          <tr>
-                            <th>Nombre</th>
-                            <th>apellido</th>
-                            <th>Correo</th>
-                            <th>Tipo integrante</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr v-for="item in integrantes" :key="item.id_integrante">
-                            <td>{{ item.nombre_usuario }}</td>
-                            <td>{{ item.apellido_usuario }}</td>
-                            <td>{{ item.email }}</td>
-                            <td>{{item.tipo_usuario}}</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </section>
+                    </div>
+
+                  </section>
+                </template>
+              </div>
+              <!--  -->
+
+              <!--  -->
+
+              <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <section class="content">
+                  <div class="row row justify-content-start">
+                    <div class="col">
+                      <div class="card">
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                          <section v-if="errored">
+                            <p>Lo sentimos, no es posible obtener la información en este momento, por favor intente nuevamente mas tarde</p>
+                          </section>
+                          <section v-else>
+                            <div v-if="loading">
+                              cargando..
+                              <div class="spinner-border text-success" role="status">
+                                <span class="sr-only">Loading...</span>
+                              </div>
+                            </div>
+                            <div v-else></div>
+                            <table
+                              id="tblproyecto"
+                              class="table table-striped table-bordered dt-responsive nowrap"
+                              style="width:100%"
+                            >
+                              <thead>
+                                <tr>
+                                  <th>Nombre</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr v-for="item in proyectos" :key="item.id_proyecto">
+                                  <td>{{ item.proyecto }}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </section>
+                        </div>
+                        <!-- /.card-body -->
+                      </div>
+                    </div>
                   </div>
-                  <!-- /.card-body -->
-                </div>
+                </section>
               </div>
-            </div>
-
-          </section>
-        </template>
-      </div>
-      <!--  -->
-
-      <!--  -->
-
-      <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-        <section class="content">
-          <div class="row row justify-content-start">
-            <div class="col-6">
-              <div class="card">
-                <!-- /.card-header -->
-                <div class="card-body">
-                  <section v-if="errored">
-                    <p>Lo sentimos, no es posible obtener la información en este momento, por favor intente nuevamente mas tarde</p>
-                  </section>
-                  <section v-else>
-                    <div v-if="loading">
-                      cargando..
-                      <div class="spinner-border text-success" role="status">
-                        <span class="sr-only">Loading...</span>
+              <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                <section class="content">
+                  <div class="row row justify-content-start">
+                    <div class="col">
+                      <div class="card">
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                          <section v-if="errored">
+                            <p>Lo sentimos, no es posible obtener la información en este momento, por favor intente nuevamente mas tarde</p>
+                          </section>
+                          <section v-else>
+                            <div v-if="loading">
+                              cargando..
+                              <div class="spinner-border text-success" role="status">
+                                <span class="sr-only">Loading...</span>
+                              </div>
+                            </div>
+                            <div v-else></div>
+                            <table
+                              id="tblproyectos"
+                              class="table table-striped table-bordered dt-responsive nowrap"
+                              style="width:100%"
+                            >
+                              <thead>
+                                <tr>
+                                  <th>Nombre</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr v-for="item in actividades" :key="item.id_actividad">
+                                  <td>{{ item.actividad }}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </section>
+                        </div>
+                        <!-- /.card-body -->
                       </div>
                     </div>
-                    <div v-else></div>
-                    <table
-                      id="tblproyecto"
-                      class="table table-striped table-bordered dt-responsive nowrap"
-                      style="width:100%"
-                    >
-                      <thead>
-                        <tr>
-                          <th>Nombre</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr v-for="item in proyectos" :key="item.id_proyecto">
-                          <td>{{ item.proyecto }}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </section>
-                </div>
-                <!-- /.card-body -->
+                  </div>
+                </section>
               </div>
+              <div
+                class="tab-pane fade"
+                id="proyectos"
+                role="tabpanel"
+                aria-labelledby="proyectos-tab"
+              >mixtape</div>
             </div>
-          </div>
-        </section>
+        </div>
       </div>
-      <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-        <section class="content">
-          <div class="row row justify-content-start">
-            <div class="col-6">
-              <div class="card">
-                <!-- /.card-header -->
-                <div class="card-body">
-                  <section v-if="errored">
-                    <p>Lo sentimos, no es posible obtener la información en este momento, por favor intente nuevamente mas tarde</p>
-                  </section>
-                  <section v-else>
-                    <div v-if="loading">
-                      cargando..
-                      <div class="spinner-border text-success" role="status">
-                        <span class="sr-only">Loading...</span>
-                      </div>
-                    </div>
-                    <div v-else></div>
-                    <table
-                      id="tblproyectos"
-                      class="table table-striped table-bordered dt-responsive nowrap"
-                      style="width:100%"
-                    >
-                      <thead>
-                        <tr>
-                          <th>Nombre</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr v-for="item in actividades" :key="item.id_actividad">
-                          <td>{{ item.actividad }}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </section>
-                </div>
-                <!-- /.card-body -->
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-      <div
-        class="tab-pane fade"
-        id="proyectos"
-        role="tabpanel"
-        aria-labelledby="proyectos-tab"
-      >mixtape</div>
     </div>
+
+    
+
+
+    
+
+
+
 
     <div
       class="modal fade"
