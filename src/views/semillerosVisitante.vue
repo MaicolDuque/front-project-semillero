@@ -13,7 +13,7 @@
               </section>
               <section v-else>
                 <div v-if="loading">
-                  cargando..
+                  Cargando..
                   <div class="spinner-border text-success" role="status">
                     <span class="sr-only">Loading...</span>
                   </div>
@@ -26,8 +26,7 @@
                 >
                   <thead>
                     <tr>
-                      <th>id_semillero</th>
-                      <th>nombre</th>
+                      <th>Nombre</th>
                       <th>objetivo</th>
                       <th>descripcion</th>
                       <th>Acciones</th>
@@ -35,7 +34,6 @@
                   </thead>
                   <tbody>
                     <tr v-for="item in semilleros" :key="item.id_semillero">
-                      <td>{{ item.id_semillero }}</td>
                       <td>{{ item.semillero }}</td>
                       <td>{{ item.objetivo }}</td>
                       <td>{{ item.descripcion }}</td>
