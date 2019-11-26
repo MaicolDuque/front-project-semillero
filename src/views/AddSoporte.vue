@@ -39,8 +39,8 @@
                   <label for="semillero">Vinculo</label>
                   <input
                     type="text"
-                    pattern="[A-Za-z0-9 ]+"
-                    title=" Solo Letras y números. Tamaño máximo: 50"
+                    pattern="[A-Za-z0-9 : . / @]+"
+                   title=" Solo Letras y números. Tamaño máximo: 255"
                     v-model.trim="soporte.vinculo"
                     id="Vinculo"
                     name="Vinculo"
@@ -52,7 +52,7 @@
                     <span v-if="!$v.soporte.vinculo.required">El campo es requerido</span>
                     <span
                       v-if="!$v.soporte.vinculo.maxLength"
-                    >El campo no debe superar los 50 caracteres</span>
+                    >El campo no debe superar los 255 caracteres</span>
                   </div>
                 </div>
                 <button type="submit" class="btn btn-outline-success">Agregar</button>

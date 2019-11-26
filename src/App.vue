@@ -12,7 +12,7 @@
     <div v-if="!isAuth && isVisitante == 'si'">
       <SPHeaderVisitante />
          
-      <router-link to="/grupos_visitante" class="nav-item nav-link" style="text-align: center; font-size: 1.5em">Ver Facultades</router-link>      
+      <router-link to="/grupos_visitante" class="nav-item nav-link" style="text-align: center; font-size: 1.5em">Ver grupos</router-link>      
       <router-view></router-view>
       
       <SPfooter />

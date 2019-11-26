@@ -509,10 +509,8 @@ export default {
         return (location.href =
           process.env.VUE_APP_URL_API + "/exportar/final/" + id);
       }
-      if (tipo == 3) {
-        return (location.href =
-          process.env.VUE_APP_URL_API + "/exportar/pdf/" + id);
-      }
+      return (location.href =
+        process.env.VUE_APP_URL_API + "/exportar/pdf/" + id);
     },
 
     handleSubmit(e) {
