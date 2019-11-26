@@ -57,6 +57,12 @@
                 Directores
               </router-link>
             </li>
+            <li class="nav-item">
+              <router-link to="/semilleros" class="nav-link">
+                <i class="nav-icon fas fa-layer-group"></i>
+                Semilleros
+              </router-link>
+            </li>
             <li class="nav-item" v-if="idRol == 2 || idRol == 1">
               <router-link to="/coordinadores" class="nav-link">
                 <i class="nav-icon fas fa-user"></i>
@@ -64,19 +70,6 @@
               </router-link>
             </li>
 
-            <li class="nav-item">
-              <router-link to="/semilleros" class="nav-link">
-                <i class="nav-icon fas fa-layer-group"></i>
-                Semilleros
-              </router-link>
-            </li>
-
-            <li class="nav-item">
-              <router-link to="/grupos_visitante" class="nav-link">
-                <i class="nav-icon far fa-image"></i>
-                Visitante
-              </router-link>
-            </li>
             <li class="nav-item">
               <router-link
                 class="nav-link"
@@ -184,11 +177,11 @@ export default {
   },
   computed: {
     idRol() {
-       if(this.$store.state.user){
-        console.log("Rioll",this.$store.state.user.id_rol);
+      if (this.$store.state.user) {
+        console.log("Rioll", this.$store.state.user.id_rol);
         return this.$store.state.user.id_rol;
       }
-      return 1
+      return 1;
     }
   }
 };

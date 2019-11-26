@@ -47,7 +47,7 @@
                     <th>Categoria</th>
                     <th>Director</th>
                     <th>Correo</th>
-                    <th>Telefono</th>
+                    <!-- <th>Telefono</th> -->
                   </tr>
                 </thead>
                 <tbody>

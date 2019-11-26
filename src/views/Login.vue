@@ -11,7 +11,7 @@
             </center>
           </h5>
           <div class="card-body">
-            <h5 class="text-center">Ingresa con email del poli:</h5>
+            <!-- <h5 class="text-center">Ingresa con email del poli:</h5> -->
             <hr class="my-4" />
             <button
               style="background-color: #196844"
