@@ -18,7 +18,7 @@
             <nav class="nav grey lighten-4 py-4">
               <a @click="back" class="nav-item nav-link">Atras</a>
             </nav>
-            <h3 class="text-center">Agregar Producto</h3>
+            <h3 class="text-center">Agregar Producto Proyecto</h3>
             <form @submit.prevent="handleSubmit">
               <div class="card-body">
                 <div class="form-group">

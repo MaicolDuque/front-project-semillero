@@ -31,7 +31,6 @@
                 >
                   <thead>
                     <tr>
-                      <th>ID</th>
                       <th>Soporte</th>
                       <th>Vinculo</th>
                       <th data-priority="2">Acciones</th>
@@ -39,7 +38,6 @@
                   </thead>
                   <tbody>
                     <tr v-for="item in soportes" :key="item.id_soporte">
-                      <td>{{ item.id_soporte }}</td>
                       <td>{{ item.soporte }}</td>
                       <td>
                         <a :href="item.vinculo">Ruta</a>

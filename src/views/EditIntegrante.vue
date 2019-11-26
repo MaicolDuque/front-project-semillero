@@ -1,12 +1,7 @@
 <template>
   <div>
-    <h3 class="text-center">Editar Integrante</h3>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="collapse navbar-collapse">
-        <div class="navbar-nav">
-          <router-link to="/integrantes" class="nav-item nav-link">integrantes</router-link>
-        </div>
-      </div>
+      <div class="collapse navbar-collapse"></div>
     </nav>
     <section v-if="errored">
       <p>Lo sentimos, no es posible Actualizar el registro en este momento</p>
@@ -22,6 +17,10 @@
       <section class="content">
         <div style="width: 50%; margin: 0 auto;">
           <div class="card card-success">
+            <div class="navbar-nav">
+              <router-link to="/integrantes" class="nav-item nav-link">integrantes</router-link>
+            </div>
+            <h3 class="text-center">Editar Integrante</h3>
             <form @submit.prevent="handleSubmit">
               <div class="card-body">
                 <div class="form-group">

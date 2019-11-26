@@ -127,7 +127,7 @@
 
                 <br />
                 <div class="form-group">
-                  <button class="btn btn-outline-success">Actualizar</button>
+                  <button class="btn btn-outline-success">Agregar</button>
                 </div>
               </div>
             </form>
@@ -182,11 +182,11 @@ export default {
     };
   },
   created() {
-    console.log(this.$route.params.periodo)
+    console.log(this.$route.params.periodo);
     ApiService.get(`/periodo/actividad/${this.$route.params.periodo}`)
       .then(response => {
         this.periodo = response.data[0];
-        console.log(this.periodo)
+        console.log(this.periodo);
       })
       .catch(error => {
         console.log(error);

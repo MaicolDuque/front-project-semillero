@@ -1,19 +1,18 @@
 <template>
   <div>
-    <h3 class="text-center">Editar Periodo</h3>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="collapse navbar-collapse">
-        <div class="navbar-nav">
-          <a @click="back" class="nav-item nav-link">Periodos</a>
-        </div>
-      </div>
+      <div class="collapse navbar-collapse"></div>
     </nav>
     <section class="content">
       <div style="width: 50%; margin: 0 auto;">
         <div class="card card-success">
+          <h3 class="text-center">Editar Periodo</h3>
           <form @submit.prevent="handleSubmit">
             <div class="card-body">
               <div class="form-group">
+                <div class="navbar-nav">
+                  <a @click="back" class="nav-item nav-link">Periodos</a>
+                </div>
                 <label for="grupo">Periodo</label>
                 <input
                   type="text"

@@ -35,7 +35,7 @@
                 </thead>
                 <tbody>
                   <tr v-for="periodo in periodos" :key="'periodo-'+periodo.id_periodo">
-                    <td style="width: 5%">
+                    <td style="width: 1%">
                       <div
                         class="btn btn-xs btn-info"
                         style="cursor:pointer"
@@ -44,7 +44,7 @@
                         <a>{{periodo.periodo}}</a>
                       </div>
                     </td>
-                    <td style="width: 5%">
+                    <td style="width: 1%">
                       <div class="btn-group" role="group">
                         <router-link
                           :to="{name: 'edit-periodo', params: { id: periodo.id_periodo}}"
@@ -52,10 +52,15 @@
                           style="margin: 2px"
                         >Editar</router-link>
                         <button
+                          class="btn btn-outline-danger btn-xs"
+                          style="margin: 2px"
+                          @click="exportar(periodo.id_periodo, 3)"
+                        >Reporte</button>
+                        <!--   <button
                           style="margin: 2px"
                           class="btn btn-outline-danger btn-xs"
                           @click="deleteperiodo(periodo.id_periodo)"
-                        >Eliminar</button>
+                        >Eliminar</button>-->
                       </div>
                     </td>
                     <td style="width: 5%">
@@ -494,6 +499,8 @@ export default {
       });
     },
     exportar(id, tipo) {
+      console.log("oelo");
+      console.log(tipo);
       if (tipo == 1) {
         return (location.href =
           process.env.VUE_APP_URL_API + "/exportar/inicial/" + id);
@@ -502,8 +509,12 @@ export default {
         return (location.href =
           process.env.VUE_APP_URL_API + "/exportar/final/" + id);
       }
-      return process.env.VUE_APP_URL_API + "/exportar/pdf/" + id;
+      if (tipo == 3) {
+        return (location.href =
+          process.env.VUE_APP_URL_API + "/exportar/pdf/" + id);
+      }
     },
+
     handleSubmit(e) {
       this.submitted = true;
 
