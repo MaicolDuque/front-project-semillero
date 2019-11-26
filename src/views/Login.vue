@@ -5,7 +5,7 @@
         <div class="card card-signin my-5">
           <h5 align="center">
             <center>
-              <img
+              <img class = "img-fluid"
                 src="https://pbs.twimg.com/profile_images/1128335908913258496/hHZklt21_400x400.png"
               />
             </center>
