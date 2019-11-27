@@ -5,13 +5,13 @@
         <div class="card card-signin my-5">
           <h5 align="center">
             <center>
-              <img
+              <img class = "img-fluid"
                 src="https://pbs.twimg.com/profile_images/1128335908913258496/hHZklt21_400x400.png"
               />
             </center>
           </h5>
           <div class="card-body">
-            <h5 class="text-center">Ingresa con email del poli:</h5>
+            <!-- <h5 class="text-center">Ingresa con email del poli:</h5> -->
             <hr class="my-4" />
             <button
               style="background-color: #196844"

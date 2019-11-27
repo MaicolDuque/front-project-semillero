@@ -18,7 +18,7 @@
               <img
                 src="https://www.politecnicojic.edu.co/images/logo/logo.png"
                 alt="Politécnico Colombiano Jaime Isaza Cadavid"
-                class="img-responsive logo"
+                class="img-responsive logo img-fluid"
               />
             </a>
           </h5>
@@ -45,15 +45,14 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
+      <button class="btn btn-light right">
+        <a @click="logout" style="cursor: pointer; color: black">Cerrar sesión</a>
+      </button>
       <!-- Messages Dropdown Menu -->
 
       <!-- Notifications Dropdown Menu -->
 
-      <li class="nav-item d-none d-sm-inline-block">
-        <button class="btn btn-light">
-          <a @click="logout" style="cursor: pointer; color: black">Cerrar sesión</a>
-        </button>
-      </li>
+      <li class="nav-item d-none d-sm-inline-block"></li>
     </ul>
   </nav>
 
@@ -76,11 +75,11 @@ export default {
       TokenService.saveTokenCustom("visitante", "si");
       this.$store.commit("setVisitante", "si");
       TokenService.removeToken();
-      let info = {id_rol: 1}
-      TokenService.saveTokenCustom('user', JSON.stringify(info))
+      let info = { id_rol: 1 };
+      TokenService.saveTokenCustom("user", JSON.stringify(info));
       TokenService.removeRefreshToken();
       ApiService.unmount401Interceptor();
-     this.$router.push({name: "home"});
+      this.$router.push({ name: "home" });
     }
   }
 };

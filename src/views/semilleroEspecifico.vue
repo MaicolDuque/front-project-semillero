@@ -1,370 +1,370 @@
 <template>
   <div>
-    <h1>semillero xxx</h1>
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-      <li class="nav-item">
-        <a
-          class="nav-link active"
-          id="home-tab"
-          data-toggle="tab"
-          href="#home"
-          role="tab"
-          aria-controls="home"
-          aria-selected="true"
-        >Integrantes</a>
-      </li>
-      <li class="nav-item">
-        <a
-          class="nav-link"
-          id="profile-tab"
-          data-toggle="tab"
-          href="#profile"
-          role="tab"
-          aria-controls="profile"
-          aria-selected="false"
-        >Proyectos</a>
-      </li>
-      <li class="nav-item">
-        <a
-          class="nav-link"
-          id="contact-tab"
-          data-toggle="tab"
-          href="#contact"
-          role="tab"
-          aria-controls="contact"
-          aria-selected="false"
-        >Actividades</a>
-      </li>
-      <li class="nav-item">
-        <a
-          class="nav-link"
-          id="proyectos-tab"
-          data-toggle="tab"
-          href="#preinscripcion"
-          role="tab"
-          aria-controls="profile"
-          aria-selected="false"
-        >pre registro</a>
-      </li>
-    </ul>
-    <div class="tab-content" id="myTabContent">
-      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-        <template>
-          <div style="padding:25px">
-            <h3 class="text-center">integrantes de investigación</h3>
-
-            <section class="content">
-              <div class="row">
-                <div class="col-12">
-                  <div class="card">
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                      <section v-if="errored">
-                        <p>Lo sentimos, no es posible obtener la información en este momento, por favor intente nuevamente mas tarde</p>
-                      </section>
-                      <section v-else>
-                        <div v-if="loading">
-                          cargando..
-                          <div class="spinner-border text-success" role="status">
-                            <span class="sr-only">Loading...</span>
-                          </div>
-                        </div>
-                        <div v-else></div>
-                        <table
-                          id="tblintegrantes"
-                          class="table table-striped table-bordered dt-responsive nowrap"
-                          style="width:100%"
-                        >
-                          <thead>
-                            <tr>
-                              <th>Nombre</th>
-                              <th>apellido</th>
-                              <th>Correo</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr v-for="item in integrantes" :key="item.id_integrante">
-                              <td>{{ item.nombre_usuario }}</td>
-                              <td>{{ item.apellido_usuario }}</td>
-                              <td>{{ item.email }}</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </section>
-                    </div>
-                    <!-- /.card-body -->
-                  </div>
-                </div>
-              </div>
-            </section>
-          </div>
-        </template>
-      </div>
-      <div
-        class="tab-pane fade show active"
-        id="preinscripcion"
-        role="tabpanel"
-        aria-labelledby="home-tab"
-      >
-        <template>
+    <div class="section" style="margin: 50px">
+      <div class="row">
+        <div class="col-sm-12 col-lg-6">
           <div>
-            <div class="container">
-              <h3 class="text-center">Realizar pre-inscripcion</h3>
+            <h3>¿Quieres participar en el semillero?</h3>
+            <button
+              class="btn btn-outline-primary"
+              style="margin:5px"
+              data-toggle="modal"
+              data-target="#preregistro"
+            >Solicitar registro</button>
+            <br />
+            <br />
+            <div class="col-12 col align-self-end row justify-content-start">
+              <ul>
+                <h3>Acerca del semillero {{semillero[0].semillero}}:</h3>
+                <br />
+                <br />
+                <h4>Objetivo</h4>
+                <br />
+                {{semillero[0].objetivo}}
+                <h4>Información</h4>
 
-              <section v-if="errored">
-                <p>Lo sentimos, no es posible Guardar el registro en este momento</p>
-              </section>
-              <section class="content">
-                <div style="width: 50%; margin: 0 auto;">
-                  <div class="card card-success">
-                    <form @submit.prevent="handleSubmit">
-                      <div class="card-body">
-                        <div class="form-group">
-                          <label for="documento">Documento</label>
-                          <input
-                            type="text"
-                            pattern="[0-9]+"
-                            title=" Solo números. Tamaño máximo: 12"
-                            v-model.trim="usuario.documento"
-                            id="documento"
-                            name="documento"
-                            placeholder="Documento"
-                            class="form-control"
-                            :class="{ 'is-invalid': submitted && $v.usuario.documento.$error }"
-                          />
-                          <div
-                            v-if="submitted && $v.usuario.documento.$error"
-                            class="invalid-feedback"
-                          >
-                            <span v-if="!$v.usuario.documento.required">El campo nombre es requerido</span>
-                            <span
-                              v-if="!$v.usuario.documento.maxLength"
-                            >El nombre no debe superar los 50 caracteres</span>
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <label for="nombre_usuario">Nombre</label>
-                          <input
-                            type="text"
-                            pattern="[A-Za-z ]+"
-                            title=" Solo Letras. Tamaño máximo: 50"
-                            v-model.trim="usuario.nombre_usuario"
-                            id="nombre_usuario"
-                            name="nombre_usuario"
-                            placeholder="Nombre"
-                            class="form-control"
-                            :class="{ 'is-invalid': submitted && $v.usuario.nombre_usuario.$error }"
-                          />
-                          <div
-                            v-if="submitted && $v.usuario.nombre_usuario.$error"
-                            class="invalid-feedback"
-                          >
-                            <span v-if="!$v.usuario.nombre_usuario.required">El campo es requerido</span>
-                            <span
-                              v-if="!$v.usuario.nombre_usuario.maxLength"
-                            >El campo no debe superar los 50 caracteres</span>
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <label for="apellido_usuario">Apellido</label>
-                          <input
-                            type="text"
-                            pattern="[A-Za-z ]+"
-                            title=" Solo Letras. Tamaño máximo: 50"
-                            v-model.trim="usuario.apellido_usuario"
-                            id="apellido_usuario"
-                            name="apellido_usuario"
-                            placeholder="Apellido"
-                            class="form-control"
-                            :class="{ 'is-invalid': submitted && $v.usuario.apellido_usuario.$error }"
-                          />
-                          <div
-                            v-if="submitted && $v.usuario.apellido_usuario.$error"
-                            class="invalid-feedback"
-                          >
-                            <span v-if="!$v.usuario.apellido_usuario.required">El campo es requerido</span>
-                            <span
-                              v-if="!$v.usuario.apellido_usuario.maxLength"
-                            >El campo no debe superar los 50 caracteres</span>
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <label for="correo">correo</label>
-                          <input
-                            type="text"
-                            v-model.trim="usuario.email"
-                            id="email"
-                            name="email"
-                            placeholder="Correo"
-                            class="form-control"
-                            :class="{ 'is-invalid': submitted && $v.usuario.email.$error }"
-                          />
-                          <div v-if="submitted && $v.usuario.email.$error" class="invalid-feedback">
-                            <span v-if="!$v.usuario.email.required">El campo correo es requerido</span>
-                            <span v-if="!$v.usuario.email">Email no Valido</span>
-                            <span
-                              v-if="!$v.usuario.email.maxLength"
-                            >El campo no debe superar los 100 caracteres</span>
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <label for="telefono">Telefono</label>
-                          <input
-                            type="text"
-                            pattern="[0-9]+"
-                            title=" Solo Numeros. Tamaño máximo: 10"
-                            v-model.trim="usuario.telefono"
-                            id="telefono"
-                            name="telefono"
-                            placeholder="telefono"
-                            class="form-control"
-                            :class="{ 'is-invalid': submitted && $v.usuario.telefono.$error }"
-                          />
-                          <div
-                            v-if="submitted && $v.usuario.telefono.$error"
-                            class="invalid-feedback"
-                          >
-                            <span v-if="!$v.usuario.telefono.required">El campo es requerido</span>
-                            <span
-                              v-if="!$v.usuario.telefono.maxLength"
-                            >El campo no debe superar los 10 caracteres</span>
-                          </div>
-                        </div>
+                <br />
+                {{semillero[0].descripcion}}
+              </ul>
+            </div>
+          </div>
+        </div>
 
-                        <!-- <div class="form-group">
-                          <label for="tipo">Tipo</label>
-                          <br />
-                          <select
-                            class="custom-select browser-default"
-                            @change="selectChangeTipoUsuario"
-                            required
-                          >
-                            <option value>Por favor seleccione un Elemento</option>
-                            <option
-                              v-for="item in Tipos_Usuarios"
-                              v-bind:key="item.value"
-                              id="id_tipo_usuario"
-                              name="id_tipo_usuario"
-                              class="form-control"
-                              :class="{ 'is-invalid': submitted && $v.usuario.id_tipo_usuario.$error }"
-                            >{{ item.tipo_usuario }}</option>
-                          </select>
-                        </div>-->
+        <!-- Opciones -->
+        <div class="col-sm-12 col-lg-6">
+          <ul class="nav nav-tabs col-12 row justify-content-center" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                id="home-tab"
+                data-toggle="tab"
+                href="#home"
+                role="tab"
+                aria-controls="home"
+                aria-selected="true"
+              >Integrantes</a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                id="profile-tab"
+                data-toggle="tab"
+                href="#profile"
+                role="tab"
+                aria-controls="profile"
+                aria-selected="false"
+              >Proyectos</a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                id="contact-tab"
+                data-toggle="tab"
+                href="#contact"
+                role="tab"
+                aria-controls="contact"
+                aria-selected="false"
+              >Actividades</a>
+            </li>
+          </ul>
 
-                        <!-- <div class="form-group">
-                  <label>Grupo</label>
-                  <select class="form-control" style="width: 100%;" v-model="usuario.id_grupo">
-                    <option value>Por favor seleccione un Elemento</option>
-                    <option
-                      v-for="grupo in grupos"
-                      v-bind:key="grupo.id_grupo"
-                      :value="grupo.id_grupo"
-                    >{{ grupo.grupo }}</option>
-                  </select>
-                        </div>-->
-                        <br />
-                        <div class="form-group">
-                          <button class="btn btn-primary">Guardar</button>
+          <!-- <div class="row  justify-content-end"></div> -->
+          <div class="tab-content" id="myTabContent">
+            <div
+              class="tab-pane fade show active"
+              id="home"
+              role="tabpanel"
+              aria-labelledby="home-tab"
+            >
+              <template>
+                <section class="content">
+                  <div class="row">
+                    <div class="col">
+                      <div class="card">
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                          <section v-if="errored">
+                            <p>Lo sentimos, no es posible obtener la información en este momento, por favor intente nuevamente mas tarde</p>
+                          </section>
+                          <section v-else>
+                            <div v-if="loading">
+                              cargando..
+                              <div class="spinner-border text-success" role="status">
+                                <span class="sr-only">Loading...</span>
+                              </div>
+                            </div>
+                            <div v-else></div>
+                            <table
+                              id="tblintegrantes"
+                              class="table table-striped table-bordered dt-responsive nowrap"
+                              style="width:100%"
+                            >
+                              <thead>
+                                <tr>
+                                  <th>Nombre</th>
+                                  <th>apellido</th>
+                                  <th>Correo</th>
+                                  <th>Tipo integrante</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr v-for="item in integrantes" :key="item.id_integrante">
+                                  <td>{{ item.nombre_usuario }}</td>
+                                  <td>{{ item.apellido_usuario }}</td>
+                                  <td>{{ item.email }}</td>
+                                  <td>{{item.tipo_usuario}}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </section>
                         </div>
+                        <!-- /.card-body -->
                       </div>
-                    </form>
+                    </div>
+                  </div>
+                </section>
+              </template>
+            </div>
+            <!--  -->
+
+            <!--  -->
+
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+              <section class="content">
+                <div class="row row justify-content-start">
+                  <div class="col">
+                    <div class="card">
+                      <!-- /.card-header -->
+                      <div class="card-body">
+                        <section v-if="errored">
+                          <p>Lo sentimos, no es posible obtener la información en este momento, por favor intente nuevamente mas tarde</p>
+                        </section>
+                        <section v-else>
+                          <div v-if="loading">
+                            cargando..
+                            <div class="spinner-border text-success" role="status">
+                              <span class="sr-only">Loading...</span>
+                            </div>
+                          </div>
+                          <div v-else></div>
+                          <table
+                            id="tblproyecto"
+                            class="table table-striped table-bordered dt-responsive nowrap"
+                            style="width:100%"
+                          >
+                            <thead>
+                              <tr>
+                                <th>Nombre</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr v-for="item in proyectos" :key="item.id_proyecto">
+                                <td>{{ item.proyecto }}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </section>
+                      </div>
+                      <!-- /.card-body -->
+                    </div>
                   </div>
                 </div>
               </section>
             </div>
-          </div>
-        </template>
-      </div>
-      <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-        <section class="content">
-          <div class="row">
-            <div class="col-12">
-              <div class="card">
-                <!-- /.card-header -->
-                <div class="card-body">
-                  <section v-if="errored">
-                    <p>Lo sentimos, no es posible obtener la información en este momento, por favor intente nuevamente mas tarde</p>
-                  </section>
-                  <section v-else>
-                    <div v-if="loading">
-                      cargando..
-                      <div class="spinner-border text-success" role="status">
-                        <span class="sr-only">Loading...</span>
+            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+              <section class="content">
+                <div class="row row justify-content-start">
+                  <div class="col">
+                    <div class="card">
+                      <!-- /.card-header -->
+                      <div class="card-body">
+                        <section v-if="errored">
+                          <p>Lo sentimos, no es posible obtener la información en este momento, por favor intente nuevamente mas tarde</p>
+                        </section>
+                        <section v-else>
+                          <div v-if="loading">
+                            cargando..
+                            <div class="spinner-border text-success" role="status">
+                              <span class="sr-only">Loading...</span>
+                            </div>
+                          </div>
+                          <div v-else></div>
+                          <table
+                            id="tblproyectos"
+                            class="table table-striped table-bordered dt-responsive nowrap"
+                            style="width:100%"
+                          >
+                            <thead>
+                              <tr>
+                                <th>Nombre</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr v-for="item in actividades" :key="item.id_actividad">
+                                <td>{{ item.actividad }}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </section>
                       </div>
+                      <!-- /.card-body -->
                     </div>
-                    <div v-else></div>
-                    <table
-                      id="tblproyecto"
-                      class="table table-striped table-bordered dt-responsive nowrap"
-                      style="width:100%"
-                    >
-                      <thead>
-                        <tr>
-                          <th>Nombre</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr v-for="item in proyectos" :key="item.id_proyecto">
-                          <td>{{ item.proyecto }}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </section>
+                  </div>
                 </div>
-                <!-- /.card-body -->
-              </div>
+              </section>
             </div>
+            <div
+              class="tab-pane fade"
+              id="proyectos"
+              role="tabpanel"
+              aria-labelledby="proyectos-tab"
+            >mixtape</div>
           </div>
-        </section>
+        </div>
       </div>
-      <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-        <section class="content">
-          <div class="row">
-            <div class="col-12">
-              <div class="card">
-                <!-- /.card-header -->
-                <div class="card-body">
-                  <section v-if="errored">
-                    <p>Lo sentimos, no es posible obtener la información en este momento, por favor intente nuevamente mas tarde</p>
-                  </section>
-                  <section v-else>
-                    <div v-if="loading">
-                      cargando..
-                      <div class="spinner-border text-success" role="status">
-                        <span class="sr-only">Loading...</span>
-                      </div>
-                    </div>
-                    <div v-else></div>
-                    <table
-                      id="tblproyectos"
-                      class="table table-striped table-bordered dt-responsive nowrap"
-                      style="width:100%"
-                    >
-                      <thead>
-                        <tr>
-                          <th>Nombre</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr v-for="item in actividades" :key="item.id_actividad">
-                          <td>{{ item.actividad }}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </section>
+    </div>
+
+    <div
+      class="modal fade"
+      id="preregistro"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Solicitud de registro</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div style="width: 50%; margin: 0 auto;">
+          <div class="card card-success">
+            <form @submit.prevent="handleSubmit">
+              <div class="card-body">
+                <div class="form-group"></div>
+                <label for="documento">Documento</label>
+                <input
+                  type="text"
+                  pattern="[0-9]+"
+                  title=" Solo números. Tamaño máximo: 12"
+                  v-model.trim="usuario.documento"
+                  id="documento"
+                  name="documento"
+                  placeholder="Documento"
+                  class="form-control"
+                  :class="{ 'is-invalid': submitted && $v.usuario.documento.$error }"
+                />
+                <div v-if="submitted && $v.usuario.documento.$error" class="invalid-feedback">
+                  <span v-if="!$v.usuario.documento.required">El campo nombre es requerido</span>
+                  <span
+                    v-if="!$v.usuario.documento.maxLength"
+                  >El nombre no debe superar los 50 caracteres</span>
                 </div>
-                <!-- /.card-body -->
+                <div class="form-group">
+                  <label for="nombre_usuario">Nombre</label>
+                  <input
+                    type="text"
+                    pattern="[A-Za-z ]+"
+                    title=" Solo Letras. Tamaño máximo: 50"
+                    v-model.trim="usuario.nombre_usuario"
+                    id="nombre_usuario"
+                    name="nombre_usuario"
+                    placeholder="Nombre"
+                    class="form-control"
+                    :class="{ 'is-invalid': submitted && $v.usuario.nombre_usuario.$error }"
+                  />
+                  <div
+                    v-if="submitted && $v.usuario.nombre_usuario.$error"
+                    class="invalid-feedback"
+                  >
+                    <span v-if="!$v.usuario.nombre_usuario.required">El campo es requerido</span>
+                    <span
+                      v-if="!$v.usuario.nombre_usuario.maxLength"
+                    >El campo no debe superar los 50 caracteres</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="apellido_usuario">Apellido</label>
+                  <input
+                    type="text"
+                    pattern="[A-Za-z ]+"
+                    title=" Solo Letras. Tamaño máximo: 50"
+                    v-model.trim="usuario.apellido_usuario"
+                    id="apellido_usuario"
+                    name="apellido_usuario"
+                    placeholder="Apellido"
+                    class="form-control"
+                    :class="{ 'is-invalid': submitted && $v.usuario.apellido_usuario.$error }"
+                  />
+                  <div
+                    v-if="submitted && $v.usuario.apellido_usuario.$error"
+                    class="invalid-feedback"
+                  >
+                    <span v-if="!$v.usuario.apellido_usuario.required">El campo es requerido</span>
+                    <span
+                      v-if="!$v.usuario.apellido_usuario.maxLength"
+                    >El campo no debe superar los 50 caracteres</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="correo">correo</label>
+                  <input
+                    type="text"
+                    v-model.trim="usuario.email"
+                    id="email"
+                    name="email"
+                    placeholder="Correo"
+                    class="form-control"
+                    :class="{ 'is-invalid': submitted && $v.usuario.email.$error }"
+                  />
+                  <div v-if="submitted && $v.usuario.email.$error" class="invalid-feedback">
+                    <span v-if="!$v.usuario.email.required">El campo correo es requerido</span>
+                    <span v-if="!$v.usuario.email">Email no Valido</span>
+                    <span
+                      v-if="!$v.usuario.email.maxLength"
+                    >El campo no debe superar los 100 caracteres</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="telefono">Telefono</label>
+                  <input
+                    type="text"
+                    pattern="[0-9]+"
+                    title=" Solo Numeros. Tamaño máximo: 10"
+                    v-model.trim="usuario.telefono"
+                    id="telefono"
+                    name="telefono"
+                    placeholder="telefono"
+                    class="form-control"
+                    :class="{ 'is-invalid': submitted && $v.usuario.telefono.$error }"
+                  />
+                  <div v-if="submitted && $v.usuario.telefono.$error" class="invalid-feedback">
+                    <span v-if="!$v.usuario.telefono.required">El campo es requerido</span>
+                    <span
+                      v-if="!$v.usuario.telefono.maxLength"
+                    >El campo no debe superar los 10 caracteres</span>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <div class="modal-footer">
+                    <button id="btn_modal" type="submit" class="btn btn-outline-success">Guardar</button>
+                  </div>
+                </div>
               </div>
-            </div>
+            </form>
           </div>
-        </section>
+        </div>
       </div>
-      <div
-        class="tab-pane fade"
-        id="proyectos"
-        role="tabpanel"
-        aria-labelledby="proyectos-tab"
-      >mixtape</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <!--  <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
     </div>
   </div>
 </template>
@@ -380,6 +380,7 @@ export default {
       errored: false,
       integrantes: [],
       proyectos: [],
+      semillero: {},
       actividades: [],
       usuario: {
         documento: "",
@@ -395,10 +396,22 @@ export default {
     };
   },
   created() {
+    console.log("primero");
+    console.log(this.$route.params.id);
+    ApiService.get(`/semillero/${this.$route.params.id}`).then(response => {
+      if (response.status === 200) {
+        /*  alert("No existen integrantes para mostrar "); */
+        this.semillero = response.data;
+        console.log("semillero" + this.semillero);
+      } else {
+        console.log("nada");
+      }
+    });
+
     ApiService.get(`/integrante/semillero/actual/${this.$route.params.id}`)
       .then(response => {
         if (response.status === 204) {
-          alert("No existen integrantes para mostrar ");
+          /*  alert("No existen integrantes para mostrar "); */
           this.integrantes = response.data;
         } else {
           this.integrantes = response.data;
@@ -406,7 +419,8 @@ export default {
       })
       .then(res => {
         $("#tblintegrantes").DataTable({
-          responsive: true
+          responsive: true,
+          retrieve: true
         });
       })
       .catch(error => {
@@ -426,7 +440,8 @@ export default {
       })
       .then(res => {
         $("#tblactividad").DataTable({
-          responsive: true
+          responsive: true,
+          retrieve: true
         });
       })
       .catch(error => {
@@ -446,7 +461,8 @@ export default {
       })
       .then(res => {
         $("#tblproyectos").DataTable({
-          responsive: true
+          responsive: true,
+          retrieve: true
         });
       })
       .catch(error => {
@@ -486,6 +502,7 @@ export default {
         console.log(response.status);
         if (response.status === 200) {
           alert("aca");
+          $("#preregistro ").modal("hide");
         }
       });
     },

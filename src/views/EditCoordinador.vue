@@ -1,11 +1,8 @@
 <template>
   <div>
-    
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="collapse navbar-collapse">
-        <div class="navbar-nav">
-         
-        </div>
+        <div class="navbar-nav"></div>
       </div>
     </nav>
     <section v-if="errored">
@@ -22,8 +19,8 @@
       <section class="content">
         <div style="width: 50%; margin: 0 auto;">
           <div class="card card-success">
-             <router-link to="/coordinadores" class="nav-item nav-link">Coordinadores</router-link>
-            <br>
+            <router-link to="/coordinadores" class="nav-item nav-link">Coordinadores</router-link>
+            <br />
             <h3 class="text-center">Editar coordinador</h3>
             <form @submit.prevent="handleSubmit" role="form">
               <div class="card-body">
@@ -316,7 +313,6 @@ export default {
             alert("No se pudo actualizar el coordinador que no tenia grupo");
           });
       } else if (this.coordinador.semillero != null) {
-        alert("aca puto");
         //si  existe en la tabla directores lo actualizo
         console.log(this.$route.params.id);
         console.log(this.semilleroSeleccionado.id_semillero);
@@ -375,15 +371,14 @@ export default {
         }`);
     },
 
-    showSemilleros(){
-      let rol     = this.$store.state.user.id_rol
-      let semillero   = this.$store.state.user.id_semillero
-      if(rol > 1){
-        return  this.semilleros.filter(semi => semi.id_semillero == semillero);
+    showSemilleros() {
+      let rol = this.$store.state.user.id_rol;
+      let semillero = this.$store.state.user.id_semillero;
+      if (rol > 1) {
+        return this.semilleros.filter(semi => semi.id_semillero == semillero);
       }
-      return  this.semilleros
+      return this.semilleros;
     }
-
   }
 };
 </script>

@@ -13,7 +13,7 @@
               <img
                 src="https://www.politecnicojic.edu.co/images/logo/logo.png"
                 alt="Politécnico Colombiano Jaime Isaza Cadavid"
-                class="img-responsive logo"
+                class="img-responsive logo img-fluid"
               />
             </a>
           </h5>
@@ -40,15 +40,14 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
+      <button class="btn btn-light">
+        <a @click="irLogin" style="cursor: pointer; color: black">Ingresar</a>
+      </button>
       <!-- Messages Dropdown Menu -->
 
       <!-- Notifications Dropdown Menu -->
 
-      <li class="nav-item d-none d-sm-inline-block">
-        <button class="btn btn-light">
-          <a @click="irLogin" style="cursor: pointer; color: black">Ingresar</a>
-        </button>
-      </li>
+      <li class="nav-item d-none d-sm-inline-block"></li>
     </ul>
   </nav>
 

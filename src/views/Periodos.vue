@@ -28,48 +28,52 @@
               >
                 <thead>
                   <tr>
-                    <th>Periodos</th>
+                    <th data-priority="1">Periodos</th>
                     <th>Acciones</th>
+                    <th data-priority="1">Exportar</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="periodo in periodos" :key="'periodo-'+periodo.id_periodo">
-                    <td style="width: 70%">
+                    <td style="width: 5%">
                       <div
-                        class="btn btn-info"
+                        class="btn btn-xs btn-info"
                         style="cursor:pointer"
                         @click="showInfoPeriodo(periodo.id_periodo)"
                       >
                         <a>{{periodo.periodo}}</a>
                       </div>
                     </td>
-                    <td style="width: 30%">
+                    <td style="width: 5%">
                       <div class="btn-group" role="group">
                         <router-link
                           :to="{name: 'edit-periodo', params: { id: periodo.id_periodo}}"
-                          class="btn btn-outline-primary"
+                          class="btn btn-outline-success btn-xs"
                           style="margin: 2px"
                         >Editar</router-link>
                         <button
                           style="margin: 2px"
-                          class="btn btn-outline-danger"
+                          class="btn btn-outline-danger btn-xs"
                           @click="deleteperiodo(periodo.id_periodo)"
                         >Eliminar</button>
-
+                      </div>
+                    </td>
+                    <td style="width: 5%">
+                      <div class="btn-group" role="group">
                         <button
-                          class="btn btn-success"
+                          class="btn btn-outline-success btn-xs"
                           style="margin: 2px"
                           @click="exportar(periodo.id_periodo, 1)"
                         >FIN13-I</button>
 
                         <button
-                          class="btn btn-success"
+                          class="btn btn-outline-success btn-xs"
                           style="margin: 2px"
                           @click="exportar(periodo.id_periodo, 2)"
                         >FIN13-F</button>
 
                         <button
-                          class="btn btn-danger"
+                          class="btn btn-outline-danger btn-xs"
                           style="margin: 2px"
                           @click="exportar(periodo.id_periodo, 3)"
                         >Reporte</button>
@@ -359,6 +363,7 @@
                       <label for="grupo">Fecha Inicio</label>
                       <input
                         type="date"
+                        min="2019-01-01"
                         v-model="periodo.fecha_inicio"
                         id="fecha_inicio"
                         name="fecha_inicio"
@@ -371,10 +376,12 @@
                         class="invalid-feedback"
                       >El campo fecha inicio es requerido</div>
                     </div>
+
                     <div class="form-group">
                       <label for="grupo">Fecha Fin</label>
                       <input
                         type="date"
+                        min="2019-01-01"
                         v-model="periodo.fecha_fin"
                         id="fecha_fin"
                         name="fecha_fin"
@@ -431,8 +438,8 @@ export default {
         fecha_fin: "",
         id_semillero: ""
       },
-      whointegrante: {},
-      submitted: false
+      submitted: false,
+      años: []
     };
   },
 
@@ -476,6 +483,16 @@ export default {
     }
   },
   methods: {
+    showAlertInicioDescarga() {
+      this.$swal({
+        type: "info",
+        title: "Procesando",
+        text: "el archivo empezara a descargarse en poco tiempo",
+
+        showCancelButton: false,
+        showConfirmButton: true
+      });
+    },
     exportar(id, tipo) {
       if (tipo == 1) {
         return (location.href =
@@ -485,8 +502,7 @@ export default {
         return (location.href =
           process.env.VUE_APP_URL_API + "/exportar/final/" + id);
       }
-      return (location.href =
-        process.env.VUE_APP_URL_API + "/exportar/pdf/" + id);
+      return (location.href =process.env.VUE_APP_URL_API + "/exportar/pdf/" + id);
     },
     handleSubmit(e) {
       this.submitted = true;
@@ -595,13 +611,13 @@ export default {
       ApiService.get(`/proyecto/periodo/semillero/${id}`)
         .then(response => {
           if (response.status === 204) {
-            /* this.$swal({
+            this.$swal({
               type: "info",
               text: "No hay proyectos en este periodo para mostrar",
               timer: 2000,
               showCancelButton: false,
               showConfirmButton: false
-            }); */
+            });
             this.proyectos = response.data;
           } else {
             this.proyectos = response.data;
@@ -645,7 +661,16 @@ export default {
           });
         });
     },
-
+    /* Despliega mensaje de exito al guardar un registro */
+    showAlert() {
+      this.$swal({
+        type: "success",
+        text: "Registro creado con exito",
+        timer: 2000,
+        showCancelButton: false,
+        showConfirmButton: false
+      });
+    },
     addProyecto() {
       if (this.idPeriodo) {
         return this.$router.push({
@@ -681,8 +706,11 @@ export default {
 
     addActividad() {
       if (this.idPeriodo) {
+        console.log("id: " + this.$route.params.id);
+        console.log("periodo: " + this.idPeriodo);
         return this.$router.push({
           name: "agregar-actividad",
+
           params: { id: this.$route.params.id, periodo: this.idPeriodo }
         });
       }
@@ -714,8 +742,13 @@ export default {
       ApiService.post("/periodo", this.periodo)
         .then(newPeriodo => {
           this.periodos.push(newPeriodo.data);
+          $("#exampleModal").modal("hide");
+          this.showAlert();
         })
-        .catch(function(response) {});
+        .catch(error => {
+          console.log(error);
+          this.errored = true;
+        });
     },
 
     deleteActividad(id) {

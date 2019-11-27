@@ -1,13 +1,11 @@
 <template>
   <div style="padding:25px">
-    <h3 class="text-center">semilleros</h3>
-    <div style="text-align: right; padding: 14px 1px;">
-      <router-link to="/addGrupos" tag="button" class="btn btn-outline-success">Agregar</router-link>
-    </div>
     <section class="content">
       <div class="row">
         <div class="col-12">
           <div class="card">
+            <h3 class="text-center">semilleros de Investigación</h3>
+
             <!-- /.card-header -->
             <div class="card-body">
               <section v-if="errored">
@@ -15,7 +13,7 @@
               </section>
               <section v-else>
                 <div v-if="loading">
-                  cargando..
+                  Cargando..
                   <div class="spinner-border text-success" role="status">
                     <span class="sr-only">Loading...</span>
                   </div>
@@ -28,8 +26,7 @@
                 >
                   <thead>
                     <tr>
-                      <th>id_semillero</th>
-                      <th>nombre</th>
+                      <th>Nombre</th>
                       <th>objetivo</th>
                       <th>descripcion</th>
                       <th>Acciones</th>
@@ -37,7 +34,6 @@
                   </thead>
                   <tbody>
                     <tr v-for="item in semilleros" :key="item.id_semillero">
-                      <td>{{ item.id_semillero }}</td>
                       <td>{{ item.semillero }}</td>
                       <td>{{ item.objetivo }}</td>
                       <td>{{ item.descripcion }}</td>
