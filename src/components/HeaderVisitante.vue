@@ -16,9 +16,6 @@
                 class="img-responsive logo img-fluid"
               />
             </a>
-            <button class="btn btn-light">
-              <a @click="irLogin" style="cursor: pointer; color: black">Ingresar</a>
-            </button>
           </h5>
           <div class="header-search pull-right"></div>
         </div>
@@ -43,6 +40,9 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
+      <button class="btn btn-light">
+        <a @click="irLogin" style="cursor: pointer; color: black">Ingresar</a>
+      </button>
       <!-- Messages Dropdown Menu -->
 
       <!-- Notifications Dropdown Menu -->

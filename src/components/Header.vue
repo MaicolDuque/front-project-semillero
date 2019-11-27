@@ -21,9 +21,6 @@
                 class="img-responsive logo img-fluid"
               />
             </a>
-            <button class="btn btn-light">
-              <a @click="logout" style="cursor: pointer; color: black">Cerrar sesión</a>
-            </button>
           </h5>
           <div class="header-search pull-right"></div>
         </div>
@@ -48,6 +45,9 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
+      <button class="btn btn-light right">
+        <a @click="logout" style="cursor: pointer; color: black">Cerrar sesión</a>
+      </button>
       <!-- Messages Dropdown Menu -->
 
       <!-- Notifications Dropdown Menu -->
