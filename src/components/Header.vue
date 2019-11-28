@@ -45,15 +45,14 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
+      <button class="btn btn-light right">
+        <a @click="logout" style="cursor: pointer; color: black">Cerrar sesión</a>
+      </button>
       <!-- Messages Dropdown Menu -->
 
       <!-- Notifications Dropdown Menu -->
 
-      <li class="nav-item d-none d-sm-inline-block">
-        <button class="btn btn-light">
-          <a @click="logout" style="cursor: pointer; color: black">Cerrar sesión</a>
-        </button>
-      </li>
+      <li class="nav-item d-none d-sm-inline-block"></li>
     </ul>
   </nav>
 

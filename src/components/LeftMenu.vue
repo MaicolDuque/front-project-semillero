@@ -3,7 +3,7 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
-      <a href="index3.html" class="brand-link">
+      <a href="/" class="brand-link">
         <img
           src="/img/AdminLTELogo.png"
           alt="AdminLTE Logo"
@@ -26,7 +26,7 @@
             />
           </div>
           <div class="info">
-            <a href="#" id="nameUser" class="d-block">Alexander Pierce</a>
+            <a href="/" id="nameUser" class="d-block"></a>
           </div>
         </div>
 
@@ -155,7 +155,7 @@
               </p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-outline-success" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-outline-success" data-dismiss="modal">Cerrar</button>
             </div>
           </div>
         </div>

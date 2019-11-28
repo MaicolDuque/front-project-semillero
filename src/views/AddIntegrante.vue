@@ -249,7 +249,7 @@ import ApiService from "../services/api.service";
 export default {
   data() {
     return {
-      periodo: {},
+      //periodo: {},
       integrantes: [],
       options: [
         { text: "Activo", value: "1" },
