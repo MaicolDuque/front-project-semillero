@@ -17,11 +17,11 @@
       </div>
       <div v-else></div>
       <section class="content">
-        <div style="width: 50%; margin: 0 auto;">
+        <div style="width: 80%; margin: 0 auto;">
           <div class="card card-success">
             <router-link to="/directores" class="nav-item nav-link">Directores</router-link>
             <br />
-            <h3 class="text-center">Editar director</h3>
+            <h3 class="text-center">Editar Director</h3>
             <form @submit.prevent="handleSubmit" role="form">
               <div class="card-body">
                 <div class="form-group">
@@ -41,14 +41,14 @@
                     <span v-if="!$v.director.documento.required">El campo es requerido</span>
                     <span
                       v-if="!$v.director.documento.maxLength"
-                    >El nombre no debe superar los 50 caracteres</span>
+                    >El campo no debe superar los 12 caracteres</span>
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="nombre_usuario">Nombre</label>
                   <input
                     type="text"
-                    pattern="[A-Za-z á é í ó ú ]+"
+                    pattern="[-a-zA-Z¨áéíóúÁÉÍÓÚ&amp;' ]+"
                     title=" Solo Letras. Tamaño máximo: 50"
                     v-model.trim="director.nombre_usuario"
                     id="nombre_usuario"
@@ -71,7 +71,7 @@
                   <label for="apellido_usuario">Apellido</label>
                   <input
                     type="text"
-                    pattern="[A-Za-z á é í ó ú ]+"
+                    pattern="[-a-zA-Z¨áéíóúÁÉÍÓÚ&amp;' ]+"
                     title=" Solo Letras. Tamaño máximo: 50"
                     v-model.trim="director.apellido_usuario"
                     id="apellido_usuario"
@@ -102,7 +102,7 @@
                     :class="{ 'is-invalid': submitted && $v.director.email.$error }"
                   />
                   <div v-if="submitted && $v.director.email.$error" class="invalid-feedback">
-                    <span v-if="!$v.director.email.required">El campo correo es requerido</span>
+                    <span v-if="!$v.director.email.required">El campo es requerido</span>
                     <span v-if="!$v.director.email">Email no Valido</span>
                     <span
                       v-if="!$v.director.email.maxLength"
@@ -143,12 +143,6 @@
                     >{{ tipo.tipo_usuario }}</option>
                   </select>
                 </div>
-                <!-- <div class="form-group">
-                <label>Rol:</label>
-                <select class="form-control" style="width: 100%;" v-model="director.id_rol">
-                  <option v-for="rol in roles" :key="rol.id_rol" :value="rol.id_rol">{{ rol.rol }}</option>
-                </select>
-                </div>-->
                 <h6>
                   Grupo:
                   <span class="badge badge-light">{{director.grupo}}</span>
@@ -210,7 +204,6 @@ export default {
         id_rol: ""
       },
       submitted: false,
-
       grupos: [],
       tipoUsuarios: [],
       roles: []
@@ -239,22 +232,23 @@ export default {
       })
       .finally(() => (this.loading = false));
 
-    ApiService.get("/grupo/disponible").then(response => {
-      this.grupos = response.data;
-      /* this.grupos.push({
-        grupo: this.director.grupo,
-        id_grupo: this.director.id_grupo
-      }); */
-      /* console.log(Object.keys(response.data)); */
-    });
+    ApiService.get("/grupo/disponible")
+      .then(response => {
+        this.grupos = response.data;
+      })
+      .catch(error => {
+        console.log(error);
+        this.errored = true;
+      });
 
-    ApiService.get("/tipousuario").then(response => {
-      this.tipoUsuarios = response.data;
-    });
-
-    /*  ApiService.get("/rol").then(response => {
-      this.roles = response.data;
-    }); */
+    ApiService.get("/tipousuario")
+      .then(response => {
+        this.tipoUsuarios = response.data;
+      })
+      .catch(error => {
+        console.log(error);
+        this.errored = true;
+      });
   },
   //Reglas de validacion para VueValidate
   validations: {
@@ -276,22 +270,17 @@ export default {
           i = element.id_grupo;
         }
       });
-
       this.grupoSeleccionado.id_grupo = i;
       this.director.id_grupo = i;
-      /* alert(this.grupoSeleccionado.id_grupo); */
     },
     handleSubmit(e) {
       this.submitted = true;
-
       // Se detiene aqui si es invalido, de lo contrario ejecuta el submit()
       this.$v.$touch();
       if (this.$v.$invalid) {
         return;
       }
-
       this.updateDirector();
-      /* alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.grupo)); */
     },
     /* Despliega mensaje de exito al guardar un registro */
     showAlert() {
@@ -304,8 +293,6 @@ export default {
       });
     },
     updateDirector() {
-      //event.preventDefault();
-      /*  console.log(this.director); */
       ApiService.put(
         `usuario/${this.$route.params.id}`,
         this.objectDirector
@@ -318,8 +305,7 @@ export default {
           showConfirmButton: false
         });
       });
-      /* console.log(this.$route.params.id);
-      console.log("id grupo" + this.grupoSeleccionado.id_grupo); */
+
       if (this.director.grupo == null) {
         ApiService.post("/director", {
           //si es nulo lo crea como director
@@ -341,8 +327,6 @@ export default {
           });
       } else if (this.director.grupo != null) {
         //si  existe en la tabla directores lo actualizo
-        /*  console.log(this.$route.params.id);
-        console.log("id grupo" + this.grupoSeleccionado.id_grupo); */
         ApiService.put(`director/${this.$route.params.id}`, {
           id_grupo: this.director.id_grupo
         })

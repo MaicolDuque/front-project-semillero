@@ -1,14 +1,12 @@
 <template>
   <div>
     <div class="container">
-      <nav class="nav grey lighten-4 py-4">
-        
-      </nav>
+      <nav class="nav grey lighten-4 py-4"></nav>
       <section v-if="errored">
         <p>Lo sentimos, no es posible Guardar el registro en este momento</p>
       </section>
       <section class="content">
-        <div style="width: 50%; margin: 0 auto;">
+        <div style="width: 80%; margin: 0 auto;">
           <div class="card card-success">
             <router-link to="/coordinadores" class="nav-item nav-link">Coordinadores</router-link>
             <br />
@@ -29,17 +27,17 @@
                     :class="{ 'is-invalid': submitted && $v.usuario.documento.$error }"
                   />
                   <div v-if="submitted && $v.usuario.documento.$error" class="invalid-feedback">
-                    <span v-if="!$v.usuario.documento.required">El campo nombre es requerido</span>
+                    <span v-if="!$v.usuario.documento.required">El campo es requerido</span>
                     <span
                       v-if="!$v.usuario.documento.maxLength"
-                    >El nombre no debe superar los 50 caracteres</span>
+                    >El campo no debe superar los 50 caracteres</span>
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="nombre_usuario">Nombre</label>
                   <input
                     type="text"
-                    pattern="[A-Za-z á é í ó ú ]+"
+                    pattern="[-a-zA-Z¨áéíóúÁÉÍÓÚ&amp;' ]+"
                     title=" Solo Letras. Tamaño máximo: 50"
                     v-model.trim="usuario.nombre_usuario"
                     id="nombre_usuario"
@@ -62,7 +60,7 @@
                   <label for="apellido_usuario">Apellido</label>
                   <input
                     type="text"
-                    pattern="[A-Za-z á é í ó ú ]+"
+                    pattern="[-a-zA-Z¨áéíóúÁÉÍÓÚ&amp;' ]+"
                     title=" Solo Letras. Tamaño máximo: 50"
                     v-model.trim="usuario.apellido_usuario"
                     id="apellido_usuario"
@@ -157,20 +155,9 @@
                     >{{ semillero.semillero }}</option>
                   </select>
                 </div>
-                <!-- <div class="form-group">
-                  <label>Grupo</label>
-                  <select class="form-control" style="width: 100%;" v-model="usuario.id_grupo">
-                    <option value>Por favor seleccione un Elemento</option>
-                    <option
-                      v-for="grupo in grupos"
-                      v-bind:key="grupo.id_grupo"
-                      :value="grupo.id_grupo"
-                    >{{ grupo.grupo }}</option>
-                  </select>
-                </div>-->
                 <br />
                 <div class="form-group">
-                  <button class="btn btn-primary">Guardar</button>
+                  <button class="btn btn-outline-success">Guardar</button>
                 </div>
               </div>
             </form>
@@ -263,18 +250,6 @@ export default {
       ApiService.post("/usuario", this.objectUsuario).catch(function(response) {
         alert("No se pudo crear el Usuario");
       });
-
-      /*  ApiService.post("/coordinador" id_semillero: this.director.id_semillero}).then(response => {
-        this.$router.push({ name: "directores" });
-      }); */
-      /* ApiService.post("/usuario", this.usuario)
-        .then(
-          response => this.$router.push({ name: "directores" })
-          // console.log(response.data)
-        )
-        .catch(error => console.log(error))
-        .finally(() => (this.loading = false));
-      this.appear(); */
     },
     /* Despliega mensaje de exito al guardar un registro */
     showAlert() {
@@ -331,14 +306,12 @@ export default {
       if (this.$v.$invalid) {
         return;
       }
-      console.log("aca2");
       //asigna como usuario un coordinador
       this.usuario.id_rol = 3;
       /*  */
       var id_sem = this.semilleroSeleccionado.id_semillero;
       ApiService.post("/usuario", this.usuario).then(response => {
         if (response.status == 200) {
-          console.log("response =", response);
           /* si fue 200 se creo el usario con exito,
             se llama al endpoint que lo asigna como un director de grupo */
           ApiService.post("/coordinador", {
@@ -350,7 +323,7 @@ export default {
               console.log("response =", response);
               if (response.status == 200) {
                 this.showAlert();
-                console.log("asignado");
+
                 this.$router.push({ name: "coordinadores" });
               } else if (response.status == 221) {
                 alert("El usuario ya es coordinador de otro semillero");
@@ -360,7 +333,13 @@ export default {
               console.error(err);
             });
         } else if (response.status == 221) {
-          alert("ya existe");
+          this.$swal({
+            type: "warning",
+            text: "el usuario ya existe",
+            timer: 2000,
+            showCancelButton: false,
+            showConfirmButton: false
+          });
         }
       });
     }

@@ -13,7 +13,7 @@
       </div>
       <div v-else></div>
       <section class="content">
-        <div style="width: 50%; margin: 0 auto;">
+        <div style="width: 80%; margin: 0 auto;">
           <div class="card card-success">
             <nav class="nav grey lighten-4 py-4">
               <a @click="back" class="nav-item nav-link">Atras</a>
@@ -25,7 +25,7 @@
                   <label for="semillero">Nombre</label>
                   <input
                     type="text"
-                    pattern="[A-Za-z0-9 ]+"
+                    pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+' ]+"
                     title=" Solo Letras y números. Tamaño máximo: 50"
                     v-model.trim="producto.producto"
                     id="producto"
@@ -39,7 +39,6 @@
                     <span
                       v-if="!$v.producto.producto.maxLength"
                     >El campo no debe superar los 50 caracteres</span>
-                    <span v-if="!$v.producto.producto === ''">El campo</span>
                   </div>
                 </div>
 
@@ -139,7 +138,6 @@ export default {
         return;
       }
       this.updateProducto();
-      /* alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.grupo)); */
     },
 
     back() {

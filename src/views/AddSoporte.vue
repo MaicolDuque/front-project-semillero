@@ -7,7 +7,7 @@
     </section>
     <section v-else>
       <section class="content">
-        <div style="width: 50%; margin: 0 auto;">
+        <div style="width: 80%; margin: 0 auto;">
           <div class="card card-success">
             <nav class="nav grey lighten-4 py-4">
               <a @click="back" class="nav-item nav-link">Atras</a>
@@ -19,7 +19,7 @@
                   <label for="semillero">Nombre</label>
                   <input
                     type="text"
-                    pattern="[A-Za-z0-9 ]+"
+                    pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+' ]+"
                     title=" Solo Letras y números. Tamaño máximo: 50"
                     v-model.trim="soporte.soporte"
                     id="soporte"
@@ -39,8 +39,8 @@
                   <label for="semillero">Vinculo</label>
                   <input
                     type="text"
-                    pattern="[A-Za-z0-9 : . / @]+"
-                   title=" Solo Letras y números. Tamaño máximo: 255"
+                    pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+' ]+"
+                    title=" Solo Letras y números. Tamaño máximo: 255"
                     v-model.trim="soporte.vinculo"
                     id="Vinculo"
                     name="Vinculo"
@@ -52,7 +52,7 @@
                     <span v-if="!$v.soporte.vinculo.required">El campo es requerido</span>
                     <span
                       v-if="!$v.soporte.vinculo.maxLength"
-                    >El campo no debe superar los 255 caracteres</span>
+                    >El campo no debe superar los 250 caracteres</span>
                   </div>
                 </div>
                 <button type="submit" class="btn btn-outline-success">Agregar</button>
@@ -76,42 +76,9 @@ export default {
       soporte: {
         soporte: "",
         vinculo: "",
-        /*  responsable: "",
-        recursos: "",
-        registro: "",
-        estado: "", */
         id_producto: this.$route.params.id
       }
-      /* id_actividad: 0, */
-      /* mesesSelected: [],
-      periodo: {}, */
     };
-  },
-
-  created() {},
-  //Obtiene las tipos de usuarios una vez se llama al componente
-  mounted() {},
-  //comvierte el objeto->en un arreglo
-  computed: {},
-  computed: {
-    /*  mesesPeriodo() {
-      if (this.periodo.periodo) {
-        let idPeriodo = this.periodo.periodo.split("-")[1];
-        if (idPeriodo == "1") {
-          return this.meses1;
-        }
-        return this.meses2;
-      }
-    },
-
-    objectMesesSelected() {
-      return this.mesesSelected.map(mes => {
-        return {
-          id_actividad: this.id_actividad,
-          id_mes: mes
-        };
-      });
-    } */
   },
 
   //Reglas de validacion para VueValidate
@@ -121,7 +88,7 @@ export default {
         required,
         maxLength: maxLength(50)
       },
-      vinculo: { required, maxLength: maxLength(150) }
+      vinculo: { required, maxLength: maxLength(250) }
     }
   },
 
@@ -148,15 +115,6 @@ export default {
           this.errored = true;
         })
         .finally(() => (this.loading = false));
-
-      /* ApiService.post("/soporte", this.soporte)
-        .then(id => {
-          alert("Soporte creado");
-          this.back();
-        })
-        .catch(function(response) {
-          alert("No se pudo crear el soporte");
-        }); */
     },
     back() {
       this.$router.go(-1);
@@ -171,15 +129,9 @@ export default {
       }
 
       this.addSoporte();
-      /* alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.grupo)); */
     },
 
     onChange(e) {}
-
-    /* logica de enviar api de creacion de usuario y asignacion de grupo */
-
-    //this.addUsuario();
-    /* alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.usuario)); */
   }
 };
 </script>

@@ -1,6 +1,5 @@
 <template>
   <div style="padding:25px">
-    
     <div style="text-align: right; padding: 14px 1px;">
       <router-link to="/addcoordinador" tag="button" class="btn btn-outline-success">Agregar</router-link>
     </div>
@@ -8,7 +7,7 @@
       <div class="row">
         <div class="col-12">
           <div class="card">
-            <br>
+            <br />
             <h3 class="text-center">Coordinadores</h3>
             <!-- /.card-header -->
             <div class="card-body">
@@ -30,28 +29,26 @@
                 >
                   <thead>
                     <tr>
-                      <th>Documento</th>
-                      <th>Nombre</th>
-                      <th>Apellido</th>
-                      <th>Telefono</th>
-                      <th>Estado</th>
-                      <th>Email</th>
-                      <th>Tipo usuario</th>
-                      <!-- <th>Rol</th> -->
-                      <th>Semillero</th>
+                      <th data-priority="1">Nombre</th>
+                      <th data-priority="8">Documento</th>
+                      <th data-priority="5">Apellido</th>
+                      <th data-priority="6">Telefono</th>
+                      <th data-priority="7">Estado</th>
+                      <th data-priority="4">Email</th>
+                      <th data-priority="9">Tipo usuario</th>
+                      <th data-priority="3">Semillero</th>
                       <th data-priority="2">Acciones</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="item in usuarios" :key="item.id_usuario">
-                      <td>{{ item.documento }}</td>
                       <td>{{ item.nombre_usuario }}</td>
+                      <td>{{ item.documento }}</td>
                       <td>{{ item.apellido_usuario }}</td>
                       <td>{{ item.telefono }}</td>
                       <td>{{ item.estado }}</td>
                       <td>{{ item.email }}</td>
                       <td>{{ item.tipo_usuario }}</td>
-                      <!--  <td>{{ item.rol }}</td> -->
                       <td>{{ item.semillero }}</td>
                       <td>
                         <div class="btn-group" role="group">
@@ -92,14 +89,20 @@ export default {
     };
   },
   created() {
-    let user = JSON.parse(localStorage.user)
-    console.log(user.id_usuario)
+    let user = JSON.parse(localStorage.user);
+    console.log(user.id_usuario);
     ApiService.get(`/usuario/coordinador/${user.id_usuario}`)
       .then(response => {
-        console.log(response.status)
-        console.log(response.data)
+        console.log(response.status);
+        console.log(response.data);
         if (response.status === 204) {
-          alert("No existen Coordinadores para mostrar para mostrar");
+          this.$swal({
+            type: "info",
+            text: "No hay coordinadores para mostrar",
+            timer: 2000,
+            showCancelButton: false,
+            showConfirmButton: false
+          });
           this.usuarios = response.data;
         } else {
           this.usuarios = response.data;
@@ -153,12 +156,6 @@ export default {
         }
       });
     }
-    /* deleteDirector(id) {
-      ApiService.delete(`/usuario/${id}`).then(response => {
-        let i = this.usuarios.map(item => item.id_usuario).indexOf(id); // find index of your object
-        this.usuarios.splice(i, 1);
-      });
-    } */
   }
 };
 </script>

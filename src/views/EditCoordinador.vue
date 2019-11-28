@@ -17,7 +17,7 @@
       </div>
       <div v-else></div>
       <section class="content">
-        <div style="width: 50%; margin: 0 auto;">
+        <div style="width: 80%; margin: 0 auto;">
           <div class="card card-success">
             <router-link to="/coordinadores" class="nav-item nav-link">Coordinadores</router-link>
             <br />
@@ -48,7 +48,7 @@
                   <label for="nombre_usuario">Nombre</label>
                   <input
                     type="text"
-                    pattern="[A-Za-z ]+"
+                    pattern="[-a-zA-Z¨áéíóúÁÉÍÓÚ&amp;' ]+"
                     title=" Solo Letras. Tamaño máximo: 50"
                     v-model.trim="coordinador.nombre_usuario"
                     id="nombre_usuario"
@@ -71,7 +71,7 @@
                   <label for="apellido_usuario">Apellido</label>
                   <input
                     type="text"
-                    pattern="[A-Za-z ]+"
+                    pattern="[-a-zA-Z¨áéíóúÁÉÍÓÚ&amp;' ]+"
                     title=" Solo Letras. Tamaño máximo: 50"
                     v-model.trim="coordinador.apellido_usuario"
                     id="apellido_usuario"
@@ -151,11 +151,7 @@
                   <div class="form-group">
                     <label for="grupo">Semillero</label>
                     <br />
-                    <select
-                      class="custom-select browser-default"
-                      @change=" selectChangeSemillero"
-                      
-                    >
+                    <select class="custom-select browser-default" @change=" selectChangeSemillero">
                       <option value>Por favor seleccione un Elemento</option>
                       <option
                         v-for="semillero in showSemilleros"
@@ -168,7 +164,7 @@
                   </div>
                 </template>
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Actualizar</button>
+                  <button type="submit" class="btn btn-outline-success">Actualizar</button>
                 </div>
               </div>
             </form>
@@ -237,10 +233,6 @@ export default {
     ApiService.get("/tipousuario").then(response => {
       this.tipoUsuarios = response.data;
     });
-
-    /* ApiService.get("/rol").then(response => {
-      this.roles = response.data;
-    }); */
   },
   //Reglas de validacion para VueValidate
   validations: {
@@ -275,9 +267,7 @@ export default {
       if (this.$v.$invalid) {
         return;
       }
-
       this.updateCoordinador();
-      /* alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.grupo)); */
     },
     showAlert() {
       this.$swal({
@@ -295,10 +285,15 @@ export default {
         `usuario/${this.$route.params.id}`,
         this.objectcoordinador
       ).catch(function(response) {
-        alert("No se pudo actualizar el usuario");
+        this.$swal({
+          type: "warning",
+          text: "No se pudo actualizar el usuario",
+          timer: 2000,
+          showCancelButton: false,
+          showConfirmButton: false
+        });
       });
-      /* console.log(this.$route.params.id);
-      console.log("id grupo" + this.grupoSeleccionado.id_grupo); */
+
       if (this.coordinador.semillero == null) {
         ApiService.post("/coordinador", {
           //si es nulo lo crea como coordinador
@@ -310,7 +305,9 @@ export default {
             this.$router.push({ name: "coordinadores" });
           })
           .catch(function(response) {
-            alert("No se pudo actualizar el coordinador que no tenia grupo");
+            alert(
+              "No se pudo actualizar el coordinador que no tenia semillero"
+            );
           });
       } else if (this.coordinador.semillero != null) {
         //si  existe en la tabla directores lo actualizo
@@ -324,36 +321,15 @@ export default {
             this.$router.push({ name: "coordinadores" });
           })
           .catch(function(response) {
-            alert(
-              "No se pudo actualizar el coordinador que ya tenia semillero"
-            );
+            this.$swal({
+              type: "warning",
+              text: "no fue posible actualizar el registro",
+              timer: 2000,
+              showCancelButton: false,
+              showConfirmButton: false
+            });
           });
       }
-
-      /* ApiService.put(`director/${this.$route.params.id}`, {
-        id_grupo: this.grupoSeleccionado.id_grupo
-      })
-        .then(response => {
-          this.showAlert();
-          this.$router.push({ name: "directores" });
-        })
-        .catch(function(response) {
-          alert("No se pudo actualizar el director");
-        }); */
-      /*  //event.preventDefault();
-      console.log(this.coordinador);
-      ApiService.put(
-        `usuario/${this.$route.params.id}`,
-        this.objectcoordinador
-      ).catch(function(response) {
-        alert("No se pudo crear el semillero");
-      });
-      console.log(this.$route.params.id);
-      ApiService.put(`coordinador/${this.$route.params.id}`, {
-        id_semillero: this.coordinador.id_semillero
-      }).then(response => {
-        this.$router.push({ name: "coordinadores" });
-      }); */
     }
   },
 

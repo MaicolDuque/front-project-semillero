@@ -13,19 +13,19 @@
       </div>
       <div v-else></div>
       <section class="content">
-        <div style="width: 50%; margin: 0 auto;">
+        <div style="width: 80%; margin: 0 auto;">
           <div class="card card-success">
             <nav class="nav grey lighten-4 py-4">
               <a @click="back" class="nav-item nav-link">Atras</a>
             </nav>
-            <h3 class="text-center">Agregar Producto actividad</h3>
+            <h3 class="text-center">Agregar Producto Actividad</h3>
             <form @submit.prevent="handleSubmit">
               <div class="card-body">
                 <div class="form-group">
                   <label for="semillero">Nombre</label>
                   <input
                     type="text"
-                    pattern="[A-Za-z0-9 ]+"
+                    pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+' ]+"
                     title=" Solo Letras y números. Tamaño máximo: 50"
                     v-model.trim="producto.producto"
                     id="producto"

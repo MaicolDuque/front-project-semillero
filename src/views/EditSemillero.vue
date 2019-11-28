@@ -13,7 +13,7 @@
       </div>
       <div v-else></div>
       <section class="content">
-        <div style="width: 50%; margin: 0 auto;">
+        <div style="width: 80%; margin: 0 auto;">
           <div class="card card-success">
             <router-link to="/semilleros" class="nav-item nav-link">Semilleros</router-link>
             <br />
@@ -24,7 +24,7 @@
                   <label for="semillero">Nombre</label>
                   <input
                     type="text"
-                    pattern="[A-Za-z0-9 ]+"
+                    pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+' ]+"
                     title=" Solo Letras y números. Tamaño máximo: 50"
                     v-model.trim="semillero.semillero"
                     id="semillero"
@@ -38,14 +38,13 @@
                     <span
                       v-if="!$v.semillero.semillero.maxLength"
                     >El campo no debe superar los 50 caracteres</span>
-                    <span v-if="!$v.semillero.semillero === ''">El campo</span>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="semillero">Objetivo</label>
+                  <label for="objetivo">Objetivo</label>
                   <input
                     type="text"
-                    pattern="[A-Za-z0-9 ]+"
+                    pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+' ]+"
                     title=" Solo Letras y números. Tamaño máximo: 200"
                     v-model.trim="semillero.objetivo"
                     id="objetivo"
@@ -62,10 +61,10 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="semillero">Descripción</label>
+                  <label for="descripcion">Descripción</label>
                   <input
                     type="text"
-                    pattern="[A-Za-z0-9. ]+"
+                    pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+' ]+"
                     title=" Solo Letras y números. Tamaño máximo: 200"
                     v-model.trim="semillero.descripcion"
                     id="descripcion"

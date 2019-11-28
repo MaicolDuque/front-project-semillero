@@ -5,7 +5,7 @@
       <p>Lo sentimos, no es posible Guardar el registro en este momento</p>
     </section>
     <section class="content">
-      <div style="width: 50%; margin: 0 auto;">
+      <div style="width: 80%; margin: 0 auto;">
         <div class="card card-success">
           <form @submit.prevent="handleSubmit">
             <div class="card-body">
@@ -27,17 +27,17 @@
                   :class="{ 'is-invalid': submitted && $v.usuario.documento.$error }"
                 />
                 <div v-if="submitted && $v.usuario.documento.$error" class="invalid-feedback">
-                  <span v-if="!$v.usuario.documento.required">El campo nombre es requerido</span>
+                  <span v-if="!$v.usuario.documento.required">El campo es requerido</span>
                   <span
                     v-if="!$v.usuario.documento.maxLength"
-                  >El nombre no debe superar los 50 caracteres</span>
+                  >El campo no debe superar los 12 caracteres</span>
                 </div>
               </div>
               <div class="form-group">
                 <label for="nombre_usuario">Nombre</label>
                 <input
                   type="text"
-                  pattern="[A-Za-z á é í ú ´ ó]+"
+                  pattern="[-a-zA-Z¨áéíóúÁÉÍÓÚ&amp;' ]+"
                   title=" Solo Letras. Tamaño máximo: 50"
                   v-model.trim="usuario.nombre_usuario"
                   id="nombre_usuario"
@@ -57,7 +57,7 @@
                 <label for="apellido_usuario">Apellido</label>
                 <input
                   type="text"
-                  pattern="[A-Za-z á é í ú ´ ó]+"
+                  pattern="[-a-zA-Z¨áéíóúÁÉÍÓÚ&amp;' ]+"
                   title=" Solo Letras. Tamaño máximo: 50"
                   v-model.trim="usuario.apellido_usuario"
                   id="apellido_usuario"
@@ -88,7 +88,7 @@
                   :class="{ 'is-invalid': submitted && $v.usuario.email.$error }"
                 />
                 <div v-if="submitted && $v.usuario.email.$error" class="invalid-feedback">
-                  <span v-if="!$v.usuario.email.required">El campo correo es requerido</span>
+                  <span v-if="!$v.usuario.email.required">El campo es requerido</span>
                   <span v-if="!$v.usuario.email">Email no Valido</span>
                   <span
                     v-if="!$v.usuario.email.maxLength"
@@ -151,7 +151,7 @@
               </div>
               <br />
               <div class="form-group">
-                <button class="btn btn-primary">Guardar</button>
+                <button class="btn btn-outline-success">Guardar</button>
               </div>
             </div>
           </form>
@@ -170,18 +170,15 @@ export default {
   data() {
     return {
       errored: false,
-      /* director: {}, */
       grupos: [],
       grupoSeleccionado: {
         id_grupo: ""
       },
-      /* value: "", */
       options: [
         { text: "Activo", value: "1" },
         { text: "Inactivo", value: "0" }
       ],
       Tipos_Usuarios: {},
-
       usuario: {
         documento: "",
         nombre_usuario: "",
@@ -245,9 +242,6 @@ export default {
       estado: { required },
       id_tipo_usuario: { required }
     }
-    /* grupo: {
-      id_grupo: { required }
-    } */
   },
 
   methods: {
@@ -306,7 +300,6 @@ export default {
       });
 
       this.grupoSeleccionado.id_grupo = i;
-      /* alert(this.grupoSeleccionado.id_grupo); */
     },
     //Valida el formulario
     handleSubmit(e) {
@@ -317,11 +310,10 @@ export default {
       if (this.$v.$invalid) {
         return;
       }
-      /* console.log("aca2"); */
       //asigna como usuario un Director
       this.usuario.id_rol = 2;
-      /*  */
       var id_gr = this.grupoSeleccionado.id_grupo;
+
       ApiService.post("/usuario", this.usuario).then(response => {
         if (response.status == 200) {
           /* si fue 200 se creo el usario con exito,
@@ -332,10 +324,8 @@ export default {
             id_grupo: id_gr
           })
             .then(response => {
-              /* console.log("response =", response); */
               if (response.status == 200) {
                 this.showAlert();
-                /* console.log("asignado"); */
                 this.$router.push({ name: "directores" });
               } else if (response.status == 221) {
                 alert("El usuario ya es director de otro grupo");
@@ -353,7 +343,6 @@ export default {
             showConfirmButton: false
           });
         }
-        //return response.json();
       });
     }
   }

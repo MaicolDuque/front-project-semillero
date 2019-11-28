@@ -23,34 +23,30 @@
                 </div>
                 <div v-else></div>
                 <table
-                  id="tblexample2"
+                  id="tblDirectores"
                   class="table table-bordered table-hover"
                   style="width: 100%"
                 >
                   <thead>
                     <tr>
-                      <th>Documento</th>
-                      <th>Nombre</th>
-                      <th>Apellido</th>
-                      <th>Telefono</th>
-                      <!-- <th>Estado</th> -->
-                      <th>Email</th>
-                      <th>Tipo usuario</th>
-
-                      <th>Grupo</th>
+                      <th data-priority="1">Nombre</th>
+                      <th data-priority="7">Documento</th>
+                      <th data-priority="5">Apellido</th>
+                      <th data-priority="6">Telefono</th>
+                      <th data-priority="4">Email</th>
+                      <th data-priority="8">Tipo usuario</th>
+                      <th data-priority="3">Grupo</th>
                       <th data-priority="2">Acciones</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="item in usuarios" :key="item.id_usuario">
-                      <td>{{ item.documento }}</td>
                       <td>{{ item.nombre_usuario }}</td>
+                      <td>{{ item.documento }}</td>
                       <td>{{ item.apellido_usuario }}</td>
                       <td>{{ item.telefono }}</td>
-                      <!-- <td>{{ item.estado }}</td> -->
                       <td>{{ item.email }}</td>
                       <td>{{ item.tipo_usuario }}</td>
-
                       <td>{{ item.grupo }}</td>
                       <td>
                         <div class="btn-group" role="group">
@@ -100,7 +96,7 @@ export default {
         }
       })
       .then(res => {
-        $("#tblexample2").DataTable({
+        $("#tblDirectores").DataTable({
           responsive: true
         });
       })

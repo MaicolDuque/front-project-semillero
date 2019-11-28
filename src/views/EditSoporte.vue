@@ -14,7 +14,7 @@
       </div>
       <div v-else></div>
       <section class="content">
-        <div style="width: 50%; margin: 0 auto;">
+        <div style="width: 80%; margin: 0 auto;">
           <div class="card card-success">
             <nav class="nav grey lighten-4 py-4">
               <a @click="back" class="nav-item nav-link">Atras</a>
@@ -23,7 +23,7 @@
             <form @submit.prevent="handleSubmit">
               <div class="card-body">
                 <div class="form-group">
-                  <label for="semillero">Nombre</label>
+                  <label for="soporte">Nombre</label>
                   <input
                     type="text"
                     pattern="[A-Za-z0-9 ]+"
@@ -43,10 +43,10 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="semillero">Vinculo</label>
+                  <label for="vinculo">Vinculo</label>
                   <input
                     type="text"
-                    pattern="[A-Za-z0-9 ]+"
+                    pattern="[A-Za-z0-9 ./ ? = @  :]+"
                     title=" Solo Letras y números. Tamaño máximo: 50"
                     v-model.trim="soporte.vinculo"
                     id="vinculo"
@@ -59,7 +59,7 @@
                     <span v-if="!$v.soporte.vinculo.required">El campo es requerido</span>
                     <span
                       v-if="!$v.soporte.vinculo.maxLength"
-                    >El campo no debe superar los 50 caracteres</span>
+                    >El campo no debe superar los 250 caracteres</span>
                   </div>
                 </div>
 
@@ -85,15 +85,7 @@ export default {
       soporte: {
         soporte: "",
         vinculo: ""
-        /*  responsable: "",
-        recursos: "",
-        registro: "",
-        estado: "", */
-        //id_producto: this.$route.params.id
       }
-      /* id_actividad: 0, */
-      /* mesesSelected: [],
-      periodo: {}, */
     };
   },
 
@@ -118,30 +110,6 @@ export default {
       })
       .finally(() => (this.loading = false));
   },
-  //Obtiene las tipos de usuarios una vez se llama al componente
-  mounted() {},
-  //comvierte el objeto->en un arreglo
-  computed: {},
-  computed: {
-    /*  mesesPeriodo() {
-      if (this.periodo.periodo) {
-        let idPeriodo = this.periodo.periodo.split("-")[1];
-        if (idPeriodo == "1") {
-          return this.meses1;
-        }
-        return this.meses2;
-      }
-    },
-
-    objectMesesSelected() {
-      return this.mesesSelected.map(mes => {
-        return {
-          id_actividad: this.id_actividad,
-          id_mes: mes
-        };
-      });
-    } */
-  },
 
   //Reglas de validacion para VueValidate
   validations: {
@@ -150,7 +118,7 @@ export default {
         required,
         maxLength: maxLength(50)
       },
-      vinculo: { required, maxLength: maxLength(150) }
+      vinculo: { required, maxLength: maxLength(250) }
     }
   },
 
@@ -197,14 +165,12 @@ export default {
 
     handleSubmit(e) {
       this.submitted = true;
-
       // Se detiene aqui si es invalido, de lo contrario ejecuta el submit()
       this.$v.$touch();
       if (this.$v.$invalid) {
         return;
       }
       this.updateSoporte();
-      /* alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.grupo)); */
     }
   }
 };

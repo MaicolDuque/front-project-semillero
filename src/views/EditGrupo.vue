@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav class="nav grey lighten-4 py-4"></nav>
+    <br />
     <section v-if="errored">
       <p>Lo sentimos, no es posible Actualizar el registro en este momento</p>
     </section>
@@ -13,7 +13,7 @@
       </div>
       <div v-else></div>
       <section class="content">
-        <div style="width: 50%; margin: 0 auto;">
+        <div style="width: 80%; margin: 0 auto;">
           <div class="card card-success">
             <router-link to="/grupos" class="nav-item nav-link">Grupos</router-link>
             <h3 class="text-center">Editar Grupo</h3>
@@ -23,8 +23,8 @@
                   <label for="grupo">Grupo</label>
                   <input
                     type="text"
-                    pattern="[A-Z a-z 0-9 á é í ó ú / ()- - ]+"
-                    title=" Solo Letras y números. Tamaño máximo: 100"
+                    pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+' ]+"
+                    title=" Solo Letras y números. Tamaño máximo: 50"
                     v-model.trim="grupo.grupo"
                     id="grupo"
                     name="grupo"
@@ -36,14 +36,34 @@
                     <span v-if="!$v.grupo.grupo.required">El campo es requerido</span>
                     <span
                       v-if="!$v.grupo.grupo.maxLength"
-                    >El campo no debe superar los 100 caracteres</span>
+                    >El campo no debe superar los 50 caracteres</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="siglas">Siglas</label>
+                  <input
+                    type="text"
+                    pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+' ]+"
+                    title=" Solo Letras y números. Tamaño máximo: 10"
+                    v-model.trim="grupo.siglas"
+                    id="siglas"
+                    name="siglas"
+                    placeholder="Siglas"
+                    class="form-control"
+                    :class="{ 'is-invalid': submitted && $v.grupo.siglas.$error }"
+                  />
+                  <div v-if="submitted && $v.grupo.siglas.$error" class="invalid-feedback">
+                    <span v-if="!$v.grupo.siglas.required">El campo es requerido</span>
+                    <span
+                      v-if="!$v.grupo.siglas.maxLength"
+                    >El campo no debe superar los 10 caracteres</span>
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="cod_colciencias">Código Colciencias</label>
                   <input
                     type="text"
-                    pattern="[A-Za-z0-9 ]+"
+                    pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+' ]+"
                     title=" Solo Letras y números. Tamaño máximo: 10 caracteres"
                     v-model.trim="grupo.cod_colciencias"
                     id="cod_colciencias"
@@ -60,7 +80,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="cod_colciencias">Vinculo Codigo Colciencias</label>
+                  <label for="vinculo">Vinculo Codigo Colciencias</label>
                   <input
                     type="text"
                     pattern="[A-Za-z0-9 ./ ? = @  :]+"
@@ -76,7 +96,7 @@
                     <span v-if="!$v.grupo.vinculo.required">El campo es requerido</span>
                     <span
                       v-if="!$v.grupo.vinculo.maxLength"
-                    >El nombre no debe superar los 150 caracteres</span>
+                    >El campo no debe superar los 150 caracteres</span>
                   </div>
                 </div>
                 <div class="form-group">
@@ -96,13 +116,15 @@
                 </div>
                 <div class="form-group">
                   <label>Facultad</label>
-                  <select class="form-control" style="width: 100%;" v-model="grupo.id_facultad">
-                    <option
-                      v-for="facultad in facultades"
-                      v-bind:key="facultad.id_facultad"
-                      :value="facultad.id_facultad"
-                    >{{ facultad.facultad }}</option>
-                  </select>
+                  <div>
+                    <select class="form-control" style="width: 100%;" v-model="grupo.id_facultad">
+                      <option
+                        v-for="facultad in facultades"
+                        v-bind:key="facultad.id_facultad"
+                        :value="facultad.id_facultad"
+                      >{{ facultad.facultad }}</option>
+                    </select>
+                  </div>
                 </div>
                 <div class="form-group">
                   <button class="btn btn-outline-success">Actualizar</button>
@@ -129,6 +151,7 @@ export default {
       facultades: [],
       grupo: {
         grupo: "",
+        siglas: "",
         id_categoria: "",
         cod_colciencias: "",
         id_facultad: "",
@@ -165,7 +188,6 @@ export default {
         console.log(error);
         this.errored = true;
       });
-    // .then(res2 => $('.select2').select2())
 
     ApiService.get("/facultad")
       .then(response => {
@@ -176,8 +198,7 @@ export default {
         this.errored = true;
       });
   },
-  mounted() {},
-  computed: {},
+
   //Reglas de validacion para VueValidate
   validations: {
     grupo: {
@@ -188,7 +209,8 @@ export default {
       id_categoria: { required },
       cod_colciencias: { required, maxLength: maxLength(10) },
       id_facultad: { required },
-      vinculo: { required, maxLength: maxLength(150) }
+      vinculo: { required, maxLength: maxLength(150) },
+      siglas: { required, maxLength: maxLength(10) }
     }
   },
   methods: {

@@ -5,7 +5,7 @@
       <p>Lo sentimos, no es posible Guardar el registro en este momento</p>
     </section>
     <section class="content">
-      <div style="width: 50%; margin: 0 auto;">
+      <div style="width: 80%; margin: 0 auto;">
         <div class="card card-success">
           <form @submit.prevent="handleSubmit">
             <div class="card-body">
@@ -17,7 +17,7 @@
                 <label for="grupo">Grupo</label>
                 <input
                   type="text"
-                  pattern="[A-Za-z0-9_-:' á é í ú ´ ó ]+"
+                  pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+' ]+"
                   title=" Solo Letras y números. Tamaño máximo: 50"
                   v-model.trim="grupo.grupo"
                   id="grupo"
@@ -27,12 +27,30 @@
                   :class="{ 'is-invalid': submitted && $v.grupo.grupo.$error }"
                 />
                 <div v-if="submitted && $v.grupo.grupo.$error" class="invalid-feedback">
-                  <span v-if="!$v.grupo.grupo.required">El campo requerido</span>
-                  <span v-if="!$v.grupo.grupo.maxLength">El nombre no debe superar los 50 caracteres</span>
+                  <span v-if="!$v.grupo.grupo.required">El campo es requerido</span>
+                  <span v-if="!$v.grupo.grupo.maxLength">El campo no debe superar los 50 caracteres</span>
                 </div>
               </div>
               <div class="form-group">
-                <label for="facultad">Categoria</label>
+                <label for="siglas">Siglas</label>
+                <input
+                  type="text"
+                  pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+' ]+"
+                  title=" Solo Letras y números. Tamaño máximo: 10"
+                  v-model.trim="grupo.siglas"
+                  id="siglas"
+                  name="siglas"
+                  placeholder="Siglas"
+                  class="form-control"
+                  :class="{ 'is-invalid': submitted && $v.grupo.siglas.$error }"
+                />
+                <div v-if="submitted && $v.grupo.siglas.$error" class="invalid-feedback">
+                  <span v-if="!$v.grupo.siglas.required">El campo es requerido</span>
+                  <span v-if="!$v.grupo.siglas.maxLength">El campo no debe superar los 10 caracteres</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="categoria">Categoria</label>
                 <br />
                 <select
                   class="custom-select browser-default"
@@ -54,7 +72,7 @@
                 <label for="cod_colciencias">Código Colciencias</label>
                 <input
                   type="text"
-                  pattern="[A-Za-z0-9 ]+"
+                  pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+' ]+"
                   title=" Solo Letras y números. Tamaño máximo: 10 caracteres"
                   v-model.trim="grupo.cod_colciencias"
                   id="cod_colciencias"
@@ -71,10 +89,10 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="cod_colciencias">Vinculo Colciencias</label>
+                <label for="vinculo">Vinculo Colciencias</label>
                 <input
                   type="text"
-                  pattern="[A-Za-z0-9:_'?./ ]+"
+                  pattern="[A-Za-z0-9 ./ ? = @  :]+"
                   title=" Solo Letras, números,punto, '/' Tamaño máximo: 150 caracteres"
                   v-model.trim="grupo.vinculo"
                   id="vinculo"
@@ -87,7 +105,7 @@
                   <span v-if="!$v.grupo.vinculo.required">El campo es requerido</span>
                   <span
                     v-if="!$v.grupo.vinculo.maxLength"
-                  >El nombre no debe superar los 50 caracteres</span>
+                  >El campo no debe superar los 150 caracteres</span>
                 </div>
               </div>
               <div class="form-group">
@@ -125,13 +143,7 @@
 import { required, minLength, maxLength } from "vuelidate/lib/validators";
 import ApiService from "../services/api.service";
 import Swal from "sweetalert2/dist/sweetalert2.all.min.js";
-$(function() {
-  $("#datepicker").datepicker({
-    dateFormat: "yy",
-    changeYear: true,
-    changeMonth: false
-  });
-});
+
 export default {
   data() {
     return {
@@ -143,11 +155,13 @@ export default {
       //Almacena los datos del grupo a crear
       grupo: {
         grupo: "",
+        siglas: "",
         id_categoria: "",
         cod_colciencias: "",
         id_facultad: "",
         vinculo: ""
       },
+      //para validar formulario
       submitted: false
     };
   },
@@ -173,10 +187,12 @@ export default {
       id_categoria: { required },
       cod_colciencias: { required, maxLength: maxLength(10) },
       id_facultad: { required },
-      vinculo: { required, maxLength: maxLength(150) }
+      vinculo: { required, maxLength: maxLength(150) },
+      siglas: { required, maxLength: maxLength(10) }
     }
   },
   methods: {
+    //despliega mensaje cuando ya existe un grupo conigual nombre
     showAlertGrupoExistente() {
       this.$swal({
         type: "error",
@@ -235,7 +251,6 @@ export default {
           this.errored = true;
         })
         .finally(() => (this.loading = false));
-      //
     },
     /*
     Cuendo se seleciona una opción del elemento <select></select>
@@ -259,21 +274,18 @@ export default {
           i = element.id_categoria;
         }
       });
-      //asigna el el id segun facultad selecionada
+      //asigna  el id segun facultad selecionada
       this.grupo.id_categoria = i;
     },
     //Valida el formulario
     handleSubmit(e) {
       this.submitted = true;
-
       // Se detiene aqui si es invalido, de lo contrario ejecuta el submit()
       this.$v.$touch();
       if (this.$v.$invalid) {
         return;
       }
-
       this.addGrupo();
-      /* alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.grupo)); */
     }
   }
 };

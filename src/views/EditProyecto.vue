@@ -13,7 +13,7 @@
       </div>
       <div v-else></div>
       <section class="content">
-        <div style="width: 50%; margin: 0 auto;">
+        <div style="width: 80%; margin: 0 auto;">
           <div class="card card-success">
             <nav class="nav grey lighten-4 py-4">
               <a @click="back" class="nav-item nav-link">Proyectos</a>
@@ -25,6 +25,7 @@
                   <label for="grupo">Proyecto</label>
                   <input
                     type="text"
+                    pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+' ]+"
                     v-model="proyecto.proyecto"
                     id="proyecto"
                     name="proyecto"
@@ -34,10 +35,12 @@
                   />
 
                   <div v-if="submitted && $v.proyecto.proyecto.$error" class="invalid-feedback">
-                    <span v-if="!$v.proyecto.proyecto.required">El campo nombre es requerido</span>
+                    <span v-if="!$v.proyecto.proyecto.required">El campo es requerido</span>
+                    <span
+                      v-if="!$v.proyecto.proyecto.maxLength"
+                    >El campo no debe superar los 50 caracteres</span>
                   </div>
                 </div>
-
                 <br />
                 <div class="form-group">
                   <button class="btn btn-outline-success">Actualizar</button>
@@ -54,7 +57,6 @@
 <script>
 import { required, minLength, maxLength } from "vuelidate/lib/validators";
 import ApiService from "../services/api.service";
-// eslint-disable-line no-use-before-define
 import Swal from "sweetalert2/dist/sweetalert2.all.min.js";
 
 export default {

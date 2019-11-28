@@ -5,7 +5,7 @@
       <p>Lo sentimos, no es posible Guardar el registro en este momento</p>
     </section>
     <section class="content">
-      <div style="width: 50%; margin: 0 auto;">
+      <div style="width: 80%; margin: 0 auto;">
         <div class="card card-success">
           <a @click="back" class="nav-item nav-link">Periodos</a>
           <h3 class="text-center">Agregar Proyecto</h3>
@@ -16,7 +16,7 @@
                   <label for="grupo">Proyecto</label>
                   <input
                     type="text"
-                    pattern="[A-Za-z0-9_-:' á é í ú ´ ó ]+"
+                    pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+' ]+"
                     title=" Solo Letras y números. Tamaño máximo: 50"
                     v-model.trim="proyecto.proyecto"
                     id="proyecto"
@@ -29,18 +29,9 @@
                     <span v-if="!$v.proyecto.proyecto.required">El campo requerido</span>
                     <span
                       v-if="!$v.proyecto.proyecto.maxLength"
-                    >El campo no debe superar los 50 caracteres</span>
+                    >El campo no debe superar los 80 caracteres</span>
                   </div>
                 </div>
-
-                <!--  <input
-                  type="text"
-                  v-model="proyecto.proyecto"
-                  id="Proyecto"
-                  name="Proyecto"
-                  placeholder="Proyecto"
-                  class="form-control"
-                />-->
                 <br />
                 <div class="form-group">
                   <button class="btn btn-outline-success">Guardar</button>
@@ -54,11 +45,6 @@
   </div>
 </template> 
 
-
-
-
-
-
 <script>
 import { required, minLength, maxLength } from "vuelidate/lib/validators";
 import ApiService from "../services/api.service";
@@ -71,15 +57,8 @@ export default {
       errored: false,
       proyecto: {
         proyecto: "",
-        /*  responsable: "",
-        recursos: "",
-        registro: "",
-        estado: "", */
         id_periodo: this.$route.params.periodo
       },
-      /* id_actividad: 0, */
-      /* mesesSelected: [],
-      periodo: {}, */
       value: ""
     };
   },
@@ -87,30 +66,6 @@ export default {
     ApiService.get(`/periodo/${this.$route.params.periodo}`).then(response => {
       this.periodo = response.data[0];
     });
-  },
-  //Obtiene las tipos de usuarios una vez se llama al componente
-  mounted() {},
-  //comvierte el objeto->en un arreglo
-  computed: {},
-  computed: {
-    /*  mesesPeriodo() {
-      if (this.periodo.periodo) {
-        let idPeriodo = this.periodo.periodo.split("-")[1];
-        if (idPeriodo == "1") {
-          return this.meses1;
-        }
-        return this.meses2;
-      }
-    },
-
-    objectMesesSelected() {
-      return this.mesesSelected.map(mes => {
-        return {
-          id_actividad: this.id_actividad,
-          id_mes: mes
-        };
-      });
-    } */
   },
 
   //Reglas de validacion para VueValidate

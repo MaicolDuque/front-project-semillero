@@ -4,7 +4,7 @@
       <nav class="nav grey lighten-4 py-4"></nav>
 
       <div class="card card-primary card-outline">
-        <h3 class="text-center">Agregar Integrante - {{this.periodo.periodo}}</h3>
+        <h3 class="text-center">Agregar Integrante</h3>
         <a @click="back" class="nav-item nav-link">Periodos</a>
         <div class="card-header p-0 pt-1 border-bottom-0">
           <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
@@ -40,46 +40,47 @@
               role="tabpanel"
               aria-labelledby="custom-tabs-two-home-tab"
             >
-              <table
-                id="add-integrantes"
-                class="table table-bordered table-hover"
-                style="width: 100%"
-              >
-                <thead>
-                  <tr>
-                    <th>Documento</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Email</th>
-                    <!-- <th>Tipo usuario</th> -->
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-if="integrantes.length == 0">
-                    <td
-                      colspan="6"
-                      style="text-align: center; font-size: 1.6em;"
-                    >No hay integrantes de periodos anteriores...</td>
-                  </tr>
-                  <tr v-for="item in integrantes" :key="item.id_usuario">
-                    <td>{{ item.documento }}</td>
-                    <td>{{ item.nombre_usuario }}</td>
-                    <td>{{ item.apellido_usuario }}</td>
-                    <td>{{ item.email }}</td>
-                    <!-- <td>{{ item.tipo_usuario }}</td> -->
+              <div class="table-responsive">
+                <table
+                  id="add-integrantes"
+                  class="table table-bordered table-hover"
+                  style="width: 100%"
+                >
+                  <thead>
+                    <tr>
+                      <th data-priority="1">Nombre</th>
+                      <th data-priority="5">Documento</th>
+                      <th data-priority="4">Apellido</th>
+                      <th data-priority="3">Email</th>
+                      <th data-priority="2">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-if="integrantes.length == 0">
+                      <td
+                        colspan="6"
+                        style="text-align: center; font-size: 1.6em;"
+                      >No hay integrantes de periodos anteriores...</td>
+                    </tr>
+                    <tr v-for="item in integrantes" :key="item.id_usuario">
+                      <td>{{ item.nombre_usuario }}</td>
+                      <td>{{ item.documento }}</td>
+                      <td>{{ item.apellido_usuario }}</td>
+                      <td>{{ item.email }}</td>
+                      <!-- <td>{{ item.tipo_usuario }}</td> -->
 
-                    <td>
-                      <div class="btn-group" role="group">
-                        <button
-                          class="btn btn-primary"
-                          @click="añadirUsuario(item.id_usuario)"
-                        >Agregar</button>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                      <td>
+                        <div class="btn-group" role="group">
+                          <button
+                            class="btn btn-primary"
+                            @click="añadirUsuario(item.id_usuario)"
+                          >Agregar</button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
 
             <div
@@ -89,7 +90,7 @@
               aria-labelledby="custom-tabs-two-profile-tab"
             >
               <section class="content">
-                <div style="width: 50%; margin: 0 auto;">
+                <div style="width: 80%; margin: 0 auto;">
                   <div class="card card-success">
                     <form @submit.prevent="handleSubmit">
                       <div class="card-body">
@@ -110,17 +111,17 @@
                             v-if="submitted && $v.usuario.documento.$error"
                             class="invalid-feedback"
                           >
-                            <span v-if="!$v.usuario.documento.required">El campo nombre es requerido</span>
+                            <span v-if="!$v.usuario.documento.required">El campo es requerido</span>
                             <span
                               v-if="!$v.usuario.documento.maxLength"
-                            >El nombre no debe superar los 50 caracteres</span>
+                            >El campo no debe superar los 12 caracteres</span>
                           </div>
                         </div>
                         <div class="form-group">
                           <label for="nombre_usuario">Nombre</label>
                           <input
                             type="text"
-                            pattern="[A-Za-z ]+"
+                            pattern="[-a-zA-Z¨áéíóúÁÉÍÓÚ&amp;' ]+"
                             title=" Solo Letras. Tamaño máximo: 50"
                             v-model.trim="usuario.nombre_usuario"
                             id="nombre_usuario"
@@ -143,7 +144,7 @@
                           <label for="apellido_usuario">Apellido</label>
                           <input
                             type="text"
-                            pattern="[A-Za-z ]+"
+                            pattern="[-a-zA-Z¨áéíóúÁÉÍÓÚ&amp;' ]+"
                             title=" Solo Letras. Tamaño máximo: 50"
                             v-model.trim="usuario.apellido_usuario"
                             id="apellido_usuario"
@@ -163,7 +164,7 @@
                           </div>
                         </div>
                         <div class="form-group">
-                          <label for="correo">correo</label>
+                          <label for="email">correo</label>
                           <input
                             type="text"
                             v-model.trim="usuario.email"
@@ -335,7 +336,7 @@ export default {
       })
         .then(response => {
           if (response.status === 200) {
-            console.log('ingresado')
+            console.log("ingresado");
             this.$swal({
               type: "success",
               text: "Registro creado con exito",
@@ -343,7 +344,7 @@ export default {
               showCancelButton: false,
               showConfirmButton: false
             });
-          }else{
+          } else {
             this.$swal({
               type: "warning",
               text: "Registro ya ha sido realizado ",
@@ -377,18 +378,6 @@ export default {
           console.log(error);
           this.errored = true;
         });
-
-      /*  ApiService.post("/director" id_grupo: this.director.id_grupo}).then(response => {
-        this.$router.push({ name: "directores" });
-      }); */
-      /* ApiService.post("/usuario", this.usuario)
-        .then(
-          response => this.$router.push({ name: "directores" })
-          // console.log(response.data)
-        )
-        .catch(error => console.log(error))
-        .finally(() => (this.loading = false));
-      this.appear(); */
     },
 
     back() {
@@ -459,7 +448,6 @@ export default {
                 } else if (response.status == 221) {
                   alert("El usuario ya es director de otro grupo");
                 }
-                //return response.json();
               })
               .catch(function(err) {
                 console.error(err);
@@ -473,7 +461,6 @@ export default {
               showConfirmButton: false
             });
           }
-          //return response.json();
         })
         .catch(function(err) {
           console.error(err);

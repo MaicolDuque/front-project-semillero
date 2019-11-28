@@ -3,7 +3,7 @@
     <br />
     <div class="container">
       <section class="content">
-        <div style="width: 50%; margin: 0 auto;">
+        <div style="width: 80%; margin: 0 auto;">
           <div class="card card-success">
             <nav class="nav grey lighten-4 py-4">
               <a @click="back" class="nav-item nav-link">Periodos</a>
@@ -15,8 +15,8 @@
                   <label for="grupo">Nombre</label>
                   <input
                     type="text"
-                    pattern="[A-Za-z0-9 ]+"
-                    title=" Solo Letras y números. Tamaño máximo: 50"
+                    pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+' ]+"
+                    title=" Solo Letras y números. Tamaño máximo: 80"
                     v-model.trim="actividad.actividad"
                     id="actividad"
                     name="actividad"
@@ -28,14 +28,14 @@
                     <span v-if="!$v.actividad.actividad.required">El campo requerido</span>
                     <span
                       v-if="!$v.actividad.actividad.maxLength"
-                    >El nombre no debe superar los 50 caracteres</span>
+                    >El nombre no debe superar los 80 caracteres</span>
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="grupo">Responsable</label>
                   <input
                     type="text"
-                    pattern="[A-Za-z0-9_-:' á é í ú ´ ó ]+"
+                    pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+' ]+"
                     title=" Solo Letras y números. Tamaño máximo: 50"
                     v-model.trim="actividad.responsable"
                     id="responsable"
@@ -55,8 +55,8 @@
                   <label for="grupo">Recursos</label>
                   <input
                     type="text"
-                    pattern="[A-Za-z0-9_-:' á é í ú ´ ó ]+"
-                    title=" Solo Letras y números. Tamaño máximo: 50"
+                    pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+' ]+"
+                    title=" Solo Letras y números. Tamaño máximo: 80"
                     v-model.trim="actividad.recursos"
                     id="recursos"
                     name="recursos"
@@ -68,14 +68,14 @@
                     <span v-if="!$v.actividad.recursos.required">El campo requerido</span>
                     <span
                       v-if="!$v.actividad.recursos.maxLength"
-                    >El nombre no debe superar los 50 caracteres</span>
+                    >El nombre no debe superar los 80 caracteres</span>
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="grupo">Registro</label>
                   <input
                     type="text"
-                    pattern="[A-Za-z0-9_-:' á é í ú ´ ó ]+"
+                    pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+' ]+"
                     title=" Solo Letras y números. Tamaño máximo: 50"
                     v-model.trim="actividad.registro"
                     id="registro"
@@ -124,7 +124,6 @@
                     >{{ option.text }}</option>
                   </select>
                 </div>
-
                 <br />
                 <div class="form-group">
                   <button class="btn btn-outline-success">Agregar</button>
@@ -160,7 +159,7 @@ export default {
       periodo: {},
       value: "",
       options: [
-        /*  { text: " ", value: "0" }, */
+        { text: "Pendiente", value: "0" },
         { text: "Se realizó", value: "1" },
         { text: "Se aplazó", value: "2" },
         { text: "No se realizó", value: "3" }
@@ -193,10 +192,7 @@ export default {
         this.errored = true;
       });
   },
-  //Obtiene las tipos de usuarios una vez se llama al componente
-  mounted() {},
-  //comvierte el objeto->en un arreglo
-  computed: {},
+
   computed: {
     mesesPeriodo() {
       if (this.periodo.periodo) {
@@ -223,11 +219,11 @@ export default {
     actividad: {
       actividad: {
         required,
-        maxLength: maxLength(50)
+        maxLength: maxLength(80)
       },
-      responsable: { required },
-      recursos: { required, maxLength: maxLength(10) },
-      registro: { required }
+      responsable: { required, maxLength: maxLength(50) },
+      recursos: { required, maxLength: maxLength(80) },
+      registro: { required, maxLength: maxLength(50) }
     }
   },
   methods: {
@@ -268,17 +264,13 @@ export default {
         });
     },
     handleSubmit(e) {
-      alert("aca1");
       this.submitted = true;
-
       // Se detiene aqui si es invalido, de lo contrario ejecuta el submit()
       this.$v.$touch();
       if (this.$v.$invalid) {
         return;
       }
-
       this.addActividad();
-      /* alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.grupo)); */
     },
     onChange(e) {}
   }

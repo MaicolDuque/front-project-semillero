@@ -6,7 +6,7 @@
     <div style="text-align: right; padding: 14px 1px;">
       <a @click="addProducto" tag="button" class="btn btn-outline-success">Agregar</a>
     </div>
-    <section class="card card-primary card-outline">
+    <section class="card card-success card-outline">
       <div class="row">
         <div class="col-12">
           <div class="card">
@@ -24,47 +24,47 @@
                   </div>
                 </div>
                 <div v-else></div>
-                <table
-                  id="tblexample2"
-                  class="table table-bordered table-hover"
-                  style="width: 100%"
-                >
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Nombre</th>
-                      <th>Tipo</th>
-                      <th data-priority="2">Acciones</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="item in productos" :key="item.id_producto">
-                      <td>{{ item.id_producto }}</td>
-                      <td>{{ item.producto }}</td>
-                      <td>{{ item.tipo_producto }}</td>
+                <div class="table-responsive">
+                  <table
+                    id="tblProductoProyecto"
+                    class="table table-bordered table-hover"
+                    style="width: 100%"
+                  >
+                    <thead>
+                      <tr>
+                        <th data-priority="1">Nombre</th>
+                        <th data-priority="3">Tipo</th>
+                        <th data-priority="2">Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="item in productos" :key="item.id_producto">
+                        <td>{{ item.producto }}</td>
+                        <td>{{ item.tipo_producto }}</td>
 
-                      <td>
-                        <div class="btn-group" role="group">
-                          <router-link
-                            :to="{name: 'editar-producto', params: { id: item.id_producto}}"
-                            class="btn btn-outline-primary"
-                            style="margin: 2px"
-                          >Editar</router-link>
-                          <button
-                            style="margin: 2px"
-                            class="btn btn-outline-danger"
-                            @click="deleteProducto(item.id_producto)"
-                          >Eliminar</button>
-                          <button
-                            class="btn btn-outline-warning"
-                            style="margin: 2px"
-                            @click="verSoportes(item.id_producto)"
-                          >Ver Soportes</button>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                        <td>
+                          <div class="btn-group" role="group">
+                            <router-link
+                              :to="{name: 'editar-producto', params: { id: item.id_producto}}"
+                              class="btn btn-outline-primary"
+                              style="margin: 2px"
+                            >Editar</router-link>
+                            <button
+                              style="margin: 2px"
+                              class="btn btn-outline-danger"
+                              @click="deleteProducto(item.id_producto)"
+                            >Eliminar</button>
+                            <button
+                              class="btn btn-outline-warning"
+                              style="margin: 2px"
+                              @click="verSoportes(item.id_producto)"
+                            >Ver Soportes</button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </section>
             </div>
             <!-- /.card-body -->
@@ -98,12 +98,11 @@ export default {
           });
           this.productos = response.data;
         } else {
-          /*  console.log(response.data); */
           this.productos = response.data;
         }
       })
       .then(res => {
-        $("#tblexample2").DataTable({
+        $("#tblProductoProyecto").DataTable({
           responsive: true
         });
       })
@@ -177,14 +176,6 @@ export default {
         }
       });
     },
-
-    /* deleteProducto(id) {
-      ApiService.delete(`/producto/${id}`).then(response => {
-        let i = this.productos.map(item => item.id_usuario).indexOf(id); // find index of your object
-        this.productos.splice(i, 1);
-        alert("Producto eliminado correctamente!");
-      });
-    }, */
     verSoportes(id) {
       this.$router.push({
         name: "soportes",

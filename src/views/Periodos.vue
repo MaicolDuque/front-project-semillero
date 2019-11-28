@@ -21,72 +21,98 @@
           <div class="card">
             <!-- /.card-header -->
             <div class="card-body">
-              <table
-                id="periodos"
-                class="table table-bordered table-hover dt-responsive nowrap"
-                style="width: 100%; text-align: center;max-width: 100%"
-              >
-                <thead>
-                  <tr>
-                    <th data-priority="1">Periodos</th>
-                    <th>Acciones</th>
-                    <th data-priority="1">Exportar</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="periodo in periodos" :key="'periodo-'+periodo.id_periodo">
-                    <td style="width: 1%">
-                      <div
-                        class="btn btn-xs btn-info"
-                        style="cursor:pointer"
-                        @click="showInfoPeriodo(periodo.id_periodo)"
-                      >
-                        <a>{{periodo.periodo}}</a>
-                      </div>
-                    </td>
-                    <td style="width: 1%">
-                      <div class="btn-group" role="group">
-                        <router-link
-                          :to="{name: 'edit-periodo', params: { id: periodo.id_periodo}}"
-                          class="btn btn-outline-success btn-xs"
-                          style="margin: 2px"
-                        >Editar</router-link>
-                        <button
-                          class="btn btn-outline-danger btn-xs"
-                          style="margin: 2px"
-                          @click="exportar(periodo.id_periodo, 3)"
-                        >Reporte</button>
-                        <!--   <button
+              <div class="table-responsive">
+                <table
+                  id="periodos"
+                  class="table table-striped table-hover dt-responsive display nowrap"
+                  cellspacing="0"
+                  style=" text-align: center"
+                >
+                  <thead>
+                    <tr>
+                      <th data-priority="1">Periodos</th>
+                      <th>Acciones</th>
+                      <th data-priority="1">Exportar</th>
+                      <th data-priority="1">Exportar pdf</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="periodo in periodos" :key="'periodo-'+periodo.id_periodo">
+                      <td>
+                        <div
+                          class="btn btn-xs btn-info"
+                          style="cursor:pointer"
+                          @click="showInfoPeriodo(periodo.id_periodo)"
+                        >
+                          <a>{{periodo.periodo}}</a>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="btn-group" role="group">
+                          <router-link
+                            :to="{name: 'edit-periodo', params: { id: periodo.id_periodo}}"
+                            class="btn btn-outline-success btn-xs"
+                            style="margin: 2px"
+                          >Editar</router-link>
+                          <button
+                            class="btn btn-outline-danger btn-xs"
+                            style="margin: 2px"
+                            @click="exportar(periodo.id_periodo, 3)"
+                          >Reporte</button>
+                          <!--   <button
                           style="margin: 2px"
                           class="btn btn-outline-danger btn-xs"
                           @click="deleteperiodo(periodo.id_periodo)"
-                        >Eliminar</button>-->
-                      </div>
-                    </td>
-                    <td style="width: 5%">
-                      <div class="btn-group" role="group">
-                        <button
-                          class="btn btn-outline-success btn-xs"
-                          style="margin: 2px"
-                          @click="exportar(periodo.id_periodo, 1)"
-                        >FIN13-I</button>
+                          >Eliminar</button>-->
+                        </div>
+                      </td>
+                      <td>
+                        <div class="btn-group" role="group">
+                          <router-link
+                            :to="{name: 'edit-periodo', params: { id: periodo.id_periodo}}"
+                            class="btn btn-outline-success btn-xs"
+                            style="margin: 2px"
+                          >Editar</router-link>
+                          <!--  <button
+                            class="btn btn-outline-danger btn-xs"
+                            style="margin: 2px"
+                            @click="exportar(periodo.id_periodo, 3)"
+                          >Reporte</button>-->
+                        </div>
+                      </td>
+                      <td>
+                        <div class="btn-group" role="group">
+                          <span
+                            class="btn btn-outline-success btn-xs"
+                            style="margin: 2px"
+                            @click="exportar(periodo.id_periodo, 1)"
+                          >FIN13-I</span>
+                          <a
+                            class="btn btn-outline-success btn-xs"
+                            :href=" url + '/exportar/pdf/' + periodo.id_periodo"
+                          >TEST</a>
+                          <!--  <a class="btn btn-outline-success btn-xs"
+                            style="margin: 2px" href=process.env.VUE_APP_URL_API + "/exportar/pdf/" + id)>
+                          text-->
+                          <!-- </a> -->
 
-                        <button
-                          class="btn btn-outline-success btn-xs"
-                          style="margin: 2px"
-                          @click="exportar(periodo.id_periodo, 2)"
-                        >FIN13-F</button>
+                          <!--  <button
+                            class="btn btn-outline-success btn-xs"
+                            style="margin: 2px"
+                            @click="exportar(periodo.id_periodo, 2)"
+                          >FIN13-F</button>-->
 
-                        <button
-                          class="btn btn-outline-danger btn-xs"
-                          style="margin: 2px"
-                          @click="exportar(periodo.id_periodo, 3)"
-                        >Reporte</button>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                          <button
+                            class="btn btn-outline-danger btn-xs"
+                            style="margin: 2px"
+                            @click="exportar(periodo.id_periodo, 3)"
+                          >Reporte</button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
             <!-- /.card-body -->
           </div>
@@ -142,52 +168,54 @@
                   <div style="text-align: right; padding: 14px 1px;">
                     <button class="btn btn-outline-success" @click="addIntegrante()">Agregar</button>
                   </div>
-                  <table
-                    id="integrantes"
-                    class="table table-bordered table-hover"
-                    style="width: 100%"
-                  >
-                    <thead>
-                      <tr>
-                        <th data-priority="1">Documento</th>
-                        <th data-priority="3">Nombre</th>
-                        <th data-priority="4">Apellido</th>
-                        <th data-priority="5">Email</th>
-                        <th data-priority="6">Tipo usuario</th>
-                        <th data-priority="2">Acciones</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-if="integrantes.length == 0">
-                        <td
-                          colspan="6"
-                          style="text-align: center; font-size: 1.6em;"
-                        >Seleccione un periodo...</td>
-                      </tr>
-                      <tr v-for="item in integrantes" :key="'integrantes'+item.id_usuario">
-                        <td>{{ item.documento }}</td>
-                        <td>{{ item.nombre_usuario }}</td>
-                        <td>{{ item.apellido_usuario }}</td>
-                        <td>{{ item.email }}</td>
-                        <td>{{ item.tipo_usuario }}</td>
+                  <div class="table-responsive">
+                    <table
+                      id="integrantes"
+                      class="table table-bordered table-hover"
+                      style="width: 100%"
+                    >
+                      <thead>
+                        <tr>
+                          <th data-priority="1">Documento</th>
+                          <th data-priority="3">Nombre</th>
+                          <th data-priority="4">Apellido</th>
+                          <th data-priority="5">Email</th>
+                          <th data-priority="6">Tipo usuario</th>
+                          <th data-priority="2">Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-if="integrantes.length == 0">
+                          <td
+                            colspan="6"
+                            style="text-align: center; font-size: 1.6em;"
+                          >Seleccione un periodo...</td>
+                        </tr>
+                        <tr v-for="item in integrantes" :key="'integrantes'+item.id_usuario">
+                          <td>{{ item.documento }}</td>
+                          <td>{{ item.nombre_usuario }}</td>
+                          <td>{{ item.apellido_usuario }}</td>
+                          <td>{{ item.email }}</td>
+                          <td>{{ item.tipo_usuario }}</td>
 
-                        <td>
-                          <div class="btn-group" role="group">
-                            <router-link
-                              :to="{name: 'editar-integrante', params: { id: item.id_usuario}}"
-                              class="btn btn-outline-primary"
-                              style="margin: 2px"
-                            >Editar</router-link>
-                            <button
-                              class="btn btn-outline-danger"
-                              style="margin: 2px"
-                              @click="deleteIntegrante(item.id_usuario)"
-                            >Eliminar</button>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                          <td>
+                            <div class="btn-group" role="group">
+                              <router-link
+                                :to="{name: 'editar-integrante', params: { id: item.id_usuario}}"
+                                class="btn btn-outline-primary"
+                                style="margin: 2px"
+                              >Editar</router-link>
+                              <button
+                                class="btn btn-outline-danger"
+                                style="margin: 2px"
+                                @click="deleteIntegrante(item.id_usuario)"
+                              >Eliminar</button>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
                 <div
                   class="tab-pane fade"
@@ -198,58 +226,60 @@
                   <div style="text-align: right; padding: 14px 1px;">
                     <button class="btn btn-outline-success" @click="addActividad()">Agregar</button>
                   </div>
-                  <table
-                    id="actividades"
-                    class="table table-bordered table-hover"
-                    style="width: 100%"
-                  >
-                    <thead>
-                      <tr>
-                        <th>Nombre</th>
-                        <th>Responsable</th>
-                        <th>Recursos</th>
-                        <th>Registro</th>
-                        <th data-priority="2">Acciones</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-if="actividades.length == 0">
-                        <td
-                          colspan="6"
-                          style="text-align: center; font-size: 1.6em;"
-                        >Seleccione un periodo...</td>
-                      </tr>
-                      <tr
-                        v-for="actividad in actividades"
-                        :key="'actividades'+actividad.id_actividad"
-                      >
-                        <td>{{actividad.actividad}}</td>
-                        <td>{{actividad.responsable}}</td>
-                        <td>{{actividad.recursos}}</td>
-                        <td>{{actividad.registro}}</td>
-                        <td>
-                          <div class="btn-group" role="group">
-                            <button
-                              @click="editActividad(actividad.id_actividad)"
-                              class="btn btn-outline-primary"
-                              style="margin: 2px"
-                            >Editar</button>
-                            <button
-                              class="btn btn-outline-danger"
-                              style="margin: 2px"
-                              @click="deleteActividad(actividad.id_actividad)"
-                            >Eliminar</button>
+                  <div class="table-responsive">
+                    <table
+                      id="actividades"
+                      class="table table-bordered table-hover"
+                      style="width: 100%"
+                    >
+                      <thead>
+                        <tr>
+                          <th>Nombre</th>
+                          <th>Responsable</th>
+                          <th>Recursos</th>
+                          <th>Registro</th>
+                          <th data-priority="2">Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-if="actividades.length == 0">
+                          <td
+                            colspan="6"
+                            style="text-align: center; font-size: 1.6em;"
+                          >Seleccione un periodo...</td>
+                        </tr>
+                        <tr
+                          v-for="actividad in actividades"
+                          :key="'actividades'+actividad.id_actividad"
+                        >
+                          <td>{{actividad.actividad}}</td>
+                          <td>{{actividad.responsable}}</td>
+                          <td>{{actividad.recursos}}</td>
+                          <td>{{actividad.registro}}</td>
+                          <td>
+                            <div class="btn-group" role="group">
+                              <button
+                                @click="editActividad(actividad.id_actividad)"
+                                class="btn btn-outline-primary"
+                                style="margin: 2px"
+                              >Editar</button>
+                              <button
+                                class="btn btn-outline-danger"
+                                style="margin: 2px"
+                                @click="deleteActividad(actividad.id_actividad)"
+                              >Eliminar</button>
 
-                            <button
-                              class="btn btn-outline-warning"
-                              style="margin: 2px"
-                              @click="verProductos(actividad.id_actividad)"
-                            >Ver Productos</button>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                              <button
+                                class="btn btn-outline-warning"
+                                style="margin: 2px"
+                                @click="verProductos(actividad.id_actividad)"
+                              >Ver Productos</button>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
                 <!-- panel proyectos -->
                 <div
@@ -266,51 +296,51 @@
                       <div class="col-12">
                         <div class="card">
                           <!-- /.card-header -->
+                          <div class="table-responsive">
+                            <table
+                              id="tblProyectos"
+                              class="table table-bordered table-hover"
+                              style="width: 100%"
+                            >
+                              <thead>
+                                <tr>
+                                  <th data-priority="1">Nombre</th>
+                                  <th data-priority="2">Acciones</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr v-if="proyectos.length == 0">
+                                  <td
+                                    colspan="6"
+                                    style="text-align: center; font-size: 1.6em;"
+                                  >Seleccione un periodo...</td>
+                                </tr>
+                                <tr v-for="item in proyectos" :key="'proyectos'+item.id_proyecto">
+                                  <td>{{ item.proyecto }}</td>
 
-                          <table
-                            id="tblProyectos"
-                            class="table table-bordered table-hover"
-                            style="width: 100%"
-                          >
-                            <thead>
-                              <tr>
-                                <th data-priority="1">Nombre</th>
-                                <th data-priority="2">Acciones</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr v-if="proyectos.length == 0">
-                                <td
-                                  colspan="6"
-                                  style="text-align: center; font-size: 1.6em;"
-                                >Seleccione un periodo...</td>
-                              </tr>
-                              <tr v-for="item in proyectos" :key="'proyectos'+item.id_proyecto">
-                                <td>{{ item.proyecto }}</td>
-
-                                <td>
-                                  <div class="btn-group" style="margin: 2px" role="group">
-                                    <router-link
-                                      :to="{name: 'editar-proyecto', params: { id: item.id_proyecto}}"
-                                      class="btn btn-outline-primary"
-                                      style="margin: 2px"
-                                    >Editar</router-link>
-                                    <button
-                                      class="btn btn-outline-danger"
-                                      style="margin: 2px"
-                                      @click="deleteProyecto(item.id_proyecto)"
-                                    >Eliminar</button>
-                                    <button
-                                      class="btn btn-outline-warning"
-                                      style="margin: 2px"
-                                      @click="verProductosP(item.id_proyecto)"
-                                    >Ver Productos</button>
-                                  </div>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-
+                                  <td>
+                                    <div class="btn-group" style="margin: 2px" role="group">
+                                      <router-link
+                                        :to="{name: 'editar-proyecto', params: { id: item.id_proyecto}}"
+                                        class="btn btn-outline-primary"
+                                        style="margin: 2px"
+                                      >Editar</router-link>
+                                      <button
+                                        class="btn btn-outline-danger"
+                                        style="margin: 2px"
+                                        @click="deleteProyecto(item.id_proyecto)"
+                                      >Eliminar</button>
+                                      <button
+                                        class="btn btn-outline-warning"
+                                        style="margin: 2px"
+                                        @click="verProductosP(item.id_proyecto)"
+                                      >Ver Productos</button>
+                                    </div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
                           <!-- /.card-body -->
                         </div>
                       </div>
@@ -426,6 +456,7 @@ import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
 export default {
   data() {
     return {
+      url: process.env.VUE_APP_URL_API,
       proyectos: [],
       loadingProyecto: true,
       erroredProyecto: false,

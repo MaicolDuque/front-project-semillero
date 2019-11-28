@@ -6,7 +6,7 @@
     <div style="text-align: right; padding: 14px 1px;">
       <a @click="addSoporte" tag="button" class="btn btn-outline-success">Agregar</a>
     </div>
-    <section class="card card-primary card-outline">
+    <section class="card card-success card-outline">
       <div class="row">
         <div class="col-12">
           <div class="card">
@@ -24,45 +24,47 @@
                   </div>
                 </div>
                 <div v-else></div>
-                <table
-                  id="tblexample2"
-                  class="table table-bordered table-hover"
-                  style="width: 100%"
-                >
-                  <thead>
-                    <tr>
-                      <th>Soporte</th>
-                      <th>Vinculo</th>
-                      <th data-priority="2">Acciones</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="item in soportes" :key="item.id_soporte">
-                      <td>{{ item.soporte }}</td>
-                      <td>
-                        <a :href="item.vinculo">Ruta</a>
-                      </td>
-                      <td>
-                        <div class="btn-group" role="group">
-                          <router-link
-                            :to="{name: 'editar-soporte', params: {id: item.id_soporte}}"
-                            class="btn btn-outline-primary"
-                            style="margin: 2px"
-                          >Editar</router-link>
-                          <button
-                            style="margin: 2px"
-                            class="btn btn-outline-danger"
-                            @click="deleteSoporte(item.id_soporte)"
-                          >Eliminar</button>
-                          <!-- <button
+                <div class="table-responsive">
+                  <table
+                    id="tblSoportes"
+                    class="table table-bordered table-hover"
+                    style="width: 100%"
+                  >
+                    <thead>
+                      <tr>
+                        <th data-priority="1">Soporte</th>
+                        <th data-priority="3">Vinculo</th>
+                        <th data-priority="2">Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="item in soportes" :key="item.id_soporte">
+                        <td>{{ item.soporte }}</td>
+                        <td>
+                          <a :href="item.vinculo">Ruta</a>
+                        </td>
+                        <td>
+                          <div class="btn-group" role="group">
+                            <router-link
+                              :to="{name: 'editar-soporte', params: {id: item.id_soporte}}"
+                              class="btn btn-outline-primary"
+                              style="margin: 2px"
+                            >Editar</router-link>
+                            <button
+                              style="margin: 2px"
+                              class="btn btn-outline-danger"
+                              @click="deleteSoporte(item.id_soporte)"
+                            >Eliminar</button>
+                            <!-- <button
                             class="btn btn-warning"
                             @click="verSoportes(item.id_soporte)"
-                          >Ver soportes</button>-->
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                            >Ver soportes</button>-->
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </section>
             </div>
             <!-- /.card-body -->
@@ -97,13 +99,11 @@ export default {
           });
           this.soportes = response.data;
         } else {
-          /*  console.log(response.status);
-          console.log(response.data); */
           this.soportes = response.data;
         }
       })
       .then(res => {
-        $("#tblexample2").DataTable({
+        $("#tblSoportes").DataTable({
           responsive: true
         });
       })
