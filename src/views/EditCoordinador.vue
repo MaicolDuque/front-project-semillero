@@ -41,7 +41,7 @@
                     <span v-if="!$v.coordinador.documento.required">El campo es requerido</span>
                     <span
                       v-if="!$v.coordinador.documento.maxLength"
-                    >El nombre no debe superar los 50 caracteres</span>
+                    >El nombre no debe superar los 12 caracteres</span>
                   </div>
                 </div>
                 <div class="form-group">

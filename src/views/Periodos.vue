@@ -229,11 +229,11 @@
                     >
                       <thead>
                         <tr>
-                          <th data-priority="1">Nombre</th>
+                          <th data-priority="2">Nombre</th>
                           <th data-priority="3">Responsable</th>
                           <th data-priority="4">Recursos</th>
                           <th data-priority="5">Registro</th>
-                          <th data-priority="2">Acciones</th>
+                          <th data-priority="1">Acciones</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -602,7 +602,7 @@ export default {
             id_periodo: this.periodos,
             id_usuario: id
           };
-          console.log(id);
+
           ApiService.delete(`integrante/periodo/${$id}`, datos).then(
             response => {
               let i = this.integrantes
@@ -628,7 +628,7 @@ export default {
           if (this.controlIntegrantes) {
             this.controlIntegrantes = 0;
             $("#integrantes").DataTable({
-              responsive: true,
+              responsive: false,
               searching: false,
               retrieve: true
             });
@@ -652,7 +652,7 @@ export default {
         })
         .then(res => {
           $("#tblProyectos").DataTable({
-            responsive: true,
+            responsive: false,
             searching: false,
             retrieve: true
           });
@@ -682,7 +682,8 @@ export default {
         })
         .then(res => {
           $("#actividades").DataTable({
-            responsive: true,
+            buttons: ["copy", "excel", "pdf"],
+            responsive: false,
             searching: false,
             retrieve: true
           });

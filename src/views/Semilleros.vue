@@ -108,7 +108,7 @@ export default {
       })
       .then(res => {
         $("#tblSemilleros").DataTable({
-          responsive: true
+          responsive: false
         });
       })
       .catch(error => {

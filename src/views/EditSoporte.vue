@@ -27,7 +27,7 @@
                   <input
                     type="text"
                     pattern="[A-Za-z0-9 ]+"
-                    title=" Solo Letras y números. Tamaño máximo: 50"
+                    title=" Solo Letras y números. Tamaño máximo: 255"
                     v-model.trim="soporte.soporte"
                     id="soporte"
                     name="soporte"
@@ -39,7 +39,7 @@
                     <span v-if="!$v.soporte.soporte.required">El campo es requerido</span>
                     <span
                       v-if="!$v.soporte.soporte.maxLength"
-                    >El campo no debe superar los 50 caracteres</span>
+                    >El campo no debe superar los 255 caracteres</span>
                   </div>
                 </div>
                 <div class="form-group">
@@ -47,7 +47,7 @@
                   <input
                     type="text"
                     pattern="[A-Za-z0-9 ./ ? = @  :]+"
-                    title=" Solo Letras y números. Tamaño máximo: 50"
+                    title=" Solo Letras y números. Tamaño máximo: 255"
                     v-model.trim="soporte.vinculo"
                     id="vinculo"
                     name="vinculo"
@@ -59,7 +59,7 @@
                     <span v-if="!$v.soporte.vinculo.required">El campo es requerido</span>
                     <span
                       v-if="!$v.soporte.vinculo.maxLength"
-                    >El campo no debe superar los 250 caracteres</span>
+                    >El campo no debe superar los 255 caracteres</span>
                   </div>
                 </div>
 
@@ -116,9 +116,9 @@ export default {
     soporte: {
       soporte: {
         required,
-        maxLength: maxLength(50)
+        maxLength: maxLength(255)
       },
-      vinculo: { required, maxLength: maxLength(250) }
+      vinculo: { required, maxLength: maxLength(255) }
     }
   },
 

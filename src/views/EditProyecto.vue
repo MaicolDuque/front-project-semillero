@@ -26,6 +26,7 @@
                   <input
                     type="text"
                     pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+' ]+"
+                    title=" Solo Letras y números. Tamaño máximo: 100"
                     v-model="proyecto.proyecto"
                     id="proyecto"
                     name="proyecto"
@@ -38,7 +39,7 @@
                     <span v-if="!$v.proyecto.proyecto.required">El campo es requerido</span>
                     <span
                       v-if="!$v.proyecto.proyecto.maxLength"
-                    >El campo no debe superar los 50 caracteres</span>
+                    >El campo no debe superar los 100 caracteres</span>
                   </div>
                 </div>
                 <br />

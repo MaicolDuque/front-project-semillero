@@ -27,7 +27,7 @@
                     <input
                       type="text"
                       pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+' ]+"
-                      title=" Solo Letras y números. Tamaño máximo: 50"
+                      title=" Solo Letras y números. Tamaño máximo: 100"
                       v-model.trim="actividad.actividad"
                       id="actividad"
                       name="actividad"
@@ -39,7 +39,7 @@
                       <span v-if="!$v.actividad.actividad.required">El campo requerido</span>
                       <span
                         v-if="!$v.actividad.actividad.maxLength"
-                      >El nombre no debe superar los 50 caracteres</span>
+                      >El nombre no debe superar los 100 caracteres</span>
                     </div>
                   </div>
                   <div class="form-group">
@@ -47,7 +47,7 @@
                     <input
                       type="text"
                       pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+' ]+"
-                      title=" Solo Letras y números. Tamaño máximo: 50"
+                      title=" Solo Letras y números. Tamaño máximo: 500"
                       v-model.trim="actividad.responsable"
                       id="responsable"
                       name="actividad"
@@ -70,7 +70,7 @@
                     <input
                       type="text"
                       pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+' ]+"
-                      title=" Solo Letras y números. Tamaño máximo: 50"
+                      title=" Solo Letras y números. Tamaño máximo: 100"
                       v-model.trim="actividad.recursos"
                       id="actividad"
                       name="actividad"
@@ -82,7 +82,7 @@
                       <span v-if="!$v.actividad.recursos.required">El campo requerido</span>
                       <span
                         v-if="!$v.actividad.recursos.maxLength"
-                      >El nombre no debe superar los 80 caracteres</span>
+                      >El nombre no debe superar los 100 caracteres</span>
                     </div>
                   </div>
                   <div class="form-group">
@@ -262,7 +262,7 @@ export default {
         maxLength: maxLength(50)
       },
       responsable: { required, maxLength: maxLength(50) },
-      recursos: { required, maxLength: maxLength(80) },
+      recursos: { required, maxLength: maxLength(100) },
       registro: { required, maxLength: maxLength(50) }
     }
   },

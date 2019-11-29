@@ -25,7 +25,7 @@
                 <div class="table-responsive">
                   <table
                     id="tblGrupos"
-                    class="table table-striped table-bordered dt-responsive nowrap"
+                    class="table table-striped table-bordered dt-responsive"
                     style="width:100%"
                   >
                     <thead>
@@ -36,7 +36,7 @@
                         <th data-priority="6">Código Colciencias</th>
                         <th data-priority="5">Vinculo Colciencias</th>
                         <th data-priority="4">Facultad</th>
-                        <th data-priority="1">Acciones</th>
+                        <th data-priority="2">Acciones</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -47,12 +47,12 @@
                         <td>{{ item.cod_colciencias }}</td>
                         <td>{{ item.vinculo }}</td>
                         <td>{{ item.facultad }}</td>
-                        <td style="text-align: center">
-                          <div class="btn-group" role="group">
+                        <td>
+                          <div>
                             <router-link
+                              style="margin: 2px"
                               :to="{name: 'editgrupo', params: { id: item.id_grupo}}"
                               class="btn btn-outline-primary"
-                              style="margin: 2px"
                             >Editar</router-link>
 
                             <button
@@ -105,7 +105,10 @@ export default {
       })
       .then(res => {
         $("#tblGrupos").DataTable({
-          responsive: true
+          responsive: true,
+          scrollX: true
+
+          /* columnDefs: [{ width: "1%" }] */
         });
       })
       .catch(error => {

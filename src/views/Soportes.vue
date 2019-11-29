@@ -104,7 +104,7 @@ export default {
       })
       .then(res => {
         $("#tblSoportes").DataTable({
-          responsive: true
+          responsive: false
         });
       })
       .catch(error => {

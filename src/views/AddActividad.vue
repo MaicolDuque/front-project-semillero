@@ -36,7 +36,7 @@
                   <input
                     type="text"
                     pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+' ]+"
-                    title=" Solo Letras y números. Tamaño máximo: 50"
+                    title=" Solo Letras y números. Tamaño máximo: 100"
                     v-model.trim="actividad.responsable"
                     id="responsable"
                     name="responsable"
@@ -48,7 +48,7 @@
                     <span v-if="!$v.actividad.responsable.required">El campo requerido</span>
                     <span
                       v-if="!$v.actividad.responsable.maxLength"
-                    >El nombre no debe superar los 50 caracteres</span>
+                    >El nombre no debe superar los 1000 caracteres</span>
                   </div>
                 </div>
                 <div class="form-group">
@@ -56,7 +56,7 @@
                   <input
                     type="text"
                     pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+' ]+"
-                    title=" Solo Letras y números. Tamaño máximo: 80"
+                    title=" Solo Letras y números. Tamaño máximo: 100"
                     v-model.trim="actividad.recursos"
                     id="recursos"
                     name="recursos"
@@ -68,7 +68,7 @@
                     <span v-if="!$v.actividad.recursos.required">El campo requerido</span>
                     <span
                       v-if="!$v.actividad.recursos.maxLength"
-                    >El nombre no debe superar los 80 caracteres</span>
+                    >El nombre no debe superar los 100 caracteres</span>
                   </div>
                 </div>
                 <div class="form-group">
@@ -222,7 +222,7 @@ export default {
         maxLength: maxLength(80)
       },
       responsable: { required, maxLength: maxLength(50) },
-      recursos: { required, maxLength: maxLength(80) },
+      recursos: { required, maxLength: maxLength(100) },
       registro: { required, maxLength: maxLength(50) }
     }
   },
