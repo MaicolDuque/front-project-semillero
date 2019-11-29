@@ -11,10 +11,14 @@
 
     <div v-if="!isAuth && isVisitante == 'si'">
       <SPHeaderVisitante />
-         
-      <router-link to="/grupos_visitante" class="nav-item nav-link" style="text-align: center; font-size: 1.5em">Ver grupos</router-link>      
+
+      <router-link
+        to="/grupos_visitante"
+        class="nav-item nav-link"
+        style="text-align: center; font-size: 1.5em"
+      >Ver grupos</router-link>
       <router-view></router-view>
-      
+
       <SPfooter />
     </div>
 
@@ -62,7 +66,7 @@ export default {
 
     if (localStorage.user) {
       let user = JSON.parse(localStorage.user);
-      console.log(user)
+      /* console.log(user) */
       let rol = user.id_rol;
       if (rol == 2) {
         this.$store.dispatch("infoUserDirector", user.id_usuario);

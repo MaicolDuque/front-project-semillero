@@ -5,9 +5,7 @@
         <div class="card card-signin my-5">
           <h5 align="center">
             <center>
-              <img class = "img-fluid"
-                src="https://pbs.twimg.com/profile_images/1128335908913258496/hHZklt21_400x400.png"
-              />
+              <img class="img-responsive logo img-fluid" src="/img/logo_poli_login.png" />
             </center>
           </h5>
           <div class="card-body">
@@ -85,18 +83,17 @@ export default {
 
       ApiService.mount401Interceptor();
       localStorage.user = JSON.stringify(data.infoToken.user);
-      
-      let user =   JSON.parse(localStorage.user)     
-      let rol  = user.id_rol
-      console.log("Mi rol,",rol)
-      if(rol == 2){
-        this.$store.dispatch('infoUserDirector',user.id_usuario)
-      }else if(rol == 3){
-        this.$store.dispatch('infoUserCoordinador',user.id_usuario)
-      }else{
-        this.$store.dispatch('infoUser',user.id_usuario)
-      }
 
+      let user = JSON.parse(localStorage.user);
+      let rol = user.id_rol;
+      /*  console.log("Mi rol,", rol); */
+      if (rol == 2) {
+        this.$store.dispatch("infoUserDirector", user.id_usuario);
+      } else if (rol == 3) {
+        this.$store.dispatch("infoUserCoordinador", user.id_usuario);
+      } else {
+        this.$store.dispatch("infoUser", user.id_usuario);
+      }
 
       this.$store.commit("setLogin", true);
       this.$router.push({ name: "home" });

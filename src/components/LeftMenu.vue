@@ -5,8 +5,7 @@
       <!-- Brand Logo -->
       <a href="/" class="brand-link">
         <img
-          src="/img/AdminLTELogo.png"
-          alt="AdminLTE Logo"
+          src="/img/logo_semilleros_poli.jpg"
           class="brand-image img-circle elevation-3"
           style="opacity: .8"
         />
@@ -178,7 +177,7 @@ export default {
   computed: {
     idRol() {
       if (this.$store.state.user) {
-        console.log("Rioll", this.$store.state.user.id_rol);
+        /* console.log("Rioll", this.$store.state.user.id_rol); */
         return this.$store.state.user.id_rol;
       }
       return 1;

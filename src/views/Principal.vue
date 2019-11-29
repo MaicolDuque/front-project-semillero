@@ -531,7 +531,7 @@ export default {
     ApiService.get("/grupo/informacion")
       .then(response => {
         if (response.status === 200) {
-          console.log(response.status);
+          /*  console.log(response.status); */
           this.grupos = response.data;
         }
       })

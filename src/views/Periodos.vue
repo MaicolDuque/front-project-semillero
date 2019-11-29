@@ -31,9 +31,8 @@
                   <thead>
                     <tr>
                       <th data-priority="1">Periodos</th>
-                      <th>Acciones</th>
-                      <th data-priority="1">Exportar</th>
-                      <th data-priority="1">Exportar pdf</th>
+                      <th data-priority="1">Acciones</th>
+                      <th data-priority="2">Exportar</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -54,34 +53,25 @@
                             class="btn btn-outline-success btn-xs"
                             style="margin: 2px"
                           >Editar</router-link>
+                          <!-- <button
+                            class="btn btn-outline-danger btn-xs"
+                            style="margin: 2px"
+                            @click="exportar(periodo.id_periodo, 3)"
+                          >Reporte</button>-->
+                          <button
+                            style="margin: 2px"
+                            class="btn btn-outline-danger btn-xs"
+                            @click="deleteperiodo(periodo.id_periodo)"
+                          >Eliminar</button>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="btn-group" role="group">
                           <button
                             class="btn btn-outline-danger btn-xs"
                             style="margin: 2px"
                             @click="exportar(periodo.id_periodo, 3)"
                           >Reporte</button>
-                          <!--   <button
-                          style="margin: 2px"
-                          class="btn btn-outline-danger btn-xs"
-                          @click="deleteperiodo(periodo.id_periodo)"
-                          >Eliminar</button>-->
-                        </div>
-                      </td>
-                      <td>
-                        <div class="btn-group" role="group">
-                          <router-link
-                            :to="{name: 'edit-periodo', params: { id: periodo.id_periodo}}"
-                            class="btn btn-outline-success btn-xs"
-                            style="margin: 2px"
-                          >Editar</router-link>
-                          <!--  <button
-                            class="btn btn-outline-danger btn-xs"
-                            style="margin: 2px"
-                            @click="exportar(periodo.id_periodo, 3)"
-                          >Reporte</button>-->
-                        </div>
-                      </td>
-                      <td>
-                        <div class="btn-group" role="group">
                           <span
                             class="btn btn-outline-success btn-xs"
                             style="margin: 2px"
@@ -91,22 +81,16 @@
                             class="btn btn-outline-success btn-xs"
                             :href=" url + '/exportar/pdf/' + periodo.id_periodo"
                           >TEST</a>
-                          <!--  <a class="btn btn-outline-success btn-xs"
-                            style="margin: 2px" href=process.env.VUE_APP_URL_API + "/exportar/pdf/" + id)>
-                          text-->
-                          <!-- </a> -->
-
-                          <!--  <button
+                          <!--  <router-link
+                            :to="{name: 'edit-periodo', params: { id: periodo.id_periodo}}"
                             class="btn btn-outline-success btn-xs"
                             style="margin: 2px"
-                            @click="exportar(periodo.id_periodo, 2)"
-                          >FIN13-F</button>-->
-
-                          <button
+                          >Editar</router-link>-->
+                          <!--  <button
                             class="btn btn-outline-danger btn-xs"
                             style="margin: 2px"
                             @click="exportar(periodo.id_periodo, 3)"
-                          >Reporte</button>
+                          >Reporte</button>-->
                         </div>
                       </td>
                     </tr>
@@ -119,7 +103,7 @@
         </div>
 
         <div class="col-lg-7 col-sm-6">
-          <div class="card card-primary card-outline">
+          <div class="card card-success card-outline">
             <div class="card-header p-0 pt-1 border-bottom-0">
               <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
                 <li class="nav-item">
@@ -234,10 +218,10 @@
                     >
                       <thead>
                         <tr>
-                          <th>Nombre</th>
-                          <th>Responsable</th>
-                          <th>Recursos</th>
-                          <th>Registro</th>
+                          <th data-priority="1">Nombre</th>
+                          <th data-priority="3">Responsable</th>
+                          <th data-priority="4">Recursos</th>
+                          <th data-priority="5">Registro</th>
                           <th data-priority="2">Acciones</th>
                         </tr>
                       </thead>
@@ -374,7 +358,7 @@
           </div>
           <div class="modal-body">
             .
-            <div style="width: 50%; margin: 0 auto;">
+            <div style="width: 100%; margin: 0 auto;">
               <div class="card card-success">
                 <form @submit.prevent="handleSubmit">
                   <div class="card-body">
@@ -485,31 +469,27 @@ export default {
         this.periodos = response.data;
       })
       .then(ress =>
-        $("#periodos").DataTable({
-          responsive: true,
-          retrieve: true
-        })
+        $("#periodos")
+          .DataTable({
+            responsive: true,
+            retrieve: true
+          })
+          .catch(error => {
+            console.log(error);
+            this.errored = true;
+          })
       );
 
-    /* ApiService.get(`/proyecto/periodo/semillero/${this.$route.params.id}`)
+    ApiService.get(`/semillero/${this.$route.params.id}`)
       .then(response => {
-        this.proyectos = response.data;
+        this.semillero = response.data[0];
       })
-      .then(ress =>
-        $("#proyectos").DataTable({
-          responsive: true
-        })
-      ); */
+      .catch(error => {
+        console.log(error);
+        this.errored = true;
+      });
+  },
 
-    ApiService.get(`/semillero/${this.$route.params.id}`).then(response => {
-      this.semillero = response.data[0];
-    });
-  },
-  mounted: function() {
-    // $("#integrantes").DataTable({
-    //       responsive: true
-    // })
-  },
   //Reglas de validacion para VueValidate
   validations: {
     periodo: {
@@ -552,12 +532,8 @@ export default {
       if (this.$v.$invalid) {
         return;
       }
-      /* this.updatePeriodo(); */
       this.periodo.id_semillero = this.semillero.id_semillero;
-
       this.addPeriodo();
-
-      /* alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.periodo)); */
     },
     deleteProyecto(id) {
       this.$swal({
@@ -613,17 +589,19 @@ export default {
         showLoaderOnConfirm: true
       }).then(result => {
         if (result.value) {
-            var datos= {
-                id_periodo : this.periodos,
-                id_usuario : id
-            };
+          var datos = {
+            id_periodo: this.periodos,
+            id_usuario: id
+          };
           console.log(id);
-          ApiService.delete(`integrante/periodo/${$id}`,datos).then(response => {
-            let i = this.integrantes
-              .map(item => item.id_integrante)
-              .indexOf(id); // find index of your object
-            this.integrantes.splice(i, 1);
-          });
+          ApiService.delete(`integrante/periodo/${$id}`, datos).then(
+            response => {
+              let i = this.integrantes
+                .map(item => item.id_integrante)
+                .indexOf(id); // find index of your object
+              this.integrantes.splice(i, 1);
+            }
+          );
           this.$swal("Registro Eliminado");
         } else {
           this.$swal(" Accion Cancelada");
@@ -729,7 +707,6 @@ export default {
 
     addIntegrante() {
       if (this.idPeriodo) {
-        console.log(this.idPeriodo);
         return this.$router.push({
           name: "agregar-integrante",
           params: { id: this.idPeriodo }
@@ -746,11 +723,8 @@ export default {
 
     addActividad() {
       if (this.idPeriodo) {
-        console.log("id: " + this.$route.params.id);
-        console.log("periodo: " + this.idPeriodo);
         return this.$router.push({
           name: "agregar-actividad",
-
           params: { id: this.$route.params.id, periodo: this.idPeriodo }
         });
       }

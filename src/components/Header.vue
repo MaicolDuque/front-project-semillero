@@ -16,7 +16,7 @@
           <h5>
             <a class="brand pull-left" href="/">
               <img
-                src="https://www.politecnicojic.edu.co/images/logo/logo.png"
+                src="/img/logo_header_poli.png"
                 alt="Politécnico Colombiano Jaime Isaza Cadavid"
                 class="img-responsive logo img-fluid"
               />
