@@ -67,20 +67,31 @@
                       </td>
                       <td>
                         <div class="btn-group" role="group">
-                          <button
+                          <!--  <button
                             class="btn btn-outline-danger btn-xs"
                             style="margin: 2px"
                             @click="exportar(periodo.id_periodo, 3)"
-                          >Reporte</button>
-                          <span
+                          >Reporte</button>-->
+                          <!--  <span
                             class="btn btn-outline-success btn-xs"
                             style="margin: 2px"
                             @click="exportar(periodo.id_periodo, 1)"
-                          >FIN13-I</span>
+                          >FIN13-I</span>-->
                           <a
+                            style="margin: 2px"
+                            class="btn btn-outline-success btn-xs"
+                            :href=" url + '/exportar/inicial/' + periodo.id_periodo"
+                          >FIN13-I</a>
+                          <a
+                            style="margin: 2px"
+                            class="btn btn-outline-success btn-xs"
+                            :href=" url + '/exportar/final/' + periodo.id_periodo"
+                          >FIN13-F</a>
+                          <a
+                            style="margin: 2px"
                             class="btn btn-outline-success btn-xs"
                             :href=" url + '/exportar/pdf/' + periodo.id_periodo"
-                          >TEST</a>
+                          >Reporte</a>
                           <!--  <router-link
                             :to="{name: 'edit-periodo', params: { id: periodo.id_periodo}}"
                             class="btn btn-outline-success btn-xs"
@@ -510,8 +521,6 @@ export default {
       });
     },
     exportar(id, tipo) {
-      console.log("oelo");
-      console.log(tipo);
       if (tipo == 1) {
         return (location.href =
           process.env.VUE_APP_URL_API + "/exportar/inicial/" + id);
