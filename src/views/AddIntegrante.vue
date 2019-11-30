@@ -419,7 +419,7 @@ export default {
     //Valida el formulario
     handleSubmit(e) {
       this.submitted = true;
-      var retornado = "";
+
       // Se detiene aqui si es invalido, de lo contrario ejecuta el submit()
       this.$v.$touch();
       if (this.$v.$invalid) {
@@ -427,7 +427,7 @@ export default {
       }
       //asigna como usuario un Director
       this.usuario.id_rol = 4;
-      var id_gr = this.periodo.id_periodo;
+      var id_gr = this.$route.params.id;
       ApiService.post("/usuario/integrante", this.usuario)
         .then(response => {
           if (response.status == 200) {
