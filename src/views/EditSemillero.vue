@@ -133,6 +133,15 @@ export default {
           });
         } else if (response.status === 200) {
           this.semillero = response.data;
+          /**
+           * 
+           * Validación Permiso
+           */
+          let grupo = this.$store.state.user.id_grupo;
+          let rol = this.$store.state.user.id_rol;
+          if (this.semillero.id_grupo != grupo && rol > 1) {
+            this.$router.push({ name: "home" });
+          }
         }
       })
       .catch(error => {
@@ -149,6 +158,7 @@ export default {
         console.log(error);
         this.errored = true;
       });
+
   },
 
   //Reglas de validacion para VueValidate
@@ -208,6 +218,14 @@ export default {
   },
 
   computed: {
+    validarDirector() {
+      let grupo = this.$store.state.user.id_grupo;
+      if (this.semillero.id_grupo == grupo) {
+        return true;
+      } else {
+        return false;
+      }
+    },
     showGruposInvestigacion() {
       if (this.grupos_investigacion) {
         let rol = this.$store.state.user.id_rol;

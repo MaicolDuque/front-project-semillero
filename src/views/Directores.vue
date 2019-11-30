@@ -22,49 +22,50 @@
                   </div>
                 </div>
                 <div v-else></div>
-                <table
-                  id="tblDirectores"
-                  class="table table-bordered table-hover"
-                  style="width: 100%"
-                >
-                  <thead>
-                    <tr>
-                      <th data-priority="1">Nombre</th>
-                      <th data-priority="7">Documento</th>
-                      <th data-priority="5">Apellido</th>
-                      <th data-priority="6">Telefono</th>
-                      <th data-priority="4">Email</th>
-                      <th data-priority="8">Tipo usuario</th>
-                      <th data-priority="3">Grupo</th>
-                      <th data-priority="2">Acciones</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="item in usuarios" :key="item.id_usuario">
-                      <td>{{ item.nombre_usuario }}</td>
-                      <td>{{ item.documento }}</td>
-                      <td>{{ item.apellido_usuario }}</td>
-                      <td>{{ item.telefono }}</td>
-                      <td>{{ item.email }}</td>
-                      <td>{{ item.tipo_usuario }}</td>
-                      <td>{{ item.grupo }}</td>
-                      <td>
-                        <div class="btn-group" role="group">
-                          <router-link
-                            :to="{name: 'editdirector', params: { id: item.id_usuario}}"
-                            class="btn btn-outline-primary"
-                            style="margin: 2px"
-                          >Editar</router-link>
-                          <button
-                            style="margin: 2px"
-                            class="btn btn-outline-danger"
-                            @click="deleteDirector(item.id_usuario)"
-                          >Eliminar</button>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                <div class="table-responsive">
+                  <table
+                    id="tblDirectores"
+                    class="table table-striped table-bordered dt-responsive nowrap"
+                    style="width: 100%"
+                  >
+                    <thead>
+                      <tr>
+                        <th data-priority="1">Documento</th>
+                        <th >Nombre</th>
+                        <th>Telefono</th>
+                        <th>Email</th>
+                        <th>Tipo usuario</th>
+                        <th>Grupo</th>
+                        <th data-priority="2">Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="item in usuarios" :key="item.id_usuario">
+                        <td>{{ item.documento }}</td>
+                        <td>{{ item.nombre_usuario }} {{ item.apellido_usuario }}</td>
+
+                        <td>{{ item.telefono }}</td>
+                        <td>{{ item.email }}</td>
+                        <td>{{ item.tipo_usuario }}</td>
+                        <td>{{ item.grupo }}</td>
+                        <td>
+                          <div class="btn-group" role="group">
+                            <router-link
+                              :to="{name: 'editdirector', params: { id: item.id_usuario}}"
+                              class="btn btn-outline-primary"
+                              style="margin: 2px"
+                            >Editar</router-link>
+                            <button
+                              style="margin: 2px"
+                              class="btn btn-outline-danger"
+                              @click="deleteDirector(item.id_usuario)"
+                            >Eliminar</button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </section>
             </div>
             <!-- /.card-body -->
@@ -97,7 +98,8 @@ export default {
       })
       .then(res => {
         $("#tblDirectores").DataTable({
-          responsive: true
+          responsive: false,
+          retrieve: true
         });
       })
       .catch(error => {

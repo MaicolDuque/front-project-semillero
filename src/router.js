@@ -133,6 +133,12 @@ const router = new Router({
 const isAuthenticated = () => {
   return localStorage.access_token
 }
+const visitante = () => {
+  return store.state.isVisitante
+}
+const autenticado = () => {
+  return store.state.isLogin
+}
 
 router.beforeEach((to, from, next) => {
   // if (!to.meta.isPublic && !loggedIn) {
@@ -147,6 +153,33 @@ router.beforeEach((to, from, next) => {
   // if (to.meta.isPublic && !isAuthenticated()) {
   //   return next();
   // }
+  /*  if (to.name === 'grupos_visitante' && autenticado() == false && visitante() == 'si') {
+     console.log(visitante())
+     return next({ name: 'grupos_visitante' })
+   } */
+  /* if (to.name !== 'home' && autenticado() == false) {
+    console.log(visitante())
+    return next({ name: 'home' })
+  } */
+  let rutasNegadas = ["directores", "grupos", "addgrupos"
+    , "editgrupo", "adduserDirector", "editdirector",
+    "periodos", "asignargrupo", "vistaDirectores",
+    "edit-periodo", "editar-integrante", "agregar-integrante",
+    'agregar-integrante', 'addperiodo', 'editar-proyecto',
+    'agregar-proyecto-producto', 'agregar-actividad',
+    'agregar-proyecto', 'editar-actividad', 'productos',
+    'productosP', 'editar-producto', 'agregar-producto',
+    'agregar-soporte', 'editar-soporte', 'soportes', "directores", "grupos", "coordinadores",
+    "addgrupos", "editgrupo", "adduserDirector", "editdirector",
+    'adduserDirector', 'editdirector', 'coordinadores',
+    'addcoordinador', 'editcoordinador', 'asignargrupo',
+    'vistaDirectores', 'asignarsemillero','semilleros','addsemillero','editsemillero'
+  ]
+  if (autenticado() == false) {
+    if (rutasNegadas.indexOf(to.name) > -1){
+      return next({ name: 'home' })
+    }
+  }
 
   // Do not allow user to visit login page or register page if they are logged in
   if (to.name === 'login' && isAuthenticated()) {

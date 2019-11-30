@@ -85,6 +85,9 @@ export default {
       localStorage.user = JSON.stringify(data.infoToken.user);
 
       let user = JSON.parse(localStorage.user);
+      this.$store.state.user = user;
+      console.log(this.$store.state.user);
+      console.log('dio la mentira');
       let rol = user.id_rol;
       /*  console.log("Mi rol,", rol); */
       if (rol == 2) {

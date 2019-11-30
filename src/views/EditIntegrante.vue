@@ -15,10 +15,10 @@
       </div>
       <div v-else></div>
       <section class="content">
-        <div style="width: 50%; margin: 0 auto;">
+        <div style="width: 80%; margin: 0 auto;">
           <div class="card card-success">
             <div class="navbar-nav">
-              <router-link to="/integrantes" class="nav-item nav-link">integrantes</router-link>
+              <router-link to="/integrantes" class="nav-item nav-link">Integrantes</router-link>
             </div>
             <h3 class="text-center">Editar Integrante</h3>
             <form @submit.prevent="handleSubmit">
