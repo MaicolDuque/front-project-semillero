@@ -71,6 +71,7 @@ import AddSoporte from './views/AddSoporte';
 import EditSoporte from './views/EditSoporte';
 import semillerosVisitante from './views/semillerosVisitante.vue';
 import semilleroEspecifico from './views/semilleroEspecifico.vue';   
+import VistaSemillerosvisitante from './views/VistaSemillerosVisitante.vue';  
 import HomeLogged from './views/HomeLogged';
 
 
@@ -127,6 +128,7 @@ const router = new Router({
     { path: '/editar-soporte/:id', name: 'editar-soporte', component: EditSoporte },
     { path: '/semilleros-visitante/:id', name: 'semilleros-visitante', component: semillerosVisitante },
     { path: '/semillero-especifico/:id', name: 'semillero-especifico', component: semilleroEspecifico },
+    { path: '/visitante/semilleros', name: 'vistante-semilleros', component: VistaSemillerosvisitante },
 
   ]
 })

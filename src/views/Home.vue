@@ -33,7 +33,7 @@
 
             <div class="box">
               <router-link
-                to="/grupos_visitante"
+                to="/visitante/semilleros"
                 class="btn btn-white btn-animation-1"
               >Ver grupos</router-link>              
             </div>
