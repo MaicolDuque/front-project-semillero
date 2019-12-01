@@ -160,7 +160,7 @@
                   </select>
                 </div>
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Actualizar</button>
+                  <button type="submit" class="btn btn-outline-success">Actualizar</button>
                 </div>
               </div>
             </form>
@@ -216,13 +216,14 @@ export default {
       })
       .finally(() => (this.loading = false));
 
-    ApiService.get("/tipousuario").then(response => {
-      this.tipoUsuarios = response.data;
-    });
-
-    /*  ApiService.get("/rol").then(response => {
-      this.roles = response.data;
-    }); */
+    ApiService.get("/tipousuario")
+      .then(response => {
+        this.tipoUsuarios = response.data;
+      })
+      .catch(error => {
+        console.log(error);
+        this.errored = true;
+      });
   },
 
   //Reglas de validacion para VueValidate
@@ -257,18 +258,39 @@ export default {
         return;
       }
       this.updateusuario();
-      /* alert(this.objectusuario);
-      alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.usuario)); */
+    },
+    /* Despliega mensaje de exito al guardar un registro */
+    showAlert() {
+      this.$swal({
+        type: "success",
+        text: "Registro Actualizado con exito",
+        timer: 2000,
+        showCancelButton: false,
+        showConfirmButton: false
+      });
     },
     updateusuario(event) {
-      ApiService.put(`/usuario/${this.$route.params.id}`, this.usuario).then(
-        response => {
-          this.back();
-        }
-      );
+      ApiService.put(`/usuario/${this.$route.params.id}`, this.usuario)
+        .then(response => {
+          if (response.status === 200) {
+            this.showAlert();
+            this.back();
+          } else if (response.status === 204) {
+            this.$swal({
+              type: "warning",
+              text: "el usuario no existe",
+              timer: 2000,
+              showCancelButton: false,
+              showConfirmButton: false
+            });
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          this.errored = true;
+        });
     }
   },
-
   computed: {
     objectusuario() {
       return JSON.parse(`{

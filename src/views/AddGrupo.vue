@@ -18,7 +18,7 @@
                 <input
                   type="text"
                   pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+' ]+"
-                  title=" Solo Letras y números. Tamaño máximo: 50"
+                  title=" Solo Letras y números. Tamaño máximo: 100"
                   v-model.trim="grupo.grupo"
                   id="grupo"
                   name="grupo"
@@ -28,7 +28,7 @@
                 />
                 <div v-if="submitted && $v.grupo.grupo.$error" class="invalid-feedback">
                   <span v-if="!$v.grupo.grupo.required">El campo es requerido</span>
-                  <span v-if="!$v.grupo.grupo.maxLength">El campo no debe superar los 50 caracteres</span>
+                  <span v-if="!$v.grupo.grupo.maxLength">El campo no debe superar los 100 caracteres</span>
                 </div>
               </div>
               <div class="form-group">
@@ -93,7 +93,7 @@
                 <input
                   type="text"
                   pattern="[A-Za-z0-9 ./ ? = @  :]+"
-                  title=" Solo Letras, números,punto, '/' Tamaño máximo: 150 caracteres"
+                  title=" Solo Letras, números,punto, '/' Tamaño máximo: 255 caracteres"
                   v-model.trim="grupo.vinculo"
                   id="vinculo"
                   name="vinculo"
@@ -105,7 +105,7 @@
                   <span v-if="!$v.grupo.vinculo.required">El campo es requerido</span>
                   <span
                     v-if="!$v.grupo.vinculo.maxLength"
-                  >El campo no debe superar los 150 caracteres</span>
+                  >El campo no debe superar los 255 caracteres</span>
                 </div>
               </div>
               <div class="form-group">
@@ -182,12 +182,12 @@ export default {
     grupo: {
       grupo: {
         required,
-        maxLength: maxLength(50)
+        maxLength: maxLength(100)
       },
       id_categoria: { required },
       cod_colciencias: { required, maxLength: maxLength(10) },
       id_facultad: { required },
-      vinculo: { required, maxLength: maxLength(150) },
+      vinculo: { required, maxLength: maxLength(255) },
       siglas: { required, maxLength: maxLength(10) }
     }
   },

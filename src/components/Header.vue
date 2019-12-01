@@ -76,6 +76,7 @@ export default {
       this.$store.commit("setVisitante", "si");
       TokenService.removeToken();
       let info = { id_rol: 1 };
+      this.$store.state.rol = 0;
       TokenService.saveTokenCustom("user", JSON.stringify(info));
       TokenService.removeRefreshToken();
       ApiService.unmount401Interceptor();

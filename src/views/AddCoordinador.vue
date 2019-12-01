@@ -30,7 +30,7 @@
                     <span v-if="!$v.usuario.documento.required">El campo es requerido</span>
                     <span
                       v-if="!$v.usuario.documento.maxLength"
-                    >El campo no debe superar los 50 caracteres</span>
+                    >El campo no debe superar los 12 caracteres</span>
                   </div>
                 </div>
                 <div class="form-group">

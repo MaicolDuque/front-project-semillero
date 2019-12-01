@@ -70,7 +70,8 @@ import Soportes from './views/Soportes';
 import AddSoporte from './views/AddSoporte';
 import EditSoporte from './views/EditSoporte';
 import semillerosVisitante from './views/semillerosVisitante.vue';
-import semilleroEspecifico from './views/semilleroEspecifico.vue'
+import semilleroEspecifico from './views/semilleroEspecifico.vue';   
+import HomeLogged from './views/HomeLogged';
 
 
 ///
@@ -88,6 +89,7 @@ const router = new Router({
   routes: [
     { path: '/login', name: 'login', component: Login, meta: { isPublic: true } },
     { path: '/', name: 'home', component: Home },
+    { path: '/home', name: 'homeLogged', component: HomeLogged },
     { path: '/about', name: 'about', component: About },
     { path: '/grupos', name: 'grupos', component: Grupos },
     { path: '/addGrupos', name: 'addgrupos', component: AddGrupo },
@@ -136,8 +138,12 @@ const isAuthenticated = () => {
 const visitante = () => {
   return store.state.isVisitante
 }
-const autenticado = () => {
+var autenticado = () => {
   return store.state.isLogin
+}
+
+var rl = () => {
+  return store.state.rol
 }
 
 router.beforeEach((to, from, next) => {
@@ -173,24 +179,26 @@ router.beforeEach((to, from, next) => {
     "addgrupos", "editgrupo", "adduserDirector", "editdirector",
     'adduserDirector', 'editdirector', 'coordinadores',
     'addcoordinador', 'editcoordinador', 'asignargrupo',
-    'vistaDirectores', 'asignarsemillero','semilleros','addsemillero','editsemillero'
+    'vistaDirectores', 'asignarsemillero', 'semilleros', 'addsemillero', 'editsemillero','homeLogged'
   ]
-  if (autenticado() == false) {
-    if (rutasNegadas.indexOf(to.name) > -1){
-      return next({ name: 'home' })
+  if (rl() == 0) {
+    console.log(rl())
+    if (autenticado() == false) {
+      console.log(autenticado())
+      if (rutasNegadas.indexOf(to.name) > -1) {
+        console.log('Te devolví wey')
+        return next({ name: 'home' })
+      }
     }
   }
-
   // Do not allow user to visit login page or register page if they are logged in
   if (to.name === 'login' && isAuthenticated()) {
     return next({ name: 'home' })
   }
   /*  let user = router.app.$store.state.user */
 
-  let user = JSON.parse(localStorage.user)
-  console.log(user.id_rol)
 
-  if (user.id_rol > 1) {
+  if (rl() > 1) {
     let rutasNoPermitidas = {
       2: [
         "directores", "grupos", "addgrupos"
@@ -216,9 +224,9 @@ router.beforeEach((to, from, next) => {
 
       ]
     }
-    let rutasNoAccesoRol = rutasNoPermitidas[user.id_rol]
+    let rutasNoAccesoRol = rutasNoPermitidas[rl()]
     if (rutasNoAccesoRol.indexOf(to.name) > -1) {
-      return next({ name: 'home' })
+      return next({ name: 'homeLogged' })
     }
   }
 

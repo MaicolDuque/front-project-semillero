@@ -25,7 +25,7 @@
                   <input
                     type="text"
                     pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+' ]+"
-                    title=" Solo Letras y números. Tamaño máximo: 50"
+                    title=" Solo Letras y números. Tamaño máximo: 100"
                     v-model.trim="semillero.semillero"
                     id="semillero"
                     name="semillero"
@@ -37,7 +37,7 @@
                     <span v-if="!$v.semillero.semillero.required">El campo es requerido</span>
                     <span
                       v-if="!$v.semillero.semillero.maxLength"
-                    >El campo no debe superar los 50 caracteres</span>
+                    >El campo no debe superar los 100 caracteres</span>
                   </div>
                 </div>
                 <div class="form-group">
@@ -45,7 +45,7 @@
                   <input
                     type="text"
                     pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+' ]+"
-                    title=" Solo Letras y números. Tamaño máximo: 200"
+                    title=" Solo Letras y números. Tamaño máximo: 255"
                     v-model.trim="semillero.objetivo"
                     id="objetivo"
                     name="objetivo"
@@ -57,7 +57,7 @@
                     <span v-if="!$v.semillero.objetivo.required">El campo es requerido</span>
                     <span
                       v-if="!$v.semillero.objetivo.maxLength"
-                    >El campo no debe superar los 200 caracteres</span>
+                    >El campo no debe superar los 255 caracteres</span>
                   </div>
                 </div>
                 <div class="form-group">
@@ -65,7 +65,7 @@
                   <input
                     type="text"
                     pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+' ]+"
-                    title=" Solo Letras y números. Tamaño máximo: 200"
+                    title=" Solo Letras y números. Tamaño máximo: 255"
                     v-model.trim="semillero.descripcion"
                     id="descripcion"
                     name="descripcion"
@@ -77,7 +77,7 @@
                     <span v-if="!$v.semillero.descripcion.required">El campo es requerido</span>
                     <span
                       v-if="!$v.semillero.descripcion.maxLength"
-                    >El campo no debe superar los 200 caracteres</span>
+                    >El campo no debe superar los 255 caracteres</span>
                   </div>
                 </div>
                 <div class="form-group">
@@ -166,10 +166,10 @@ export default {
     semillero: {
       semillero: {
         required,
-        maxLength: maxLength(50)
+        maxLength: maxLength(100)
       },
-      objetivo: { required, maxLength: maxLength(200) },
-      descripcion: { required, maxLength: maxLength(200) }
+      objetivo: { required, maxLength: maxLength(255) },
+      descripcion: { required, maxLength: maxLength(255) }
     }
   },
 

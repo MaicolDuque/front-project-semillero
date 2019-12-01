@@ -86,7 +86,11 @@ export default {
 
       let user = JSON.parse(localStorage.user);
       this.$store.state.user = user;
-      console.log(this.$store.state.user);
+      this.$store.state.rol = user.id_rol;
+      /* this.$store.commit('setRol',user.id_rol);
+      this.$store.commit('setLogin',true); */
+      console.log(this.$store.state.user );
+      console.log(this.$store.state.rol)
       console.log('dio la mentira');
       let rol = user.id_rol;
       /*  console.log("Mi rol,", rol); */
@@ -97,9 +101,10 @@ export default {
       } else {
         this.$store.dispatch("infoUser", user.id_usuario);
       }
+      this.$store.dispatch("obtenerRol",user.id_rol);
 
       this.$store.commit("setLogin", true);
-      this.$router.push({ name: "home" });
+      this.$router.push({ name: "homeLogged" });
     }
   }
 };

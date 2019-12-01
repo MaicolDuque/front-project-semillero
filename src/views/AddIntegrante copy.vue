@@ -1,13 +1,11 @@
 <template>
   <div>
     <div class="container">
-      
       <nav class="nav grey lighten-4 py-4">
         <a @click="back" class="nav-item nav-link">Periodos</a>
       </nav>
 
       <div class="card card-primary card-outline">
-        
         <div class="card-header p-0 pt-1 border-bottom-0">
           <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
             <li class="nav-item">
@@ -250,7 +248,7 @@ export default {
         telefono: "",
         estado: "",
         id_tipo_usuario: "",
-        id_rol: ""
+        id_rol: 4
       },
       submitted: false
     };
@@ -308,24 +306,11 @@ export default {
     }
   },
   methods: {
-    addUsuario() {
-      this.usuario.id_rol = 4;
+    /* addUsuario() {
       ApiService.post("/usuario", this.objectUsuario).catch(function(response) {
         alert("No se pudo crear el Usuario");
       });
-
-      /*  ApiService.post("/director" id_grupo: this.director.id_grupo}).then(response => {
-        this.$router.push({ name: "directores" });
-      }); */
-      /* ApiService.post("/usuario", this.usuario)
-        .then(
-          response => this.$router.push({ name: "directores" })
-          // console.log(response.data)
-        )
-        .catch(error => console.log(error))
-        .finally(() => (this.loading = false));
-      this.appear(); */
-    },
+    }, */
 
     back() {
       this.$router.go(-1);
@@ -358,34 +343,12 @@ export default {
     //Valida el formulario
     handleSubmit(e) {
       this.submitted = true;
-      var retornado = "";
       // Se detiene aqui si es invalido, de lo contrario ejecuta el submit()
       this.$v.$touch();
       if (this.$v.$invalid) {
         return;
       }
-      //asigna como usuario un Director
-      this.usuario.id_rol = 4;
-      /* Almacenar el usuario */
-      var id_gr = this.periodo.id_periodo;
-      ApiService.post("/usuario", this.usuario).then(function(value) {
-        /*  console.log(value); */
-        retornado = value.data;
-        console.log("retornado: " + retornado);
-
-        console.log(id_gr);
-        ApiService.post("/integrante", {
-          id_usuario: value.data,
-          id_periodo: id_gr
-        }).then(function(value) {
-          console.log(value);
-        });
-      });
-
-      /* logica de enviar api de creacion de usuario y asignacion de grupo */
-
-      //this.addUsuario();
-      /* alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.usuario)); */
+      alert("aca");
     }
   }
 };

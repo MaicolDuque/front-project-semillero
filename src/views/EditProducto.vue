@@ -26,7 +26,7 @@
                   <input
                     type="text"
                     pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+' ]+"
-                    title=" Solo Letras y números. Tamaño máximo: 50"
+                    title=" Solo Letras y números. Tamaño máximo: 255"
                     v-model.trim="producto.producto"
                     id="producto"
                     name="producto"
@@ -38,7 +38,7 @@
                     <span v-if="!$v.producto.producto.required">El campo es requerido</span>
                     <span
                       v-if="!$v.producto.producto.maxLength"
-                    >El campo no debe superar los 50 caracteres</span>
+                    >El campo no debe superar los 255 caracteres</span>
                   </div>
                 </div>
 
@@ -123,9 +123,9 @@ export default {
     producto: {
       producto: {
         required,
-        maxLength: maxLength(50)
+        maxLength: maxLength(255)
       },
-      id_tipo_producto: { required, maxLength: maxLength(200) }
+      id_tipo_producto: { required }
     }
   },
 

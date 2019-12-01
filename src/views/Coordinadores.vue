@@ -113,7 +113,7 @@ export default {
       })
       .then(res => {
         $("#coordinadores").DataTable({
-          responsive: true,
+          responsive: false,
           retrieve: true
         });
       })

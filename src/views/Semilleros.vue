@@ -30,19 +30,21 @@
                   >
                     <thead>
                       <tr>
-                        <th data-priority="1">Nombre</th>
-                        <th data-priority="3">Objetivo</th>
-                        <th data-priority="4">Descripción</th>
+                        <th data-priority="1">Siglas</th>
+                        <th data-priority="2">Nombre</th>
+                       <!--  <th data-priority="3">Objetivo</th>
+                        <th data-priority="4">Descripción</th> -->
                         <th data-priority="5">Grupo</th>
                         <th data-priority="2">Acciones</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr v-for="item in showSemilleros" :key="item.id_semillero">
+                        <td>{{ item.siglas_semillero }}</td>
                         <td>{{ item.semillero }}</td>
-                        <td>{{ item.objetivo }}</td>
-                        <td>{{ item.descripcion }}</td>
-                        <td>{{ item.grupo }}</td>
+                     <!--    <td>{{ item.objetivo }}</td>
+                        <td>{{ item.descripcion }}</td> -->
+                        <td>{{ item.siglas }}</td>
                         <td>
                           <div class="btn-group" role="group">
                             <div v-if="rol < 3">
@@ -91,6 +93,8 @@ export default {
     };
   },
   created() {
+    console.log( this.$store.state.user)
+    /* console.log("rol: "+this.$store.state.rol) */
     ApiService.get("/semillero")
       .then(response => {
         if (response.status === 204) {
@@ -108,7 +112,7 @@ export default {
       })
       .then(res => {
         $("#tblSemilleros").DataTable({
-          responsive: true
+          responsive: false
         });
       })
       .catch(error => {

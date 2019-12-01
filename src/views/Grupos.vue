@@ -34,7 +34,7 @@
                         <th data-priority="3">Nombre</th>
                         <th data-priority="7">Categoria</th>
                         <th data-priority="6">Código Colciencias</th>
-                        <th data-priority="5">Vinculo Colciencias</th>
+                        <!-- <th data-priority="5">Vinculo Colciencias</th> -->
                         <th data-priority="4">Facultad</th>
                         <th data-priority="2">Acciones</th>
                       </tr>
@@ -45,14 +45,14 @@
                         <td>{{ item.grupo }}</td>
                         <td>{{ item.categoria }}</td>
                         <td>{{ item.cod_colciencias }}</td>
-                        <td>{{ item.vinculo }}</td>
+                        <!-- <td>{{ item.vinculo }}</td> -->
                         <td>{{ item.facultad }}</td>
                         <td>
                           <div>
                             <router-link
-                              :to="{name: 'editgrupo', params: { id: item.id_grupo}}"
-                              class="btn btn-outline-primary "
                               style="margin: 2px"
+                              :to="{name: 'editgrupo', params: { id: item.id_grupo}}"
+                              class="btn btn-outline-primary"
                             >Editar</router-link>
 
                             <button
@@ -105,9 +105,8 @@ export default {
       })
       .then(res => {
         $("#tblGrupos").DataTable({
-          responsive: true,
-          scrollX: true,
-          retrieve: true
+          responsive: false,
+          scrollX: true
 
           /* columnDefs: [{ width: "1%" }] */
         });

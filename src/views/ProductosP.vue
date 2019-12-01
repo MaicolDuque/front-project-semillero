@@ -103,7 +103,7 @@ export default {
       })
       .then(res => {
         $("#tblProductoProyecto").DataTable({
-          responsive: true
+          responsive: false
         });
       })
       .catch(error => {
