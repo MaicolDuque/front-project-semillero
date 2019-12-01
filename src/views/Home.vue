@@ -34,8 +34,8 @@
             <div class="box">
               <router-link
                 to="/visitante/semilleros"
-                class="btn btn-white btn-animation-1"
-              >Ver grupos</router-link>              
+                class="btn btn-white btn-animation-1 btn-lg"
+              >Ver semilleros</router-link>              
             </div>
           </div>
         </div>
@@ -91,9 +91,10 @@ export default {
 
 
 <style>
+
 .box {
   position: absolute;
-  top: 50%;
+  top: 70%;
   left: 50%;
   transform: translate(-50%, -50%);
 }

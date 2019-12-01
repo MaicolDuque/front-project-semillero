@@ -42,7 +42,7 @@
               >
                 <thead>
                   <tr>
-                    <th>Siglas</th>
+                    <th data-priority="1">Siglas</th>
                     <th>Nombre</th>
                     <th>Grupo de investigación</th>
                     <th>Coordinador</th>
@@ -120,7 +120,7 @@
                   >
                     <thead>
                       <tr>
-                        <th>Siglas</th>
+                        <th data-priority="1">Siglas</th>
                         <th>Nombre</th>
                         <th>Grupo de investigación</th>
                         <th>Coordinador</th>
@@ -136,7 +136,7 @@
                         >{{ item.semillero_sigla }}</router-link>
                       </td>
                         
-                        <td>{{ item.semillero }}</td>
+                        <td data-priority="1">{{ item.semillero }}</td>
                         <td>{{ item.grupo_sigla }}</td>
                         <td>{{ item.nombre_usuario }} {{ item.apellido_usuario }}</td>
                         <td>{{ item.email }}</td>
@@ -195,7 +195,7 @@
                 >
                   <thead>
                     <tr>
-                      <th>Siglas</th>
+                      <th data-priority="1">Siglas</th>
                       <th>Nombre</th>
                       <th>Grupo de investigación</th>
                       <th>Coordinador</th>
@@ -268,7 +268,7 @@
                 >
                   <thead>
                     <tr>
-                      <th>Siglas</th>
+                      <th data-priority="1">Siglas</th>
                       <th>Nombre</th>
                       <th>Grupo de investigación</th>
                       <th>Coordinador</th>
@@ -342,7 +342,7 @@
                 >
                   <thead>
                     <tr>
-                      <th>Siglas</th>
+                      <th data-priority="1">Siglas</th>
                       <th>Nombre</th>
                       <th>Grupo de investigación</th>
                       <th>Coordinador</th>
@@ -415,7 +415,7 @@
                   <thead>
                     <tr>
                       <!-- <th>id grupo</th> -->
-                      <th>Siglas</th>
+                      <th data-priority="1">Siglas</th>
                       <th>Nombre</th>
                       <th>Grupo de investigación</th>
                       <th>Coordinador</th>

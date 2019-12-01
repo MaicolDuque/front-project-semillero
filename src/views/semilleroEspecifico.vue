@@ -94,28 +94,30 @@
                               </div>
                             </div>
                             <div v-else></div>
-                            <table
-                              id="tblintegrantes"
-                              class="table table-striped table-bordered dt-responsive nowrap"
-                              style="width:100%"
-                            >
-                              <thead>
-                                <tr>
-                                  <th>Nombre</th>
-                                  <th>apellido</th>
-                                  <th>Correo</th>
-                                  <th>Tipo integrante</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr v-for="item in integrantes" :key="item.id_integrante">
-                                  <td>{{ item.nombre_usuario }}</td>
-                                  <td>{{ item.apellido_usuario }}</td>
-                                  <td>{{ item.email }}</td>
-                                  <td>{{item.tipo_usuario}}</td>
-                                </tr>
-                              </tbody>
-                            </table>
+                            <div class="table-responsive">
+                              <table
+                                id="tblintegrantes"
+                                class="table table-striped table-bordered dt-responsive nowrap"
+                                style="width:100%"
+                              >
+                                <thead>
+                                  <tr>
+                                    <th>Nombre</th>
+                                    <th>apellido</th>
+                                    <th>Correo</th>
+                                    <th>Tipo integrante</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr v-for="item in integrantes" :key="item.id_integrante">
+                                    <td>{{ item.nombre_usuario }}</td>
+                                    <td>{{ item.apellido_usuario }}</td>
+                                    <td>{{ item.email }}</td>
+                                    <td>{{item.tipo_usuario}}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
                           </section>
                         </div>
                         <!-- /.card-body -->
@@ -147,22 +149,24 @@
                             </div>
                           </div>
                           <div v-else></div>
-                          <table
-                            id="tblproyecto"
-                            class="table table-striped table-bordered dt-responsive nowrap"
-                            style="width:100%"
-                          >
-                            <thead>
-                              <tr>
-                                <th>Nombre</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr v-for="item in proyectos" :key="item.id_proyecto">
-                                <td>{{ item.proyecto }}</td>
-                              </tr>
-                            </tbody>
-                          </table>
+                          <div class="table-responsive">
+                            <table
+                              id="tblproyecto"
+                              class="table table-striped table-bordered dt-responsive nowrap"
+                              style="width:100%"
+                            >
+                              <thead>
+                                <tr>
+                                  <th>Nombre</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr v-for="item in proyectos" :key="item.id_proyecto">
+                                  <td>{{ item.proyecto }}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
                         </section>
                       </div>
                       <!-- /.card-body -->
@@ -189,22 +193,24 @@
                             </div>
                           </div>
                           <div v-else></div>
-                          <table
-                            id="tblproyectos"
-                            class="table table-striped table-bordered dt-responsive nowrap"
-                            style="width:100%"
-                          >
-                            <thead>
-                              <tr>
-                                <th>Nombre</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr v-for="item in actividades" :key="item.id_actividad">
-                                <td>{{ item.actividad }}</td>
-                              </tr>
-                            </tbody>
-                          </table>
+                          <div class="table-responsive">
+                            <table
+                              id="tblproyectos"
+                              class="table table-striped table-bordered dt-responsive nowrap"
+                              style="width:100%"
+                            >
+                              <thead>
+                                <tr>
+                                  <th>Nombre</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr v-for="item in actividades" :key="item.id_actividad">
+                                  <td>{{ item.actividad }}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
                         </section>
                       </div>
                       <!-- /.card-body -->
@@ -453,7 +459,7 @@ export default {
     ApiService.get(`/proyecto/semillero/actual/${this.$route.params.id}`)
       .then(response => {
         if (response.status === 204) {
-          alert("No existen integrantes para mostrar ");
+          alert("No existen proyectos para mostrar ");
           this.proyectos = response.data;
         } else {
           this.proyectos = response.data;
