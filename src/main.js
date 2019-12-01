@@ -46,12 +46,12 @@ if (!TokenService.getToken()) {
 }
 
 //If user no exist in localStorage
-if(!localStorage.user){
-  let info = {id_rol: 1}
+if (!localStorage.user) {
+  let info = { id_rol: 4 }
   TokenService.saveTokenCustom('user', JSON.stringify(info))
   let user = JSON.parse(localStorage.user)
-  console.log("USER=>>",user)
-  console.log("USER=>>",user.id_rol)
+  console.log("USER=>>", user)
+  console.log("USER=>>", user.id_rol)
 }
 
 ApiService.setHeader();
