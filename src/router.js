@@ -70,7 +70,9 @@ import Soportes from './views/Soportes';
 import AddSoporte from './views/AddSoporte';
 import EditSoporte from './views/EditSoporte';
 import semillerosVisitante from './views/semillerosVisitante.vue';
-import semilleroEspecifico from './views/semilleroEspecifico.vue'
+import semilleroEspecifico from './views/semilleroEspecifico.vue';   
+import VistaSemillerosvisitante from './views/VistaSemillerosVisitante.vue';  
+import HomeLogged from './views/HomeLogged';
 
 
 ///
@@ -88,6 +90,7 @@ const router = new Router({
   routes: [
     { path: '/login', name: 'login', component: Login, meta: { isPublic: true } },
     { path: '/', name: 'home', component: Home },
+    { path: '/home', name: 'homeLogged', component: HomeLogged },
     { path: '/about', name: 'about', component: About },
     { path: '/grupos', name: 'grupos', component: Grupos, meta: { isPublic: false } },
     { path: '/addGrupos', name: 'addgrupos', component: AddGrupo },
@@ -125,6 +128,7 @@ const router = new Router({
     { path: '/editar-soporte/:id', name: 'editar-soporte', component: EditSoporte },
     { path: '/semilleros-visitante/:id', name: 'semilleros-visitante', component: semillerosVisitante },
     { path: '/semillero-especifico/:id', name: 'semillero-especifico', component: semilleroEspecifico },
+    { path: '/visitante/semilleros', name: 'vistante-semilleros', component: VistaSemillerosvisitante },
 
   ]
 })
@@ -132,6 +136,16 @@ const router = new Router({
 
 const isAuthenticated = () => {
   return localStorage.access_token
+}
+const visitante = () => {
+  return store.state.isVisitante
+}
+var autenticado = () => {
+  return store.state.isLogin
+}
+
+var rl = () => {
+  return store.state.rol
 }
 
 router.beforeEach((to, from, next) => {
@@ -147,17 +161,46 @@ router.beforeEach((to, from, next) => {
   // if (to.meta.isPublic && !isAuthenticated()) {
   //   return next();
   // }
-
+  /*  if (to.name === 'grupos_visitante' && autenticado() == false && visitante() == 'si') {
+     console.log(visitante())
+     return next({ name: 'grupos_visitante' })
+   } */
+  /* if (to.name !== 'home' && autenticado() == false) {
+    console.log(visitante())
+    return next({ name: 'home' })
+  } */
+  let rutasNegadas = ["directores", "grupos", "addgrupos"
+    , "editgrupo", "adduserDirector", "editdirector",
+    "periodos", "asignargrupo", "vistaDirectores",
+    "edit-periodo", "editar-integrante", "agregar-integrante",
+    'agregar-integrante', 'addperiodo', 'editar-proyecto',
+    'agregar-proyecto-producto', 'agregar-actividad',
+    'agregar-proyecto', 'editar-actividad', 'productos',
+    'productosP', 'editar-producto', 'agregar-producto',
+    'agregar-soporte', 'editar-soporte', 'soportes', "directores", "grupos", "coordinadores",
+    "addgrupos", "editgrupo", "adduserDirector", "editdirector",
+    'adduserDirector', 'editdirector', 'coordinadores',
+    'addcoordinador', 'editcoordinador', 'asignargrupo',
+    'vistaDirectores', 'asignarsemillero', 'semilleros', 'addsemillero', 'editsemillero','homeLogged'
+  ]
+  if (rl() == 0) {
+    console.log(rl())
+    if (autenticado() == false) {
+      console.log(autenticado())
+      if (rutasNegadas.indexOf(to.name) > -1) {
+        console.log('Te devolví wey')
+        return next({ name: 'home' })
+      }
+    }
+  }
   // Do not allow user to visit login page or register page if they are logged in
   if (to.name === 'login' && isAuthenticated()) {
     return next({ name: 'grupos_visitante' })
   }
   /*  let user = router.app.$store.state.user */
 
-  let user = JSON.parse(localStorage.user)
-  console.log(user.id_rol)
 
-  if (user.id_rol > 1) {
+  if (rl() > 1) {
     let rutasNoPermitidas = {
       2: [
         "directores", "grupos", "addgrupos"
@@ -191,9 +234,9 @@ router.beforeEach((to, from, next) => {
  
        ] */
     }
-    let rutasNoAccesoRol = rutasNoPermitidas[user.id_rol]
+    let rutasNoAccesoRol = rutasNoPermitidas[rl()]
     if (rutasNoAccesoRol.indexOf(to.name) > -1) {
-      return next({ name: 'home' })
+      return next({ name: 'homeLogged' })
     }
   }
 

@@ -30,23 +30,23 @@
                   >
                     <thead>
                       <tr>
-                        <th data-priority="1">Nombre</th>
-                        <th data-priority="7">Documento</th>
-                        <th data-priority="5">Apellido</th>
-                        <th data-priority="6">Telefono</th>
+                        <th data-priority="1">Documento</th>
+                        <th data-priority="3">Nombre</th>
                         <th data-priority="4">Email</th>
-                        <th data-priority="8">Tipo usuario</th>
-                        <th data-priority="3">Grupo</th>
+                        <th data-priority="5">Telefono</th>
+
+                        <th data-priority="6">Tipo usuario</th>
+                        <th data-priority="7">Grupo</th>
                         <th data-priority="2">Acciones</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr v-for="item in usuarios" :key="item.id_usuario">
-                        <td>{{ item.nombre_usuario }}</td>
                         <td>{{ item.documento }}</td>
-                        <td>{{ item.apellido_usuario }}</td>
-                        <td>{{ item.telefono }}</td>
+                        <td>{{ item.nombre_usuario }} {{ item.apellido_usuario }}</td>
                         <td>{{ item.email }}</td>
+                        <td>{{ item.telefono }}</td>
+
                         <td>{{ item.tipo_usuario }}</td>
                         <td>{{ item.grupo }}</td>
                         <td>
@@ -99,7 +99,8 @@ export default {
       })
       .then(res => {
         $("#tblDirectores").DataTable({
-          responsive: false
+          responsive: false,
+          retrieve: true
         });
       })
       .catch(error => {

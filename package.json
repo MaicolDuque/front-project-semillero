@@ -17,6 +17,7 @@
     "vee-validate": "^3.0.11",
     "vue": "^2.6.10",
     "vue-axios": "^2.1.4",
+    "vue-crypt": "^1.0.0",
     "vue-multiselect": "^2.1.6",
     "vue-paginate": "^3.6.0",
     "vue-router": "^3.0.3",
@@ -24,7 +25,8 @@
     "vue-sweetalert2": "^2.1.4",
     "vue-toasted": "^1.1.27",
     "vuelidate": "^0.7.4",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "vuex-persistedstate": "^2.7.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.11.0",

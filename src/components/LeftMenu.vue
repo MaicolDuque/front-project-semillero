@@ -3,7 +3,7 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
-      <a href="/" class="brand-link">
+      <a href="/home" class="brand-link">
         <img
           src="/img/logo_semilleros_poli.jpg"
           class="brand-image img-circle elevation-3"
@@ -25,7 +25,7 @@
             />
           </div>
           <div class="info">
-            <a href="/" id="nameUser" class="d-block"></a>
+            <a href="/home" id="nameUser" class="d-block"></a>
           </div>
         </div>
 
@@ -38,7 +38,7 @@
             data-accordion="false"
           >
             <li class="nav-item">
-              <router-link to="/" class="nav-link">
+              <router-link to="/home" class="nav-link">
                 <i class="nav-icon fa fa-fw fa-home"></i>
                 Home
               </router-link>

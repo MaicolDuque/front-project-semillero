@@ -34,7 +34,7 @@
                         <th data-priority="3">Nombre</th>
                         <th data-priority="7">Categoria</th>
                         <th data-priority="6">Código Colciencias</th>
-                        <th data-priority="5">Vinculo Colciencias</th>
+                        <!-- <th data-priority="5">Vinculo Colciencias</th> -->
                         <th data-priority="4">Facultad</th>
                         <th data-priority="2">Acciones</th>
                       </tr>
@@ -45,7 +45,7 @@
                         <td>{{ item.grupo }}</td>
                         <td>{{ item.categoria }}</td>
                         <td>{{ item.cod_colciencias }}</td>
-                        <td>{{ item.vinculo }}</td>
+                        <!-- <td>{{ item.vinculo }}</td> -->
                         <td>{{ item.facultad }}</td>
                         <td>
                           <div>
@@ -105,7 +105,7 @@ export default {
       })
       .then(res => {
         $("#tblGrupos").DataTable({
-          responsive: true,
+          responsive: false,
           scrollX: true
 
           /* columnDefs: [{ width: "1%" }] */
