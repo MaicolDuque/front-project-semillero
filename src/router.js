@@ -70,8 +70,8 @@ import Soportes from './views/Soportes';
 import AddSoporte from './views/AddSoporte';
 import EditSoporte from './views/EditSoporte';
 import semillerosVisitante from './views/semillerosVisitante.vue';
-import semilleroEspecifico from './views/semilleroEspecifico.vue';   
-import VistaSemillerosvisitante from './views/VistaSemillerosVisitante.vue';  
+import semilleroEspecifico from './views/semilleroEspecifico.vue';
+import VistaSemillerosvisitante from './views/VistaSemillerosVisitante.vue';
 import HomeLogged from './views/HomeLogged';
 
 
@@ -145,7 +145,16 @@ var autenticado = () => {
 }
 
 var rl = () => {
-  return store.state.rol
+ /*  console.log(localStorage.user) */
+  var bytes = CryptoJS.AES.decrypt(localStorage.user, 'Key');
+  var originalText = bytes.toString(CryptoJS.enc.Utf8);
+ 
+  /* console.log(originalText+ "text") */
+  let user = JSON.parse(originalText);
+  
+  let rol = user.id_rol
+  
+  return rol;
 }
 
 router.beforeEach((to, from, next) => {
@@ -181,17 +190,14 @@ router.beforeEach((to, from, next) => {
     "addgrupos", "editgrupo", "adduserDirector", "editdirector",
     'adduserDirector', 'editdirector', 'coordinadores',
     'addcoordinador', 'editcoordinador', 'asignargrupo',
-    'vistaDirectores', 'asignarsemillero', 'semilleros', 'addsemillero', 'editsemillero','homeLogged'
+    'vistaDirectores', 'asignarsemillero', 'semilleros', 'addsemillero', 'editsemillero', 'homeLogged'
   ]
   if (rl() == 0) {
-    console.log(rl())
-    if (autenticado() == false) {
-      console.log(autenticado())
+   /*  if (autenticado() == false) { */
       if (rutasNegadas.indexOf(to.name) > -1) {
-        console.log('Te devolví wey')
         return next({ name: 'home' })
       }
-    }
+    /* } */
   }
   // Do not allow user to visit login page or register page if they are logged in
   if (to.name === 'login' && isAuthenticated()) {

@@ -16,7 +16,7 @@
               </section>
               <section v-else>
                 <div v-if="loading">
-                  cargando..
+                  Cargando..
                   <div class="spinner-border text-success" role="status">
                     <span class="sr-only">Loading...</span>
                   </div>
@@ -106,7 +106,7 @@ export default {
       .then(res => {
         $("#tblGrupos").DataTable({
           responsive: false,
-          scrollX: true
+          retrieve: true
 
           /* columnDefs: [{ width: "1%" }] */
         });
@@ -121,10 +121,10 @@ export default {
   methods: {
     deleteGrupo(id) {
       this.$swal({
-        title: "Estas seguro de eliminar el registro?",
+        title: "¿Estás seguro de eliminar?",
         type: "warning",
         showCancelButton: true,
-        confirmButtonText: "Si, Eliminar!",
+        confirmButtonText: "Eliminar",
         cancelButtonText: "Cancelar",
         showCloseButton: true,
         showLoaderOnConfirm: true
@@ -145,7 +145,7 @@ export default {
                 this.$swal({
                   type: "warning",
                   text:
-                    "fallo, no se ha podido eliminar el registro, Registros asociados",
+                    "Fallo, no se ha podido eliminar el registro porque tiene otros registros asociados",
                   timer: 2000,
                   showCancelButton: false,
                   showConfirmButton: false
@@ -156,9 +156,9 @@ export default {
               console.log(error);
               this.errored = true;
             });
-          this.$swal("Registro Eliminado");
+          /* this.$swal("Registro Eliminado"); */
         } else {
-          this.$swal(" Accion Cancelada");
+          this.$swal("Acción Cancelada");
         }
       });
     }

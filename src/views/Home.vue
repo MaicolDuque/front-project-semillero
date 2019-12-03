@@ -35,7 +35,7 @@
               <router-link
                 to="/visitante/semilleros"
                 class="btn btn-white btn-animation-1 btn-lg"
-              >Ver semilleros</router-link>              
+              >Ver semilleros</router-link>
             </div>
           </div>
         </div>
@@ -55,11 +55,17 @@ export default {
   },
 
   created() {
-    console.log(this.$store.state.user);
+    var bytes = CryptoJS.AES.decrypt(this.$store.state.prueba, "Key");
+    var originalText = bytes.toString(CryptoJS.enc.Utf8);  
+    bytes = CryptoJS.AES.decrypt(localStorage.user, "Key");
+    originalText = bytes.toString(CryptoJS.enc.Utf8);
+    let user = JSON.parse(originalText);
   },
   mounted: () => {
     if (localStorage.user) {
-      let user = JSON.parse(localStorage.user);
+      var bytes = CryptoJS.AES.decrypt(localStorage.user, "Key");
+      var originalText = bytes.toString(CryptoJS.enc.Utf8);
+      let user = JSON.parse(originalText);
       $("#nameUser").text(user.nombre_usuario);
 
       $("#imageUser").attr("src", user.imagen);
@@ -69,6 +75,7 @@ export default {
     idRol() {
       return this.$store.state.user.id_rol;
     }
+
     /*  mensaje(){
       if(this.$store.state.user != undefined){
         let rol = this.$store.state.user.id_rol
@@ -91,7 +98,6 @@ export default {
 
 
 <style>
-
 .box {
   position: absolute;
   top: 70%;

@@ -30,11 +30,9 @@
                   >
                     <thead>
                       <tr>
-                        <th data-priority="1">Nombre</th>
-                        <th>Documento</th>
-                        <th>Apellido</th>
+                        <th data-priority="1">Documento</th>
+                        <th>Nombre</th>                        
                         <th>Telefono</th>
-                        <th>Estado</th>
                         <th>Email</th>
                         <th>Tipo usuario</th>
                         <th>Semillero</th>
@@ -42,12 +40,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="item in usuarios" :key="item.id_usuario">
-                        <td>{{ item.nombre_usuario }}</td>
+                      <tr v-for="item in usuarios" :key="item.id_usuario">                       
                         <td>{{ item.documento }}</td>
-                        <td>{{ item.apellido_usuario }}</td>
+                         <td>{{ item.nombre_usuario }} {{ item.apellido_usuario }}</td>
                         <td>{{ item.telefono }}</td>
-                        <td>{{ item.estado }}</td>
                         <td>{{ item.email }}</td>
                         <td>{{ item.tipo_usuario }}</td>
                         <td>{{ item.semillero }}</td>
@@ -92,7 +88,12 @@ export default {
     };
   },
   created() {
-    let user = JSON.parse(localStorage.user);
+    var bytes = CryptoJS.AES.decrypt(localStorage.user, "Key");
+    var originalText = bytes.toString(CryptoJS.enc.Utf8);
+    /* console.log(originalText+ "text") */
+    let user = JSON.parse(originalText);
+
+    
     console.log(user.id_usuario);
     ApiService.get(`/usuario/coordinador/${user.id_usuario}`)
       .then(response => {
@@ -126,10 +127,10 @@ export default {
   methods: {
     deleteDirector(id) {
       this.$swal({
-        title: "Estas seguro de eliminar el registro?",
+        title: "¿Estás seguro de eliminar?",
         type: "warning",
         showCancelButton: true,
-        confirmButtonText: "Si, Eliminar!",
+        confirmButtonText: "Eliminar",
         cancelButtonText: "Cancelar",
         showCloseButton: true,
         showLoaderOnConfirm: true

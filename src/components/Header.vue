@@ -14,7 +14,7 @@
       <header class="header" role="banner">
         <div class="header-inner clearfix">
           <h5>
-            <a class="brand pull-left" href="/">
+            <a class="brand pull-left" href="/home">
               <img
                 src="/img/logo_header_poli.png"
                 alt="Politécnico Colombiano Jaime Isaza Cadavid"
@@ -75,9 +75,20 @@ export default {
       TokenService.saveTokenCustom("visitante", "si");
       this.$store.commit("setVisitante", "si");
       TokenService.removeToken();
-      let info = { id_rol: 1 };
+      /* let info = JSON.stringify('{"id_rol": 0}')
+      console.log(info);
+      let encriptado = CryptoJS.AES.encrypt(info, "Key").toString();
+      TokenService.saveTokenCustom("user", JSON.stringify(encriptado)); */
+
+      let info = JSON.stringify({"id_rol": 0});
+      console.log(info);
+      let encriptado = CryptoJS.AES.encrypt(info, "Key").toString();
+      console.log(encriptado + "encriptado");
+      TokenService.saveTokenCustom("user", encriptado);
+
+      this.$store.commit("MUTATION_setRol", 0);
       this.$store.state.rol = 0;
-      TokenService.saveTokenCustom("user", JSON.stringify(info));
+      /* TokenService.saveTokenCustom("user", JSON.stringify(encriptado)); */
       TokenService.removeRefreshToken();
       ApiService.unmount401Interceptor();
       this.$router.push({ name: "home" });

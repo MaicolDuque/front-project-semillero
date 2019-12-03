@@ -133,10 +133,10 @@ export default {
     },
     deleteProducto(id) {
       this.$swal({
-        title: "Estas seguro de eliminar el registro?",
+        title: "¿Estás seguro de eliminar?",
         type: "warning",
         showCancelButton: true,
-        confirmButtonText: "Si, Eliminar!",
+        confirmButtonText: "Eliminar",
         cancelButtonText: "Cancelar",
         showCloseButton: true,
         showLoaderOnConfirm: true

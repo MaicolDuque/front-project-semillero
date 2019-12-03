@@ -48,7 +48,7 @@
                         <td>{{ item.telefono }}</td>
 
                         <td>{{ item.tipo_usuario }}</td>
-                        <td>{{ item.grupo }}</td>
+                        <td>{{ item.siglas }}</td>
                         <td>
                           <div class="btn-group" role="group">
                             <router-link
@@ -91,7 +91,13 @@ export default {
     ApiService.get("/usuario/director")
       .then(response => {
         if (response.status === 204) {
-          alert("No existen usuarios para mostrar ");
+          this.$swal({
+            type: "info",
+            text: "No hay directores para mostrar",
+            timer: 2000,
+            showCancelButton: false,
+            showConfirmButton: false
+          });
           this.usuarios = response.data;
         } else {
           this.usuarios = response.data;
@@ -121,10 +127,10 @@ export default {
     },
     deleteDirector(id) {
       this.$swal({
-        title: "Estas seguro de eliminar el registro director?",
+        title: "¿Estás seguro de eliminar el director?",
         type: "warning",
         showCancelButton: true,
-        confirmButtonText: "Si, Eliminar!",
+        confirmButtonText: "Eliminar",
         cancelButtonText: "Cancelar",
         showCloseButton: true,
         showLoaderOnConfirm: true
@@ -150,7 +156,7 @@ export default {
               this.errored = true;
             });
 
-          this.$swal("Registro Eliminado");
+          /* this.$swal("Registro Eliminado"); */
         } else {
           this.$swal("Accion Cancelada");
         }

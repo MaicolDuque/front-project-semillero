@@ -438,7 +438,6 @@ export default {
     ApiService.get(`/actividad/semillero/actual/${this.$route.params.id}`)
       .then(response => {
         if (response.status === 204) {
-          alert("No existen integrantes para mostrar ");
           this.actividades = response.data;
         } else {
           this.actividades = response.data;
@@ -459,7 +458,6 @@ export default {
     ApiService.get(`/proyecto/semillero/actual/${this.$route.params.id}`)
       .then(response => {
         if (response.status === 204) {
-          alert("No existen proyectos para mostrar ");
           this.proyectos = response.data;
         } else {
           this.proyectos = response.data;
@@ -502,12 +500,17 @@ export default {
   },
   methods: {
     enviarPreregistro() {
-      alert("enviar");
       ApiService.post("/semillero/solicitud", this.usuario).then(response => {
         console.log(response.data);
         console.log(response.status);
         if (response.status === 200) {
-          alert("aca");
+          this.$swal({
+            type: "success",
+            text: "La solicitud ha sido enviada",
+            timer: 2000,
+            showCancelButton: false,
+            showConfirmButton: false
+          });
           $("#preregistro ").modal("hide");
         }
       });

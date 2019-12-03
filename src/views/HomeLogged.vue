@@ -7,13 +7,9 @@
           <div class="card">
             <!-- /.card-header -->
             <div class="card-body">
-
-              <div style="text-align: center; font-size: 3em">
-                {{mensaje}}
-              </div>
-
+              <div style="text-align: center; font-size: 3em">{{mensaje}}</div>
             </div>
-            
+
             <!-- /.card-body -->
           </div>
         </div>
@@ -32,12 +28,16 @@ export default {
     };
   },
 
-  created(){
-    console.log(this.$store.state.user)
+  created() {
+    console.log(this.$store.state.user);
   },
   mounted: () => {
     if (localStorage.user) {
-      let user = JSON.parse(localStorage.user);
+      var bytes = CryptoJS.AES.decrypt(localStorage.user, "Key");
+      var originalText = bytes.toString(CryptoJS.enc.Utf8);
+      /* console.log(originalText + "text"); */
+      let user = JSON.parse(originalText);
+      /*  let user = JSON.parse(localStorage.user); */
       $("#nameUser").text(user.nombre_usuario);
 
       $("#imageUser").attr("src", user.imagen);
@@ -47,20 +47,24 @@ export default {
     idRol() {
       return this.$store.state.user.id_rol;
     },
-    mensaje(){
-      if(this.$store.state.user != undefined){
-        let rol = this.$store.state.user.id_rol
-        if(rol == 1){
-          return "Bienvenido Administrador"
+    mensaje() {
+      var bytes = CryptoJS.AES.decrypt(localStorage.user, "Key");
+      var originalText = bytes.toString(CryptoJS.enc.Utf8);
+      let user = JSON.parse(originalText);
+      console.log(user.nombre_usuario)
+      if (user.id_rol != undefined) {
+        /* let rol = this.$store.state.user.id_rol; */
+        if (user.id_rol == 1) {
+          return "Bienvenido Administrador";
         }
-        if(rol == 2){
-          return "Bienvenido Director"
+        if (user.id_rol == 2) {
+          return "Bienvenido Director";
         }
-        if(rol == 1){
-          return "Bienvenido Coordinador"
+        if (user.id_rol == 3) {
+          return "Bienvenido Coordinador";
         }
-      }else{
-        return "BIENVENIDO!"
+      } else {
+        return "BIENVENIDO!";
       }
     }
   }
