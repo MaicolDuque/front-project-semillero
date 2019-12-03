@@ -35,6 +35,7 @@
 <script>
 import ApiService from "../services/api.service";
 import { TokenService } from "../services/storage.service";
+import VueCryptojs from 'vue-cryptojs'
 export default {
   mounted: () => {
     $(".toastrDefaultError").click(function() {
@@ -80,18 +81,25 @@ export default {
       TokenService.saveToken(data.infoToken.token);
       TokenService.saveRefreshToken(data.infoToken.token);
       ApiService.setHeader();
-
+     /*  var CryptoJS = require("crypto-js"); */
+      let datos = JSON.stringify(data.infoToken.user)
+     
+      let encriptado = CryptoJS.AES.encrypt(datos,'Key').toString()
+    
+      
       ApiService.mount401Interceptor();
-      localStorage.user = JSON.stringify(data.infoToken.user);
+      localStorage.user = encriptado;
+     
 
-      let user = JSON.parse(localStorage.user);
+      /* let user = JSON.parse(JSON.stringify(data.infoToken.user)); */
+     
+      let user = data.infoToken.user;
       this.$store.state.user = user;
       this.$store.state.rol = user.id_rol;
+      console.log(this.$store.state.rol)
       /* this.$store.commit('setRol',user.id_rol);
       this.$store.commit('setLogin',true); */
-      console.log(this.$store.state.user );
-      console.log(this.$store.state.rol)
-      console.log('dio la mentira');
+
       let rol = user.id_rol;
       /*  console.log("Mi rol,", rol); */
       if (rol == 2) {
@@ -101,7 +109,7 @@ export default {
       } else {
         this.$store.dispatch("infoUser", user.id_usuario);
       }
-      this.$store.dispatch("obtenerRol",user.id_rol);
+      this.$store.dispatch("obtenerRol", user.id_rol);
 
       this.$store.commit("setLogin", true);
       this.$router.push({ name: "homeLogged" });

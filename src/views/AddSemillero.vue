@@ -30,7 +30,7 @@
                   <span v-if="!$v.semillero.semillero.required">El campo es requerido</span>
                   <span
                     v-if="!$v.semillero.semillero.maxLength"
-                  >El campo no debe superar los 50 caracteres</span>
+                  >El campo no debe superar los 100 caracteres</span>
                 </div>
               </div>
               <div class="form-group">
@@ -55,14 +55,14 @@
               </div>
               <div class="form-group">
                 <label for="objetivo">Objetivo</label>
-                <input
-                  type="text"
-                  pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+' ]+"
-                  title=" Solo Letras y números. Tamaño máximo: 255"
+                <textarea
+                  
+                  pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+'() ]+"
+                  title=" Solo Letras y números. Tamaño máximo: 1000"
                   v-model.trim="semillero.objetivo"
                   id="objetivo"
                   name="objetivo"
-                  placeholder="objetivo"
+                  placeholder="Objetivo"
                   class="form-control"
                   :class="{ 'is-invalid': submitted && $v.semillero.objetivo.$error }"
                 />
@@ -70,19 +70,19 @@
                   <span v-if="!$v.semillero.objetivo.required">El campo es requerido</span>
                   <span
                     v-if="!$v.semillero.objetivo.maxLength"
-                  >El campo no debe superar los 255 caracteres</span>
+                  >El campo no debe superar los 1000 caracteres</span>
                 </div>
               </div>
               <div class="form-group">
                 <label for="descripcion">Descripción</label>
-                <input
-                  type="text"
-                  pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+' ]+"
-                  title=" Solo Letras y números. Tamaño máximo: 255"
+                <textarea
+                 
+                  pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+'() ]+"
+                  title=" Solo Letras y números. Tamaño máximo: 1000"
                   v-model.trim="semillero.descripcion"
                   id="descripcion"
                   name="descripcion"
-                  placeholder="descripcion"
+                  placeholder="Descripcion"
                   class="form-control"
                   :class="{ 'is-invalid': submitted && $v.semillero.descripcion.$error }"
                 />
@@ -90,7 +90,7 @@
                   <span v-if="!$v.semillero.descripcion.required">El campo es requerido</span>
                   <span
                     v-if="!$v.semillero.descripcion.maxLength"
-                  >El campo no debe superar los 255 caracteres</span>
+                  >El campo no debe superar los 1000 caracteres</span>
                 </div>
               </div>
               <div class="form-group">
@@ -168,8 +168,8 @@ export default {
         required,
         maxLength: maxLength(100)
       },
-      objetivo: { required, maxLength: maxLength(255) },
-      descripcion: { required, maxLength: maxLength(255) },
+      objetivo: { required, maxLength: maxLength(1000) },
+      descripcion: { required, maxLength: maxLength(1000) },
       id_grupo: { required },
       siglas: { required, maxLength: maxLength(10) }
     }

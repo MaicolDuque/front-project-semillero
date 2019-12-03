@@ -23,11 +23,14 @@ import Multiselect from 'vue-multiselect'  //Select with search
 //Import API for setter anf getter localstorage
 import ApiService from './services/api.service';
 import { TokenService } from './services/storage.service';
+//Import cifrado de js
+import VueCryptojs from 'vue-cryptojs'
 
 Vue.component('multiselect', Multiselect)
 Vue.use(Vuelidate)
 // Loading the plugin into the Vue.
 Vue.use(VueCollapse);
+Vue.use(VueCryptojs)
 
 // Indicar uso de idioma español
 extend('required', {
@@ -47,11 +50,13 @@ if (!TokenService.getToken()) {
 
 //If user no exist in localStorage
 if(!localStorage.user){
-  let info = {id_rol: 1}
-  TokenService.saveTokenCustom('user', JSON.stringify(info))
-  let user = JSON.parse(localStorage.user)
-  console.log("USER=>>",user)
-  console.log("USER=>>",user.id_rol)
+  
+  let info = JSON.stringify({"id_rol":0})
+  let encriptado = CryptoJS.AES.encrypt(info,'Key').toString()
+  TokenService.saveTokenCustom('user', encriptado)
+  /* let user = JSON.parse(localStorage.user) */
+  /* console.log("USER=>>",user)
+  console.log("USER=>>",user.id_rol) */
 }
 
 ApiService.setHeader();

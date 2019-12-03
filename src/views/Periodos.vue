@@ -470,11 +470,48 @@ export default {
         id_semillero: ""
       },
       submitted: false,
+      coordinador: {},
       años: []
     };
   },
 
   created() {
+    /* let coordinacion = this.$router.state.user.id_usuario; */
+    var bytes = CryptoJS.AES.decrypt(localStorage.user, "Key");
+    var originalText = bytes.toString(CryptoJS.enc.Utf8);
+    let user = JSON.parse(originalText);
+    /* console.log(user) */
+
+    ApiService.get(`/semillero/${this.$route.params.id}`)
+      .then(response => {
+        this.semillero = response.data[0];
+        /* console.log(this.semillero) */
+      })
+      .catch(error => {
+        console.log(error);
+        this.errored = true;
+      });
+    console.log(user.id_usuario);
+    ApiService.get(`/coordinador/${user.id_usuario}`).then(response => {
+      this.coordinador = response.data[0];
+      console.log(response.status);
+      console.log(this.coordinador);
+
+      /**
+       *
+       * Validación Permiso
+       */
+      let rol = this.$store.state.user.id_rol;
+      console.log( this.semillero.id_semillero  ,this.coordinador.id_semillero)
+      if (
+        this.semillero.id_semillero != this.coordinador.id_semillero &&
+        rol > 1
+      ) {
+        this.$router.push({ name: "homeLogged" });
+      }
+    
+    });
+
     ApiService.get(`/periodo/${this.$route.params.id}`)
       .then(response => {
         this.periodos = response.data;
@@ -490,15 +527,6 @@ export default {
             this.errored = true;
           })
       );
-
-    ApiService.get(`/semillero/${this.$route.params.id}`)
-      .then(response => {
-        this.semillero = response.data[0];
-      })
-      .catch(error => {
-        console.log(error);
-        this.errored = true;
-      });
   },
 
   //Reglas de validacion para VueValidate
@@ -546,10 +574,10 @@ export default {
     },
     deleteProyecto(id) {
       this.$swal({
-        title: "Estas seguro de eliminar el registro?",
+        title: "¿Estás seguro de eliminar?",
         type: "warning",
         showCancelButton: true,
-        confirmButtonText: "Si, Eliminar!",
+        confirmButtonText: "Eliminar",
         cancelButtonText: "Cancelar",
         showCloseButton: true,
         showLoaderOnConfirm: true
@@ -567,10 +595,10 @@ export default {
     },
     deleteperiodo(id) {
       this.$swal({
-        title: "Estas seguro de eliminar el registro?",
+        title: "¿Estás seguro de eliminar?",
         type: "warning",
         showCancelButton: true,
-        confirmButtonText: "Si, Eliminar!",
+        confirmButtonText: "Eliminar",
         cancelButtonText: "Cancelar",
         showCloseButton: true,
         showLoaderOnConfirm: true
@@ -589,10 +617,10 @@ export default {
 
     deleteIntegrante(id) {
       this.$swal({
-        title: "Estas seguro de eliminar el registro?",
+        title: "¿Estás seguro de eliminar?",
         type: "warning",
         showCancelButton: true,
-        confirmButtonText: "Si, Eliminar!",
+        confirmButtonText: "Eliminar",
         cancelButtonText: "Cancelar",
         showCloseButton: true,
         showLoaderOnConfirm: true
@@ -777,10 +805,10 @@ export default {
 
     deleteActividad(id) {
       this.$swal({
-        title: "Estas seguro de eliminar el registro?",
+        title: "¿Estás seguro de eliminar?",
         type: "warning",
         showCancelButton: true,
-        confirmButtonText: "Si, Eliminar!",
+        confirmButtonText: "Eliminar",
         cancelButtonText: "Cancelar",
         showCloseButton: true,
         showLoaderOnConfirm: true

@@ -16,7 +16,7 @@
               </section>
               <section v-else>
                 <div v-if="loading">
-                  cargando..
+                  Cargando..
                   <div class="spinner-border text-success" role="status">
                     <span class="sr-only">Loading...</span>
                   </div>
@@ -52,6 +52,7 @@
                                 :to="{name: 'editsemillero', params: { id: item.id_semillero}}"
                                 class="btn btn-outline-primary"
                                 style="margin: 2px"
+                                
                               >Editar</router-link>
                               <button
                                 style="margin: 2px"
@@ -124,10 +125,10 @@ export default {
   methods: {
     deleteSemillero(id) {
       this.$swal({
-        title: "Estas seguro de eliminar el registro?",
+        title: "¿Estás seguro de eliminar?",
         type: "warning",
         showCancelButton: true,
-        confirmButtonText: "Si, Eliminar!",
+        confirmButtonText: "Eliminar",
         cancelButtonText: "Cancelar",
         showCloseButton: true,
         showLoaderOnConfirm: true
@@ -154,7 +155,7 @@ export default {
               console.log(error);
               this.errored = true;
             });
-          this.$swal("Registro Eliminado");
+          /* this.$swal("Registro Eliminado"); */
         } else {
           this.$swal(" Accion Cancelada");
         }

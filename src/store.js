@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import userService from './services/user.service'
 import createPersistedState from "vuex-persistedstate";
+import VueCryptojs from 'vue-cryptojs'
+Vue.use(VueCryptojs)
 
 Vue.use(Vuex)
 
@@ -10,9 +12,10 @@ export default new Vuex.Store({
     isLogin: false,
     isVisitante: "si",
     user: {},
-    rol: 0
+    rol : 0,
+    prueba: Vue.CryptoJS.AES.encrypt('Vamos a ver que sale','Key').toString()
   },
-  plugins: [createPersistedState()],
+  /* plugins: [createPersistedState()], */
   getters: {
     getUser: (state) => {
       return state.user

@@ -12,11 +12,11 @@
     <div v-if="!isAuth && isVisitante == 'si'">
       <SPHeaderVisitante />
 
-     <!--  <router-link
+      <!--  <router-link
         to="/grupos_visitante"
         class="nav-item nav-link"
         style="text-align: center; font-size: 1.5em"
-      >Ver grupos</router-link> -->
+      >Ver grupos</router-link>-->
       <router-view></router-view>
 
       <SPfooter />
@@ -65,8 +65,16 @@ export default {
     }
 
     if (localStorage.user) {
-      let user = JSON.parse(localStorage.user);
+      var bytes = CryptoJS.AES.decrypt(localStorage.user, "Key");
+      var originalText = bytes.toString(CryptoJS.enc.Utf8);
+      /* console.log(originalText + "text"); */
+      let user = JSON.parse(originalText);
+      console.log("APP")
+      console.log(user)
+      /* this.$store.state.user = user; */
+      /* let user = JSON.parse(localStorage.user); */
       /* console.log(user) */
+     
       let rol = user.id_rol;
       if (rol == 2) {
         this.$store.dispatch("infoUserDirector", user.id_usuario);

@@ -211,9 +211,19 @@ export default {
         if (response.status === 204) {
           alert("No se encontro un grupo  ");
         } else if (response.status === 200) {
+ 
           this.coordinador = response.data.filter(
             res => res.id_usuario == this.$route.params.id
           )[0];
+          /**
+           * 
+           * Validación Permiso
+           */
+          let grupo = this.$store.state.user.id_grupo;
+          let rol = this.$store.state.user.id_rol;
+          if (this.coordinador.id_grupo != grupo && rol > 1) {
+            this.$router.push({ name: "homeLogged" });
+          }
         }
       })
       .catch(error => {

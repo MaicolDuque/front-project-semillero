@@ -10,7 +10,7 @@
     </section>
     <section v-else>
       <div v-if="loading">
-        cargando..
+        Cargando..
         <div class="spinner-border text-success" role="status">
           <span class="sr-only">Loading...</span>
         </div>
@@ -91,7 +91,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="correo">correo</label>
+                  <label for="correo">Correo</label>
                   <input
                     type="text"
                     v-model.trim="director.email"
@@ -155,7 +155,7 @@
                     <select
                       class="custom-select browser-default"
                       @change=" selectChangeGrupo"
-                      required
+                      
                     >
                       <option value>Por favor seleccione un Elemento</option>
                       <option

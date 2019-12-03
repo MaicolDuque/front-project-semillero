@@ -169,16 +169,21 @@ export default {
   },
   mounted: () => {
     if (localStorage.user) {
-      let user = JSON.parse(localStorage.user);
+      var bytes = CryptoJS.AES.decrypt(localStorage.user, "Key");
+      var originalText = bytes.toString(CryptoJS.enc.Utf8);
+      let user = JSON.parse(originalText);
       $("#nameUser").text(user.nombre_usuario);
       $("#imageUser").attr("src", user.imagen);
     }
   },
   computed: {
     idRol() {
-      if (this.$store.state.user) {
+      if (localStorage.user) {
+        var bytes = CryptoJS.AES.decrypt(localStorage.user, "Key");
+        var originalText = bytes.toString(CryptoJS.enc.Utf8);
+        let user = JSON.parse(originalText);
         /* console.log("Rioll", this.$store.state.user.id_rol); */
-        return this.$store.state.user.id_rol;
+        return user.id_rol;
       }
       return 1;
     }
