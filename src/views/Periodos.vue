@@ -494,8 +494,6 @@ export default {
     console.log(user.id_usuario);
     ApiService.get(`/coordinador/${user.id_usuario}`).then(response => {
       this.coordinador = response.data[0];
-      console.log(response.status);
-      console.log(this.coordinador);
 
       /**
        *

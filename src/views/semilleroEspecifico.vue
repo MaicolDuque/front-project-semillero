@@ -14,13 +14,18 @@
             <br />
             <br />
             <div class="col-12 col align-self-end row justify-content-start">
+              <h4>Coordinador: {{coordinador[0].nombre_usuario}} {{coordinador[0].apellido_usuario}}</h4>
+              <br />
+              <br />
+
               <ul>
                 <h3>Acerca del semillero {{semillero[0].semillero}}:</h3>
-                <br />
                 <br />
                 <h4>Objetivo</h4>
                 <br />
                 {{semillero[0].objetivo}}
+                <br />
+                <br />
                 <h4>Información</h4>
 
                 <br />
@@ -187,7 +192,7 @@
                         </section>
                         <section v-else>
                           <div v-if="loading">
-                            cargando..
+                            Cargando..
                             <div class="spinner-border text-success" role="status">
                               <span class="sr-only">Loading...</span>
                             </div>
@@ -398,17 +403,26 @@ export default {
         id_semillero: this.$route.params.id
       },
       submitted: false,
-      Tipos_Usuarios: {}
+      Tipos_Usuarios: {},
+      coordinador: {}
     };
   },
   created() {
-    console.log("primero");
-    console.log(this.$route.params.id);
     ApiService.get(`/semillero/${this.$route.params.id}`).then(response => {
       if (response.status === 200) {
         /*  alert("No existen integrantes para mostrar "); */
         this.semillero = response.data;
-        console.log("semillero" + this.semillero);
+        console.log(this.semillero);
+      } else {
+        console.log("nada");
+      }
+    });
+
+    ApiService.get(`/coordinador/${this.$route.params.id}`).then(response => {
+      if (response.status === 200) {
+        /*  alert("No existen integrantes para mostrar "); */
+        this.coordinador = response.data;
+        console.log(this.coordinador);
       } else {
         console.log("nada");
       }
