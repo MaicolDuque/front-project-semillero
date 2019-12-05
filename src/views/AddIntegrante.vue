@@ -5,7 +5,7 @@
 
       <div class="card card-primary card-outline">
         <h3 class="text-center">Agregar Integrante</h3>
-        <a @click="back" class="nav-item nav-link">Periodos</a>
+        <a @click="back" class="nav-item nav-link">Atrás</a>
         <div class="card-header p-0 pt-1 border-bottom-0">
           <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
             <li class="nav-item">

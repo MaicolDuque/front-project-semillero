@@ -32,8 +32,8 @@
                       <tr>
                         <th data-priority="1">Siglas</th>
                         <th data-priority="2">Nombre</th>
-                       <!--  <th data-priority="3">Objetivo</th>
-                        <th data-priority="4">Descripción</th> -->
+                        <!--  <th data-priority="3">Objetivo</th>
+                        <th data-priority="4">Descripción</th>-->
                         <th data-priority="5">Grupo</th>
                         <th data-priority="2">Acciones</th>
                       </tr>
@@ -42,8 +42,8 @@
                       <tr v-for="item in showSemilleros" :key="item.id_semillero">
                         <td>{{ item.siglas_semillero }}</td>
                         <td>{{ item.semillero }}</td>
-                     <!--    <td>{{ item.objetivo }}</td>
-                        <td>{{ item.descripcion }}</td> -->
+                        <!--    <td>{{ item.objetivo }}</td>
+                        <td>{{ item.descripcion }}</td>-->
                         <td>{{ item.siglas }}</td>
                         <td>
                           <div class="btn-group" role="group">
@@ -52,7 +52,6 @@
                                 :to="{name: 'editsemillero', params: { id: item.id_semillero}}"
                                 class="btn btn-outline-primary"
                                 style="margin: 2px"
-                                
                               >Editar</router-link>
                               <button
                                 style="margin: 2px"
@@ -94,7 +93,7 @@ export default {
     };
   },
   created() {
-    console.log( this.$store.state.user)
+    console.log(this.$store.state.user);
     /* console.log("rol: "+this.$store.state.rol) */
     ApiService.get("/semillero")
       .then(response => {
@@ -113,6 +112,9 @@ export default {
       })
       .then(res => {
         $("#tblSemilleros").DataTable({
+          language: {
+            url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+          },
           responsive: false
         });
       })

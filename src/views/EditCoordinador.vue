@@ -19,7 +19,7 @@
       <section class="content">
         <div style="width: 80%; margin: 0 auto;">
           <div class="card card-success">
-            <router-link to="/coordinadores" class="nav-item nav-link">Coordinadores</router-link>
+            <router-link to="/coordinadores" class="nav-item nav-link">Atrás</router-link>
             <br />
             <h3 class="text-center">Editar coordinador</h3>
             <form @submit.prevent="handleSubmit" role="form">
@@ -211,12 +211,11 @@ export default {
         if (response.status === 204) {
           alert("No se encontro un grupo  ");
         } else if (response.status === 200) {
- 
           this.coordinador = response.data.filter(
             res => res.id_usuario == this.$route.params.id
           )[0];
           /**
-           * 
+           *
            * Validación Permiso
            */
           let grupo = this.$store.state.user.id_grupo;

@@ -92,7 +92,7 @@ const router = new Router({
     { path: '/', name: 'home', component: Home },
     { path: '/home', name: 'homeLogged', component: HomeLogged },
     { path: '/about', name: 'about', component: About },
-    { path: '/grupos', name: 'grupos', component: Grupos },
+    { path: '/grupos', name: 'grupos', component: Grupos, meta: { isPublic: false } },
     { path: '/addGrupos', name: 'addgrupos', component: AddGrupo },
     { path: '/editGrupo/:id', name: 'editgrupo', component: EditGrupo },
     { path: '/directores', name: 'directores', component: Directores },
@@ -201,7 +201,7 @@ router.beforeEach((to, from, next) => {
   }
   // Do not allow user to visit login page or register page if they are logged in
   if (to.name === 'login' && isAuthenticated()) {
-    return next({ name: 'home' })
+    return next({ name: 'grupos_visitante' })
   }
   /*  let user = router.app.$store.state.user */
 
@@ -230,7 +230,15 @@ router.beforeEach((to, from, next) => {
         'vistaDirectores', 'asignarsemillero',
 
 
-      ]
+      ],
+      /*  4: ["directores", "coordinadores", "grupos",
+         "addgrupos", "editgrupo", "adduserDirector", "editdirector",
+         'adduserDirector', 'editdirector', 'coordinadores',
+         'addcoordinador', 'editcoordinador', 'asignargrupo',
+         'vistaDirectores', 'asignarsemillero',
+ 
+ 
+       ] */
     }
     let rutasNoAccesoRol = rutasNoPermitidas[rl()]
     if (rutasNoAccesoRol.indexOf(to.name) > -1) {

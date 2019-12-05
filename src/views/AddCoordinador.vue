@@ -8,7 +8,7 @@
       <section class="content">
         <div style="width: 80%; margin: 0 auto;">
           <div class="card card-success">
-            <router-link to="/coordinadores" class="nav-item nav-link">Coordinadores</router-link>
+            <router-link to="/coordinadores" class="nav-item nav-link">Atrás</router-link>
             <br />
             <h3 class="text-center">Agregar coordinador</h3>
             <form @submit.prevent="handleSubmit">

@@ -49,10 +49,10 @@ if (!TokenService.getToken()) {
 }
 
 //If user no exist in localStorage
-if(!localStorage.user){
-  
-  let info = JSON.stringify({"id_rol":0})
-  let encriptado = CryptoJS.AES.encrypt(info,'Key').toString()
+if (!localStorage.user) {
+
+  let info = JSON.stringify({ "id_rol": 0 })
+  let encriptado = CryptoJS.AES.encrypt(info, 'Key').toString()
   TokenService.saveTokenCustom('user', encriptado)
   /* let user = JSON.parse(localStorage.user) */
   /* console.log("USER=>>",user)

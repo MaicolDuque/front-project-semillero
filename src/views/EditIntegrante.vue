@@ -18,7 +18,7 @@
         <div style="width: 80%; margin: 0 auto;">
           <div class="card card-success">
             <div class="navbar-nav">
-              <router-link to="/integrantes" class="nav-item nav-link">Integrantes</router-link>
+              <router-link to="/integrantes" class="nav-item nav-link">Atrás</router-link>
             </div>
             <h3 class="text-center">Editar Integrante</h3>
             <form @submit.prevent="handleSubmit">

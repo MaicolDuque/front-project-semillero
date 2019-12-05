@@ -17,7 +17,7 @@
           <div style="width: 80%; margin: 0 auto;">
             <div class="card card-success">
               <nav class="nav grey lighten-4 py-4">
-                <a @click="back" class="nav-item nav-link">Periodos</a>
+                <a @click="back" class="nav-item nav-link">Atrás</a>
               </nav>
               <h3 class="text-center">Editar Actividad</h3>
               <form @submit.prevent="handleSubmit">

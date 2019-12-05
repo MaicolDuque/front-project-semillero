@@ -3,7 +3,7 @@
     <div class="container">
       <h3 class="text-center">Agregar Proyecto - {{this.periodo.periodo}}</h3>
       <nav class="nav grey lighten-4 py-4">
-        <a @click="back" class="nav-item nav-link">Proyectos</a>
+        <a @click="back" class="nav-item nav-link">Atrás</a>
       </nav>
       <section class="content">
         <div style="width: 50%; margin: 0 auto;">

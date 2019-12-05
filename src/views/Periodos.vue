@@ -79,7 +79,7 @@
                           >FIN13-I</span>-->
                           <a
                             style="margin: 2px"
-                            class="btn btn-outline-success btn-xs"
+                            class="btn btn-outline-primary btn-xs"
                             :href=" url + '/exportar/inicial/' + periodo.id_periodo"
                           >FIN13-I</a>
                           <a
@@ -89,7 +89,7 @@
                           >FIN13-F</a>
                           <a
                             style="margin: 2px"
-                            class="btn btn-outline-success btn-xs"
+                            class="btn btn-outline-danger btn-xs"
                             :href=" url + '/exportar/pdf/' + periodo.id_periodo"
                           >Reporte</a>
                           <!--  <router-link
@@ -374,6 +374,38 @@
                 <form @submit.prevent="handleSubmit">
                   <div class="card-body">
                     <div class="form-group">
+                      <label for="periodo">Periodo académico</label>
+                      <br />
+                      <select
+                        class="custom-select browser-default"
+                        @change="onChange($event)"
+                        required
+                      >
+                        <option value>Por favor seleccione un Elemento</option>
+                        <option
+                          v-for="option in options"
+                          v-bind:key="option.value"
+                          class="form-control"
+                        >{{ option.text }}</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="estado">Año</label>
+                      <br />
+                      <select
+                        class="custom-select browser-default"
+                        @change="onChange2($event)"
+                        required
+                      >
+                        <option value>Por favor seleccione un Elemento</option>
+                        <option
+                          v-for="ano in anos"
+                          v-bind:key="ano.value"
+                          class="form-control"
+                        >{{ ano.text }}</option>
+                      </select>
+                    </div>
+                    <!-- <div class="form-group">
                       <label for="grupo">Periodo</label>
                       <input
                         type="text"
@@ -388,7 +420,7 @@
                         v-if="submitted && !$v.periodo.periodo.required"
                         class="invalid-feedback"
                       >El campo periodo es requerido</div>
-                    </div>
+                    </div>-->
                     <div class="form-group">
                       <label for="grupo">Fecha Inicio</label>
                       <input
@@ -469,6 +501,24 @@ export default {
         fecha_fin: "",
         id_semillero: ""
       },
+      year: "",
+      period: "",
+      options: [{ text: "1", value: "1" }, { text: "2", value: "2" }],
+      anos: [
+        { text: "2019", value: "2019" },
+        { text: "2020", value: "2020" },
+        { text: "2021", value: "2021" },
+        { text: "2022", value: "2022" },
+        { text: "2023", value: "2023" },
+        { text: "2024", value: "2024" },
+        { text: "2025", value: "2025" },
+        { text: "2026", value: "2026" },
+        { text: "2027", value: "2027" },
+        { text: "2028", value: "2028" },
+        { text: "2029", value: "2029" },
+        { text: "2030", value: "2030" },
+        { text: "2031", value: "2031" }
+      ],
       submitted: false,
       coordinador: {},
       años: []
@@ -491,7 +541,7 @@ export default {
         console.log(error);
         this.errored = true;
       });
-    console.log(user.id_usuario);
+
     ApiService.get(`/coordinador/${user.id_usuario}`).then(response => {
       this.coordinador = response.data[0];
 
@@ -500,14 +550,13 @@ export default {
        * Validación Permiso
        */
       let rol = this.$store.state.user.id_rol;
-      console.log( this.semillero.id_semillero  ,this.coordinador.id_semillero)
+
       if (
         this.semillero.id_semillero != this.coordinador.id_semillero &&
         rol > 1
       ) {
         this.$router.push({ name: "homeLogged" });
       }
-    
     });
 
     ApiService.get(`/periodo/${this.$route.params.id}`)
@@ -517,6 +566,9 @@ export default {
       .then(ress =>
         $("#periodos")
           .DataTable({
+            language: {
+              /* url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" */
+            },
             responsive: true,
             retrieve: true
           })
@@ -530,12 +582,48 @@ export default {
   //Reglas de validacion para VueValidate
   validations: {
     periodo: {
-      periodo: { required },
+      /*  periodo: { required }, */
       fecha_inicio: { required },
       fecha_fin: { required }
     }
   },
   methods: {
+    onChange($event) {
+      if (event.target.value == "1") {
+        this.period = 1;
+      } else {
+        this.period = 2;
+      }
+    },
+    onChange2($event) {
+      if (event.target.value == "2019") {
+        this.year = 2019;
+      } else if (event.target.value == "2020") {
+        this.year = 2020;
+      } else if (event.target.value == "2021") {
+        this.year = 2021;
+      } else if (event.target.value == "2022") {
+        this.year = 2022;
+      } else if (event.target.value == "2023") {
+        this.year = 20230;
+      } else if (event.target.value == "2024") {
+        this.year = 2024;
+      } else if (event.target.value == "2025") {
+        this.year = 2025;
+      } else if (event.target.value == "2026") {
+        this.year = 2026;
+      } else if (event.target.value == "2027") {
+        this.year = 2027;
+      } else if (event.target.value == "2028") {
+        this.year = 2028;
+      } else if (event.target.value == "2029") {
+        this.year = 2029;
+      } else if (event.target.value == "2030") {
+        this.year = 2030;
+      } else if (event.target.value == "2031") {
+        this.year = 2031;
+      }
+    },
     showAlertInicioDescarga() {
       this.$swal({
         type: "info",
@@ -654,6 +742,9 @@ export default {
           if (this.controlIntegrantes) {
             this.controlIntegrantes = 0;
             $("#integrantes").DataTable({
+              language: {
+                url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+              },
               responsive: false,
               searching: false,
               retrieve: true
@@ -664,7 +755,7 @@ export default {
       ApiService.get(`/proyecto/periodo/semillero/${id}`)
         .then(response => {
           if (response.status === 204) {
-           /*  this.$swal({
+            /* this.$swal({
               type: "info",
               text: "No hay proyectos en este periodo para mostrar",
               timer: 2000,
@@ -678,6 +769,9 @@ export default {
         })
         .then(res => {
           $("#tblProyectos").DataTable({
+            language: {
+              url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+            },
             responsive: false,
             searching: false,
             retrieve: true
@@ -708,6 +802,9 @@ export default {
         })
         .then(res => {
           $("#actividades").DataTable({
+            language: {
+              url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+            },
             buttons: ["copy", "excel", "pdf"],
             responsive: false,
             searching: false,
@@ -789,11 +886,13 @@ export default {
       });
     },
     addPeriodo() {
+      this.periodo.periodo = this.year + "-" + this.period;
       ApiService.post("/periodo", this.periodo)
         .then(newPeriodo => {
           this.periodos.push(newPeriodo.data);
           $("#exampleModal").modal("hide");
           this.showAlert();
+          (this.period = ""), (this.year = "");
         })
         .catch(error => {
           console.log(error);
