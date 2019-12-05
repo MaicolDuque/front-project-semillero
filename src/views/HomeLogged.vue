@@ -51,7 +51,6 @@ export default {
       var bytes = CryptoJS.AES.decrypt(localStorage.user, "Key");
       var originalText = bytes.toString(CryptoJS.enc.Utf8);
       let user = JSON.parse(originalText);
-      console.log(user.nombre_usuario)
       if (user.id_rol != undefined) {
         /* let rol = this.$store.state.user.id_rol; */
         if (user.id_rol == 1) {

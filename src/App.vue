@@ -69,8 +69,6 @@ export default {
       var originalText = bytes.toString(CryptoJS.enc.Utf8);
       /* console.log(originalText + "text"); */
       let user = JSON.parse(originalText);
-      console.log("APP")
-      console.log(user)
       /* this.$store.state.user = user; */
       /* let user = JSON.parse(localStorage.user); */
       /* console.log(user) */

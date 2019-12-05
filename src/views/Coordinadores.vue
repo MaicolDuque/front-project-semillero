@@ -92,11 +92,9 @@ export default {
     var originalText = bytes.toString(CryptoJS.enc.Utf8);
     /* console.log(originalText+ "text") */
     let user = JSON.parse(originalText);
-
     ApiService.get(`/usuario/coordinador/${user.id_usuario}`)
       .then(response => {
-        console.log(response.status);
-        if (response.status != 200) {
+        if (response.status === 204) {
           this.$swal({
             type: "info",
             text: "No hay coordinadores para mostrar",
