@@ -15,12 +15,24 @@
       <section class="content">
         <div style="width: 80%; margin: 0 auto;">
           <div class="card card-success">
+            <div class="active">
+              <a @click="back" class="nav-item nav-link">Atrás</a>
+            </div>
             <h3 class="text-center">Editar Periodo</h3>
             <form @submit.prevent="handleSubmit">
               <div class="card-body">
                 <div class="form-group">
-                  <div class="active">
-                    <a @click="back" class="nav-item nav-link">Atrás</a>
+                  <div class="form-group">
+                    <label for="estado">Año</label>
+                    <br />
+                    <select class="form-control" style="width: 100%;" required v-model="numero.uno">
+                      <option value>Por favor seleccione un Elemento</option>
+                      <option
+                        v-for="ano in anos"
+                        v-bind:key="ano.value"
+                        class="form-control"
+                      >{{ ano.text }}</option>
+                    </select>
                   </div>
                   <div class="form-group">
                     <label for="periodo">Periodo académico</label>
@@ -39,18 +51,7 @@
                       >{{ option.text }}</option>
                     </select>
                   </div>
-                  <div class="form-group">
-                    <label for="estado">Año</label>
-                    <br />
-                    <select class="form-control" style="width: 100%;" required v-model="numero.uno">
-                      <option value>Por favor seleccione un Elemento</option>
-                      <option
-                        v-for="ano in anos"
-                        v-bind:key="ano.value"
-                        class="form-control"
-                      >{{ ano.text }}</option>
-                    </select>
-                  </div>
+
                   <!-- <label for="grupo">Periodo</label>
                   <input
                     type="text"

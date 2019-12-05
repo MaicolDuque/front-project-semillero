@@ -374,22 +374,6 @@
                 <form @submit.prevent="handleSubmit">
                   <div class="card-body">
                     <div class="form-group">
-                      <label for="periodo">Periodo académico</label>
-                      <br />
-                      <select
-                        class="custom-select browser-default"
-                        @change="onChange($event)"
-                        required
-                      >
-                        <option value>Por favor seleccione un Elemento</option>
-                        <option
-                          v-for="option in options"
-                          v-bind:key="option.value"
-                          class="form-control"
-                        >{{ option.text }}</option>
-                      </select>
-                    </div>
-                    <div class="form-group">
                       <label for="estado">Año</label>
                       <br />
                       <select
@@ -405,6 +389,23 @@
                         >{{ ano.text }}</option>
                       </select>
                     </div>
+                    <div class="form-group">
+                      <label for="periodo">Periodo académico</label>
+                      <br />
+                      <select
+                        class="custom-select browser-default"
+                        @change="onChange($event)"
+                        required
+                      >
+                        <option value>Por favor seleccione un Elemento</option>
+                        <option
+                          v-for="option in options"
+                          v-bind:key="option.value"
+                          class="form-control"
+                        >{{ option.text }}</option>
+                      </select>
+                    </div>
+
                     <!-- <div class="form-group">
                       <label for="grupo">Periodo</label>
                       <input
