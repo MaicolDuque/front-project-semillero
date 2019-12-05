@@ -139,14 +139,15 @@ export default {
           ApiService.delete(`/director/${id}`)
             .then(response => {
               if (response.status === 200) {
-                let i = this.usuarios.map(item => item.id_usuario).indexOf(id); // find index of your object
-                this.usuarios.splice(i, 1);
+                /* let i = this.usuarios.map(item => item.id_usuario).indexOf(id); // find index of your object
+                this.usuarios.splice(i, 1); */
                 this.$swal.fire({
                   type: "success",
                   title: "Eliminado con exito",
                   showConfirmButton: false,
                   timer: 1500
                 });
+                
               } else if (response.status === 222) {
                 alert("No se pudo borrar el registro");
               }

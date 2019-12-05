@@ -5,16 +5,16 @@
       <p>Lo sentimos, no es posible Actualizar el registro en este momento</p>
     </section>
     <section v-else>
-      <div v-if="loading">
-        cargando..
-        <div class="spinner-border text-success" role="status">
-          <span class="sr-only">Loading...</span>
-        </div>
-      </div>
-      <div v-else></div>
       <section class="content">
         <div style="width: 80%; margin: 0 auto;">
           <div class="card card-success">
+            <div v-if="loading">
+              Cargando..
+              <div class="spinner-border text-success" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+            </div>
+            <div v-else></div>
             <router-link to="/grupos" class="nav-item nav-link">Grupos</router-link>
             <h3 class="text-center">Editar Grupo</h3>
             <form @submit.prevent="handleSubmit" role="form">

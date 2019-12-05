@@ -29,7 +29,7 @@ export default {
   },
 
   created() {
-    console.log(this.$store.state.user);
+
   },
   mounted: () => {
     if (localStorage.user) {

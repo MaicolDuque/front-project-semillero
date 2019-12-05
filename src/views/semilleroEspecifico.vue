@@ -324,7 +324,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="correo">correo</label>
+                  <label for="correo">Correo</label>
                   <input
                     type="text"
                     v-model.trim="usuario.email"
@@ -418,7 +418,7 @@ export default {
       }
     });
 
-    ApiService.get(`/coordinador/${this.$route.params.id}`).then(response => {
+    ApiService.get(`/coordinador/semillero/${this.$route.params.id}`).then(response => {
       if (response.status === 200) {
         /*  alert("No existen integrantes para mostrar "); */
         this.coordinador = response.data;

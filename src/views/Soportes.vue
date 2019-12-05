@@ -41,7 +41,7 @@
                       <tr v-for="item in soportes" :key="item.id_soporte">
                         <td>{{ item.soporte }}</td>
                         <td>
-                          <a :href="item.vinculo">Ruta</a>
+                          <a :href="item.vinculo" target="_blank">Ruta</a>
                         </td>
                         <td>
                           <div class="btn-group" role="group">

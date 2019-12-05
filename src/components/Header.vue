@@ -81,9 +81,9 @@ export default {
       TokenService.saveTokenCustom("user", JSON.stringify(encriptado)); */
 
       let info = JSON.stringify({"id_rol": 0});
-      console.log(info);
+
       let encriptado = CryptoJS.AES.encrypt(info, "Key").toString();
-      console.log(encriptado + "encriptado");
+
       TokenService.saveTokenCustom("user", encriptado);
 
       this.$store.commit("MUTATION_setRol", 0);

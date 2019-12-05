@@ -96,7 +96,6 @@ export default {
       let user = data.infoToken.user;
       this.$store.state.user = user;
       this.$store.state.rol = user.id_rol;
-      console.log(this.$store.state.rol)
       /* this.$store.commit('setRol',user.id_rol);
       this.$store.commit('setLogin',true); */
 

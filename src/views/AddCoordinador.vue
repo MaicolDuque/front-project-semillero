@@ -335,7 +335,7 @@ export default {
         } else if (response.status == 221) {
           this.$swal({
             type: "warning",
-            text: "el usuario ya existe",
+            text: "El usuario ya existe",
             timer: 2000,
             showCancelButton: false,
             showConfirmButton: false

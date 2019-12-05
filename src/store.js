@@ -40,7 +40,6 @@ export default new Vuex.Store({
 
     MUTATION_setRol(state, data) {
       state.rol = data;
-      console.log("rol " + state.rol + "cambiado")
     }
   },
   actions: {

@@ -664,13 +664,13 @@ export default {
       ApiService.get(`/proyecto/periodo/semillero/${id}`)
         .then(response => {
           if (response.status === 204) {
-            this.$swal({
+           /*  this.$swal({
               type: "info",
               text: "No hay proyectos en este periodo para mostrar",
               timer: 2000,
               showCancelButton: false,
               showConfirmButton: false
-            });
+            }); */
             this.proyectos = response.data;
           } else {
             this.proyectos = response.data;
