@@ -1,8 +1,5 @@
 <template>
   <div style="padding:25px" class="container">
-    <nav class="nav grey lighten-4 py-4">
-      <a @click="back" class="nav-item nav-link">Atrás</a>
-    </nav>
     <div style="text-align: right; padding: 14px 1px;">
       <a @click="addProducto" tag="button" class="btn btn-outline-success">Agregar</a>
     </div>
@@ -10,6 +7,9 @@
       <div class="row">
         <div class="col-12">
           <div class="card">
+            <nav class="nav grey lighten-4 py-4">
+              <a @click="back" class="nav-item nav-link">Atrás</a>
+            </nav>
             <h3 class="text-center">Productos proyectos</h3>
             <!-- /.card-header -->
             <div class="card-body">

@@ -10,33 +10,25 @@
               <div style="text-align: center; font-size: 3em">Bienvenido</div>
               <br />
 
-              <div>
-                <p style="text-align: center">
+              <div style = "margin-bottom: 200px;" >
+                <p style="text-align: center" >
                   Aquí puedes encontrar información sobre cada uno de los semilleros de investigación
-                  <br />
                 </p>
 
-                <p></p>
               </div>
             </div>
             <br />
 
             <!-- /.card-body -->
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-
-            <div class="box">
-              <router-link
-                to="/visitante/semilleros"
-                class="btn btn-white btn-animation-1 btn-lg"
-              >Ver semilleros</router-link>
-            </div>
+            
+           
+              <div class="box">
+                <router-link
+                  to="/visitante/semilleros"
+                  class="btn btn-white btn-animation-1 btn-lg"
+                >Ver semilleros</router-link>
+              </div>
+            
           </div>
         </div>
       </div>
@@ -56,7 +48,7 @@ export default {
 
   created() {
     var bytes = CryptoJS.AES.decrypt(this.$store.state.prueba, "Key");
-    var originalText = bytes.toString(CryptoJS.enc.Utf8);  
+    var originalText = bytes.toString(CryptoJS.enc.Utf8);
     bytes = CryptoJS.AES.decrypt(localStorage.user, "Key");
     originalText = bytes.toString(CryptoJS.enc.Utf8);
     let user = JSON.parse(originalText);
@@ -102,6 +94,7 @@ export default {
   position: absolute;
   top: 70%;
   left: 50%;
+  bottom: 100%;
   transform: translate(-50%, -50%);
 }
 .btn:visited {

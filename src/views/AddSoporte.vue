@@ -39,7 +39,6 @@
                   <label for="semillero">Vinculo</label>
                   <input
                     type="text"
-                    pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+'/. ]+"
                     title=" Solo Letras y números. Tamaño máximo: 255"
                     v-model.trim="soporte.vinculo"
                     id="Vinculo"

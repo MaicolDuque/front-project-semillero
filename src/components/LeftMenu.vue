@@ -9,7 +9,7 @@
           class="brand-image img-circle elevation-3"
           style="opacity: .8"
         />
-        <span class="brand-text font-weight-light">Semilleros POLI</span>
+        <span class="brand-text font-weight-light">SIPS</span>
       </a>
 
       <!-- Sidebar -->
@@ -80,6 +80,13 @@
                 Acerca de
               </router-link>
             </li>
+
+            <li class="nav-item">
+              <a class="nav-link" :href=" url + '/exportar/manual/'">
+                <i class="fa fa-download"></i>
+                 Manual
+              </a>
+            </li>
             <!--  <li class="nav-item">
               <router-link
               
@@ -137,7 +144,7 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Acerca de..</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Sistema de Información Politécnica de Semilleros</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -165,7 +172,9 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      url: process.env.VUE_APP_URL_API
+    };
   },
   mounted: () => {
     if (localStorage.user) {

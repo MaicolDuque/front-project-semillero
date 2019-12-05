@@ -164,7 +164,7 @@
                           </div>
                         </div>
                         <div class="form-group">
-                          <label for="email">correo</label>
+                          <label for="email">Correo</label>
                           <input
                             type="text"
                             v-model.trim="usuario.email"

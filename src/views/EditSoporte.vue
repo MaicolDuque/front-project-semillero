@@ -46,7 +46,6 @@
                   <label for="vinculo">Vinculo</label>
                   <input
                     type="text"
-                    pattern="[A-Za-z0-9 ./ ? = @  :]+"
                     title=" Solo Letras y números. Tamaño máximo: 255"
                     v-model.trim="soporte.vinculo"
                     id="vinculo"

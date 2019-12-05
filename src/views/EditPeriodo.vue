@@ -132,6 +132,7 @@ export default {
       },
       year: "",
       period: "",
+
       options: [{ text: "1", value: "1" }, { text: " 2", value: "2" }],
       anos: [
         { text: "2019", value: "2019" },
@@ -154,6 +155,12 @@ export default {
   },
 
   created() {
+    let today = new Date();
+    let year1 = today.getFullYear();
+    for (let index = 0; index < this.anos.length; index++) {
+      this.anos[index].text = (year1 + index).toString();
+      this.anos[index].value = (year1 + index).toString();
+    }
     ApiService.get(`/periodo/${this.$route.params.id}/edit`)
       .then(response => {
         if (response.status === 204) {

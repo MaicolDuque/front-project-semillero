@@ -527,6 +527,12 @@ export default {
   },
 
   created() {
+    let today = new Date();
+    let year1 = today.getFullYear();
+    for (let index = 0; index < this.anos.length; index++) {
+      this.anos[index].text = (year1 + index).toString();
+      this.anos[index].value = (year1 + index).toString();
+    }
     /* let coordinacion = this.$router.state.user.id_usuario; */
     var bytes = CryptoJS.AES.decrypt(localStorage.user, "Key");
     var originalText = bytes.toString(CryptoJS.enc.Utf8);
@@ -542,23 +548,6 @@ export default {
         console.log(error);
         this.errored = true;
       });
-
-    ApiService.get(`/coordinador/${user.id_usuario}`).then(response => {
-      this.coordinador = response.data[0];
-
-      /**
-       *
-       * Validación Permiso
-       */
-      let rol = this.$store.state.user.id_rol;
-
-      if (
-        this.semillero.id_semillero != this.coordinador.id_semillero &&
-        rol > 1
-      ) {
-        this.$router.push({ name: "homeLogged" });
-      }
-    });
 
     ApiService.get(`/periodo/${this.$route.params.id}`)
       .then(response => {
@@ -578,6 +567,21 @@ export default {
             this.errored = true;
           })
       );
+
+    ApiService.get(`/coordinador/${user.id_usuario}`).then(response => {
+      this.coordinador = response.data[0];
+      /**
+       *
+       * Validación Permiso
+       */
+      let rol = this.$store.state.user.id_rol;
+      if (
+        this.semillero.id_semillero != this.coordinador.id_semillero &&
+        rol > 1
+      ) {
+        this.$router.push({ name: "homeLogged" });
+      }
+    });
   },
 
   //Reglas de validacion para VueValidate
