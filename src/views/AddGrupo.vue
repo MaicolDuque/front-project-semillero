@@ -10,7 +10,7 @@
           <form @submit.prevent="handleSubmit">
             <div class="card-body">
               <nav>
-                <router-link to="/grupos" class="nav-item nav-link">Grupos</router-link>
+                <router-link to="/grupos" class="nav-item nav-link">Atrás</router-link>
               </nav>
               <h3 class="text-center">Agregar Grupo</h3>
               <div class="form-group">

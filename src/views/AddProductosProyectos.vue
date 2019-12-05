@@ -3,7 +3,7 @@
     <div class="container">
       <h3 class="text-center">Agregar Producto</h3>
       <nav class="nav grey lighten-4 py-4">
-        <router-link to="/grupos" class="nav-item nav-link">Grupos</router-link>
+        <router-link to="/grupos" class="nav-item nav-link">Atrás</router-link>
       </nav>
 
       <section class="content">

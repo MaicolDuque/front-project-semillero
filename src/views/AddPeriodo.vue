@@ -4,7 +4,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="collapse navbar-collapse">
         <div class="navbar-nav">
-          <a @click="back" class="nav-item nav-link">Periodos</a>
+          <a @click="back" class="nav-item nav-link">Atrás</a>
         </div>
       </div>
     </nav>

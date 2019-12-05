@@ -15,7 +15,7 @@
       <section class="content">
         <div style="width: 80%; margin: 0 auto;">
           <div class="card card-success">
-            <router-link to="/grupos" class="nav-item nav-link">Grupos</router-link>
+            <router-link to="/grupos" class="nav-item nav-link">Atrás</router-link>
             <h3 class="text-center">Editar Grupo</h3>
             <form @submit.prevent="handleSubmit" role="form">
               <div class="card-body">

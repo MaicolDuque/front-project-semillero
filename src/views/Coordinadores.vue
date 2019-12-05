@@ -31,7 +31,7 @@
                     <thead>
                       <tr>
                         <th data-priority="1">Documento</th>
-                        <th>Nombre</th>                        
+                        <th>Nombre</th>
                         <th>Telefono</th>
                         <th>Email</th>
                         <th>Tipo usuario</th>
@@ -40,9 +40,9 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="item in usuarios" :key="item.id_usuario">                       
+                      <tr v-for="item in usuarios" :key="item.id_usuario">
                         <td>{{ item.documento }}</td>
-                         <td>{{ item.nombre_usuario }} {{ item.apellido_usuario }}</td>
+                        <td>{{ item.nombre_usuario }} {{ item.apellido_usuario }}</td>
                         <td>{{ item.telefono }}</td>
                         <td>{{ item.email }}</td>
                         <td>{{ item.tipo_usuario }}</td>
@@ -93,13 +93,10 @@ export default {
     /* console.log(originalText+ "text") */
     let user = JSON.parse(originalText);
 
-    
-    console.log(user.id_usuario);
     ApiService.get(`/usuario/coordinador/${user.id_usuario}`)
       .then(response => {
         console.log(response.status);
-        console.log(response.data);
-        if (response.status === 204) {
+        if (response.status != 200) {
           this.$swal({
             type: "info",
             text: "No hay coordinadores para mostrar",
@@ -114,6 +111,9 @@ export default {
       })
       .then(res => {
         $("#coordinadores").DataTable({
+          language: {
+            url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+          },
           responsive: false,
           retrieve: true
         });

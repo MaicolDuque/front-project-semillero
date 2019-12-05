@@ -6,7 +6,7 @@
     </section>
     <section v-else>
       <div v-if="loading">
-         Cargando..
+        Cargando..
         <div class="spinner-border text-success" role="status">
           <span class="sr-only">Loading...</span>
         </div>
@@ -15,7 +15,7 @@
       <section class="content">
         <div style="width: 80%; margin: 0 auto;">
           <div class="card card-success">
-            <router-link to="/semilleros" class="nav-item nav-link">Semilleros</router-link>
+            <router-link to="/semilleros" class="nav-item nav-link">Atrás</router-link>
             <br />
             <h3 class="text-center">Editar Semillero</h3>
             <form @submit.prevent="handleSubmit">
@@ -134,11 +134,11 @@ export default {
         } else if (response.status === 200) {
           this.semillero = response.data;
           /**
-           * 
+           *
            * Validación Permiso
            */
           let grupo = this.$store.state.user.id_grupo;
-          console.log(this.$store.state.user)
+          console.log(this.$store.state.user);
           let rol = this.$store.state.user.id_rol;
           if (this.semillero.id_grupo != grupo && rol > 1) {
             this.$router.push({ name: "homeLogged" });
@@ -159,7 +159,6 @@ export default {
         console.log(error);
         this.errored = true;
       });
-
   },
 
   //Reglas de validacion para VueValidate

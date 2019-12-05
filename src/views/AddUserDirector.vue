@@ -10,7 +10,7 @@
           <form @submit.prevent="handleSubmit">
             <div class="card-body">
               <nav>
-                <router-link to="/directores" class="nav-item nav-link">Directores</router-link>
+                <router-link to="/directores" class="nav-item nav-link">Atrás</router-link>
               </nav>
               <h3 class="text-center">Agregar Director</h3>
               <div class="form-group">

@@ -1,7 +1,7 @@
 <template>
   <div style="padding:25px" class="container">
     <nav class="nav grey lighten-4 py-4">
-      <a @click="back" class="nav-item nav-link">Atras</a>
+      <a @click="back" class="nav-item nav-link">Atrás</a>
     </nav>
     <div style="text-align: right; padding: 14px 1px;">
       <a @click="addProducto" tag="button" class="btn btn-outline-success">Agregar</a>
@@ -103,6 +103,9 @@ export default {
       })
       .then(res => {
         $("#tblProductoProyecto").DataTable({
+          language: {
+            url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+          },
           responsive: false
         });
       })

@@ -19,7 +19,7 @@
       <section class="content">
         <div style="width: 80%; margin: 0 auto;">
           <div class="card card-success">
-            <router-link to="/directores" class="nav-item nav-link">Directores</router-link>
+            <router-link to="/directores" class="nav-item nav-link">Atrás</router-link>
             <br />
             <h3 class="text-center">Editar Director</h3>
             <form @submit.prevent="handleSubmit" role="form">
@@ -152,11 +152,7 @@
                   <div class="form-group">
                     <label for="grupo">Grupo</label>
                     <br />
-                    <select
-                      class="custom-select browser-default"
-                      @change=" selectChangeGrupo"
-                      
-                    >
+                    <select class="custom-select browser-default" @change=" selectChangeGrupo">
                       <option value>Por favor seleccione un Elemento</option>
                       <option
                         v-for="grupo in grupos"

@@ -49,23 +49,14 @@ if (!TokenService.getToken()) {
 }
 
 //If user no exist in localStorage
-<<<<<<< HEAD
 if (!localStorage.user) {
-  let info = { id_rol: 4 }
-  TokenService.saveTokenCustom('user', JSON.stringify(info))
-  let user = JSON.parse(localStorage.user)
-  console.log("USER=>>", user)
-  console.log("USER=>>", user.id_rol)
-=======
-if(!localStorage.user){
-  
-  let info = JSON.stringify({"id_rol":0})
-  let encriptado = CryptoJS.AES.encrypt(info,'Key').toString()
+
+  let info = JSON.stringify({ "id_rol": 0 })
+  let encriptado = CryptoJS.AES.encrypt(info, 'Key').toString()
   TokenService.saveTokenCustom('user', encriptado)
   /* let user = JSON.parse(localStorage.user) */
   /* console.log("USER=>>",user)
   console.log("USER=>>",user.id_rol) */
->>>>>>> 8b610192e502c2af22906a304503e90ee7bd96bc
 }
 
 ApiService.setHeader();

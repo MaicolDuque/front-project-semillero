@@ -10,7 +10,7 @@
           <form @submit.prevent="handleSubmit">
             <div class="card-body">
               <nav>
-                <router-link to="/semilleros" class="nav-item nav-link">Semilleros</router-link>
+                <router-link to="/semilleros" class="nav-item nav-link">Atrás</router-link>
               </nav>
               <h3 class="text-center">Agregar semillero</h3>
               <div class="form-group">
@@ -56,7 +56,6 @@
               <div class="form-group">
                 <label for="objetivo">Objetivo</label>
                 <textarea
-                  
                   pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+'() ]+"
                   title=" Solo Letras y números. Tamaño máximo: 1000"
                   v-model.trim="semillero.objetivo"
@@ -76,7 +75,6 @@
               <div class="form-group">
                 <label for="descripcion">Descripción</label>
                 <textarea
-                 
                   pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+'() ]+"
                   title=" Solo Letras y números. Tamaño máximo: 1000"
                   v-model.trim="semillero.descripcion"

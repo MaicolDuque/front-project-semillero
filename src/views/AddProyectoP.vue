@@ -7,7 +7,7 @@
     <section class="content">
       <div style="width: 80%; margin: 0 auto;">
         <div class="card card-success">
-          <a @click="back" class="nav-item nav-link">Periodos</a>
+          <a @click="back" class="nav-item nav-link">Atrás</a>
           <h3 class="text-center">Agregar Proyecto</h3>
           <form @submit.prevent="handleSubmit">
             <div class="card-body">
