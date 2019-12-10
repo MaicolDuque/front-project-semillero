@@ -4,11 +4,6 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
       <a href="/home" class="brand-link">
-        <img
-          src="/img/logo_semilleros_poli.jpg"
-          class="brand-image img-circle elevation-3"
-          style="opacity: .8"
-        />
         <span class="brand-text font-weight-light">SIPS</span>
       </a>
 
@@ -144,7 +139,7 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Sistema de Información Politécnica de Semilleros</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Sistema de Información Politécnico de Semilleros</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>

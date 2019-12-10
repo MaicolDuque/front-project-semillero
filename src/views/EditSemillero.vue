@@ -24,7 +24,7 @@
                   <label for="semillero">Nombre</label>
                   <input
                     type="text"
-                    pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+' ]+"
+                    pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+'() ]+"
                     title=" Solo Letras y números. Tamaño máximo: 100"
                     v-model.trim="semillero.semillero"
                     id="semillero"
@@ -33,6 +33,7 @@
                     class="form-control"
                     :class="{ 'is-invalid': submitted && $v.semillero.semillero.$error }"
                   />
+                  
                   <div v-if="submitted && $v.semillero.semillero.$error" class="invalid-feedback">
                     <span v-if="!$v.semillero.semillero.required">El campo es requerido</span>
                     <span
@@ -40,6 +41,26 @@
                     >El campo no debe superar los 100 caracteres</span>
                   </div>
                 </div>
+                <div class="form-group">
+                <label for="siglas">Siglas</label>
+                <input
+                  type="text"
+                  pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+' ]+"
+                  title=" Solo Letras y números. Tamaño máximo: 10"
+                  v-model.trim="semillero.siglas"
+                  id="siglas"
+                  name="siglas"
+                  placeholder="Siglas"
+                  class="form-control"
+                  :class="{ 'is-invalid': submitted && $v.semillero.siglas.$error }"
+                />
+                <div v-if="submitted && $v.semillero.siglas.$error" class="invalid-feedback">
+                  <span v-if="!$v.semillero.siglas.required">El campo es requerido</span>
+                  <span
+                    v-if="!$v.semillero.siglas.maxLength"
+                  >El campo no debe superar los 10 caracteres</span>
+                </div>
+              </div>
                 <div class="form-group">
                   <label for="objetivo">Objetivo</label>
                   <textarea
@@ -138,7 +159,7 @@ export default {
            * Validación Permiso
            */
           let grupo = this.$store.state.user.id_grupo;
-          console.log(this.$store.state.user);
+         /*  console.log(this.$store.state.user); */
           let rol = this.$store.state.user.id_rol;
           if (this.semillero.id_grupo != grupo && rol > 1) {
             this.$router.push({ name: "homeLogged" });

@@ -17,8 +17,8 @@
                 <label for="semillero">Nombre</label>
                 <input
                   type="text"
-                  pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+' ]+"
-                  title=" Solo Letras y números. Tamaño máximo: 50"
+                  pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+'() ]+"
+                  title=" Solo Letras y números. Tamaño máximo: 100"
                   v-model.trim="semillero.semillero"
                   id="semillero"
                   name="semillero"

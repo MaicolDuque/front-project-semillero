@@ -262,10 +262,15 @@ export default {
     selectChangeGrupo(event) {
       var i;
       this.grupos.forEach(function(element) {
-        if (element.grupo == event.target.value) {
+        console.log(event.target.value)
+        console.log(element.grupo)
+        if (element.grupo.trim == event.target.value.trim) {
           i = element.id_grupo;
+          console.log('entré')
+          console.log(i)
         }
       });
+      console.log(this.grupos[0].grupo)
       this.grupoSeleccionado.id_grupo = i;
       this.director.id_grupo = i;
     },

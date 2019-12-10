@@ -47,7 +47,7 @@
                   <label for="nombre_usuario">Nombre</label>
                   <input
                     type="text"
-                    pattern="[A-Za-z ]+"
+                    pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+'() ]+"
                     title=" Solo Letras. Tamaño máximo: 50"
                     v-model.trim="usuario.nombre_usuario"
                     id="nombre_usuario"
@@ -90,7 +90,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="correo">correo</label>
+                  <label for="correo">Correo</label>
                   <input
                     type="text"
                     v-model.trim="usuario.email"

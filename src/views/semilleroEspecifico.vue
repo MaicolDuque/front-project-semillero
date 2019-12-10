@@ -19,7 +19,7 @@
               <br />
 
               <ul>
-                <h3>Acerca del semillero {{semillero[0].semillero}}:</h3>
+                <h3>Acerca del {{semillero[0].semillero}}:</h3>
                 <br />
                 <h4>Objetivo</h4>
                 <br />
@@ -93,7 +93,7 @@
                           </section>
                           <section v-else>
                             <div v-if="loading">
-                              cargando..
+                              Cargando..
                               <div class="spinner-border text-success" role="status">
                                 <span class="sr-only">Loading...</span>
                               </div>
@@ -108,15 +108,13 @@
                                 <thead>
                                   <tr>
                                     <th>Nombre</th>
-                                    <th>apellido</th>
                                     <th>Correo</th>
                                     <th>Tipo integrante</th>
                                   </tr>
                                 </thead>
                                 <tbody>
                                   <tr v-for="item in integrantes" :key="item.id_integrante">
-                                    <td>{{ item.nombre_usuario }}</td>
-                                    <td>{{ item.apellido_usuario }}</td>
+                                    <td>{{ item.nombre_usuario }} {{ item.apellido_usuario }}</td>
                                     <td>{{ item.email }}</td>
                                     <td>{{item.tipo_usuario}}</td>
                                   </tr>
@@ -148,7 +146,7 @@
                         </section>
                         <section v-else>
                           <div v-if="loading">
-                            cargando..
+                            Cargando..
                             <div class="spinner-border text-success" role="status">
                               <span class="sr-only">Loading...</span>
                             </div>
@@ -156,7 +154,7 @@
                           <div v-else></div>
                           <div class="table-responsive">
                             <table
-                              id="tblproyecto"
+                              id="tblproyectos"
                               class="table table-striped table-bordered dt-responsive nowrap"
                               style="width:100%"
                             >
@@ -200,7 +198,7 @@
                           <div v-else></div>
                           <div class="table-responsive">
                             <table
-                              id="tblproyectos"
+                              id="tblactividad"
                               class="table table-striped table-bordered dt-responsive nowrap"
                               style="width:100%"
                             >
@@ -418,15 +416,17 @@ export default {
       }
     });
 
-    ApiService.get(`/coordinador/semillero/${this.$route.params.id}`).then(response => {
-      if (response.status === 200) {
-        /*  alert("No existen integrantes para mostrar "); */
-        this.coordinador = response.data;
-        console.log(this.coordinador);
-      } else {
-        console.log("nada");
+    ApiService.get(`/coordinador/semillero/${this.$route.params.id}`).then(
+      response => {
+        if (response.status === 200) {
+          /*  alert("No existen integrantes para mostrar "); */
+          this.coordinador = response.data;
+          console.log(this.coordinador);
+        } else {
+          console.log("nada");
+        }
       }
-    });
+    );
 
     ApiService.get(`/integrante/semillero/actual/${this.$route.params.id}`)
       .then(response => {
@@ -459,7 +459,7 @@ export default {
       })
       .then(res => {
         $("#tblactividad").DataTable({
-           language: {
+          language: {
             url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
           },
           responsive: true,

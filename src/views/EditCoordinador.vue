@@ -209,7 +209,13 @@ export default {
     ApiService.get(`/usuario/coordinador/${this.$route.params.id}/edit`)
       .then(response => {
         if (response.status === 204) {
-          alert("No se encontro un grupo  ");
+          this.$swal({
+              type: "warning",
+              text: "No se encontró",
+              timer: 2000,
+              showCancelButton: false,
+              showConfirmButton: false
+            });
         } else if (response.status === 200) {
           this.coordinador = response.data.filter(
             res => res.id_usuario == this.$route.params.id
@@ -258,15 +264,25 @@ export default {
   methods: {
     selectChangeSemillero(event) {
       var i;
-      this.semilleros.forEach(function(element) {
+      /* this.semilleros.forEach(function(element) {
         if (element.semillero == event.target.value) {
           i = element.id_semillero;
+          console.log(element.id_semillero)
+          
         }
+      }); */
+      this.semilleros.forEach(function(element) {
+        if (element.semillero.trim == event.target.value.trim) {
+          i = element.id_semillero;
+          /* console.log(i) */
+        }
+        /* console.log('nada') */
       });
 
-      this.semilleroSeleccionado.id_semillero = i;
+      this.semilleroSeleccionado.id_semillero =i;
       this.coordinador.id_semillero = i;
-      alert(this.semilleroSeleccionado.id_grupo);
+    
+       /* alert(this.coordinador.id_semillero); */
     },
     handleSubmit(e) {
       this.submitted = true;
@@ -289,7 +305,7 @@ export default {
     },
     updateCoordinador() {
       //event.preventDefault();
-      console.log(this.coordinador);
+     /* alert(this.semilleroSeleccionado.id_semillero); */
       ApiService.put(
         `usuario/${this.$route.params.id}`,
         this.objectcoordinador
@@ -314,9 +330,13 @@ export default {
             this.$router.push({ name: "coordinadores" });
           })
           .catch(function(response) {
-            alert(
-              "No se pudo actualizar el coordinador que no tenia semillero"
-            );
+            this.$swal({
+              type: "warning",
+              text: "No se pudo actualizar coordinador porque no tenía semillero asignado",
+              timer: 2000,
+              showCancelButton: false,
+              showConfirmButton: false
+            });
           });
       } else if (this.coordinador.semillero != null) {
         //si  existe en la tabla directores lo actualizo

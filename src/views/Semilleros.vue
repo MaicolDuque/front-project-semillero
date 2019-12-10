@@ -1,6 +1,6 @@
 <template>
   <div style="padding:25px">
-    <div style="text-align: right; padding: 14px 1px;">
+    <div v-if="rol < 3" style="text-align: right; padding: 14px 1px;">
       <router-link to="/addsemillero" tag="button" class="btn btn-outline-success">Agregar</router-link>
     </div>
     <section class="content">

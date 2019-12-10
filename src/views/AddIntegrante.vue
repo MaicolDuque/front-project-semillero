@@ -48,9 +48,8 @@
                 >
                   <thead>
                     <tr>
-                      <th data-priority="1">Nombre</th>
-                      <th data-priority="5">Documento</th>
-                      <th data-priority="4">Apellido</th>
+                      <th data-priority="1">Documento</th>
+                      <th data-priority="3">Nombre</th>
                       <th data-priority="3">Email</th>
                       <th data-priority="2">Acciones</th>
                     </tr>
@@ -63,9 +62,8 @@
                       >No hay integrantes de periodos anteriores...</td>
                     </tr>
                     <tr v-for="item in integrantes" :key="item.id_usuario">
-                      <td>{{ item.nombre_usuario }}</td>
-                      <td>{{ item.documento }}</td>
-                      <td>{{ item.apellido_usuario }}</td>
+                       <td>{{ item.documento }}</td>
+                      <td>{{ item.nombre_usuario }} {{ item.apellido_usuario }}</td>
                       <td>{{ item.email }}</td>
                       <!-- <td>{{ item.tipo_usuario }}</td> -->
 

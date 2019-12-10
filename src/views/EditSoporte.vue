@@ -26,7 +26,7 @@
                   <label for="soporte">Nombre</label>
                   <input
                     type="text"
-                    pattern="[A-Za-z0-9 ]+"
+                    pattern="[-a-zA-Z0-9~:,¨áéíóúÁÉÍÓÚ&amp;*_=+'() ]+"
                     title=" Solo Letras y números. Tamaño máximo: 255"
                     v-model.trim="soporte.soporte"
                     id="soporte"
@@ -42,6 +42,7 @@
                     >El campo no debe superar los 255 caracteres</span>
                   </div>
                 </div>
+                
                 <div class="form-group">
                   <label for="vinculo">Vinculo</label>
                   <input

@@ -153,7 +153,7 @@ export default {
               console.log(error);
               this.errored = true;
             });
-          this.$swal("Registro Eliminado");
+          /* this.$swal("Registro Eliminado"); */
         } else {
           this.$swal(" Accion Cancelada");
         }
